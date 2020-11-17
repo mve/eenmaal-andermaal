@@ -10,7 +10,7 @@
 1. Download and install XAMPP from https://www.apachefriends.org/download.html
 2. Windows Settings -> System -> About -> Advanced System Settings -> Environment Variables -> Path (System Variables) -> Edit
 3. Click 'New' and insert the PHP folder path: ```C:\xampp\php```
-4. Check if the path is working by opening a new command prompt and typing "php -v"
+4. Check if the path is working by opening a new command prompt and typing ```php -v```
 5. Download and install Composer from https://getcomposer.org/download/
 6. Download and install NodeJS from https://nodejs.org/en/ (this includes NPM)
 7. Follow the regular Setup steps above.
