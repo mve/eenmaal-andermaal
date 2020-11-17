@@ -1,5 +1,7 @@
+$border-radius: 0.75rem;
+
 // Body
-$body-bg: #f8fafc;
+$body-bg: #fff;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -17,3 +19,15 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+// Theme colors
+$dark-gray: #353535;
+$darker-gray: #2d3748;
+$sand: #c5AE91;
+$dark-blue: #284B63;
+
+$theme-colors: (
+    "primary": $dark-blue,
+    "secondary": $sand,
+    "danger": $red
+);
