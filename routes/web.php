@@ -21,7 +21,10 @@ Route::get('auction', function () {
     return view('auctions.view');
 });
 
-Auth::routes();
+//Auth::routes();
+
+Route::get('/login', 'Auth\LoginController@index')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -31,9 +34,9 @@ Route::get('foo', function () {
 //   return \App\User::register("Stefan", "Teunissen", "ja@gmail.com", "HELP");
 
     $user = new \App\User();
-    $user->name = "APPLES";
-    $user->email = "asjidsakl@skdalj.com";
-    $user->password = \Illuminate\Support\Facades\Hash::make("xd");
+    $user->name = "Name";
+    $user->email = "name@mail.com";
+    $user->password = \Illuminate\Support\Facades\Hash::make("Password");
     $user->save();
     dd($user);
 });
