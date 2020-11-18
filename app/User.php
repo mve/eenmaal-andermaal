@@ -2,38 +2,42 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable
+class User extends SuperModel
 {
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
+    protected $attributes = [
+        'id',
+        'first_name',
+        'last_name',
+        'email_address',
+        'password'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    //moet naar de controllers
+    public static function login($email_address, $password){
+        $user = User::oneWhere("email_address",$email_address);
+        if($user == null){
+            return "Geen account gevonden met het ingevoerde e-mailadres";
+        }
+        if(!Hash::check($password, $user->password)){
+            return "Wachtwoorden komen niet overeen";
+        }
+        return "Inloggen gelukt";
+    }
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    //moet naar de controllers
+    public static function register($first_name, $last_name, $email_address, $password){
+        $user = User::oneWhere("email_address",$email_address);
+        if($user){
+            return "Er bestaat al een account met het ingevulde e-mailadres";
+        }
+        \App\User::insert([
+            "first_name" => $first_name,
+            "last_name" => $last_name,
+            "email_address" => $email_address,
+            "password" => Hash::make($password)
+        ]);
+        return "Registreren gelukt";
+    }
 }
