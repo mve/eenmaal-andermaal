@@ -83,3 +83,31 @@ h1, h2, h3, h4, h5, h6, p {
 .auction-card-body {
     padding: 20px;
 }
+
+
+/*** CSS GUUS ***/
+
+.profile-picture{
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+.info-content{
+    height: 60px;
+}
+
+.auction-card-head{
+    background: rgb(197, 174, 145);
+    background: linear-gradient(27deg, rgba(197, 174, 145, 1) 0%, rgba(40, 75, 99, 1) 100%);
+    padding: 15px;
+
+    h4{
+        margin: 0;
+        color: white;
+    }
+}
+
+.list-group-item{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

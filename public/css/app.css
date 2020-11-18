@@ -10975,3 +10975,31 @@ p {
   padding: 20px;
 }
 
+/*** CSS GUUS ***/
+
+.profile-picture {
+  font-size: 40px;
+  margin-right: 10px;
+}
+
+.info-content {
+  height: 60px;
+}
+
+.auction-card-head {
+  background: #c5ae91;
+  background: linear-gradient(27deg, #c5ae91 0%, #284b63 100%);
+  padding: 15px;
+}
+
+.auction-card-head h4,
+.auction-card-head .h4 {
+  margin: 0;
+  color: white;
+}
+
+.list-group-item {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
