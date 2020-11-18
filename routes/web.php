@@ -30,10 +30,10 @@ Route::get('foo', function () {
 //    return \App\User::login("stefanteunissen1@gmail.com", "help");
 //   return \App\User::register("Stefan", "Teunissen", "ja@gmail.com", "HELP");
 
-//    $user = new \App\User();
-//    $user->name = "APPLES";
-//    $user->email_address = "asjidsakl@skdalj.com";
-//    $user->password = \Illuminate\Support\Facades\Hash::make("xd");
-//    $user->save();
-//    dd($user);
+    $user = new \App\User();
+    $user->name = "APPLES";
+    $user->email = "asjidsakl@skdalj.com";
+    $user->password = \Illuminate\Support\Facades\Hash::make("xd");
+    $user->save();
+    dd($user);
 });
