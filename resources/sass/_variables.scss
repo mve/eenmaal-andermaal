@@ -1,5 +1,7 @@
+$border-radius: 0.75rem;
+
 // Body
-$body-bg: #f8fafc;
+$body-bg: #fff;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -19,20 +21,14 @@ $teal: #4dc0b5;
 $cyan: #6cb2eb;
 //$warm-sand: #C5AE91;
 
-//$primary:       $blue !default;
-//$secondary:     $warm-sand !default;
-//$success:       $green !default;
-//$info:          $cyan !default;
-//$warning:       $yellow !default;
-//$danger:        $red !default;
+// Theme colors
+$dark-gray: #353535;
+$darker-gray: #2d3748;
+$sand: #c5AE91;
+$dark-blue: #284B63;
 
-//$blue: #3490dc;
-//$indigo: #6574cd;
-//$purple: #9561e2;
-//$pink: #f66d9b;
-//$red: #e3342f;
-//$orange: #f6993f;
-//$yellow: #ffed4a;
-//$green: #38c172;
-//$teal: #4dc0b5;
-//$cyan: #6cb2eb;
+$theme-colors: (
+    "primary": $dark-blue,
+    "secondary": $sand,
+    "danger": $red
+);

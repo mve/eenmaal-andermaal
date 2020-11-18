@@ -6,3 +6,94 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    color: $darker-gray;
+}
+
+.btn {
+    border-radius: $border-radius;
+    padding: 0.375rem 1rem;
+}
+
+.hero-section {
+    background: $sand;
+    background: linear-gradient(27deg, $sand 0%, $dark-blue 100%);
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.auction-card {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+}
+
+.hover-effect {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+    transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+    cursor: pointer;
+}
+
+.hover-effect:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+
+}
+
+.no-link {
+    text-decoration: none;
+    color: $darker-gray;
+}
+
+.no-link:hover {
+    color: $darker-gray;
+}
+
+.flex-centered {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.auction-card-image {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+}
+
+.auction-card-data {
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+
+.auction-card-body {
+    padding: 20px;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: #cbd5e0;
+    border-bottom: 1px solid transparent;
+    transition: all .2s ease-in;
+
+}
+
+.footer-link:hover {
+    text-decoration: none;
+    color: white;
+    border-bottom: 1px solid white;
+}
