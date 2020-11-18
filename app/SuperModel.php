@@ -3,7 +3,6 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\DB;
 
 abstract class SuperModel
 {
@@ -32,7 +31,7 @@ abstract class SuperModel
      * @return int
      */
     public function delete(){
-        return DB::delete(DB::raw("DELETE FROM ". self::getTableName(static::class) ." WHERE id=:id"),[
+        return DB::delete("DELETE FROM ". self::getTableName(static::class) ." WHERE id=:id",[
             'id' => $this->id
         ]);
     }
@@ -56,8 +55,9 @@ abstract class SuperModel
                 $keysString .= ",";
             }
         }
-        $insertId = DB::selectOne(DB::raw("INSERT INTO " . self::getTableName(static::class) . " (" . $keysString . ") OUTPUT Inserted.id VALUES(" . $valuesString . ")"), $values);
-        return $insertId->id;
+
+        $insertId = DB::selectOne("INSERT INTO " . self::getTableName(static::class) . " (" . $keysString . ") OUTPUT Inserted.id VALUES(" . $valuesString . ")", $values);
+        return $insertId["id"];
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class SuperModel
      */
     public static function all()
     {
-        $result = DB::select(DB::raw("SELECT * FROM " . self::getTableName(static::class)));
+        $result = DB::select("SELECT * FROM " . self::getTableName(static::class));
         return self::resultArrayToClassArray($result, static::class);
     }
 
@@ -78,7 +78,7 @@ abstract class SuperModel
      */
     public static function allOrderBy($column = "id", $order = "ASC")
     {
-        $result = DB::select(DB::raw("SELECT * FROM " . self::getTableName(static::class) . " ORDER BY " . $column . " " . $order));
+        $result = DB::select("SELECT * FROM " . self::getTableName(static::class) . " ORDER BY " . $column . " " . $order);
         return self::resultArrayToClassArray($result, static::class);
     }
 
@@ -90,9 +90,11 @@ abstract class SuperModel
      */
     public static function oneWhere($column, $value)
     {
-        $result = DB::selectOne(DB::raw("SELECT TOP 1 * FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:value"), array(
+        $result = DB::selectOne("SELECT TOP 1 * FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:value", array(
             'value' => $value
         ));
+        if($result==null)
+            return false;
         $class = static::class;
         $obj = new $class();
         $obj->fillAttributes($result);
@@ -117,7 +119,12 @@ abstract class SuperModel
     private function fillAttributes($stdClassObject)
     {
         foreach ($this->attributes as $attribute) {
-            $this->{$attribute} = $stdClassObject->{$attribute};
+            if($stdClassObject instanceof \stdClass){
+                $attr =  $stdClassObject->{$attribute};
+            }else{
+                $attr = $stdClassObject[$attribute];
+            }
+            $this->{$attribute} = $attr;
         }
 //        unset($this->attributes);
     }

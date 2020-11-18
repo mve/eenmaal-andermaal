@@ -8,15 +8,14 @@ class User extends SuperModel
 {
     protected $attributes = [
         'id',
-        'first_name',
-        'last_name',
-        'email_address',
+        'name',
+        'email',
         'password'
     ];
 
     //moet naar de controllers
     public static function login($email_address, $password){
-        $user = User::oneWhere("email_address",$email_address);
+        $user = User::oneWhere("email",$email_address);
         if($user == null){
             return "Geen account gevonden met het ingevoerde e-mailadres";
         }
@@ -27,15 +26,14 @@ class User extends SuperModel
     }
 
     //moet naar de controllers
-    public static function register($first_name, $last_name, $email_address, $password){
-        $user = User::oneWhere("email_address",$email_address);
+    public static function register($last_name, $email_address, $password){
+        $user = User::oneWhere("email",$email_address);
         if($user){
             return "Er bestaat al een account met het ingevulde e-mailadres";
         }
         \App\User::insert([
-            "first_name" => $first_name,
-            "last_name" => $last_name,
-            "email_address" => $email_address,
+            "name" => $last_name,
+            "email" => $email_address,
             "password" => Hash::make($password)
         ]);
         return "Registreren gelukt";

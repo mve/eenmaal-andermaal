@@ -31,18 +31,9 @@ Route::get('foo', function () {
 //   return \App\User::register("Stefan", "Teunissen", "ja@gmail.com", "HELP");
 
 //    $user = new \App\User();
-//    $user->first_name = "APPLES";
-//    $user->last_name = "SAUCE";
+//    $user->name = "APPLES";
 //    $user->email_address = "asjidsakl@skdalj.com";
 //    $user->password = \Illuminate\Support\Facades\Hash::make("xd");
 //    $user->save();
 //    dd($user);
-
-//    $fruit = new \App\Fruit();
-//    $fruit->name = "Orang";
-//    $fruit->save();
-//    dd($fruit);
-
-//    $fruit = \App\Fruit::oneWhere("id",3);
-//    dd($fruit->delete());
 });
