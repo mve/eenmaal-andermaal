@@ -10926,7 +10926,8 @@ p {
   font-weight: bold;
 }
 
-.auction-card {
+.auction-card,
+.card {
   border-radius: 0.75rem;
   overflow: hidden;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -10986,6 +10987,11 @@ p {
   text-decoration: none;
   color: white;
   border-bottom: 1px solid white;
+}
+
+.sand-blue-gradient {
+  background: #c5AE91;
+  background: linear-gradient(27deg, #c5AE91 0%, #284B63 100%);
 }
 
 /*** CSS GUUS ***/

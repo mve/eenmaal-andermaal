@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6, p {
     font-weight: bold;
 }
 
-.auction-card {
+.auction-card, .card {
     border-radius: 0.75rem;
     overflow: hidden;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
@@ -95,6 +95,11 @@ h1, h2, h3, h4, h5, h6, p {
     text-decoration: none;
     color: white;
     border-bottom: 1px solid white;
+}
+
+.sand-blue-gradient {
+    background: $sand;
+    background: linear-gradient(27deg, $sand 0%, $dark-blue 100%);
 }
 
 /*** CSS GUUS ***/
