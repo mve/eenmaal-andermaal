@@ -2,11 +2,18 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class User extends SuperModel
 {
+    protected $attributes = [
+        'id',
+        'first_name',
+        'last_name',
+        'email_address',
+        'password'
+    ];
+
     //moet naar de controllers
     public static function login($email_address, $password){
         $user = User::oneWhere("email_address",$email_address);

@@ -2,9 +2,11 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\DB;
-
 class Fruit extends SuperModel
 {
+    protected $attributes = [
+        'id',
+        'name'
+    ];
 
 }
