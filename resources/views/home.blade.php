@@ -104,14 +104,6 @@
 
         </div>
 
-        <h2>Categoriën</h2>
-
-        <div class="row">
-            <div class="col-md-3">
-
-            </div>
-        </div>
-
     </div>
 
 @endsection

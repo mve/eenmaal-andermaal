@@ -10913,8 +10913,8 @@ p {
 }
 
 .hero-section {
-  background: #c5ae91;
-  background: linear-gradient(27deg, #c5ae91 0%, #284b63 100%);
+  background: #c5AE91;
+  background: linear-gradient(27deg, #c5AE91 0%, #284B63 100%);
   min-height: 400px;
   display: flex;
   justify-content: center;
@@ -10973,5 +10973,18 @@ p {
 
 .auction-card-body {
   padding: 20px;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #cbd5e0;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease-in;
+}
+
+.footer-link:hover {
+  text-decoration: none;
+  color: white;
+  border-bottom: 1px solid white;
 }
 

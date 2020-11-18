@@ -21,8 +21,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .hero-section {
-    background: rgb(197, 174, 145);
-    background: linear-gradient(27deg, rgba(197, 174, 145, 1) 0%, rgba(40, 75, 99, 1) 100%);
+    background: $sand;
+    background: linear-gradient(27deg, $sand 0%, $dark-blue 100%);
     min-height: 400px;
     display: flex;
     justify-content: center;
@@ -82,4 +82,18 @@ h1, h2, h3, h4, h5, h6, p {
 
 .auction-card-body {
     padding: 20px;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: #cbd5e0;
+    border-bottom: 1px solid transparent;
+    transition: all .2s ease-in;
+
+}
+
+.footer-link:hover {
+    text-decoration: none;
+    color: white;
+    border-bottom: 1px solid white;
 }
