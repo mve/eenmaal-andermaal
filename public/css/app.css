@@ -10991,7 +10991,7 @@ p {
 /*** CSS GUUS ***/
 
 .profile-picture {
-  font-size: 40px;
+  font-size: 25px;
   margin-right: 10px;
 }
 
@@ -11011,8 +11011,18 @@ p {
   color: white;
 }
 
+.list-group {
+  border-radius: 0;
+}
+
 .list-group-item {
   padding-top: 15px;
   padding-bottom: 15px;
+  border-left: 0;
+  border-right: 0;
+}
+
+.fa-star {
+  color: #FFD700;
 }
 

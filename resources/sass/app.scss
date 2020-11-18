@@ -99,13 +99,15 @@ h1, h2, h3, h4, h5, h6, p {
 
 /*** CSS GUUS ***/
 .profile-picture{
-    font-size: 40px;
+    font-size: 25px;
     margin-right: 10px;
 }
 
 .info-content{
     height: 60px;
 }
+
+
 
 .auction-card-head{
     background: rgb(197, 174, 145);
@@ -117,8 +119,17 @@ h1, h2, h3, h4, h5, h6, p {
         color: white;
     }
 }
+.list-group{
+    border-radius: 0;
+}
 
 .list-group-item{
     padding-top: 15px;
     padding-bottom: 15px;
+    border-left: 0;
+    border-right: 0;
+}
+
+.fa-star{
+    color: #FFD700;
 }
