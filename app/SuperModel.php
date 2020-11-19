@@ -122,7 +122,7 @@ abstract class SuperModel
         ));
         if ($result == null)
             return false;
-        return self::resultToClass(static::class);
+        return self::resultToClass($result, static::class);
     }
 
     /**
