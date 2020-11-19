@@ -70,9 +70,13 @@ class LoginController extends Controller
     {
         $user = User::oneWhere('email', $request->get('email'));
 
+        if(!$user){
+            return "Ongeldige inlog";
+        }
+
         $userLoggedIn = Hash::check($request->get('password'), $user->password);
 
-        if ($user) {
+        if ($userLoggedIn) {
             $request->session()->put('user', $user);
             return redirect('/');
         }
