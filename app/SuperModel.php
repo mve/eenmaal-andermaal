@@ -16,10 +16,11 @@ abstract class SuperModel
     /**
      * Insert the model with attributes into the child's presumed table, except for the ID which should be IDENTITY
      */
-    public function save(){
+    public function save()
+    {
         $values = [];
         foreach ($this->attributes as $attribute) {
-            if($attribute=="id")
+            if ($attribute == "id")
                 continue;
             $values[$attribute] = $this->{$attribute};
         }
@@ -28,11 +29,23 @@ abstract class SuperModel
 
     /**
      * Delete the row with the ID of the current object from the child's presumed table
-     * @return int
+     * @return int affected rows
      */
-    public function delete(){
-        return DB::delete("DELETE FROM ". self::getTableName(static::class) ." WHERE id=:id",[
-            'id' => $this->id
+    public function delete()
+    {
+        return self::deleteWhere('id', $this->id);
+    }
+
+    /**
+     * Delete all rows WHERE $column = $value
+     * @param $column
+     * @param $value
+     * @return int affected rows
+     */
+    public static function deleteWhere($column, $value)
+    {
+        return DB::delete("DELETE FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:val", [
+            'val' => $value
         ]);
     }
 
@@ -71,6 +84,20 @@ abstract class SuperModel
     }
 
     /**
+     * Selects all rows from the child table WHERE $column=$value
+     * @param $column
+     * @param $value
+     * @return array
+     */
+    public static function allWhere($column, $value)
+    {
+        $result = DB::select("SELECT * FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:value", array(
+            'value' => $value
+        ));
+        return self::resultArrayToClassArray($result, static::class);
+    }
+
+    /**
      * Selects all rows from the child table in the provided order and by the provided column
      * @param string $column column to sort by
      * @param string $order order to sort in
@@ -93,12 +120,9 @@ abstract class SuperModel
         $result = DB::selectOne("SELECT TOP 1 * FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:value", array(
             'value' => $value
         ));
-        if($result==null)
+        if ($result == null)
             return false;
-        $class = static::class;
-        $obj = new $class();
-        $obj->fillAttributes($result);
-        return $obj;
+        return self::resultToClass($result, static::class);
     }
 
     /**
@@ -119,9 +143,9 @@ abstract class SuperModel
     private function fillAttributes($stdClassObject)
     {
         foreach ($this->attributes as $attribute) {
-            if($stdClassObject instanceof \stdClass){
-                $attr =  $stdClassObject->{$attribute};
-            }else{
+            if ($stdClassObject instanceof \stdClass) {
+                $attr = $stdClassObject->{$attribute};
+            } else {
                 $attr = $stdClassObject[$attribute];
             }
             $this->{$attribute} = $attr;
@@ -130,7 +154,7 @@ abstract class SuperModel
     }
 
     /**
-     * Convert stdClass array to $class array
+     * Convert result array to $class array
      * @param $resultArray
      * @param $class
      * @return array
@@ -141,9 +165,22 @@ abstract class SuperModel
         foreach ($resultArray as $result) {
             $obj = new $class();
             $obj->fillAttributes($result);
-            array_push($returnArray,$obj);
+            array_push($returnArray, $obj);
         }
         return $returnArray;
+    }
+
+    /**
+     * Convert result to $class object
+     * @param $result
+     * @param $class
+     * @return mixed
+     */
+    private static function resultToClass($result, $class)
+    {
+        $obj = new $class();
+        $obj->fillAttributes($result);
+        return $obj;
     }
 
     /**
