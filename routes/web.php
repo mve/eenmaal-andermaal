@@ -26,7 +26,7 @@ Route::get('auction', function () {
 Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@home')->name('home');
 
 Route::get('foo', function () {
 //    return \Illuminate\Support\Facades\Hash::make("help");

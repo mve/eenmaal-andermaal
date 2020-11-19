@@ -73,9 +73,9 @@ class LoginController extends Controller
         $userLoggedIn = Hash::check($request->get('password'), $user->password);
 
         if ($userLoggedIn) {
-            // TODO Password is now also stored in the session, maybe not safe.
+
             $request->session()->put('user', $user);
-            dd($request->session());
+            return redirect('home');
         }
     }
 }
