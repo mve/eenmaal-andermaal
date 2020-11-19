@@ -34,7 +34,6 @@ CREATE TABLE eenmaalandermaal.dbo.shipping_methods
     CONSTRAINT shipping_methods_PK PRIMARY KEY (id)
 )
 
-
 CREATE TABLE eenmaalandermaal.dbo.users
 (
     id                   int IDENTITY (0,1)                                NOT NULL,
@@ -50,9 +49,9 @@ CREATE TABLE eenmaalandermaal.dbo.users
     birth_date           date                                              NULL,
     security_question_id int                                               NULL,
     security_answer      varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-    is_seller            bit DEFAULT 0                                     NULL,
-    is_admin             bit DEFAULT 0                                     NULL,
-    created_at           datetime DEFAULT getdate()                        NULL,    
+    is_seller            bit      DEFAULT 0                                NULL,
+    is_admin             bit      DEFAULT 0                                NULL,
+    created_at           datetime DEFAULT getdate()                        NULL,
     CONSTRAINT users_PK PRIMARY KEY (id),
     CONSTRAINT security_question_FK FOREIGN KEY (security_question_id) REFERENCES eenmaalandermaal.dbo.security_questions (id)
 )
@@ -129,4 +128,23 @@ CREATE TABLE eenmaalandermaal.dbo.reviews
     CONSTRAINT reviews_PK PRIMARY KEY (id),
     CONSTRAINT reviews_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction (id),
     CONSTRAINT reviews_FK_1 FOREIGN KEY (user_id) REFERENCES eenmaalandermaal.dbo.users (id)
+)
+
+CREATE TABLE eenmaalandermaal.dbo.categories
+(
+    id        int IDENTITY (0,1)                                NOT NULL,
+    name      varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    parent_id int                                               NULL,
+    CONSTRAINT category_PK PRIMARY KEY (id),
+    CONSTRAINT category_FK FOREIGN KEY (parent_id) REFERENCES eenmaalandermaal.dbo.categories (id)
+)
+
+CREATE TABLE eenmaalandermaal.dbo.auction_categories
+(
+    id          int IDENTITY (0,1) NOT NULL,
+    auction_id  int                NOT NULL,
+    category_id int                NOT NULL,
+    CONSTRAINT auction_categories_PK PRIMARY KEY (id),
+    CONSTRAINT auction_categories_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction (id),
+    CONSTRAINT auction_categories_FK_1 FOREIGN KEY (category_id) REFERENCES eenmaalandermaal.dbo.categories (id)
 )
