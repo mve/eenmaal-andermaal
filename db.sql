@@ -164,7 +164,7 @@ CREATE TABLE eenmaalandermaal.dbo.auction_categories (
 	CONSTRAINT auction_categories_PK PRIMARY KEY (id),
 	CONSTRAINT auction_categories_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
 	CONSTRAINT auction_categories_FK_1 FOREIGN KEY (category_id) REFERENCES eenmaalandermaal.dbo.categories(id)
-) G
+)
 
 
 -- eenmaalandermaal.dbo.auction_hits definition
