@@ -30,6 +30,16 @@ Route::get('foo', function () {
 //    return \App\User::login("stefanteunissen1@gmail.com", "help");
 //   return \App\User::register("Stefan", "Teunissen", "ja@gmail.com", "HELP");
 
+//    $user = \App\User::deleteWhere('name', "Pear");
+//    dd($user);
+
+    $users = \App\User::allWhere("email", "asjidsakl@skdalj.com");
+    foreach($users as $user){
+        $user->delete();
+    }
+    $users = \App\User::allWhere("email", "asjidsakl@skdalj.com");
+    dd($users);
+
 //    $user = new \App\User();
 //    $user->name = "APPLES";
 //    $user->email = "asjidsakl@skdalj.com";
