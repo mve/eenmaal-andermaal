@@ -11022,7 +11022,49 @@ p {
   border-right: 0;
 }
 
-.fa-star {
+.stars {
+  padding: 10px 25px;
+  border-radius: 35px;
+  background: #f2faff;
+}
+
+.stars .fa-star {
   color: #FFD700;
+  font-size: 20px;
+}
+
+.rating-bar-empty {
+  margin: auto 5px;
+  width: 50%;
+  height: 12px;
+  border-radius: 35px;
+  border: 1px solid #bfbfbf;
+  background: #f2faff;
+}
+
+.rating-bar-empty .rating-bar-filled {
+  height: 10px;
+  border-radius: 35px;
+  background: #FFD700;
+}
+
+.rating-bar-empty .rating-bar-filled.five-star {
+  width: 84%;
+}
+
+.rating-bar-empty .rating-bar-filled.four-star {
+  width: 9%;
+}
+
+.rating-bar-empty .rating-bar-filled.three-star {
+  width: 4%;
+}
+
+.rating-bar-empty .rating-bar-filled.two-star {
+  width: 2%;
+}
+
+.rating-bar-empty .rating-bar-filled.one-star {
+  width: 1%;
 }
 

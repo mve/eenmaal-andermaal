@@ -6,7 +6,7 @@
     <div class="container">
         <h2>TITEL VAN VEILING ITEM</h2>
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-lg-7 col-xl-8">
                 <!-- CAROUSEL SLIDER -->
                 <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -95,7 +95,7 @@
                     </p>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-lg-5 col-xl-4">
                 <div class="auction-card mb-5">
                     <div class="auction-card-head flex-centered">
                         <h4>Sluit over 5d 8u 15m 9s</h4>
@@ -129,10 +129,10 @@
                         <hr>
                         <p>vorige bieders</p>
                         <ul>
-                            <li>persoon</li>
-                            <li>persoon</li>
-                            <li>persoon</li>
-                            <li>persoon</li>
+                            <li>persoon €120.000</li>
+                            <li>persoon €115.000</li>
+                            <li>persoon €110.000</li>
+                            <li>persoon €105.000</li>
                         </ul>
                     </div>
                 </div>
@@ -141,9 +141,27 @@
                     <div class="flex-centered auction-card-head">
                         <h4>Beoordelingen</h4>
                     </div>
-                    <div class="auction-card-body flex-centered">
-                        
-                        <i>40 beoordelingen</i>
+                    <div class="auction-card-body ">
+                        <div class="flex-centered">
+                            <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            4.7 van de 5
+                            </div>
+                        </div>
+                        <div class="flex-centered my-3">
+                            <i>40 beoordelingen</i>
+                        </div>
+
+                            <div class="flex-centered">5 star <div class="rating-bar-empty"><div class="rating-bar-filled five-star"></div></div> 78%</div>
+                            <div class="flex-centered">4 star <div class="rating-bar-empty"><div class="rating-bar-filled four-star"></div></div> 9%</div>
+                            <div class="flex-centered">3 star <div class="rating-bar-empty"><div class="rating-bar-filled three-star"></div></div> 4%</div>
+                            <div class="flex-centered">2 star <div class="rating-bar-empty"><div class="rating-bar-filled two-star"></div></div> 2%</div>
+                            <div class="flex-centered">1 star <div class="rating-bar-empty"><div class="rating-bar-filled one-star"></div></div> 1%</div>
+
                     </div>
                 </div>
             </div>

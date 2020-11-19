@@ -98,38 +98,83 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 /*** CSS GUUS ***/
-.profile-picture{
+.profile-picture {
     font-size: 25px;
     margin-right: 10px;
 }
 
-.info-content{
+.info-content {
     height: 60px;
 }
 
 
-
-.auction-card-head{
+.auction-card-head {
     background: rgb(197, 174, 145);
     background: linear-gradient(27deg, rgba(197, 174, 145, 1) 0%, rgba(40, 75, 99, 1) 100%);
     padding: 15px;
 
-    h4{
+    h4 {
         margin: 0;
         color: white;
     }
 }
-.list-group{
+
+.list-group {
     border-radius: 0;
 }
 
-.list-group-item{
+.list-group-item {
     padding-top: 15px;
     padding-bottom: 15px;
     border-left: 0;
     border-right: 0;
 }
 
-.fa-star{
-    color: #FFD700;
+.stars {
+    padding: 10px 25px;
+    border-radius: 35px;
+    background: #f2faff;
+
+    .fa-star {
+        color: #FFD700;
+        font-size: 20px;
+    }
 }
+
+.rating-bar-empty {
+    margin: auto 5px;
+    width: 50%;
+    height: 12px;
+    border-radius: 35px;
+    border: 1px solid #bfbfbf;
+    background: #f2faff;
+
+    .rating-bar-filled {
+        height: 10px;
+        border-radius: 35px;
+        background: #FFD700;
+
+        &.five-star {
+            width: 84%;
+        }
+
+        &.four-star {
+            width: 9%;
+        }
+
+        &.three-star {
+            width: 4%;
+        }
+
+        &.two-star {
+            width: 2%;
+        }
+
+        &.one-star {
+            width: 1%;
+        }
+    }
+}
+
+
+
