@@ -118,7 +118,7 @@
                         <li class="list-group-item flex-centered"><strong>Huidig bod: 120.000</strong></li>
                     </ul>
                     <div class="auction-card-body">
-                        <label for="Bieden" class="form-label">Plaats bod</label>
+                        <label for="Bieden" class="form-label fw-bold">Plaats bod</label>
                         <div class="input-group">
 
                             <input type="number" class="form-control" id="Bieden" aria-describedby="Plaats bod"
@@ -127,13 +127,15 @@
                         </div>
 
                         <hr>
-                        <p>vorige bieders</p>
-                        <ul>
-                            <li>persoon €120.000</li>
-                            <li>persoon €115.000</li>
-                            <li>persoon €110.000</li>
-                            <li>persoon €105.000</li>
+                        <p class="fw-bold">vorige bieders</p>
+                        <ul class="list-group" style="max-height: 200px; overflow-y: scroll">
+                            <li class="list-group-item flex-centered"><strong>Bod: 120.000</strong></li>
+                            <li class="list-group-item flex-centered"><strong>Bod: 100.000</strong></li>
+                            <li class="list-group-item flex-centered"><strong>Bod: 80.000</strong></li>
+                            <li class="list-group-item flex-centered"><strong>Bod: 60.000</strong></li>
+                            <li class="list-group-item flex-centered"><strong>Bod: 55.000</strong></li>
                         </ul>
+
                     </div>
                 </div>
                 <!-- RATINGS -->
@@ -144,23 +146,48 @@
                     <div class="auction-card-body ">
                         <div class="flex-centered">
                             <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            4.7 van de 5
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                4.7 van de 5
                             </div>
                         </div>
                         <div class="flex-centered my-3">
                             <i>40 beoordelingen</i>
                         </div>
 
-                            <div class="flex-centered">5 star <div class="rating-bar-empty"><div class="rating-bar-filled five-star"></div></div> 78%</div>
-                            <div class="flex-centered">4 star <div class="rating-bar-empty"><div class="rating-bar-filled four-star"></div></div> 9%</div>
-                            <div class="flex-centered">3 star <div class="rating-bar-empty"><div class="rating-bar-filled three-star"></div></div> 4%</div>
-                            <div class="flex-centered">2 star <div class="rating-bar-empty"><div class="rating-bar-filled two-star"></div></div> 2%</div>
-                            <div class="flex-centered">1 star <div class="rating-bar-empty"><div class="rating-bar-filled one-star"></div></div> 1%</div>
+                        <div class="flex-centered">5 star
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled five-star"></div>
+                            </div>
+                            78%
+                        </div>
+                        <div class="flex-centered">4 star
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled four-star"></div>
+                            </div>
+                            9%
+                        </div>
+                        <div class="flex-centered">3 star
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled three-star"></div>
+                            </div>
+                            4%
+                        </div>
+                        <div class="flex-centered">2 star
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled two-star"></div>
+                            </div>
+                            2%
+                        </div>
+                        <div class="flex-centered">1 star
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled one-star"></div>
+                            </div>
+                            1%
+                        </div>
 
                     </div>
                 </div>

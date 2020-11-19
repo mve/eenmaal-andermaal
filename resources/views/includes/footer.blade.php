@@ -10,8 +10,8 @@
             </div>
             <div class="col-md-6 col-lg-4 mt-4">
                 <div class="fw-bold">Mijn account</div>
-                <div><a class="footer-link" href="#">Inloggen</a></div>
-                <div><a class="footer-link" href="#">Registreren</a></div>
+                <div><a class="footer-link" href="/login">Inloggen</a></div>
+                <div><a class="footer-link" href="/register">Registreren</a></div>
             </div>
             <div class="col-md-6 col-lg-4 mt-4">
                 <div class="fw-bold">Eenmaal Andermaal</div>
