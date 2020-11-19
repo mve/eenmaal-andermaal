@@ -9,16 +9,17 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
-$blue: #3490dc;
-$indigo: #6574cd;
-$purple: #9561e2;
-$pink: #f66d9b;
-$red: #e3342f;
-$orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
-$teal: #4dc0b5;
-$cyan: #6cb2eb;
+$blue: #3B82F6;
+$indigo: #6366F1;
+$purple: #8B5CF6;
+$pink: #EC4899;
+$red: #EF4444;
+$orange: #F59E0B;
+$yellow: #FCD34D;
+$green: #34D399;
+$gray: #6B7280;
+$light: #F3F4F6;
+$dark: #111827;
 
 // Theme colors
 $dark-gray: #353535;
@@ -29,5 +30,10 @@ $dark-blue: #284B63;
 $theme-colors: (
     "primary": $dark-blue,
     "secondary": $sand,
-    "danger": $red
+    "success": $green,
+    "danger": $red,
+    "warning": $orange,
+    "info": $yellow,
+    "light": $light,
+    "dark": $dark,
 );
