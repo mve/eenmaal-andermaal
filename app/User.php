@@ -8,7 +8,7 @@ class User extends SuperModel
 {
     protected $attributes = [
         'id',
-        'name',
+        'username',
         'email',
         'password'
     ];
