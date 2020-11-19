@@ -74,7 +74,7 @@ class LoginController extends Controller
 
         if ($user) {
             $request->session()->put('user', $user);
-            return redirect('home');
+            return redirect('/');
         }
     }
 

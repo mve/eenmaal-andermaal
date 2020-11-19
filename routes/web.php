@@ -13,24 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('auction', function () {
     return view('auctions.view');
 });
 
-//Auth::routes();
+Route::get('/register', 'Auth\RegisterController@index')->name('register');
+Route::post('/register', 'Auth\RegisterController@create');
 
-Route::get('/register', 'Auth\LoginController@index')->name('register');
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-
-Route::get('/home', 'HomeController@home')->name('home');
 
 Route::get('foo', function () {
 //    return \Illuminate\Support\Facades\Hash::make("help");
