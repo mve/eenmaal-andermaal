@@ -1,6 +1,6 @@
 -- DROP SCHEMA dbo;
 
-CREATE SCHEMA dbo;
+-- CREATE SCHEMA dbo;
 -- eenmaalandermaal.dbo.security_questions definition
 
 -- Drop table
