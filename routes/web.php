@@ -23,8 +23,12 @@ Route::get('auction', function () {
 
 //Auth::routes();
 
+Route::get('/register', 'Auth\LoginController@index')->name('register');
+
 Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
+
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@home')->name('home');
 
@@ -36,12 +40,12 @@ Route::get('foo', function () {
 //    $user = \App\User::deleteWhere('name', "Pear");
 //    dd($user);
 
-    $users = \App\User::allWhere("email", "asjidsakl@skdalj.com");
-    foreach($users as $user){
-        $user->delete();
-    }
-    $users = \App\User::allWhere("email", "asjidsakl@skdalj.com");
-    dd($users);
+    // $users = \App\User::allWhere("email", "asjidsakl@skdalj.com");
+    // foreach($users as $user){
+    //     $user->delete();
+    // }
+    // $users = \App\User::allWhere("email", "asjidsakl@skdalj.com");
+    // dd($users);
 
 //    $user = new \App\User();
 //    $user->name = "APPLES";
