@@ -72,10 +72,17 @@ class LoginController extends Controller
 
         $userLoggedIn = Hash::check($request->get('password'), $user->password);
 
-        if ($userLoggedIn) {
-
+        if ($user) {
             $request->session()->put('user', $user);
             return redirect('home');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        if($request->session()->has('user')) {
+            $request->session()->forget('user');
+            return redirect('login');
         }
     }
 }
