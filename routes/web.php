@@ -13,34 +13,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('auction', function () {
     return view('auctions.view');
 });
 
-Auth::routes();
+Route::get('/register', 'Auth\RegisterController@index')->name('register');
+Route::post('/register', 'Auth\RegisterController@create');
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/login', 'Auth\LoginController@index')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('foo', function () {
 //    return \Illuminate\Support\Facades\Hash::make("help");
 //    return \App\User::login("stefanteunissen1@gmail.com", "help");
 //   return \App\User::register("Stefan", "Teunissen", "ja@gmail.com", "HELP");
 
-//    $user = \App\User::deleteWhere('name', "Pear");
-//    dd($user);
+    $user = \App\User::oneWhere("id",4);
+    $user->delete();
 
-    dd(\App\DB::select("INSERT INTO auction_hits (auction_id,user_id,ip_binary,hit_datetime) VALUES (:auction_id,:user_id,:ip_binary,:hit_datetime)",[
-        "auction_id" => 0,
-        "user_id" => 1,
-        "ip_binary" => inet_ntop("192.168.0.0"),
+//    dd(\App\DB::select("INSERT INTO auction_hits (auction_id,user_id,ip_binary,hit_datetime) VALUES (:auction_id,:user_id,:ip_binary,:hit_datetime)",[
+//        "auction_id" => 0,
+//        "user_id" => 1,
+//        "ip_binary" => inet_ntop("192.168.0.0"),
 //        "ip_binary" => "hey",
-        "hit_datetime" => "2020-11-19 11:11:11"
-    ]));
-
+//        "hit_datetime" => "2020-11-19 11:11:11"
+//    ]));
 //    dd(\App\User::oneWhere("id",1));
 
     $user = new \App\User();
