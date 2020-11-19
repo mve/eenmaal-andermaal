@@ -55,8 +55,13 @@ class DB
      */
     public static function select($query, $values = [])
     {
-        $stmt = self::prepareAndBind($query, $values);
-        return $rows = $stmt->fetchAll();
+        $dbh = self::connection();
+        $stmt = $dbh->prepare($query);
+        foreach ($values as $key => &$value) {
+            $stmt->bindParam($key, $value);
+        }
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     /**
@@ -67,8 +72,13 @@ class DB
      */
     public static function selectOne($query, $values = [])
     {
-        $stmt = self::prepareAndBind($query, $values);
-        return $row = $stmt->fetch();
+        $dbh = self::connection();
+        $stmt = $dbh->prepare($query);
+        foreach ($values as $key => &$value) {
+            $stmt->bindParam($key, $value);
+        }
+        $stmt->execute();
+        return $stmt->fetch();
     }
 
     /**
@@ -79,7 +89,12 @@ class DB
      */
     public static function delete($query, $values = [])
     {
-        $stmt = self::prepareAndBind($query, $values);
-        return $row = $stmt->rowCount();
+        $dbh = self::connection();
+        $stmt = $dbh->prepare($query);
+        foreach ($values as $key => &$value) {
+            $stmt->bindParam($key, $value);
+        }
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 }

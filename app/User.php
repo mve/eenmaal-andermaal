@@ -8,9 +8,21 @@ class User extends SuperModel
 {
     protected $attributes = [
         'id',
-        'username',
         'email',
-        'password'
+        'password',
+        'username',
+        'first_name',
+        'last_name',
+        'address',
+        'postal_code',
+        'city',
+        'country',
+        'birth_date',
+        'security_question_id',
+        'security_answer',
+        'is_seller',
+        'is_admin',
+        'created_at',
     ];
 
     //moet naar de controllers
