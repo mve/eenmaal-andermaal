@@ -33,8 +33,8 @@ Route::get('foo', function () {
 //    return \App\User::login("stefanteunissen1@gmail.com", "help");
 //   return \App\User::register("Stefan", "Teunissen", "ja@gmail.com", "HELP");
 
-//    $user = \App\User::deleteWhere('name', "Pear");
-//    dd($user);
+    $user = \App\User::oneWhere("id",4);
+    $user->delete();
 
     // $users = \App\User::allWhere("email", "asjidsakl@skdalj.com");
     // foreach($users as $user){
