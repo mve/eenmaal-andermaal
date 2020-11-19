@@ -4,10 +4,22 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+
+    /**
+     * The session used by the guard.
+     *
+     * @var \Illuminate\Contracts\Session\Session
+     */
+    protected $session;
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -36,5 +48,34 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Show the login form.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Log the user in.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function login(Request $request)
+    {
+        $user = User::oneWhere('email', $request->get('email'));
+
+        $userLoggedIn = Hash::check($request->get('password'), $user->password);
+
+        if ($userLoggedIn) {
+            // TODO Password is now also stored in the session, maybe not safe.
+            $request->session()->put('user', $user);
+            dd($request->session());
+        }
     }
 }

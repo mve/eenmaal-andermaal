@@ -21,7 +21,10 @@ Route::get('auction', function () {
     return view('auctions.view');
 });
 
-Auth::routes();
+//Auth::routes();
+
+Route::get('/login', 'Auth\LoginController@index')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
