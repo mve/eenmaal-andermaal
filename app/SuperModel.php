@@ -8,9 +8,7 @@ abstract class SuperModel
 {
     public function __construct()
     {
-        foreach ($this->attributes as $attribute) {
-            $this->{$attribute} = "";
-        }
+
     }
 
     /**
@@ -19,10 +17,9 @@ abstract class SuperModel
     public function save()
     {
         $values = [];
-        foreach ($this->attributes as $attribute) {
-            if ($attribute == "id")
-                continue;
-            $values[$attribute] = $this->{$attribute};
+        $arr = get_object_vars($this);
+        foreach ($arr as $key=>$value){
+            $values[$key] = $value;
         }
         $this->id = self::insert($values);
     }
@@ -122,7 +119,7 @@ abstract class SuperModel
         ));
         if ($result == null)
             return false;
-        return self::resultToClass($result, static::class);
+        return self::resultToClass($result,static::class);
     }
 
     /**
@@ -133,7 +130,7 @@ abstract class SuperModel
     private static function getTableName($class)
     {
         $xp = explode("\\", $class);
-        return self::pluralize(strtolower(end($xp)));
+        return self::pluralize(self::pascalCaseToSnakeCase(end($xp)));
     }
 
     /**
@@ -142,13 +139,8 @@ abstract class SuperModel
      */
     private function fillAttributes($stdClassObject)
     {
-        foreach ($this->attributes as $attribute) {
-            if ($stdClassObject instanceof \stdClass) {
-                $attr = $stdClassObject->{$attribute};
-            } else {
-                $attr = $stdClassObject[$attribute];
-            }
-            $this->{$attribute} = $attr;
+        foreach ($stdClassObject as $key=>$value) {
+            $this->{$key} = $value;
         }
 //        unset($this->attributes);
     }
@@ -184,13 +176,28 @@ abstract class SuperModel
     }
 
     /**
+     * Convert a PascalCase string to a snake_case_string
+     * @param $string
+     * @return string
+     */
+    private static function pascalCaseToSnakeCase($string){
+        $parts = preg_split("/(?=[A-Z])/",lcfirst($string));
+        $returnString = "";
+        $last = end($parts);
+        foreach ($parts as $part){
+            $returnString .= $part.($part == $last ? "" : "_");
+        }
+        return strtolower($returnString);
+    }
+
+    /**
      * Simple function to pluralize a word
      * @param string $word word to pluralize
      * @return string pluralized word
      */
-    public static function pluralize($word)
+    private static function pluralize($word)
     {
-        $last_letter = strtolower($word[strlen($word) - 1]);
+        $last_letter = $word[strlen($word) - 1];
         switch ($last_letter) {
             case 's':
                 return $word . 'es';

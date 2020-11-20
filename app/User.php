@@ -6,13 +6,6 @@ use Illuminate\Support\Facades\Hash;
 
 class User extends SuperModel
 {
-    protected $attributes = [
-        'id',
-        'name',
-        'email',
-        'password'
-    ];
-
     //moet naar de controllers
     public static function login($email_address, $password){
         $user = User::oneWhere("email",$email_address);

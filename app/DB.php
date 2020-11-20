@@ -20,9 +20,12 @@ class DB
 
             if (env("DB_CONNECTION") == "sqlsrv") {
                 $dbh = new PDO("sqlsrv:Server=" . env("DB_HOST") . ";Database=" . env("DB_DATABASE"), env("DB_USERNAME"), env("DB_PASSWORD"), $options);
+
             } else {
                 $dbh = new PDO(env("DB_CONNECTION") . ':host=' . env("DB_HOST") . ';port=' . env("DB_PORT") . ';dbname=' . env("DB_DATABASE"), env("DB_USERNAME"), env("DB_PASSWORD"), $options);
             }
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
             return $dbh;
         } catch (\PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";
@@ -49,14 +52,20 @@ class DB
 
     /**
      * Bind parameters and select rows from the database
+     *
      * @param $query
      * @param array $values
      * @return array
      */
     public static function select($query, $values = [])
     {
-        $stmt = self::prepareAndBind($query, $values);
-        return $rows = $stmt->fetchAll();
+        $dbh = self::connection();
+        $stmt = $dbh->prepare($query);
+        foreach ($values as $key => &$value) {
+            $stmt->bindParam($key, $value);
+        }
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     /**
@@ -67,8 +76,29 @@ class DB
      */
     public static function selectOne($query, $values = [])
     {
-        $stmt = self::prepareAndBind($query, $values);
-        return $row = $stmt->fetch();
+        $dbh = self::connection();
+        $stmt = $dbh->prepare($query);
+        foreach ($values as $key => &$value) {
+            $stmt->bindParam($key, $value);
+        }
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    /**
+     * Bind parameters and insert 1 row into the database
+     * Use this instead of selectOne if you need to get true/false instead of the id
+     * @param $query
+     * @param array $values
+     * @return bool
+     */
+    public static function insertOne($query, $values = []){
+        $dbh = self::connection();
+        $stmt = $dbh->prepare($query);
+        foreach ($values as $key => &$value) {
+            $stmt->bindParam($key, $value);
+        }
+        return $stmt->execute();
     }
 
     /**
@@ -79,7 +109,12 @@ class DB
      */
     public static function delete($query, $values = [])
     {
-        $stmt = self::prepareAndBind($query, $values);
-        return $row = $stmt->rowCount();
+        $dbh = self::connection();
+        $stmt = $dbh->prepare($query);
+        foreach ($values as $key => &$value) {
+            $stmt->bindParam($key, $value);
+        }
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 }
