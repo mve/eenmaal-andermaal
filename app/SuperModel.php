@@ -67,7 +67,7 @@ abstract class SuperModel
         }
 
         $insertId = DB::selectOne("INSERT INTO " . self::getTableName(static::class) . " (" . $keysString . ") OUTPUT Inserted.id VALUES(" . $valuesString . ")", $values);
-        return $insertId["id"];
+        return $insertId ? $insertId["id"] : $insertId;
     }
 
     /**
