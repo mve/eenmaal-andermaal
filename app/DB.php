@@ -18,11 +18,14 @@ class DB
                 PDO::ATTR_EMULATE_PREPARES => false,
             ];
 
-            if (env("DB_CONNECTION") == "sqlsrv") {
+            if (env("DB_LINUX") != "true") {
                 $dbh = new PDO("sqlsrv:Server=" . env("DB_HOST") . ";Database=" . env("DB_DATABASE"), env("DB_USERNAME"), env("DB_PASSWORD"), $options);
+
             } else {
-                $dbh = new PDO(env("DB_CONNECTION") . ':host=' . env("DB_HOST") . ';port=' . env("DB_PORT") . ';dbname=' . env("DB_DATABASE"), env("DB_USERNAME"), env("DB_PASSWORD"), $options);
+                $dbh = new PDO('dblib:host=' . env("DB_HOST") . ';port=' . env("DB_PORT") . ';dbname=' . env("DB_DATABASE"), env("DB_USERNAME"), env("DB_PASSWORD"), $options);
             }
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
             return $dbh;
         } catch (\PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";
