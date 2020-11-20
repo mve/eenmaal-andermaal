@@ -8,9 +8,7 @@ abstract class SuperModel
 {
     public function __construct()
     {
-        foreach ($this->attributes as $attribute) {
-            $this->{$attribute} = "";
-        }
+
     }
 
     /**
@@ -19,10 +17,9 @@ abstract class SuperModel
     public function save()
     {
         $values = [];
-        foreach ($this->attributes as $attribute) {
-            if ($attribute == "id")
-                continue;
-            $values[$attribute] = $this->{$attribute};
+        $arr = get_object_vars($this);
+        foreach ($arr as $key=>$value){
+            $values[$key] = $value;
         }
         $this->id = self::insert($values);
     }
@@ -70,7 +67,6 @@ abstract class SuperModel
         }
 
         $insertId = DB::selectOne("INSERT INTO " . self::getTableName(static::class) . " (" . $keysString . ") OUTPUT Inserted.id VALUES(" . $valuesString . ")", $values);
-//        dd("INSERT INTO " . self::getTableName(static::class) . " (" . $keysString . ") OUTPUT Inserted.id VALUES(" . $valuesString .")");
         return $insertId["id"];
     }
 
@@ -143,13 +139,8 @@ abstract class SuperModel
      */
     private function fillAttributes($stdClassObject)
     {
-        foreach ($this->attributes as $attribute) {
-            if ($stdClassObject instanceof \stdClass) {
-                $attr = $stdClassObject->{$attribute};
-            } else {
-                $attr = $stdClassObject[$attribute];
-            }
-            $this->{$attribute} = $attr;
+        foreach ($stdClassObject as $key=>$value) {
+            $this->{$key} = $value;
         }
 //        unset($this->attributes);
     }
