@@ -32,13 +32,23 @@ Route::get('foo', function () {
 //    $user = \App\User::oneWhere("id",4);
 //    $user->delete();
 
-//    dd(\App\DB::select("INSERT INTO auction_hits (auction_id,user_id,ip,hit_datetime) VALUES (:auction_id,:user_id,:ip,:hit_datetime)",[
-//        "auction_id" => 0,
-//        "user_id" => 1,
-////        "ip_binary" => inet_ntop("192.168.0.0"),
-//        "ip" => "hey",
-//        "hit_datetime" => \Carbon\Carbon::now()
-//    ]));
+    //Handmatig rij toevoegen en true/false krijgen
+    dd(\App\DB::insertOne("INSERT INTO auction_hits (auction_id,user_id,ip,hit_datetime) VALUES (:auction_id,:user_id,:ip,:hit_datetime)",[
+        "auction_id" => 0,
+        "user_id" => 1,
+//        "ip_binary" => inet_ntop("192.168.0.0"),
+        "ip" => "hey",
+        "hit_datetime" => \Carbon\Carbon::now()
+    ]));
+
+    //Handmatig rij toevoegen en ID krijgen
+    dd(\App\DB::selectOne("INSERT INTO auction_hits (auction_id,user_id,ip,hit_datetime) OUTPUT Inserted.id VALUES (:auction_id,:user_id,:ip,:hit_datetime)",[
+        "auction_id" => 0,
+        "user_id" => 1,
+//        "ip_binary" => inet_ntop("192.168.0.0"),
+        "ip" => "hey",
+        "hit_datetime" => \Carbon\Carbon::now()
+    ]));
 
 //    dd(\App\AuctionHit::oneWhere("id",203));
 

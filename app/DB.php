@@ -49,6 +49,7 @@ class DB
 
     /**
      * Bind parameters and select rows from the database
+     *
      * @param $query
      * @param array $values
      * @return array
@@ -79,6 +80,22 @@ class DB
         }
         $stmt->execute();
         return $stmt->fetch();
+    }
+
+    /**
+     * Bind parameters and insert 1 row into the database
+     * Use this instead of selectOne if you need to get true/false instead of the id
+     * @param $query
+     * @param array $values
+     * @return bool
+     */
+    public static function insertOne($query, $values = []){
+        $dbh = self::connection();
+        $stmt = $dbh->prepare($query);
+        foreach ($values as $key => &$value) {
+            $stmt->bindParam($key, $value);
+        }
+        return $stmt->execute();
     }
 
     /**
