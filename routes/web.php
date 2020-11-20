@@ -21,6 +21,7 @@ Route::get('auction', function () {
 
 Route::get('/registeren', 'Auth\RegisterController@index')->name('register');
 Route::post('/register', 'Auth\RegisterController@create');
+Route::post('/register/verify', 'Auth\RegisterController@send_verify');
 
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');

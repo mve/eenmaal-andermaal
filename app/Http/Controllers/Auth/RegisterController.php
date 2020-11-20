@@ -6,10 +6,13 @@ use App\DB;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\SendVerify;
 
 class RegisterController extends Controller
 {
@@ -116,5 +119,24 @@ class RegisterController extends Controller
         $request->session()->put('user', $user);
 
         return redirect('/');
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    protected function send_verify(Request $request)
+    {
+        $data = $request->all();
+        $code = Str::random(32);
+        $request->verify_code = $code;
+        $request->session()->put('verify_code', $code);
+        Mail::to($request->email)->send(new SendVerify($request));
+        dd($request->session());
+
+
+        return response()->json(['success'=>'Vul de verificatie code in die gestuurd is naar ']);
     }
 }

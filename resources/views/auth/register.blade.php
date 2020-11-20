@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
     <div class="san sand-blue-gradient">
         <div class="container">
             <div class="row justify-content-center align-items-center py-5">
@@ -14,6 +16,25 @@
 
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
+
+                            <div id="form_1">
+                                <div class="form-group row mb-2">
+                                    <label for="Username"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="username" type="text"
+                                               class="form-control @error('username') is-invalid @enderror"
+                                               name="username" value="{{ old('username') }}" required
+                                               autocomplete="username">
+
+                                        @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
                                 <div class="form-group row mb-2">
                                     <label for="email" class="col-md-4 col-form-label text-md-right">Email adres</label>
@@ -32,6 +53,46 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-primary" id="send_verify">
+                                            Verifieer email
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="form_2" class="d-none">
+
+                                <div class="form-group row mb-2">
+                                    <label for="verificatie_code" class="col-md-4 col-form-label text-md-right">Verificatie code</label>
+
+                                    <div class="col-md-6">
+                                        <input id="verificatie_code" type="text"
+                                               class="form-control @error('verificatie_code') is-invalid @enderror"
+                                               name="verificatie_code"
+                                               value="{{ old('verificatie_code') }}" required autocomplete="verificatie_code">
+
+                                        @error('verificatie_code')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button onclick="myFunction1()" class="btn btn-primary check_verify">
+                                            Verifieer code
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="form_3" class="d-none">
                                 <div class="form-group row mb-2">
                                     <label for="password"
                                            class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
@@ -56,24 +117,6 @@
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control"
                                                name="password_confirmation" required autocomplete="new-password">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row mb-2">
-                                    <label for="Username"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="username" type="text"
-                                               class="form-control @error('username') is-invalid @enderror"
-                                               name="username" value="{{ old('username') }}" required
-                                               autocomplete="username">
-
-                                        @error('first_name')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
                                     </div>
                                 </div>
 
@@ -245,12 +288,13 @@
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary submit">
                                             Registreer
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </form>
 
 
                         </div>
@@ -258,4 +302,37 @@
                 </div>
             </div>
         </div>
+
+<script>
+
+document.getElementById("send_verify").addEventListener("click", function() {
+    event.preventDefault();
+
+    let username = $("input[name=username]").val();
+    let email = $("input[name=email]").val();
+    let _token = $('meta[name="csrf-token"]').attr('content');
+
+
+    $.ajax({
+        url: "/register/verify",
+        type:"POST",
+        data:{
+        username:username,
+        email:email,
+        _token: _token
+        },
+        success:function(response){
+        console.log(response);
+        if(response) {
+            $('.success').text(response.success);
+            document.getElementById("form_1").className = "d-none";
+            document.getElementById("form_2").className = "block";
+        }
+        },
+    });
+});
+
+
+
+</script>
 @endsection
