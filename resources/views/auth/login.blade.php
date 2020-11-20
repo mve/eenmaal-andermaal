@@ -3,7 +3,8 @@
 @section('content')
     <div class="sand-blue-gradient">
         <div class="container">
-            <div class="row justify-content-center align-items-center py-5" style="height: calc(100vh - 392px); min-height: 450px;">
+            <div class="row justify-content-center align-items-center py-5"
+                 style="height: calc(100vh - 392px); min-height: 450px;">
                 <div class="col-md-6">
 
                     <div class="card">
@@ -48,7 +49,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row mb-4">
+                                <div class="form-group row mb-2">
                                     <div class="col-md-6 offset-md-4">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="remember"
@@ -61,6 +62,11 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row mb-4">
+                                    <div class="col-md-6 offset-md-4">
+                                        <a href="{{ route('wachtwoordvergeten') }}">Wachtwoord vergeten?</a>
+                                    </div>
+                                </div>
                                 <div class="form-group row mb-0">
                                     <div class="col-md-8 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
