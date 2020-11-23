@@ -82,43 +82,47 @@ class RegisterController extends Controller
      */
     protected function create(Request $request)
     {
-        $this->validate($request, array(
-            'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
-            'first_name' => ['required', 'string'],
-            'last_name' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'postal_code' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'country' => ['required', 'string'],
-            'birth_date' => ['required', 'date_format:Y-m-d'],
-            'security_question_id' => ['required', 'exists:security_questions,id'],
-            'security_answer' => ['required', 'string']
-        ));
+        if($data["code"] == $request->session()->get('verify_code') ) {
+            $this->validate($request, array(
+                'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u', 'unique:users'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+                'first_name' => ['required', 'string'],
+                'last_name' => ['required', 'string'],
+                'address' => ['required', 'string'],
+                'postal_code' => ['required', 'string'],
+                'city' => ['required', 'string'],
+                'country' => ['required', 'string'],
+                'birth_date' => ['required', 'date_format:Y-m-d'],
+                'security_question_id' => ['required', 'exists:security_questions,id'],
+                'security_answer' => ['required', 'string']
+            ));
 
-        $user = new \App\User();
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->address = $request->address;
-        $user->postal_code = $request->postal_code;
-        $user->city = $request->city;
-        $user->country = $request->country;
-        $user->birth_date = $request->birth_date;
-        $user->security_question_id = $request->security_question_id;
-        $user->security_answer = $request->security_answer;
-        $user->save();
+            $user = new \App\User();
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->address = $request->address;
+            $user->postal_code = $request->postal_code;
+            $user->city = $request->city;
+            $user->country = $request->country;
+            $user->birth_date = $request->birth_date;
+            $user->security_question_id = $request->security_question_id;
+            $user->security_answer = $request->security_answer;
+            $user->save();
 
-        if($user->id==false)
-            dd("fail");//TODO betere afhandeling
+            if($user->id==false)
+                dd("fail");//TODO betere afhandeling
 
-        // inloggen na registreren
-        $request->session()->put('user', $user);
+            // inloggen na registreren
+            $request->session()->put('user', $user);
 
-        return redirect('/');
+            return redirect('/');
+        } else {
+            return redirect('/registeren');
+        }
     }
 
     /**
@@ -129,14 +133,31 @@ class RegisterController extends Controller
      */
     protected function send_verify(Request $request)
     {
+
         $data = $request->all();
-        $code = Str::random(32);
-        $request->verify_code = $code;
-        $request->session()->put('verify_code', $code);
-        Mail::to($request->email)->send(new SendVerify($request));
-        dd($request->session());
 
+        if ($data["type"] == "1"){
+            $code = Str::random(32);
 
-        return response()->json(['success'=>'Vul de verificatie code in die gestuurd is naar ']);
+            $request->verify_code = $code;
+            $request->session()->put('verify_code', $code);
+
+            Mail::to($data["email"])->send(new SendVerify($request));
+
+            return response()->json(['success'=>'Vul de verificatie code in die gestuurd is naar je email']);
+        }
+
+        if ($data["type"] == "2") {
+
+            if($data["code"] == $request->session()->get('verify_code') ) {
+
+                return response()->json(['success'=>'Verificatie code is correct, Vul de rest van je gegevens in']);
+            } else {
+
+                return response()->json(['error'=>'Verificatie code is onjuist vul opnieuw in of vraag een nieuwe code aan']);
+            }
+        }
+
+        //dd($request->session());
     }
 }

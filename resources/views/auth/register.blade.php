@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <div class="san sand-blue-gradient">
         <div class="container">
@@ -13,6 +12,8 @@
                         <div class="card-body">
 
                             <h2 class="text-center mt-2 mb-4">Registreren</h2>
+                            <span class="success" id="success" style="color:green; margin-top:10px; margin-bottom: 10px;"></span>
+                            <span class="error" id="error" style="color:red; margin-top:10px; margin-bottom: 10px;"></span>
 
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
@@ -55,7 +56,7 @@
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary" id="send_verify">
+                                        <button class="btn btn-primary" id="send_verify">
                                             Verifieer email
                                         </button>
                                     </div>
@@ -83,11 +84,26 @@
                                 </div>
 
                                 <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-4">
-                                        <button onclick="myFunction1()" class="btn btn-primary check_verify">
+
+                                    <div class="col-md-6">
+
+                                        <button class="btn btn-primary d-none" id="send_verify_again">
+                                            Herstuur code email
+                                        </button>
+
+
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <button type="button" class="btn btn-primary check_verify" id="check_verify">
                                             Verifieer code
                                         </button>
+
                                     </div>
+
+
+
                                 </div>
 
                             </div>
@@ -305,34 +321,112 @@
 
 <script>
 
-document.getElementById("send_verify").addEventListener("click", function() {
+function Send_verify() {
     event.preventDefault();
 
-    let username = $("input[name=username]").val();
+    let username = document.getElementById("searchTxt").value;
     let email = $("input[name=email]").val();
     let _token = $('meta[name="csrf-token"]').attr('content');
 
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200 && JSON.parse(this.responseText).success) {
+      document.getElementById("success").innerHTML =
+      JSON.parse(this.responseText).success
 
-    $.ajax({
-        url: "/register/verify",
-        type:"POST",
-        data:{
-        username:username,
-        email:email,
-        _token: _token
-        },
-        success:function(response){
-        console.log(response);
-        if(response) {
-            $('.success').text(response.success);
+      document.getElementById("form_1").className = "d-none";
+      document.getElementById("form_2").className = "block";
+
+    }
+     };
+    xhttp.open("POST", "/register/verify", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
+
+}
+//verstuur verificatie code
+document.getElementById("send_verify").addEventListener("click", function() {
+    event.preventDefault();
+
+    let username = document.getElementById("username").value;
+    let email = document.getElementById("email").value;
+    let _token = document.getElementsByName("_token")[0].value;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        if(JSON.parse(this.responseText).success) {
+            document.getElementById("success").innerHTML =
+            JSON.parse(this.responseText).success
+
             document.getElementById("form_1").className = "d-none";
             document.getElementById("form_2").className = "block";
         }
-        },
-    });
+
+    }
+     };
+    xhttp.open("POST", "/register/verify", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
+});
+
+document.getElementById("send_verify_again").addEventListener("click", function() {
+    event.preventDefault();
+
+    let username = document.getElementById("username").value;
+    let email = document.getElementById("email").value;
+    let _token = document.getElementsByName("_token")[0].value;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+
+        if(JSON.parse(this.responseText).success) {
+            document.getElementById("error").innerHTML = ""
+            document.getElementById("success").innerHTML =
+            JSON.parse(this.responseText).success
+
+        }
+
+        }
+    };
+    xhttp.open("POST", "/register/verify", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
 });
 
 
+//controlleer verificatie code
+document.getElementById("check_verify").addEventListener("click", function() {
+    event.preventDefault();
+    let code = document.getElementById("verificatie_code").value;
+    let _token = document.getElementsByName("_token")[0].value;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if(JSON.parse(this.responseText).success) {
+                document.getElementById("success").innerHTML =
+                JSON.parse(this.responseText).success
+
+                document.getElementById("form_2").className = "d-none";
+                document.getElementById("form_3").className = "block";
+            }
+
+            if( JSON.parse(this.responseText).error){
+                document.getElementById("success").innerHTML = "";
+                document.getElementById("error").innerHTML =
+                JSON.parse(this.responseText).error
+
+                document.getElementById("send_verify_again").className = "btn btn-primary block";
+            }
+        }
+    };
+    xhttp.open("POST", "/register/verify", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("type=2&code="+code+"&_token="+_token);
+
+});
 
 </script>
 @endsection
