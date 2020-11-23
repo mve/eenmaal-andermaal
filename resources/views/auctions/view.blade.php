@@ -103,7 +103,6 @@
                             <h4>Sluit over 5d 8u 15m 9s</h4>
                         </div>
                         <div class="bid-overlay-body">
-
                             <h3 class="flex-centered">Ook mee bieden?</h3>
                             <div class="flex-centered">
                                 <a href="{{ route('login') }}"  class="btn btn-primary">
@@ -111,8 +110,6 @@
                                 </a>
                             </div>
                             <a class="flex-centered" href="{{ route('register') }}">ik heb geen account</a>
-
-
                         </div>
                     </div>
                     <div class="auction-card-head flex-centered">
