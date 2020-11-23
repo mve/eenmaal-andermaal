@@ -53,7 +53,7 @@
 
 .sand-blue-gradient {
     background: $sand;
-    background: linear-gradient(27deg, $sand 0%, $dark-blue 100%);
+    background: linear-gradient(27deg, $sand 0%, $dark-blue-opactiy 100%);
 }
 
 .profile-picture {
@@ -74,4 +74,33 @@
     padding-bottom: 15px;
     border-left: 0;
     border-right: 0;
+}
+
+.bid-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    background: linear-gradient(0deg, $sand-opacity 0%, $dark-blue-opactiy 100%);
+
+    .card-head{
+        padding: 15px;
+
+        h4 {
+            margin: 0;
+            color: white;
+        }
+    }
+
+    .bid-overlay-body{
+        margin: 100px 50px;
+        padding: 35px;
+        background: #ffffff;
+        border-radius: $border-radius;
+        border: 1px solid #000000;
+
+        .btn{
+            margin: 20px 0;
+        }
+    }
 }
