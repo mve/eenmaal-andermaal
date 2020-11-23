@@ -34,6 +34,9 @@ Route::get('foo', function () {
 //    $user = \App\User::oneWhere("id",4);
 //    $user->delete();
 
+    $auction = \App\Auction::oneWhere("id",0);
+    dd($auction->getLatestBid());
+
     //Handmatig rij toevoegen en true/false krijgen
     dd(\App\DB::insertOne("INSERT INTO auction_hits (auction_id,user_id,ip,hit_datetime) VALUES (:auction_id,:user_id,:ip,:hit_datetime)",[
         "auction_id" => 0,

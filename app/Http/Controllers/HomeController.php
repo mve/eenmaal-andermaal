@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Auction;
+use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Middleware\CheckUser;
@@ -34,6 +36,18 @@ class HomeController extends Controller
 //        dump($user->id);
 //        dump(Carbon::now());
 
-        return view('home');
+        $data = [
+            "auctions" => Auction::resultArrayToClassArray(DB::select("
+                SELECT TOP 10 *
+                FROM eenmaalandermaal.dbo.auctions
+                WHERE EXISTS (
+                    SELECT TOP 10 auction_id, COUNT(auction_id) as Cnt
+                    FROM eenmaalandermaal.dbo.auction_hits WHERE auction_id=eenmaalandermaal.dbo.auctions.id AND hit_datetime >= DATEADD(HOUR, -1, GETDATE())
+                    GROUP BY auction_id
+                    ORDER BY Cnt DESC
+                )
+            "))
+        ];
+        return view('home')->with($data);
     }
 }
