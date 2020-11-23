@@ -1,5 +1,6 @@
 INSERT INTO dbo.security_questions (question)
-VALUES ('What is love?')
+VALUES ('What is love?');
+
 INSERT INTO dbo.users (
         username,
         email,
@@ -55,11 +56,13 @@ VALUES (
         '2020-11-10',
         0,
         'Baby don''t hurt me'
-    )
+    );
+
 INSERT INTO dbo.phone_numbers (user_id, phone_number)
 VALUES (0, 0612345678),
     (1, 0612345678),
-    (2, 0612345678)
+    (2, 0612345678);
+
 INSERT INTO auction (
         title,
         description,
@@ -73,9 +76,9 @@ INSERT INTO auction (
     )
 VALUES (
         'Fiets te koop',
-        'Mooie fiets, mogelijk gestolen. Om die reden ook geen foto''s',
+        'Mooie fiets, Zeker het kopen waard.',
         10.00,
-        'Alleen munten!',
+        'Kan alleen contant',
         '2020-11-20',
         '2020-11-27',
         'Stad',
@@ -83,7 +86,7 @@ VALUES (
         1
     ),
     (
-        'Tantoesnelle brommer',
+        'Hele brommer',
         'Gaat moeilijk hard. Niet doorvertellen!',
         20.00,
         NULL,
@@ -94,10 +97,10 @@ VALUES (
         1
     ),
     (
-        'Kutauto',
+        'Slechte auto',
         'Ik heb echt een hekel aan dit ding. Moet weg!',
         25.00,
-        'Al betaal je met knikkers!',
+        'Contant of de pin',
         '2020-11-24',
         '2020-12-01',
         'Stad',
@@ -106,7 +109,7 @@ VALUES (
     ),
     (
         'Nvidia RTX 3090',
-        'Ik ben heel gul, dus gun jullie deze videokaart voor een vriendenprijsje',
+        'Mooie prijs voor een nieuwe videokaart.',
         2500.00,
         'Bij verzenden, eerst betalen!',
         '2020-11-20',
@@ -114,26 +117,31 @@ VALUES (
         'Stad',
         'Nederland',
         1
-    )
+    );
+
 INSERT INTO auction_images (auction_id, file_name)
 VALUES (1, '1picturepath 1 here'),
     (1, '1picturepath2 here'),
-    (1, '1picture3 here')
+    (1, '1picture3 here');
+
 INSERT INTO shipping_methods (method)
 VALUES ('Afhalen'),
     ('Verzenden (binnenland)'),
-    ('Verzenden (buitenland)')
+    ('Verzenden (buitenland)');
+
 INSERT INTO auction_shipping_methods (auction_id, shipping_id, price)
 VALUES (0, 0, 0),
     (1, 0, 0),
     (2, 0, 0),
     (3, 1, 6.95),
-    (3, 2, 10.95)
+    (3, 2, 10.95);
+
 INSERT INTO payment_methods (method)
 VALUES ('Contant'),
     ('iDeal'),
     ('Creditcard'),
-    ('PayPal')
+    ('PayPal');
+
 INSERT INTO auction_payment_methods (auction_id, payment_id)
 VALUES (0, 0),
     (1, 0),
@@ -141,7 +149,8 @@ VALUES (0, 0),
     (2, 0),
     (2, 1),
     (3, 0),
-    (3, 1)
+    (3, 1);
+
 INSERT INTO categories (name, parent_id)
 VALUES ('Computer', NULL),
     ('Accessoires', 0),
@@ -182,12 +191,14 @@ VALUES ('Computer', NULL),
     ('Fietsen', 33),
     ('Motoren', 33),
     ('Scooters', 34),
-    ('Overig', 29)
+    ('Overig', 29);
+
 INSERT INTO auction_categories (auction_id, category_id)
 VALUES (0, 36),
     (1, 35),
     (2, 30),
-    (3, 13)
+    (3, 13);
+
 INSERT INTO reviews (
         auction_id,
         user_id,
@@ -200,7 +211,7 @@ VALUES (
         0,
         '2020-11-20',
         0,
-        'Fiets was inderdaad gestolen'
+        'Fiets was erg slecht.'
     ),
     (
         1,
@@ -221,48 +232,5 @@ VALUES (
         0,
         '2020-11-20',
         0,
-        'Vieze afzetter, en nog een lul ook!'
-    )
-    
--- CATEGORIES:
-    -- Computer
-    --     Accessoires
-    --         Monitoren
-    --         Muizen
-    --         Speakers
-    --         Toetsenborden
-    --     Desktops
-    --         All-in-ones
-    --         Tower
-    --     Componenten 
-    --         Moederborden
-    --         Processoren
-    --         SSDs
-    --         Videokaarten
-    --     Laptops
-    -- Muziek
-    --     Instrumenten
-    --         Gitaren en versterkers
-    --             Akoestische gitaren
-    --             Elektrische Gitaren
-    --             Versterkers
-    --         Drumstellen
-    --         Blaasinstrumenten
-    --             Blokfluiten
-    --             Trombones
-    --             Trompetten
-    --             Tubas
-    --         Keyboards en pianos 
-    --             Keyboards,
-    --             Pianos
-    -- Transport 
-    --     Autos
-    --     Aanhangers
-    --     Boten
-    --     Tweewielers
-    --         Brommers en Scooters
-    --             Brommers
-    --             Fietsen
-    --             Motoren
-    --             Scooters
-    --     Overig
+        'Toch wel duur.'
+    );

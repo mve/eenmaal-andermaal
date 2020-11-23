@@ -1,11 +1,3 @@
--- DROP SCHEMA dbo;
-
--- eenmaalandermaal.dbo.auction definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction GO
-
 CREATE TABLE eenmaalandermaal.dbo.auction (
 	id int IDENTITY(0,1) NOT NULL,
 	title varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
@@ -18,53 +10,25 @@ CREATE TABLE eenmaalandermaal.dbo.auction (
 	country varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	user_id int NOT NULL,
 	CONSTRAINT auction_PK PRIMARY KEY (id)
-)
-
-
--- eenmaalandermaal.dbo.payment_methods definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.payment_methods GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.payment_methods (
 	id int IDENTITY(0,1) NOT NULL,
 	[method] varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	CONSTRAINT payment_methods_PK PRIMARY KEY (id)
-)
-
-
--- eenmaalandermaal.dbo.security_questions definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.security_questions GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.security_questions (
 	id int IDENTITY(0,1) NOT NULL,
 	question varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	CONSTRAINT security_questions_PK PRIMARY KEY (id)
-)
-
-
--- eenmaalandermaal.dbo.shipping_methods definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.shipping_methods GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.shipping_methods (
 	id int IDENTITY(0,1) NOT NULL,
 	[method] varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	CONSTRAINT shipping_methods_PK PRIMARY KEY (id)
-)
-
-
--- eenmaalandermaal.dbo.auction_images definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_images GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.auction_images (
 	id int IDENTITY(0,1) NOT NULL,
@@ -72,14 +36,7 @@ CREATE TABLE eenmaalandermaal.dbo.auction_images (
 	file_name varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	CONSTRAINT auction_images_PK PRIMARY KEY (id),
 	CONSTRAINT auction_images_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id)
-)
-
-
--- eenmaalandermaal.dbo.auction_payment_methods definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_payment_methods GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.auction_payment_methods (
 	id int IDENTITY(0,1) NOT NULL,
@@ -88,14 +45,7 @@ CREATE TABLE eenmaalandermaal.dbo.auction_payment_methods (
 	CONSTRAINT auction_payment_methods_PK PRIMARY KEY (id),
 	CONSTRAINT auction_payment_methods_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
 	CONSTRAINT auction_payment_methods_FK_1 FOREIGN KEY (payment_id) REFERENCES eenmaalandermaal.dbo.payment_methods(id)
-)
-
-
--- eenmaalandermaal.dbo.auction_shipping_methods definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_shipping_methods GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.auction_shipping_methods (
 	id int IDENTITY(0,1) NOT NULL,
@@ -105,14 +55,7 @@ CREATE TABLE eenmaalandermaal.dbo.auction_shipping_methods (
 	CONSTRAINT auction_shipping_methods_PK PRIMARY KEY (id),
 	CONSTRAINT auction_shipping_methods_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
 	CONSTRAINT auction_shipping_methods_FK_1 FOREIGN KEY (shipping_id) REFERENCES eenmaalandermaal.dbo.shipping_methods(id)
-)
-
-
--- eenmaalandermaal.dbo.categories definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.categories GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.categories (
 	id int IDENTITY(0,1) NOT NULL,
@@ -120,14 +63,7 @@ CREATE TABLE eenmaalandermaal.dbo.categories (
 	parent_id int NULL,
 	CONSTRAINT category_PK PRIMARY KEY (id),
 	CONSTRAINT category_FK FOREIGN KEY (parent_id) REFERENCES eenmaalandermaal.dbo.categories(id)
-)
-
-
--- eenmaalandermaal.dbo.users definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.users GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.users (
 	id int IDENTITY(0,1) NOT NULL,
@@ -148,14 +84,7 @@ CREATE TABLE eenmaalandermaal.dbo.users (
 	created_at datetime DEFAULT getdate() NULL,
 	CONSTRAINT users_PK PRIMARY KEY (id),
 	CONSTRAINT security_question_FK FOREIGN KEY (security_question_id) REFERENCES eenmaalandermaal.dbo.security_questions(id)
-)
-
-
--- eenmaalandermaal.dbo.auction_categories definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_categories GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.auction_categories (
 	id int IDENTITY(0,1) NOT NULL,
@@ -164,14 +93,7 @@ CREATE TABLE eenmaalandermaal.dbo.auction_categories (
 	CONSTRAINT auction_categories_PK PRIMARY KEY (id),
 	CONSTRAINT auction_categories_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
 	CONSTRAINT auction_categories_FK_1 FOREIGN KEY (category_id) REFERENCES eenmaalandermaal.dbo.categories(id)
-)
-
-
--- eenmaalandermaal.dbo.auction_hits definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_hits GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.auction_hits (
 	id int IDENTITY(0,1) NOT NULL,
@@ -180,14 +102,7 @@ CREATE TABLE eenmaalandermaal.dbo.auction_hits (
 	ip varchar(45) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	hit_datetime datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT auction_hits_FK FOREIGN KEY (user_id) REFERENCES eenmaalandermaal.dbo.users(id)
-)
-
-
--- eenmaalandermaal.dbo.bids definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.bids GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.bids (
 	id int IDENTITY(0,1) NOT NULL,
@@ -198,14 +113,7 @@ CREATE TABLE eenmaalandermaal.dbo.bids (
 	CONSTRAINT bids_PK PRIMARY KEY (id),
 	CONSTRAINT bids_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
 	CONSTRAINT bids_FK_1 FOREIGN KEY (user_id) REFERENCES eenmaalandermaal.dbo.users(id)
-)
-
-
--- eenmaalandermaal.dbo.phone_numbers definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.phone_numbers GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.phone_numbers (
 	id int IDENTITY(0,1) NOT NULL,
@@ -213,14 +121,7 @@ CREATE TABLE eenmaalandermaal.dbo.phone_numbers (
 	phone_number varchar(15) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	CONSTRAINT numbers_PK PRIMARY KEY (id),
 	CONSTRAINT numbers_FK FOREIGN KEY (user_id) REFERENCES eenmaalandermaal.dbo.users(id)
-)
-
-
--- eenmaalandermaal.dbo.reviews definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.reviews GO
+);
 
 CREATE TABLE eenmaalandermaal.dbo.reviews (
 	id int IDENTITY(0,1) NOT NULL,
