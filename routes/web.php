@@ -19,8 +19,9 @@ Route::get('auction', function () {
     return view('auctions.view');
 });
 
-Route::get('/registeren', 'Auth\RegisterController@index')->name('register');
-Route::post('/register', 'Auth\RegisterController@create');
+Route::get('/registreren', 'Auth\RegisterController@index')->name('register');
+Route::post('/registreren', 'Auth\RegisterController@create');
+Route::post('/registreren/verify', 'Auth\RegisterController@send_verify');
 
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');
@@ -33,6 +34,9 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('foo', function () {
 //    $user = \App\User::oneWhere("id",4);
 //    $user->delete();
+
+    $auction = \App\Auction::oneWhere("id",0);
+    dd($auction->getLatestBid());
 
     //Handmatig rij toevoegen en true/false krijgen
     dd(\App\DB::insertOne("INSERT INTO auction_hits (auction_id,user_id,ip,hit_datetime) VALUES (:auction_id,:user_id,:ip,:hit_datetime)",[
