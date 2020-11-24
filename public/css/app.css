@@ -1,137 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
-.auction-card,
-.card {
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  position: relative;
-}
-
-.auction-card-image {
-  height: 300px;
-  background-size: cover;
-  background-position: center;
-}
-
-.auction-card-data {
-  font-size: 16px;
-  font-weight: bold;
-  width: 100%;
-  text-align: center;
-}
-
-.auction-card-body {
-  padding: 20px;
-}
-
-.auction-card-head {
-  background: #c5ae91;
-  background: linear-gradient(27deg, #c5ae91 0%, #284b63 100%);
-  padding: 15px;
-}
-
-.auction-card-head h4,
-.auction-card-head .h4 {
-  margin: 0;
-  color: white;
-}
-
-.footer-link {
-  text-decoration: none;
-  color: #cbd5e0;
-  border-bottom: 1px solid transparent;
-  transition: all 0.2s ease-in;
-}
-
-.footer-link:hover {
-  text-decoration: none;
-  color: white;
-  border-bottom: 1px solid white;
-}
-
-.stars {
-  padding: 10px 25px;
-  border-radius: 35px;
-  background: #f2faff;
-}
-
-.stars .fa-star {
-  color: #FFD700;
-  font-size: 20px;
-}
-
-.rating-bar-empty {
-  margin: auto 5px;
-  width: 50%;
-  height: 12px;
-  border-radius: 35px;
-  border: 1px solid #bfbfbf;
-  background: #f2faff;
-}
-
-.rating-bar-empty .rating-bar-filled {
-  height: 10px;
-  border-radius: 35px;
-  background: #FFD700;
-}
-
-.rating-bar-empty .rating-bar-filled.five-star {
-  width: 84%;
-}
-
-.rating-bar-empty .rating-bar-filled.four-star {
-  width: 9%;
-}
-
-.rating-bar-empty .rating-bar-filled.three-star {
-  width: 4%;
-}
-
-.rating-bar-empty .rating-bar-filled.two-star {
-  width: 2%;
-}
-
-.rating-bar-empty .rating-bar-filled.one-star {
-  width: 1%;
-}
-
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
-  font-weight: bold;
-}
-
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6,
-p {
-  color: #2d3748;
-}
-
-.title {
-  font-size: 40px;
-  font-weight: bold;
-}
-
 /*!
  * Bootstrap v5.0.0-alpha3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -11676,6 +11544,144 @@ fieldset:disabled .btn {
   .d-print-none {
     display: none !important;
   }
+}
+
+.auction-card,
+.card {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.auction-card-image {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+
+.auction-card-data {
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+.auction-card-body {
+  padding: 20px;
+}
+
+.auction-card-head {
+  background: #c5ae91;
+  background: linear-gradient(27deg, #c5ae91 0%, #284b63 100%);
+  padding: 15px;
+}
+
+.auction-card-head h4,
+.auction-card-head .h4 {
+  margin: 0;
+  color: white;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #cbd5e0;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease-in;
+}
+
+.footer-link:hover {
+  text-decoration: none;
+  color: white;
+  border-bottom: 1px solid white;
+}
+
+.stars {
+  padding: 10px 25px;
+  border-radius: 35px;
+  background: #f2faff;
+}
+
+.stars .fa-star {
+  color: #FFD700;
+  font-size: 20px;
+}
+
+.rating-bar-empty {
+  margin: auto 5px;
+  width: 50%;
+  height: 12px;
+  border-radius: 35px;
+  border: 1px solid #bfbfbf;
+  background: #f2faff;
+}
+
+.rating-bar-empty .rating-bar-filled {
+  height: 10px;
+  border-radius: 35px;
+  background: #FFD700;
+}
+
+.rating-bar-empty .rating-bar-filled.five-star {
+  width: 84%;
+}
+
+.rating-bar-empty .rating-bar-filled.four-star {
+  width: 9%;
+}
+
+.rating-bar-empty .rating-bar-filled.three-star {
+  width: 4%;
+}
+
+.rating-bar-empty .rating-bar-filled.two-star {
+  width: 2%;
+}
+
+.rating-bar-empty .rating-bar-filled.one-star {
+  width: 1%;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  font-weight: bold;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6,
+p {
+  color: #2d3748;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .btn {
