@@ -28,11 +28,16 @@ class Auction extends SuperModel
             "));
         $popularAuctionsCount = count($popularAuctions);
         if($popularAuctionsCount < $maxn){
-            $nAddAuctions = $maxn - $popularAuctionsCount;
-            $idString = "";
-            for($i = 0; $i < $popularAuctionsCount; $i++)
-                $idString.=$popularAuctions[$i]->id.($i==$popularAuctionsCount-1? "":",");
-            $addAuctions = Auction::resultArrayToClassArray(DB::select("
+            if($popularAuctionsCount===0){
+                $addAuctions = Auction::resultArrayToClassArray(DB::select("
+                    SELECT TOP $maxn *
+                    FROM auctions ORDER BY end_datetime ASC"));
+            }else{
+                $nAddAuctions = $maxn - $popularAuctionsCount;
+                $idString = "";
+                for($i = 0; $i < $popularAuctionsCount; $i++)
+                    $idString.=$popularAuctions[$i]->id.($i==$popularAuctionsCount-1? "":",");
+                $addAuctions = Auction::resultArrayToClassArray(DB::select("
                     SELECT TOP $nAddAuctions *
                     FROM auctions
                     WHERE id NOT IN (
@@ -40,6 +45,7 @@ class Auction extends SuperModel
                         FROM auctions
                         WHERE id IN ($idString)
                 ) ORDER BY end_datetime ASC"));
+            }
             $popularAuctions = array_merge($popularAuctions, $addAuctions);
         }
         return $popularAuctions;
