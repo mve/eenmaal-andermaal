@@ -9,9 +9,9 @@
                     <div class="card">
 
                         <div class="card-body">
-                            @if (session('status'))
+                            @if (session('msg'))
                                 <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
+                                    {{ session('msg') }}
                                 </div>
                             @endif
 
@@ -32,6 +32,47 @@
                                                value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                         @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label for="security_question_id"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Security question') }}</label>
+
+                                    <div class="col-md-6">
+                                        <select name="security_question_id" id="security_question_id"
+                                                class="form-control @error('security_question_id') is-invalid @enderror"
+                                                required autocomplete="security_question_id">
+                                            <option value="">Select a question...</option>
+                                            @foreach($securityQuestions as $securityQuestion)
+                                                <option value="{{$securityQuestion["id"]}}"
+                                                        @if(old("security_question_id")==$securityQuestion["id"]) selected @endif>{{$securityQuestion["question"]}}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('security_question_id')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-2">
+                                    <label for="security_answer"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Security answer') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="security_answer" type="text"
+                                               class="form-control @error('security_answer') is-invalid @enderror"
+                                               name="security_answer" value="{{ old('security_answer') }}" required
+                                               autocomplete="security_answer">
+
+                                        @error('security_answer')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
