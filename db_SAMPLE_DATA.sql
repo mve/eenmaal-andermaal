@@ -223,7 +223,7 @@ VALUES (
         0,
         'Vieze afzetter, en nog een lul ook!'
     )
-    
+
 -- CATEGORIES:
     -- Computer
     --     Accessoires
@@ -234,7 +234,7 @@ VALUES (
     --     Desktops
     --         All-in-ones
     --         Tower
-    --     Componenten 
+    --     Componenten
     --         Moederborden
     --         Processoren
     --         SSDs
@@ -252,10 +252,10 @@ VALUES (
     --             Trombones
     --             Trompetten
     --             Tubas
-    --         Keyboards en pianos 
+    --         Keyboards en pianos
     --             Keyboards,
     --             Pianos
-    -- Transport 
+    -- Transport
     --     Autos
     --     Aanhangers
     --     Boten
