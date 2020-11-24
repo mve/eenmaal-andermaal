@@ -40,7 +40,9 @@
                                         <input id="password" type="password"
                                                class="form-control @error('password') is-invalid @enderror"
                                                name="password" required autocomplete="new-password">
-
+                                               <small id="passwordHelpInline" class="text-muted">
+                                                    Wachtwoord moet minimaal 8 tekens bevatten, 1 hoofdletter en 1 speciaal teken
+                                                </small>
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
