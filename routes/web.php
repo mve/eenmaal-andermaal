@@ -19,8 +19,9 @@ Route::get('auction', function () {
     return view('auctions.view');
 });
 
-Route::get('/registeren', 'Auth\RegisterController@index')->name('register');
-Route::post('/register', 'Auth\RegisterController@create');
+Route::get('/registreren', 'Auth\RegisterController@index')->name('register');
+Route::post('/registreren', 'Auth\RegisterController@create');
+Route::post('/registreren/verify', 'Auth\RegisterController@send_verify');
 
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');
