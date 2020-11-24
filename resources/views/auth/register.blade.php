@@ -342,7 +342,7 @@ function Send_verify() {
 
     }
     };
-    xhttp.open("POST", "/register/verify", true);
+    xhttp.open("POST", "/registreren/verify", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
 
@@ -375,7 +375,7 @@ document.getElementById("check_verify").addEventListener("click", function() {
             }
         }
     };
-    xhttp.open("POST", "/register/verify", true);
+    xhttp.open("POST", "/registreren/verify", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("type=2&code="+code+"&_token="+_token);
 

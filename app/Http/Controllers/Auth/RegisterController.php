@@ -84,7 +84,7 @@ class RegisterController extends Controller
     {
         $data = $request->all();
 
-        if($data["code"] == $request->session()->get('verify_code') ) {
+        if($data["verificatie_code"] == $request->session()->get('verify_code') ) {
 
             $this->validate($request, array(
                 'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u', 'unique:users'],
@@ -124,7 +124,7 @@ class RegisterController extends Controller
 
             return redirect('/');
         } else {
-            return redirect('/registeren');
+            return redirect('/registreren');
         }
     }
 
@@ -132,7 +132,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function send_verify(Request $request)
     {
