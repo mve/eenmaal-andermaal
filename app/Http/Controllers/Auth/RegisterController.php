@@ -82,7 +82,10 @@ class RegisterController extends Controller
      */
     protected function create(Request $request)
     {
+        $data = $request->all();
+
         if($data["code"] == $request->session()->get('verify_code') ) {
+
             $this->validate($request, array(
                 'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u', 'unique:users'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

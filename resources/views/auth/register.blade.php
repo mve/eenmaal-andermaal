@@ -56,7 +56,7 @@
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button class="btn btn-primary" id="send_verify">
+                                        <button class="btn btn-primary" onclick="Send_verify()" id="send_verify">
                                             Verifieer email
                                         </button>
                                     </div>
@@ -87,7 +87,7 @@
 
                                     <div class="col-md-6">
 
-                                        <button class="btn btn-primary d-none" id="send_verify_again">
+                                        <button class="btn btn-primary d-none" onclick="Send_verify()" id="send_verify_again">
                                             Herstuur code email
                                         </button>
 
@@ -324,30 +324,6 @@
 function Send_verify() {
     event.preventDefault();
 
-    let username = document.getElementById("searchTxt").value;
-    let email = $("input[name=email]").val();
-    let _token = $('meta[name="csrf-token"]').attr('content');
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200 && JSON.parse(this.responseText).success) {
-      document.getElementById("success").innerHTML =
-      JSON.parse(this.responseText).success
-
-      document.getElementById("form_1").className = "d-none";
-      document.getElementById("form_2").className = "block";
-
-    }
-     };
-    xhttp.open("POST", "/register/verify", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
-
-}
-//verstuur verificatie code
-document.getElementById("send_verify").addEventListener("click", function() {
-    event.preventDefault();
-
     let username = document.getElementById("username").value;
     let email = document.getElementById("email").value;
     let _token = document.getElementsByName("_token")[0].value;
@@ -356,6 +332,7 @@ document.getElementById("send_verify").addEventListener("click", function() {
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         if(JSON.parse(this.responseText).success) {
+            document.getElementById("error").innerHTML = ""
             document.getElementById("success").innerHTML =
             JSON.parse(this.responseText).success
 
@@ -364,37 +341,12 @@ document.getElementById("send_verify").addEventListener("click", function() {
         }
 
     }
-     };
-    xhttp.open("POST", "/register/verify", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
-});
-
-document.getElementById("send_verify_again").addEventListener("click", function() {
-    event.preventDefault();
-
-    let username = document.getElementById("username").value;
-    let email = document.getElementById("email").value;
-    let _token = document.getElementsByName("_token")[0].value;
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-
-        if(JSON.parse(this.responseText).success) {
-            document.getElementById("error").innerHTML = ""
-            document.getElementById("success").innerHTML =
-            JSON.parse(this.responseText).success
-
-        }
-
-        }
     };
     xhttp.open("POST", "/register/verify", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
-});
 
+}
 
 //controlleer verificatie code
 document.getElementById("check_verify").addEventListener("click", function() {
@@ -406,6 +358,7 @@ document.getElementById("check_verify").addEventListener("click", function() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if(JSON.parse(this.responseText).success) {
+                document.getElementById("error").innerHTML = ""
                 document.getElementById("success").innerHTML =
                 JSON.parse(this.responseText).success
 
