@@ -56,7 +56,26 @@ class Auction extends SuperModel
     }
 
     /**
-     * Get the auction's images
+     * Get the auction's first image or use the placeholder
+     * @return string
+     */
+    public function getFirstImage()
+    {
+        $image = DB::selectOne("
+            SELECT TOP 1 file_name
+            FROM auction_images
+            WHERE auction_id=:id",
+            [
+                "id" => $this->id
+            ]);
+        if($image===false){
+            return "../images/no-image.jpg";
+        }
+        return $image["file_name"];
+    }
+
+    /**
+     * Get the auction's images or use the placeholder
      * @return array
      */
     public function getImages()
@@ -68,6 +87,10 @@ class Auction extends SuperModel
             [
                 "id" => $this->id
             ]);
+        if(empty($images)){
+            $images = [];
+            array_push($images, ["file_name" => "../images/no-image.jpg"]);
+        }
         return $images;
     }
 
@@ -89,16 +112,16 @@ class Auction extends SuperModel
                 )
             "));
         $popularAuctionsCount = count($popularAuctions);
-        if($popularAuctionsCount < $maxn){
-            if($popularAuctionsCount===0){
+        if ($popularAuctionsCount < $maxn) {
+            if ($popularAuctionsCount === 0) {
                 $addAuctions = Auction::resultArrayToClassArray(DB::select("
                     SELECT TOP $maxn *
                     FROM auctions ORDER BY end_datetime ASC"));
-            }else{
+            } else {
                 $nAddAuctions = $maxn - $popularAuctionsCount;
                 $idString = "";
-                for($i = 0; $i < $popularAuctionsCount; $i++)
-                    $idString.=$popularAuctions[$i]->id.($i==$popularAuctionsCount-1? "":",");
+                for ($i = 0; $i < $popularAuctionsCount; $i++)
+                    $idString .= $popularAuctions[$i]->id . ($i == $popularAuctionsCount - 1 ? "" : ",");
                 $addAuctions = Auction::resultArrayToClassArray(DB::select("
                     SELECT TOP $nAddAuctions *
                     FROM auctions
@@ -201,7 +224,7 @@ class Auction extends SuperModel
      */
     public function getCountry()
     {
-        return DB::selectOne("SELECT country FROM countries WHERE country_code=:country_code",[
+        return DB::selectOne("SELECT country FROM countries WHERE country_code=:country_code", [
             "country_code" => $this->country_code
         ])["country"];
     }

@@ -15,9 +15,9 @@
         <div class="row py-4">
 
             @foreach($auctions as $auction)
-                <a href="#" class="col-lg-4 col-md-6 mb-4 no-link">
+                <a href="{{route("auctions.show",$auction->id)}}" class="col-lg-4 col-md-6 mb-4 no-link">
                     <div class="auction-card hover-effect">
-                        <div class="auction-card-image" style="background-image: url('/images/unsplash-ferrari.jpg');">
+                        <div class="auction-card-image" style="background-image: url('{{$auction->getFirstImage()}}');">
                         </div>
                         <div class="auction-card-body">
                             <h4>{{$auction->title}}</h4>

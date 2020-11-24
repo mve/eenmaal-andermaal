@@ -55,18 +55,21 @@
                             {{$auction->payment_instruction}}<br/><br/>
                         @endif
                         De verkoper accepteert de volgende betalingsmethoden:<br/>
-                        @foreach($auction->getPaymentMethods() as $paymentMethod)
-                            {{$paymentMethod["method"]}}<br/>
-                        @endforeach
+                        <ul>
+                            @foreach($auction->getPaymentMethods() as $paymentMethod)
+                                <li>{{$paymentMethod["method"]}}</li>
+                            @endforeach
+                        </ul>
                     </p>
                     <h4>Verzending</h4>
                     <hr>
                     <p>
                         De verkoper accepteert de volgende verzendmethoden:<br/>
-                        @foreach($auction->getShippingMethods() as $shippingMethod)
-                            {{$shippingMethod["method"]}}:
-                            &euro;{{$shippingMethod["price"]}}<br/>
-                        @endforeach
+                        <ul>
+                            @foreach($auction->getShippingMethods() as $shippingMethod)
+                                <li>{{$shippingMethod["method"]}}: &euro;{{$shippingMethod["price"]}}</li>
+                            @endforeach
+                        </ul>
                     </p>
                 </div>
             </div>
@@ -86,7 +89,7 @@
                                     </a>
                                 </div>
                                 @if (Route::has('register'))
-                                    <a class="flex-centered" href="{{ route('register') }}">ik heb geen account</a>
+                                    <a class="flex-centered" href="{{ route('register') }}">Ik heb geen account</a>
                                 @endif
                             </div>
                         </div>
