@@ -19,12 +19,14 @@ Route::get('auction', function () {
     return view('auctions.view');
 });
 
-Route::get('/register', 'Auth\RegisterController@index')->name('register');
+Route::get('/registeren', 'Auth\RegisterController@index')->name('register');
 Route::post('/register', 'Auth\RegisterController@create');
 
 
 Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
+
+Route::get('/wachtwoordvergeten', 'Auth\ForgotPasswordController@index')->name('wachtwoordvergeten');
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
