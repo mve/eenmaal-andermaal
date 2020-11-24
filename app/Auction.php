@@ -128,7 +128,7 @@ class Auction extends SuperModel
     public function getReviewAverage()
     {
         $positiveReviews = $this->getPositiveReviews();
-        return count($this->getReviews()) > 0 ? round(($positiveReviews*5)/($positiveReviews+$this->getNegativeReviews())) : 0;
+        return count($this->getReviews()) > 0 ? round(($positiveReviews * 5) / ($positiveReviews + $this->getNegativeReviews())) : 0;
     }
 
     /**
@@ -150,6 +150,17 @@ class Auction extends SuperModel
         if ($result !== false)
             return $result["Cnt"];
         return 0;
+    }
+
+    /**
+     * Get the auction's country
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return DB::selectOne("SELECT country FROM countries WHERE country_code=:country_code",[
+            "country_code" => $this->country_code
+        ])["country"];
     }
 
     /**

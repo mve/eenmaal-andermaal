@@ -41,7 +41,7 @@
                     <h4>Gegevens</h4>
                     <hr>
                     <p>
-                        Land: {{$auction->country}}<br/>
+                        Land: {{$auction->getCountry()}}<br/>
                         Plaats: {{$auction->city}}
                         @foreach($auction->getSeller()->getPhoneNumbers() as $phoneNumber)
                             <br/>Telefoonnummer: {{$phoneNumber["phone_number"]}}<br/>
