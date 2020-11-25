@@ -74,7 +74,6 @@
                                                class="form-control @error('verificatie_code') is-invalid @enderror"
                                                name="verificatie_code"
                                                value="{{ old('verificatie_code') }}" required autocomplete="verificatie_code">
-
                                         @error('verificatie_code')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -117,7 +116,9 @@
                                         <input id="password" type="password"
                                                class="form-control @error('password') is-invalid @enderror"
                                                name="password" required autocomplete="new-password">
-
+                                        <small id="passwordHelpInline" class="text-muted">
+                                          Wachtwoord moet minimaal 8 tekens bevatten, 1 hoofdletter en 1 speciaal teken
+                                        </small>
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -226,14 +227,14 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="country"
+                                    <label for="country_code"
                                            class="col-md-4 col-form-label text-md-right">{{ __('Land') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="country" type="text"
-                                               class="form-control @error('country') is-invalid @enderror"
-                                               name="country" value="{{ old('country') }}" required
-                                               autocomplete="country">
+                                        <input id="country_code" type="text"
+                                               class="form-control @error('country_code') is-invalid @enderror"
+                                               name="country_code" value="{{ old('country_code') }}" required
+                                               autocomplete="country_code">
 
                                         @error('country')
                                         <span class="invalid-feedback" role="alert">
@@ -248,7 +249,7 @@
                                            class="col-md-4 col-form-label text-md-right">{{ __('Geboortedatum') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="birth_date" type="date" value="2000-12-28"
+                                        <input id="birth_date" type="date"
                                                class="form-control @error('birth_date') is-invalid @enderror"
                                                name="birth_date" value="{{ old('birth_date') }}" required
                                                autocomplete="birth_date">

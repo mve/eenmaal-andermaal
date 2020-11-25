@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             <i class="fas fa-gavel"></i> {{ config('app.name', 'Laravel') }}
@@ -12,6 +12,10 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
 
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Categorieën</a>
+                </li>
+
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -20,25 +24,31 @@
                 @if (!Session::has('user'))
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Inloggen') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">Inloggen</a>
                     </li>
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Registreren') }}</a>
-                        </li>
-                    @endif
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Registreren</a>
+                    </li>
+
                 @else
+
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Session::get('user')->username }}
+                            Welkom <span class="fw-bold">{{ Session::get('user')->username }}</span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                            <a class="dropdown-item" href="#">
+                                Mijn account
+                            </a>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                Uitloggen
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -46,8 +56,10 @@
                             </form>
                         </div>
                     </li>
+
                 @endif
             </ul>
+
         </div>
     </div>
 </nav>

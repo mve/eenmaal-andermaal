@@ -4,151 +4,136 @@
     <div class="mb-5"></div>
 
     <div class="container">
-        <h2>TITEL VAN VEILING ITEM</h2>
+        <h2>{{$auction->title}}</h2>
         <div class="row">
             <div class="col-lg-7 col-xl-8">
                 <!-- CAROUSEL SLIDER -->
                 <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        @for($i = 0; $i < count($auctionImages); $i++)
+                            <li data-target="#carouselExampleIndicators" @if($i==0) class="active" @endif data-slide-to="{{$i}}"></li>
+                        @endfor
                     </ol>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="../images/unsplash-ferrari.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="../images/unsplash-ferrari.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="../images/unsplash-ferrari.jpg" class="d-block w-100" alt="...">
-                        </div>
+                        @for($i = 0; $i < count($auctionImages); $i++)
+                            <div class="carousel-item @if($i==0) active @endif">
+                                <img src="{{$auctionImages[$i]["file_name"]}}" class="d-block w-100" alt="...">
+                            </div>
+                        @endfor
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                       data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
-                       data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </a>
+                    @if(count($auctionImages) > 1)
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    @endif
                 </div>
                 <div class="my-4">
                     <h4>Omschrijving</h4>
                     <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dapibus condimentum dignissim.
-                        Vivamus sodales enim sapien, sed dignissim nunc placerat eu. Fusce finibus malesuada justo a
-                        laoreet. Aliquam condimentum convallis erat, et pharetra leo tempus sit amet. Ut at aliquam
-                        lorem, nec bibendum metus. Vivamus ac sollicitudin lorem. Nunc feugiat feugiat sem. Etiam vel
-                        eros eu sapien tincidunt pellentesque. Mauris finibus rutrum scelerisque. Fusce tempus quam
-                        posuere enim congue congue. Mauris quis libero ut erat rutrum pretium. Mauris lectus neque,
-                        mattis sit amet lacus eget, ultrices aliquam ligula. Quisque in tortor metus. Quisque et ex
-                        pellentesque, porttitor tellus a, viverra diam.
-                        Phasellus hendrerit nunc nec cursus tempor. Donec eu egestas metus, non sodales enim. Aliquam
-                        erat volutpat. Pellentesque at convallis eros. Duis semper ante et euismod maximus. Mauris
-                        aliquet elit massa. Pellentesque dictum, purus eget iaculis cursus, nisi mauris fringilla ipsum,
-                        id pulvinar odio nulla et est. Aliquam iaculis nisi sit amet arcu vehicula, egestas convallis
-                        nibh congue. In eu pharetra odio. Integer scelerisque eleifend pharetra. Mauris quis varius
-                        nunc. Ut consectetur metus sed aliquam consequat. Quisque id lorem vitae elit lobortis fermentum
-                        maximus vel elit. Curabitur quis velit sagittis, suscipit tortor eget, ultrices enim. Nulla
-                        sodales pellentesque ex vitae vulputate.</p>
+                    <p>{{nl2br($auction->description)}}</p>
                     <h4>Gegevens</h4>
                     <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dapibus condimentum dignissim.
-                        Vivamus sodales enim sapien, sed dignissim nunc placerat eu. Fusce finibus malesuada justo a
-                        laoreet. Aliquam condimentum convallis erat, et pharetra leo tempus sit amet. Ut at aliquam
-                        lorem, nec bibendum metus. Vivamus ac sollicitudin lorem. Nunc feugiat feugiat sem. Etiam vel
-                        eros eu sapien tincidunt pellentesque. Mauris finibus rutrum scelerisque. Fusce tempus quam
-                        posuere enim congue congue. Mauris quis libero ut erat rutrum pretium. Mauris lectus neque,
-                        mattis sit amet lacus eget, ultrices aliquam ligula. Quisque in tortor metus. Quisque et ex
-                        pellentesque, porttitor tellus a, viverra diam.
-                        Phasellus hendrerit nunc nec cursus tempor. Donec eu egestas metus, non sodales enim. Aliquam
-                        erat volutpat. Pellentesque at convallis eros. Duis semper ante et euismod maximus. Mauris
-                        aliquet elit massa. Pellentesque dictum, purus eget iaculis cursus, nisi mauris fringilla ipsum,
-                        id pulvinar odio nulla et est. Aliquam iaculis nisi sit amet arcu vehicula, egestas convallis
-                        nibh congue. In eu pharetra odio. Integer scelerisque eleifend pharetra. Mauris quis varius
-                        nunc. Ut consectetur metus sed aliquam consequat. Quisque id lorem vitae elit lobortis fermentum
-                        maximus vel elit. Curabitur quis velit sagittis, suscipit tortor eget, ultrices enim. Nulla
-                        sodales pellentesque ex vitae vulputate.
+                    <p>
+                        Land: {{$auction->getCountry()}}<br/>
+                        Plaats: {{$auction->city}}
+                        @foreach($auction->getSeller()->getPhoneNumbers() as $phoneNumber)
+                            <br/>Telefoonnummer: {{$phoneNumber["phone_number"]}}<br/>
+                        @endforeach
+                    </p>
+                    <h4>Betaling</h4>
+                    <hr>
+                    <p>
+                        @if($auction->payment_instruction!==null && !empty($auction->payment_instruction))
+                            Betalingsinstructies:<br/>
+                            {{$auction->payment_instruction}}<br/><br/>
+                        @endif
+                        De verkoper accepteert de volgende betalingsmethoden:<br/>
+                        <ul>
+                            @foreach($auction->getPaymentMethods() as $paymentMethod)
+                                <li>{{$paymentMethod["method"]}}</li>
+                            @endforeach
+                        </ul>
                     </p>
                     <h4>Verzending</h4>
                     <hr>
-                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dapibus condimentum dignissim.
-                        Vivamus sodales enim sapien, sed dignissim nunc placerat eu. Fusce finibus malesuada justo a
-                        laoreet. Aliquam condimentum convallis erat, et pharetra leo tempus sit amet. Ut at aliquam
-                        lorem, nec bibendum metus. Vivamus ac sollicitudin lorem. Nunc feugiat feugiat sem. Etiam vel
-                        eros eu sapien tincidunt pellentesque. Mauris finibus rutrum scelerisque. Fusce tempus quam
-                        posuere enim congue congue. Mauris quis libero ut erat rutrum pretium. Mauris lectus neque,
-                        mattis sit amet lacus eget, ultrices aliquam ligula. Quisque in tortor metus. Quisque et ex
-                        pellentesque, porttitor tellus a, viverra diam.
-                        Phasellus hendrerit nunc nec cursus tempor. Donec eu egestas metus, non sodales enim. Aliquam
-                        erat volutpat. Pellentesque at convallis eros. Duis semper ante et euismod maximus. Mauris
-                        aliquet elit massa. Pellentesque dictum, purus eget iaculis cursus, nisi mauris fringilla ipsum,
-                        id pulvinar odio nulla et est. Aliquam iaculis nisi sit amet arcu vehicula, egestas convallis
-                        nibh congue. In eu pharetra odio. Integer scelerisque eleifend pharetra. Mauris quis varius
-                        nunc. Ut consectetur metus sed aliquam consequat. Quisque id lorem vitae elit lobortis fermentum
-                        maximus vel elit. Curabitur quis velit sagittis, suscipit tortor eget, ultrices enim. Nulla
-                        sodales pellentesque ex vitae vulputate.
+                    <p>
+                        De verkoper accepteert de volgende verzendmethoden:<br/>
+                        <ul>
+                            @foreach($auction->getShippingMethods() as $shippingMethod)
+                                <li>{{$shippingMethod["method"]}}: &euro;{{$shippingMethod["price"]}}</li>
+                            @endforeach
+                        </ul>
                     </p>
                 </div>
             </div>
             <div class="col-lg-5 col-xl-4">
 
                 <div class="auction-card mb-5">
-                    <div class="bid-overlay">
-                        <div class="card-head flex-centered">
-                            <h4>Sluit over 5d 8u 15m 9s</h4>
-                        </div>
-                        <div class="bid-overlay-body">
-                            <h3 class="flex-centered">Ook mee bieden?</h3>
-                            <div class="flex-centered">
-                                <a href="{{ route('login') }}"  class="btn btn-primary">
-                                    Log in en bied mee
-                                </a>
+                    @if(!Session::has('user'))
+                        <div class="bid-overlay">
+                            <div class="card-head flex-centered">
+                                <h4>Sluit over {{$auction->getTimeLeft()}}</h4>
                             </div>
-                            <a class="flex-centered" href="{{ route('register') }}">ik heb geen account</a>
+                            <div class="bid-overlay-body">
+                                <h3 class="flex-centered">Ook mee bieden?</h3>
+                                <div class="flex-centered">
+                                    <a href="{{ route('login') }}"  class="btn btn-primary">
+                                        Log in en bied mee
+                                    </a>
+                                </div>
+                                @if (Route::has('register'))
+                                    <a class="flex-centered" href="{{ route('register') }}">Ik heb geen account</a>
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="auction-card-head flex-centered">
-                        <h4>Sluit over 5d 8u 15m 9s</h4>
+                        <h4>Sluit over {{$auction->getTimeLeft()}}</h4>
                     </div>
                     <div class="auction-card-body">
                         <i class="fas fa-user profile-picture"></i>
-                        <a href="#">Verkopersnaam</a>
+                        <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
                         <div class="my-3">
                             <div class="btn btn-outline-primary">
                                 <i class="fas fa-envelope"></i> Bericht
                             </div>
-                            <div class="btn btn-primary">
-                                <i class="fas fa-phone-alt"></i> Neem contact op!
-                            </div>
+                            @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
+                                <a class="btn btn-primary" href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
+                                    <i class="fas fa-phone-alt"></i> Neem contact op!
+                                </a>
+                            @endif
                         </div>
 
                     </div>
                     <ul class="list-group">
-                        <li class="list-group-item flex-centered"><strong>Startbod: €100.000</strong></li>
-                        <li class="list-group-item flex-centered"><strong>Huidig bod: 120.000</strong></li>
+                        <li class="list-group-item flex-centered"><strong>Startbod: &euro;{{$auction->start_price}}</strong></li>
+                        <li class="list-group-item flex-centered"><strong>Huidig bod: &euro;{{$auction->getLatestBid()}}</strong></li>
                     </ul>
                     <div class="auction-card-body">
                         <label for="Bieden" class="form-label fw-bold">Plaats bod</label>
                         <div class="input-group">
-
                             <input type="number" class="form-control" id="Bieden" aria-describedby="Plaats bod"
-                                   value="125000">
+                                   value="{{$auction->getLatestBid()+1}}">
                             <button type="submit" class="btn btn-primary">Bied</button>
                         </div>
 
                         <hr>
-                        <p class="fw-bold">vorige bieders</p>
+                        <p class="fw-bold">Vorige bieders</p>
                         <ul class="list-group" style="max-height: 200px; overflow-y: scroll">
-                            <li class="list-group-item flex-centered"><strong>Bod: 120.000</strong></li>
-                            <li class="list-group-item flex-centered"><strong>Bod: 100.000</strong></li>
-                            <li class="list-group-item flex-centered"><strong>Bod: 80.000</strong></li>
-                            <li class="list-group-item flex-centered"><strong>Bod: 60.000</strong></li>
-                            <li class="list-group-item flex-centered"><strong>Bod: 55.000</strong></li>
+                            @if(count($auctionBids))
+                                @foreach($auctionBids as $bid)
+                                    <li class="list-group-item flex-centered"><strong>{{$bid->getBidder()->first_name}}: &euro;{{$bid->amount}}</strong></li>
+                                @endforeach
+                            @else
+                                <li class="list-group-item flex-centered"><strong>Er is nog niet geboden</strong></li>
+                            @endif
                         </ul>
 
                     </div>
@@ -161,47 +146,29 @@
                     <div class="auction-card-body ">
                         <div class="flex-centered">
                             <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                4.7 van de 5
+                                @if($auctionReviewAverage > 0) <i class="fas fa-star"></i> @endif
+                                @if($auctionReviewAverage > 1) <i class="fas fa-star"></i> @endif
+                                @if($auctionReviewAverage > 2) <i class="fas fa-star"></i> @endif
+                                @if($auctionReviewAverage > 3) <i class="fas fa-star"></i> @endif
+                                @if($auctionReviewAverage > 4) <i class="fas fa-star"></i> @endif
+                                {{$auctionReviewAverage}} van de 5
                             </div>
                         </div>
                         <div class="flex-centered my-3">
-                            <i>40 beoordelingen</i>
+                            <i>{{count($auction->getReviews())}} beoordelingen</i>
                         </div>
 
-                        <div class="flex-centered">5 star
+                        <div class="flex-centered">Positief
                             <div class="rating-bar-empty">
-                                <div class="rating-bar-filled five-star"></div>
+                                <div class="rating-bar-filled" style="width:{{$auctionReviewsPositivePercent}};"></div>
                             </div>
-                            78%
+                            {{$auctionReviewsPositivePercent}}
                         </div>
-                        <div class="flex-centered">4 star
+                        <div class="flex-centered">Negatief
                             <div class="rating-bar-empty">
-                                <div class="rating-bar-filled four-star"></div>
+                                <div class="rating-bar-filled" style="width:{{$auctionReviewsNegativePercent}};"></div>
                             </div>
-                            9%
-                        </div>
-                        <div class="flex-centered">3 star
-                            <div class="rating-bar-empty">
-                                <div class="rating-bar-filled three-star"></div>
-                            </div>
-                            4%
-                        </div>
-                        <div class="flex-centered">2 star
-                            <div class="rating-bar-empty">
-                                <div class="rating-bar-filled two-star"></div>
-                            </div>
-                            2%
-                        </div>
-                        <div class="flex-centered">1 star
-                            <div class="rating-bar-empty">
-                                <div class="rating-bar-filled one-star"></div>
-                            </div>
-                            1%
+                            {{$auctionReviewsNegativePercent}}
                         </div>
 
                     </div>

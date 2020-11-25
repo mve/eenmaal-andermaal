@@ -4,7 +4,7 @@
 
         <div class="row" style="padding: 40px 0;">
             <div class="col-md-6 col-lg-4 mt-4">
-                <div class="fw-bold">Over Eenmaal Andermaal</div>
+                <div class="fw-bold">Eenmaal Andermaal</div>
                 <div><a class="footer-link" href="#">Categorieën</a></div>
                 <div><a class="footer-link" href="#">Nieuwste veilingen</a></div>
             </div>
@@ -14,7 +14,7 @@
                 <div><a class="footer-link" href="/register">Registreren</a></div>
             </div>
             <div class="col-md-6 col-lg-4 mt-4">
-                <div class="fw-bold">Eenmaal Andermaal</div>
+                <div class="fw-bold">Contact</div>
                 <div>Ruitenberglaan 26</div>
                 <div>Arnhem</div>
                 <div>06-12345678</div>
