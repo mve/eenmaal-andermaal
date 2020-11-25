@@ -21,7 +21,7 @@
                             <div id="form_1">
                                 <div class="form-group row mb-2">
                                     <label for="Username"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Gebruikersnaam</label>
 
                                     <div class="col-md-6">
                                         <input id="username" type="text"
@@ -139,7 +139,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="first_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('First name') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Voornaam</label>
 
                                     <div class="col-md-6">
                                         <input id="first_name" type="text"
@@ -157,7 +157,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="last_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Last name') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Achternaam</label>
 
                                     <div class="col-md-6">
                                         <input id="last_name" type="text"
@@ -175,7 +175,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="address"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Adres</label>
 
                                     <div class="col-md-6">
                                         <input id="address" type="text"
@@ -193,7 +193,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="postal_code"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Postal code') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Postcode</label>
 
                                     <div class="col-md-6">
                                         <input id="postal_code" type="text"
@@ -211,7 +211,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="city"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Stad</label>
 
                                     <div class="col-md-6">
                                         <input id="city" type="text"
@@ -228,7 +228,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="country_code"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Country Code (NL)') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Landcode (NL)</label>
 
                                     <div class="col-md-6">
                                         <input id="country_code" type="text"
@@ -246,7 +246,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="birth_date"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Birth date') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Geboortedatum</label>
 
                                     <div class="col-md-6">
                                         <input id="birth_date" type="date"
@@ -264,7 +264,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="security_question_id"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Security question') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Beveiligingsvraag</label>
 
                                     <div class="col-md-6">
                                         <select name="security_question_id" id="security_question_id"
@@ -287,7 +287,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="security_answer"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Security answer') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Beveiligingsantwoord</label>
 
                                     <div class="col-md-6">
                                         <input id="security_answer" type="text"
