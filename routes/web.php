@@ -35,4 +35,13 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('foo', function () {
 
+    $allCategories = \App\Category::all();
+    $mainCategories = [];
+    foreach ($allCategories as $category) {
+        if ($category->parent_id === null)
+            array_push($mainCategories, $category);
+    }
+
+    \App\Category::printTree($mainCategories, $allCategories);
+
 });

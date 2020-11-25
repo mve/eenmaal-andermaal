@@ -11684,6 +11684,24 @@ p {
   padding-bottom: 12px;
 }
 
+.category-container {
+  padding: 18px 0;
+}
+
+.category-1 {
+  font-weight: bold;
+  color: #284B63;
+}
+
+.category-2 {
+  font-weight: normal;
+  color: #3B82F6;
+}
+
+.category-3 {
+  color: black;
+}
+
 .btn {
   border-radius: 0.75rem;
   padding: 0.375rem 1rem;

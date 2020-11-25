@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Auction;
+use App\Category;
 use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,7 +38,8 @@ class HomeController extends Controller
 //        dump(Carbon::now());
 
         $data = [
-            "auctions" => Auction::getPopularAuctions()
+            "auctions" => Auction::getPopularAuctions(),
+            "categories" => Category::getCategories()
         ];
         return view('home')->with($data);
     }
