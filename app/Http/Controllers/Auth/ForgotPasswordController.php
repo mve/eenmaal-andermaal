@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPassword;
 use App\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -55,9 +56,9 @@ class ForgotPasswordController extends Controller
             if ($user->security_answer == $data['security_answer']) {
 
                 $request->type = '1';
-                $request->token = Str::random(64);;
+                $request->token = Str::random(64);
 
-                DB::selectOne("UPDATE users SET reset_token=:reset_token WHERE id=:id",[
+                DB::insertOne("UPDATE users SET reset_token=:reset_token WHERE id=:id",[
                     "id" => $user->id,
                     "reset_token" => $request->token
                 ]);
@@ -81,7 +82,53 @@ class ForgotPasswordController extends Controller
 
     public function reset_password(Request $request, $token)
     {
-        dd($token);
+        $user = User::oneWhere("reset_token",$token);
+
+        if($user) {
+            $data = [
+                'securityQuestions' => DB::select("SELECT * FROM security_questions")
+            ];
+
+            return view('auth.passwords.reset', ['token' => $token])->with($data);
+        } else if (!$user) {
+
+
+            return abort(404);
+        }
+
+    }
+
+    public function update_password(Request $request)
+    {
+        $data = $request->all();
+        $user = User::oneWhere("reset_token",$data['token']);
+
+        if ($user->email == $data['email']) {
+
+            $this->validate($request, array(
+                'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+            ));
+
+            DB::insertOne("UPDATE users SET password=:password, reset_token=:reset_token WHERE id=:id",[
+                "id" => $user->id,
+                "password" => Hash::make($request->password),
+                "reset_token" => null
+            ]);
+
+            $request->type = '3';
+            Mail::to($user->email)->send(new ResetPassword($request));
+
+            session()->flash('msg', 'Wachtwoord succesvol gewijzigd');
+            return redirect('/wachtwoordvergeten');
+
+        }else if ($user->email != $data['email']) {
+
+            session()->flash('msg', 'Verkeerd emailadress opgegeven');
+            return redirect(url()->previous());
+
+        }
+
+
 
     }
 }
