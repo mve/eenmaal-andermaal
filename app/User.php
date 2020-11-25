@@ -6,6 +6,22 @@ use Illuminate\Support\Facades\Hash;
 
 class User extends SuperModel
 {
+    /**
+     * Get the user's phone numbers
+     * @return array
+     */
+    public function getPhoneNumbers()
+    {
+        return DB::select("
+            SELECT phone_number
+            FROM phone_numbers
+            WHERE user_id=:id
+            ",
+            [
+                "id" => $this->id
+            ]);
+    }
+
     //moet naar de controllers
     public static function login($email_address, $password){
         $user = User::oneWhere("email",$email_address);
