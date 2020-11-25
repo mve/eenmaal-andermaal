@@ -227,14 +227,14 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="country"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
+                                    <label for="country_code"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Country Code (NL)') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="country" type="text"
-                                               class="form-control @error('country') is-invalid @enderror"
-                                               name="country" value="{{ old('country') }}" required
-                                               autocomplete="country">
+                                        <input id="country_code" type="text"
+                                               class="form-control @error('country_code') is-invalid @enderror"
+                                               name="country_code" value="{{ old('country_code') }}" required
+                                               autocomplete="country_code">
 
                                         @error('country')
                                         <span class="invalid-feedback" role="alert">
@@ -249,7 +249,7 @@
                                            class="col-md-4 col-form-label text-md-right">{{ __('Birth date') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="birth_date" type="date" value="2000-12-28"
+                                        <input id="birth_date" type="date"
                                                class="form-control @error('birth_date') is-invalid @enderror"
                                                name="birth_date" value="{{ old('birth_date') }}" required
                                                autocomplete="birth_date">
