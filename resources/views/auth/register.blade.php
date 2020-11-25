@@ -18,7 +18,7 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
-                            <div id="form_1" @if($errors->any()) class="d-none" @endif>
+                            <div id="form_1" class="@if(!$errors->any() || $errors->has("username") || $errors->has("email")) d-block @else d-none @endif">
                                 <div class="form-group row mb-2">
                                     <label for="Username"
                                            class="col-md-4 col-form-label text-md-right">{{ __('Gebruikersnaam') }}</label>
@@ -31,8 +31,8 @@
 
                                         @error('username')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -48,17 +48,19 @@
 
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button class="btn btn-primary" onclick="Send_verify()" id="send_verify">
-                                            Verifieer email
-                                        </button>
+                                        @if(!$errors->any() || $errors->has("email"))
+                                            <button class="btn btn-primary" onclick="Send_verify()" id="send_verify">
+                                                Verifieer email
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -107,7 +109,7 @@
 
                             </div>
 
-                            <div id="form_3" @if(!$errors->any()) class="d-none" @endif>
+                            <div id="form_3" @if(!$errors->any() || $errors->has("email")) class="d-none" @endif>
                                 <div class="form-group row mb-2">
                                     <label for="password"
                                            class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
@@ -228,7 +230,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="country_code"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Land') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Landcode') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="country_code" type="text"
@@ -236,7 +238,7 @@
                                                name="country_code" value="{{ old('country_code') }}" required
                                                autocomplete="country_code">
 
-                                        @error('country')
+                                        @error('country_code')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
