@@ -92,7 +92,6 @@ class ForgotPasswordController extends Controller
             return view('auth.passwords.reset', ['token' => $token])->with($data);
         } else if (!$user) {
 
-
             return abort(404);
         }
 
