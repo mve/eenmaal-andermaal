@@ -36,5 +36,5 @@ Route::post('/resetwachtwoord', 'Auth\ForgotPasswordController@update_password')
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('foo', function () {
-
+    return view('auth.passwords.reset', ['token' => 'asdasdas']);
 });
