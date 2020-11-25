@@ -34,5 +34,8 @@ Route::get('/wachtwoordvergeten', 'Auth\ForgotPasswordController@index')->name('
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('foo', function () {
-
+    $user = \App\User::oneWhere("id", 0);
+    $user->first_name = "User";
+    $user->last_name = "Name";
+    dd($user->update());
 });
