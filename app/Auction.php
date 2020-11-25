@@ -9,6 +9,7 @@ use Facade\Ignition\Support\Packagist\Package;
 
 class Auction extends SuperModel
 {
+
     /**
      * Get the auction's seller
      * @return mixed
@@ -68,7 +69,7 @@ class Auction extends SuperModel
             [
                 "id" => $this->id
             ]);
-        if($image===false){
+        if ($image === false) {
             return "../images/no-image.jpg";
         }
         return $image["file_name"];
@@ -87,7 +88,7 @@ class Auction extends SuperModel
             [
                 "id" => $this->id
             ]);
-        if(empty($images)){
+        if (empty($images)) {
             $images = [];
             array_push($images, ["file_name" => "../images/no-image.jpg"]);
         }
@@ -133,6 +134,21 @@ class Auction extends SuperModel
             }
             $popularAuctions = array_merge($popularAuctions, $addAuctions);
         }
+        return $popularAuctions;
+    }
+
+    public static function getPersonalAuctions()
+    {
+        $popularAuctions = Auction::resultArrayToClassArray(DB::select("
+                SELECT TOP $maxn *
+                FROM auctions
+                WHERE EXISTS (
+                    SELECT TOP $maxn auction_id, COUNT(auction_id) as Cnt
+                    FROM auction_hits WHERE auction_id=auctions.id AND hit_datetime >= DATEADD(HOUR, -1, GETDATE())
+                    GROUP BY auction_id
+                    ORDER BY Cnt DESC
+                )
+            "));
         return $popularAuctions;
     }
 
