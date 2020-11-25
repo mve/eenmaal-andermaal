@@ -18,7 +18,7 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
-                            <div id="form_1">
+                            <div id="form_1" @if($errors->any()) class="d-none" @endif>
                                 <div class="form-group row mb-2">
                                     <label for="Username"
                                            class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
@@ -107,7 +107,7 @@
 
                             </div>
 
-                            <div id="form_3" class="d-none">
+                            <div id="form_3" @if(!$errors->any()) class="d-none" @endif>
                                 <div class="form-group row mb-2">
                                     <label for="password"
                                            class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
