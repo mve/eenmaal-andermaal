@@ -14,93 +14,29 @@
 
         <div class="row py-4">
 
-            <a href="#" class="col-lg-4 col-md-6 mb-4 no-link">
-                <div class="auction-card hover-effect">
-                    <div class="auction-card-image" style="background-image: url('/images/unsplash-ferrari.jpg');">
-                    </div>
-                    <div class="auction-card-body">
-                        <h4>Ferrari</h4>
-
-                        <div class="flex-centered">
-                            <div class="auction-card-data">€ 100.000.000</div>
-                            <div class="auction-card-data">02:13:10</div>
+            @foreach($auctions as $auction)
+                <a href="{{route("auctions.show",$auction->id)}}" class="col-lg-4 col-md-6 mb-4 no-link">
+                    <div class="auction-card hover-effect">
+                        <div class="auction-card-image" style="background-image: url('{{$auction->getFirstImage()}}');">
                         </div>
+                        <div class="auction-card-body">
+                            <h4>{{$auction->title}}</h4>
 
-                        <div class="flex-centered mt-2">
-                            <div class="btn btn-outline-primary">
-                                Bieden
+                            <div class="flex-centered">
+                                <div class="auction-card-data">€ {{$auction->getLatestBid()}}</div>
+                                <div class="auction-card-data">{{$auction->getTimeLeft()}}</div>
                             </div>
-                        </div>
 
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="col-lg-4 col-md-6 mb-4 no-link">
-                <div class="auction-card hover-effect">
-                    <div class="auction-card-image" style="background-image: url('/images/unsplash-polaroid.jpg');">
-                    </div>
-                    <div class="auction-card-body">
-                        <h4>Ferrari</h4>
-
-                        <div class="flex-centered">
-                            <div class="auction-card-data">€ 1</div>
-                            <div class="auction-card-data">00:04:06</div>
-                        </div>
-
-                        <div class="flex-centered mt-2">
-                            <div class="btn btn-outline-primary">
-                                Bieden
+                            <div class="flex-centered mt-2">
+                                <div class="btn btn-outline-primary">
+                                    Bieden
+                                </div>
                             </div>
+
                         </div>
-
                     </div>
-                </div>
-            </a>
-
-            <a href="#" class="col-lg-4 col-md-6 mb-4 no-link">
-                <div class="auction-card hover-effect">
-                    <div class="auction-card-image" style="background-image: url('/images/unsplash-ferrari.jpg');">
-                    </div>
-                    <div class="auction-card-body">
-                        <h4>Ferrari</h4>
-
-                        <div class="flex-centered">
-                            <div class="auction-card-data">€ 100.000.000</div>
-                            <div class="auction-card-data">02:13:10</div>
-                        </div>
-
-                        <div class="flex-centered mt-2">
-                            <div class="btn btn-outline-primary">
-                                Bieden
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </a>
-
-            <a href="#" class="col-lg-4 col-md-6 mb-4 no-link">
-                <div class="auction-card hover-effect">
-                    <div class="auction-card-image" style="background-image: url('/images/unsplash-ferrari.jpg');">
-                    </div>
-                    <div class="auction-card-body">
-                        <h4>Ferrari</h4>
-
-                        <div class="flex-centered">
-                            <div class="auction-card-data">€ 100.000.000</div>
-                            <div class="auction-card-data">02:13:10</div>
-                        </div>
-
-                        <div class="flex-centered mt-2">
-                            <div class="btn btn-outline-primary">
-                                Bieden
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </a>
+                </a>
+            @endforeach
 
         </div>
 

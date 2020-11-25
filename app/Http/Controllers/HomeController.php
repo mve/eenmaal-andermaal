@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Auction;
+use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Middleware\CheckUser;
@@ -34,6 +36,9 @@ class HomeController extends Controller
 //        dump($user->id);
 //        dump(Carbon::now());
 
-        return view('home');
+        $data = [
+            "auctions" => Auction::getPopularAuctions()
+        ];
+        return view('home')->with($data);
     }
 }

@@ -88,17 +88,17 @@ class RegisterController extends Controller
             $request->session()->forget('verify_code');
 
             $this->validate($request, array(
-                'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u', 'unique:users'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
+                'email' => ['required', 'string', 'email', 'max:255'],
                 'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
                 'first_name' => ['required', 'string'],
                 'last_name' => ['required', 'string'],
                 'address' => ['required', 'string'],
                 'postal_code' => ['required', 'string'],
                 'city' => ['required', 'string'],
-                'country' => ['required', 'string'],
+                'country_code' => ['required', 'string'],
                 'birth_date' => ['required', 'date_format:Y-m-d'],
-                'security_question_id' => ['required', 'exists:security_questions,id'],
+                'security_question_id' => ['required'],
                 'security_answer' => ['required', 'string']
             ));
 
@@ -111,7 +111,7 @@ class RegisterController extends Controller
             $user->address = $request->address;
             $user->postal_code = $request->postal_code;
             $user->city = $request->city;
-            $user->country = $request->country;
+            $user->country_code = $request->country_code;
             $user->birth_date = $request->birth_date;
             $user->security_question_id = $request->security_question_id;
             $user->security_answer = $request->security_answer;
