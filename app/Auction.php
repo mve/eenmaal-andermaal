@@ -265,4 +265,86 @@ class Auction extends SuperModel
                 "id" => $this->id
             ]));
     }
+
+    /**
+     * Get the subcategories for a certain category_id
+     * 
+     */
+    public function getSubcategoriesForCategoryId($categoryId) {
+        return Bid::resultArrayToClassArray(DB::select("
+            WITH subcategories AS(
+                    SELECT  *
+                    FROM    dbo.categories
+                    WHERE   id = :categoryId
+                    UNION ALL
+                    SELECT  c.*
+                    FROM    dbo.categories c INNER JOIN
+                            subcategories s ON c.parent_id = s.id
+            )
+            
+            SELECT  *
+            FROM    subcategories
+            ",
+            [
+                "categoryId" => $categoryId
+            ]));
+    }
+
+    /**
+     * Get all auctions in a category (even subcategories)
+     * @return array with auctions
+     */
+    public static function getAllAuctionsFromParent($parentId, $limit = 6) {
+        return Auction::resultArrayToClassArray(DB::select("
+        WITH subcategories AS(
+            SELECT  *
+            FROM    dbo.categories
+            WHERE   id = :parentId
+            UNION ALL
+            SELECT  c.*
+            FROM    dbo.categories c INNER JOIN
+                    subcategories s ON c.parent_id = s.id
+        )
+    
+        SELECT c.id AS category_id, c.name AS category_name, c.parent_id AS category_parent_id,
+        a.id AS auction_id, a.title AS title, a.description, a.start_price, a.user_id
+        FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac 
+        WHERE c.id = ac.category_id
+        AND ac.auction_id = a.id
+        AND ac.category_id IN (SELECT id FROM subcategories)
+        ", [
+            "parentId" => $parentId
+        ]));
+    }
+
+    /**
+     * Return all auctions per category
+     * @return array of objects with name == categoryName && auctions
+     */
+    public static function getAllTopCategoryAuctions($limit = 6) {
+        $topCategories = DB::select("
+            SELECT *
+            FROM dbo.categories
+            WHERE parent_id
+            IS NULL
+            ORDER BY name ASC
+        ");
+
+        if (empty($topCategories)) {
+            return [];
+        }
+
+        $auctions = [];
+
+        foreach ($topCategories as $cat) {
+            $auctionsPerTopCategory = Auction::getAllAuctionsFromParent($cat['id']);
+            if (empty($auctionsPerTopCategory)) {
+                continue;
+            }
+            $auctions[$cat['name']] = $auctionsPerTopCategory;
+            // array_push($auctions, $auctionsPerTopCategory);
+        }
+        
+        return $auctions;
+    }
 }

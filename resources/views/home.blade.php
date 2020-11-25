@@ -42,4 +42,10 @@
 
     </div>
 
+    @foreach($topCategoryAuctions as $topCatAuctionKey => $topCatAuctionValue)
+    <div class="container pt-4">
+        <h2>{{ $topCatAuctionKey }}</h2>
+    </div>
+    @endforeach
+
 @endsection
