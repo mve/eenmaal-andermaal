@@ -137,7 +137,7 @@ VALUES (
     (
         'Nvidia RTX 3090',
         'Nieuw gekocht maar ik kan nog wel even wachten. Mag weg, maar hoeft niet!',
-        200.00,
+        2000.00,
         'Bij verzenden, eerst betalen!',
         3,
         '2020-12-15',
@@ -168,9 +168,9 @@ VALUES (0, 0, 15),
     (1, 0, 20),
     (1, 0, 25),
     (1, 0, 40),
-    (2, 0, 25),
-    (3, 0, 2500),
-    (3, 0, 2525)
+    (2, 0, 8050),
+    (3, 0, 2000),
+    (3, 0, 2100)
 
 INSERT INTO dbo.auction_images (auction_id, file_name)
 VALUES (0, '../images/fiets.jpeg'),
