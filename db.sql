@@ -80,6 +80,7 @@ CREATE TABLE dbo.users (
 	username varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	email varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	password varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    reset_token varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	first_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	last_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	address varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,

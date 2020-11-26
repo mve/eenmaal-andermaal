@@ -18,10 +18,10 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
-                            <div id="form_1">
+                            <div id="form_1" class="@if(!$errors->any() || $errors->has("username") || $errors->has("email")) d-block @else d-none @endif">
                                 <div class="form-group row mb-2">
                                     <label for="Username"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Gebruikersnaam') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="username" type="text"
@@ -31,14 +31,14 @@
 
                                         @error('username')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">Email adres</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">E-mailadres</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email"
@@ -48,17 +48,19 @@
 
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <strong>{{ $message }}</strong>
+                            </span>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button class="btn btn-primary" onclick="Send_verify()" id="send_verify">
-                                            Verifieer email
-                                        </button>
+                                        @if(!$errors->any() || $errors->has("email"))
+                                            <button class="btn btn-primary" onclick="Send_verify()" id="send_verify">
+                                                Verifieer email
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -107,7 +109,7 @@
 
                             </div>
 
-                            <div id="form_3" class="d-none">
+                            <div id="form_3" @if(!$errors->any() || $errors->has("email")) class="d-none" @endif>
                                 <div class="form-group row mb-2">
                                     <label for="password"
                                            class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
@@ -139,7 +141,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="first_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('First name') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Voornaam') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="first_name" type="text"
@@ -157,7 +159,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="last_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Last name') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Achternaam') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="last_name" type="text"
@@ -175,7 +177,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="address"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Straat en huisnummer') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="address" type="text"
@@ -193,7 +195,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="postal_code"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Postal code') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Postcode') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="postal_code" type="text"
@@ -211,7 +213,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="city"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Woonplaats') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="city" type="text"
@@ -228,7 +230,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="country_code"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Country Code (NL)') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Landcode') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="country_code" type="text"
@@ -236,7 +238,7 @@
                                                name="country_code" value="{{ old('country_code') }}" required
                                                autocomplete="country_code">
 
-                                        @error('country')
+                                        @error('country_code')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -246,7 +248,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="birth_date"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Birth date') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Geboortedatum') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="birth_date" type="date"
@@ -264,7 +266,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="security_question_id"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Security question') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Beveiligingsvraag') }}</label>
 
                                     <div class="col-md-6">
                                         <select name="security_question_id" id="security_question_id"
@@ -287,7 +289,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="security_answer"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Security answer') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Antwoord op beveiligingsvraag') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="security_answer" type="text"
