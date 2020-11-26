@@ -17,7 +17,7 @@
                                 @csrf
 
                                 <div class="form-group row mb-2">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">Email adres</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">E-mailadres</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email"
@@ -56,7 +56,7 @@
                                                    id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                             <label class="form-check-label" for="remember">
-                                                {{ __('Remember Me') }}
+                                                {{ __('Onthouden') }}
                                             </label>
                                         </div>
                                     </div>

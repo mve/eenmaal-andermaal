@@ -4,74 +4,37 @@
 
     <div class="container">
         <div class="row category-container">
-
-            @php(\App\Category::getCategories())
-<!--            --><?php //printf($categories) ?>
-
+        @php(\App\Category::getCategories())
         </div>
     </div>
 
-    <main>
+    <div class="hero-section">
+        <h1 class="title text-white text-center">
+            <i class="fas fa-gavel"></i> Eenmaal Andermaal
+        </h1>
+    </div>
 
+    <div class="container pt-4">
+        @include("includes.auctionsrow", [
+                "title" => "Uitgelichte veilingen",
+                "auctions" =>$popularAuctions
+            ])
 
+        @foreach($personalAuctions as $category)
+            @include("includes.auctionsrow", [
+                    "title" => $category["name"],
+                    "auctions" =>$category["auctions"]
+            ])
+        @endforeach
 
-
-
-{{--        <div class="container">--}}
-
-{{--            <div class="row">--}}
-
-{{--                @foreach($categories['main'] as $category)--}}
-
-{{--                    <div class="col-md-3">--}}
-{{--                        <div class="category-parent">--}}
-{{--                            {{$category->name}}--}}
-
-{{--                            <div class="category-first-child">--}}
-{{--                                Auto's--}}
-{{--                                <div class="category-final-child">Kleine auto's</div>--}}
-{{--                                <div class="category-final-child">Middel grote auto's</div>--}}
-{{--                                <div class="category-final-child">Grote auto's</div>--}}
-
-
-{{--                            </div>--}}
-{{--                            <div class="category-first-child">--}}
-{{--                                Boten--}}
-
-{{--                            </div>--}}
-{{--                            <div class="category-first-child">--}}
-{{--                                Vliegtuigen--}}
-
-{{--                            </div>--}}
-
-{{--                        </div>--}}
-
-
-{{--                    </div>--}}
-
-{{--                @endforeach--}}
-
-{{--            </div>--}}
-
-{{--        </div>--}}
-
-        <div class="hero-section">
-            <h1 class="title text-white">
-                <i class="fas fa-gavel"></i> Eenmaal Andermaal
-            </h1>
-        </div>
-
-        <div class="container pt-4">
-
-            <h2>Uitgelichte veilingen</h2>
+        @foreach($topCategoryAuctions as $topCAKey => $topCAValue)
+            <h2>{{ $topCAKey }}</h2>
 
             <div class="row py-4">
-
-                @foreach($auctions as $auction)
+                @foreach($topCAValue as $auction)
                     <a href="{{route("auctions.show",$auction->id)}}" class="col-lg-4 col-md-6 mb-4 no-link">
                         <div class="auction-card hover-effect">
-                            <div class="auction-card-image"
-                                 style="background-image: url('{{$auction->getFirstImage()}}');">
+                            <div class="auction-card-image" style="background-image: url('{{$auction->getFirstImage()}}');">
                             </div>
                             <div class="auction-card-body">
                                 <h4>{{$auction->title}}</h4>
@@ -91,11 +54,11 @@
                         </div>
                     </a>
                 @endforeach
-
             </div>
+        @endforeach
 
-        </div>
+    </div>
 
-    </main>
+
 
 @endsection

@@ -4,6 +4,8 @@
 namespace App;
 
 
+use Carbon\Carbon;
+
 abstract class SuperModel
 {
     public function __construct()
@@ -22,6 +24,35 @@ abstract class SuperModel
             $values[$key] = $value;
         }
         $this->id = self::insert($values);
+    }
+
+    /**
+     * Update the model with attributes into the child's presumed table at the row with the ID of the object
+     */
+    public function update()
+    {
+        $values = [];
+        $arr = get_object_vars($this);
+        foreach ($arr as $key=>$value){
+            if($key=="created_at"||$key=="birth_date")
+                continue;
+            $values[$key] = $value;
+        }
+
+        $setString = "";
+        end($values);
+        $lastElement = key($values);
+        foreach ($values as $key => $value) {
+            if($key=="id")
+                continue;
+            $setString .= $key."=:" . $key;
+            if ($key != $lastElement) {
+                $setString .= ",";
+            }
+        }
+
+        $insertId = DB::insertOne("UPDATE " . self::getTableName(static::class) . " SET " . $setString . " WHERE id=:id", $values);
+        return $insertId;
     }
 
     /**
