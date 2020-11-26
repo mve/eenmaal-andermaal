@@ -5,7 +5,8 @@
     <div class="container">
         <div class="row category-container">
 
-            <?php printf($categories) ?>
+            @php(\App\Category::getCategories())
+<!--            --><?php //printf($categories) ?>
 
         </div>
     </div>

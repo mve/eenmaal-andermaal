@@ -39,7 +39,7 @@ class HomeController extends Controller
 
         $data = [
             "auctions" => Auction::getPopularAuctions(),
-            "categories" => Category::getCategories()
+//            "categories" => Category::getCategories()
         ];
         return view('home')->with($data);
     }

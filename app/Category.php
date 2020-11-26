@@ -7,26 +7,34 @@ class Category extends SuperModel
 {
     public static function printTree($categories, &$allCategories, $level = 0)
     {
-
         $i = 1;
         foreach ($categories as $category) {
-
-            $indentStr = "&nbsp;&nbsp;&nbsp;&nbsp;";
-            $fullIndentStr = "";
-
-            for ($x = 0; $x < $level; $x++) {
-                $fullIndentStr .= $indentStr;
-            }
-
-            printf($fullIndentStr . $i++ . " " . $category->name . "<br/>");
-
             $childCategories = [];
             foreach ($allCategories as $childCat) {
                 if ($childCat->parent_id === $category->id)
                     array_push($childCategories, $childCat);
             }
-            if (count($childCategories) > 0)
+
+            $classes = 'category category-' . $level;
+
+            if ($level == 0) {
+                $classes .= ' col-sm-6 col-md-2';
+            }
+            if($level != 0){
+                $classes .= ' d-none';
+            }
+
+
+
+            if (count($childCategories) > 0){
+                echo '<div class="' . $classes . ' category-hoverable"><span class="clickable-submenu user-select-none">' . $i++. " " . $category->name. ($level!=0? " <i class='fas fa-arrow-down category-arrow'></i>" : "") ." </span>";
                 self::printTree($childCategories, $allCategories, $level + 1);
+                echo '</div>';
+            }else{
+                echo '<a href="https://google.com" class="' . $classes . ' user-select-none">'. $i++. " " . $category->name;
+                echo '</a>';
+            }
+
 
         }
 
@@ -48,7 +56,7 @@ class Category extends SuperModel
 
 //        self::printTree($mainCategories, $allCategories, 0);
 
-        return self::buildNavigation($allCategories);
+        return self::printTree($mainCategories, $allCategories);
 
     }
 
@@ -71,13 +79,21 @@ class Category extends SuperModel
                     $classes .= ' col-sm-6 col-md-3';
                 }
 
+                $childCategories = [];
+                foreach ($items as $childCat) {
+                    if ($childCat->parent_id === $item->id)
+                        array_push($childCategories, $childCat);
+                }
+
                 $childrenHtml .= '<div class="' . $classes . '">' . $item->name;
 
-//                $childrenHtml .= '<a href="' . $item->id . '">' . $item->name;
+                $childrenHtml .= '<a href="' . $item->id . '">' . $item->name;
 
 //                    $childrenHtml .= '<a href="' . $item->id . '">';
-                        $childrenHtml .= self::buildNavigation($items, $item->id, $level);
-//                    $childrenHtml .= '</a>';
+                if(count($childCategories)){
+                    $childrenHtml .= self::buildNavigation($items, $item->id, $level);
+                }
+                    $childrenHtml .= '</a>';
                 $childrenHtml .= '</div>';
             }
 
