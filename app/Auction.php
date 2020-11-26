@@ -6,9 +6,11 @@ namespace App;
 
 use Carbon\Carbon;
 use Facade\Ignition\Support\Packagist\Package;
+use Illuminate\Support\Facades\Session;
 
 class Auction extends SuperModel
 {
+
     /**
      * Get the auction's seller
      * @return mixed
@@ -68,7 +70,7 @@ class Auction extends SuperModel
             [
                 "id" => $this->id
             ]);
-        if($image===false){
+        if ($image === false) {
             return "../images/no-image.jpg";
         }
         return $image["file_name"];
@@ -87,7 +89,7 @@ class Auction extends SuperModel
             [
                 "id" => $this->id
             ]);
-        if(empty($images)){
+        if (empty($images)) {
             $images = [];
             array_push($images, ["file_name" => "../images/no-image.jpg"]);
         }
@@ -134,6 +136,55 @@ class Auction extends SuperModel
             $popularAuctions = array_merge($popularAuctions, $addAuctions);
         }
         return $popularAuctions;
+    }
+
+    /**
+     * Retrieves the most viewed ($maxc) categories by the user with $maxn auctions
+     * @param int $maxc
+     * @param int $maxn
+     * @return array
+     */
+    public static function getPersonalAuctions($maxc = 3, $maxn = 10)
+    {
+        $categories = [];
+        if(Session::has("user")){
+            $userid = Session::get("user")->id;
+            $categories = DB::select("
+                SELECT TOP $maxc id,name
+                FROM categories
+                WHERE EXISTS (
+                    SELECT TOP $maxc category_id
+                    FROM auction_categories
+                    WHERE EXISTS (
+                        SELECT TOP 10 id
+                        FROM auctions
+                        WHERE EXISTS (
+                            SELECT TOP 10 auction_id, COUNT(auction_id) as Cnt
+                            FROM auction_hits WHERE auction_id=auctions.id AND user_id= $userid
+                            GROUP BY auction_id
+                            ORDER BY Cnt DESC
+                        ) AND auction_id =id
+                        GROUP BY id
+                    ) AND category_id = categories .id
+                )
+            ");
+            for($i = 0; $i < count($categories); $i++){
+                $auctions = Auction::resultArrayToClassArray(DB::select("
+                    SELECT TOP $maxn *
+                    FROM auctions
+                    WHERE EXISTS (
+                        SELECT TOP 3 auction_id
+                        FROM auction_categories
+                        WHERE category_id = :cat_id AND auctions.id=id
+                    ) AND end_datetime >= DATEADD(MINUTE, 1, GETDATE())
+                ",[
+                    "cat_id" => $categories[$i]["id"]
+                ]));
+                $categories[$i]["auctions"] = $auctions;
+            }
+        }
+        return $categories;
+
     }
 
     /**

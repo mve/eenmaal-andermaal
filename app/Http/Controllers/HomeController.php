@@ -37,7 +37,8 @@ class HomeController extends Controller
 //        dump(Carbon::now());
 
         $data = [
-            "auctions" => Auction::getPopularAuctions(),
+            "popularAuctions" => Auction::getPopularAuctions(3),
+            "personalAuctions" => Auction::getPersonalAuctions(3, 3)
             "topCategoryAuctions" => Auction::getAllTopCategoryAuctions()
         ];
         return view('home')->with($data);
