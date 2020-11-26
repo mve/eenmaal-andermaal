@@ -84,7 +84,7 @@ CREATE TABLE dbo.users (
 	first_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	last_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	address varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	postal_code char(6) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	postal_code varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	city varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	country_code varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	birth_date date NOT NULL,

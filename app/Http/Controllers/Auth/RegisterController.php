@@ -127,7 +127,11 @@ class RegisterController extends Controller
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->address = $request->address;
-            $user->postal_code = $request->postal_code;
+            if ( !preg_match('/\s/',$request->postal_code) ) {
+                $user->postal_code = chunk_split($request->postal_code, 4, ' ');
+            } else {
+                $user->postal_code = $request->postal_code;
+            }
             $user->city = $request->city;
             $user->country_code = $request->country_code;
             $user->birth_date = $request->birth_date;
