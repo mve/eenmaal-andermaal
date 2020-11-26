@@ -11716,6 +11716,58 @@ p {
   border: 0;
 }
 
+.category-container {
+  padding: 18px 0;
+}
+
+.clickable-submenu {
+  font-weight: normal;
+  color: #284B63;
+  cursor: pointer;
+}
+
+a.category {
+  text-decoration: none;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+a.category:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.category-arrow {
+  font-size: 10px;
+}
+
+.category-0 > div,
+.category-0 > a {
+  display: block;
+}
+
+.category-0 > .clickable-submenu {
+  font-weight: bold;
+}
+
+.category-0 :last-child {
+  padding-bottom: 10px;
+}
+
+.category-1 {
+  font-weight: bold;
+  color: #284B63;
+  display: block;
+}
+
+.category-hoverable > * > div,
+.category-hoverable > * > a {
+  display: none;
+}
+
+.category a {
+  font-weight: normal;
+}
+
 .btn {
   border-radius: 0.75rem;
   padding: 0.375rem 1rem;
