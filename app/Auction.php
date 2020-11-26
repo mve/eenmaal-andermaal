@@ -307,7 +307,7 @@ class Auction extends SuperModel
         )
     
         SELECT c.id AS category_id, c.name AS category_name, c.parent_id AS category_parent_id,
-        a.id AS auction_id, a.title AS title, a.description, a.start_price, a.user_id
+        a.*
         FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac 
         WHERE c.id = ac.category_id
         AND ac.auction_id = a.id
