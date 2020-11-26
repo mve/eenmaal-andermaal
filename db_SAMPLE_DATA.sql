@@ -4,7 +4,7 @@ VALUES ('NL', 'Nederland'),
     ('BE', 'België')
 
 INSERT INTO dbo.security_questions (question)
-VALUES ('What is love?')
+VALUES ('Wat voor een huisdier heb je?')
 
 INSERT INTO dbo.users (
         username,
@@ -32,7 +32,7 @@ VALUES (
         'NL',
         '2020-11-10',
         0,
-        'Baby don''t hurt me'
+        'Hond'
     ),
     (
         'seller',
@@ -46,7 +46,7 @@ VALUES (
         'NL',
         '2020-11-10',
         0,
-        'Baby don''t hurt me'
+        'Kat'
     ),
     (
         'german',
@@ -60,7 +60,7 @@ VALUES (
         'DE',
         '2020-11-10',
         0,
-        'Tut mir leid'
+        'Katze'
     ),
     (
         'belgian',
@@ -74,7 +74,7 @@ VALUES (
         'BE',
         '2020-11-10',
         0,
-        'Baby don''t hurt me'
+        'Konijn'
     )
 
 INSERT INTO dbo.phone_numbers (user_id, phone_number)
@@ -103,45 +103,45 @@ INSERT INTO dbo.auctions (
     )
 VALUES (
         'Fiets te koop',
-        'Mooie fiets, mogelijk gestolen. Om die reden ook geen foto''s',
+        'Mooie fiets, gekregen van mijn vader. Ik heb hem niet langer nodig wegens aanschaf van een auto',
         10.00,
-        'Alleen munten!',
+        'Het liefst contant',
         3,
-        '2020-11-27',
-        'Stad',
+        '2020-11-30',
+        'Arnhem',
         'NL',
         1
     ),
     (
-        'Tantoesnelle brommer',
-        'Gaat moeilijk hard. Niet doorvertellen!',
+        'Stadsbrommer',
+        'Blauwe plaat en zeer compact. Ideaal voor korte reizen!',
         20.00,
         NULL,
         7,
-        '2020-11-29',
-        'Stad',
+        '2020-12-03',
+        'Nijmegen',
         'NL',
         1
     ),
     (
-        'Aftrapauto',
-        'Ik heb echt een hekel aan dit ding. Moet weg!',
-        25.00,
-        'Al betaal je met knikkers!',
+        'Auto ALS NIEUW',
+        'Halfjaar geleden tweedehands gekocht, bleek achteraf niet nodig. OV is in mijn omgeving veel eenvoudiger, dus kan de auto beter van de hand doen.',
+        8000.00,
+        'Alle Nederlandse betaalmethodes worden geaccepteerd!',
         10,
-        '2020-12-01',
-        'Stad',
+        '2020-12-06',
+        'Amsterdam',
         'NL',
         1
     ),
     (
         'Nvidia RTX 3090',
-        'Ik ben heel gul, dus gun jullie deze videokaart voor een vriendenprijsje',
-        2500.00,
+        'Nieuw gekocht maar ik kan nog wel even wachten. Mag weg, maar hoeft niet!',
+        200.00,
         'Bij verzenden, eerst betalen!',
         3,
         '2020-12-15',
-        'Stad',
+        'Utrecht',
         'NL',
         1
     )
@@ -263,30 +263,30 @@ INSERT INTO dbo.reviews (
 VALUES (
         0,
         0,
-        '2020-11-20',
+        '2020-11-26',
         0,
-        'Fiets was inderdaad gestolen'
+        'Fiets was in slechte staat, was niet te zien in de foto''s. Heb er niet lang mee kunnen doen voordat ik op zoek kon naar een andere.'
     ),
     (
         1,
         0,
-        '2020-11-20',
+        '2020-11-26',
         1,
-        'Met 90 km/h door het centrum, helemaal prima!'
+        'Leuk klein dingetje, verkoper was ook zeer vriendelijk.'
     ),
     (
         2,
         0,
-        '2020-11-20',
+        '2020-11-26',
         1,
-        'Auto was als beschreven dus er is maar één schuldige'
+        'Auto was als beschreven, zeer tevreden!'
     ),
     (
         3,
         0,
-        '2020-11-20',
+        '2020-11-26',
         0,
-        'Afgezet, natuurlijk niet tevreden!'
+        'Blij dat ik de kaart heb, maar toch ontevreden dat ik er een premium voor heb moeten betalen t.o.v. de winkelprijs!'
     )
 
 INSERT INTO dbo.administrators (username, email, password)
