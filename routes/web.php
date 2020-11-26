@@ -33,6 +33,10 @@ Route::get('/wachtwoordvergeten', 'Auth\ForgotPasswordController@index')->name('
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('faq', function () {
+    return view('faq.faq');
+});
+
 Route::get('foo', function () {
     $user = \App\User::oneWhere("id", 0);
     $user->first_name = "User";

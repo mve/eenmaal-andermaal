@@ -11684,6 +11684,32 @@ p {
   padding-bottom: 12px;
 }
 
+.accordion {
+  padding: 50px 0;
+}
+
+.accordion .accordion-header .accordion-button {
+  font-size: 35px;
+  color: #284B63;
+  background: #ffffff;
+  border: 0;
+  box-shadow: #ffffff;
+}
+
+.accordion .accordion-header .accordion-button:not(.collapsed) {
+  background: #ffffff;
+  border: 0;
+  box-shadow: #ffffff;
+}
+
+.accordion .accordion-header .accordion-button:focus {
+  box-shadow: none;
+}
+
+.accordion .accordion-collapse {
+  border: 0;
+}
+
 .btn {
   border-radius: 0.75rem;
   padding: 0.375rem 1rem;
