@@ -173,9 +173,10 @@ VALUES (0, 0, 15),
     (3, 0, 2525)
 
 INSERT INTO dbo.auction_images (auction_id, file_name)
-VALUES (1, 'picture1_name_here'),
-    (1, 'picture2_name_here'),
-    (1, 'picture3_name_here')
+VALUES (0, '../images/fiets.jpeg'),
+    (1, '../images/brommer.jpg'),
+    (2, '../images/unsplash-ferrari.jpg'),
+    (3, '../images/3090.png')
 
 INSERT INTO dbo.shipping_methods (method)
 VALUES ('Afhalen'),

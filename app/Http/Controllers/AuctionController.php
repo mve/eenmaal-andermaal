@@ -19,8 +19,8 @@ class AuctionController extends Controller
         $positiveReviews = $auction->getPositiveReviews();
         $auctionReviews = $auction->getReviews();
         $auctionReviewAverage = $auction->getReviewAverage();
-        $auctionReviewsNegativePercent = round(($negativeReviews / count($auctionReviews))*100) ."%";
-        $auctionReviewsPositivePercent = round(($positiveReviews / count($auctionReviews))*100) ."%";
+        $auctionReviewsNegativePercent = (count($auctionReviews) > 0? round(($negativeReviews / count($auctionReviews))*100):0) ."%";
+        $auctionReviewsPositivePercent = (count($auctionReviews) > 0? round(($positiveReviews / count($auctionReviews))*100):0) ."%";
         $data = [
             "auction" => $auction,
             "auctionImages" => $auctionImages,

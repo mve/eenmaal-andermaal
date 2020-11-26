@@ -85,6 +85,7 @@ class RegisterController extends Controller
         $data = $request->all();
 
         if($data["verificatie_code"] == $request->session()->get('verify_code') ) {
+            $request->session()->forget('verify_code');
 
             $this->validate($request, array(
                 'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
@@ -101,6 +102,24 @@ class RegisterController extends Controller
                 'security_answer' => ['required', 'string']
             ));
 
+            if(User::oneWhere("email", $request->email)!==false){
+                return redirect()->back()->withInput($request->all())->withErrors(["email" => "Er bestaat al een gebruiker met het ingevulde e-mailadres"]);
+            }
+            if(
+                DB::selectOne("SELECT * FROM countries WHERE country_code=:country_code",[
+                    "country_code" => $request->country_code
+                ])===false
+            ){
+                return redirect()->back()->withInput($request->all())->withErrors(["country_code" => "Er bestaat geen land in onze database met de ingevulde landcode"]);
+            }
+            if(
+                DB::selectOne("SELECT * FROM security_questions WHERE id=:id",[
+                    "id" => $request->security_question_id
+                ])===false
+            ){
+                return redirect()->back()->withInput($request->all())->withErrors(["country_code" => "De geselecteerde beveiligingsvraag bestaat niet"]);
+            }
+
             $user = new \App\User();
             $user->username = $request->username;
             $user->email = $request->email;
@@ -108,16 +127,17 @@ class RegisterController extends Controller
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->address = $request->address;
-            $user->postal_code = $request->postal_code;
+            if ( !preg_match('/\s/',$request->postal_code) ) {
+                $user->postal_code = chunk_split($request->postal_code, 4, ' ');
+            } else {
+                $user->postal_code = $request->postal_code;
+            }
             $user->city = $request->city;
             $user->country_code = $request->country_code;
             $user->birth_date = $request->birth_date;
             $user->security_question_id = $request->security_question_id;
             $user->security_answer = $request->security_answer;
             $user->save();
-
-            if($user->id==false)
-                dd("fail");//TODO betere afhandeling
 
             // inloggen na registreren
             $request->session()->put('user', $user);
