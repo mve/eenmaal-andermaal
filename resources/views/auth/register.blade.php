@@ -18,10 +18,10 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
-                            <div id="form_1">
+                            <div id="form_1" @if($errors->any()) class="d-none" @endif>
                                 <div class="form-group row mb-2">
                                     <label for="Username"
-                                           class="col-md-4 col-form-label text-md-right">Gebruikersnaam</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Gebruikersnaam') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="username" type="text"
@@ -38,7 +38,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">Email adres</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">E-mailadres</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email"
@@ -107,7 +107,7 @@
 
                             </div>
 
-                            <div id="form_3" class="d-none">
+                            <div id="form_3" @if(!$errors->any()) class="d-none" @endif>
                                 <div class="form-group row mb-2">
                                     <label for="password"
                                            class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
@@ -139,7 +139,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="first_name"
-                                           class="col-md-4 col-form-label text-md-right">Voornaam</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Voornaam') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="first_name" type="text"
@@ -157,7 +157,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="last_name"
-                                           class="col-md-4 col-form-label text-md-right">Achternaam</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Achternaam') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="last_name" type="text"
@@ -175,7 +175,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="address"
-                                           class="col-md-4 col-form-label text-md-right">Adres</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Straat en huisnummer') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="address" type="text"
@@ -193,7 +193,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="postal_code"
-                                           class="col-md-4 col-form-label text-md-right">Postcode</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Postcode') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="postal_code" type="text"
@@ -211,7 +211,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="city"
-                                           class="col-md-4 col-form-label text-md-right">Stad</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Woonplaats') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="city" type="text"
@@ -228,7 +228,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="country_code"
-                                           class="col-md-4 col-form-label text-md-right">Landcode (NL)</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Land') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="country_code" type="text"
@@ -246,7 +246,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="birth_date"
-                                           class="col-md-4 col-form-label text-md-right">Geboortedatum</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Geboortedatum') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="birth_date" type="date"
@@ -264,7 +264,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="security_question_id"
-                                           class="col-md-4 col-form-label text-md-right">Beveiligingsvraag</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Beveiligingsvraag') }}</label>
 
                                     <div class="col-md-6">
                                         <select name="security_question_id" id="security_question_id"
@@ -287,7 +287,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="security_answer"
-                                           class="col-md-4 col-form-label text-md-right">Beveiligingsantwoord</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Antwoord op beveiligingsvraag') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="security_answer" type="text"

@@ -36,5 +36,8 @@ Route::post('/resetwachtwoord', 'Auth\ForgotPasswordController@update_password')
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('foo', function () {
-
+    $user = \App\User::oneWhere("id", 0);
+    $user->first_name = "User";
+    $user->last_name = "Name";
+    dd($user->update());
 });
