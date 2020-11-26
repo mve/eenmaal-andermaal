@@ -8,11 +8,17 @@
             color: #284B63;
             background: #ffffff;
             border: 0;
+            border-bottom: 1px solid #284b63;
             box-shadow: #ffffff;
+
+            &:last-of-type{
+                border-radius: 0;
+            }
 
             &:not(.collapsed){
                 background: #ffffff;
                 border: 0;
+                border-bottom: 1px solid #284b63;
                 box-shadow: #ffffff;
             }
 
