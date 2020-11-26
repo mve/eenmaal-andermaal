@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +29,9 @@ Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
 Route::get('/wachtwoordvergeten', 'Auth\ForgotPasswordController@index')->name('wachtwoordvergeten');
+Route::post('/wachtwoordvergeten', 'Auth\ForgotPasswordController@reset_mail');
+Route::get('/wachtwoordvergeten/{token}', 'Auth\ForgotPasswordController@reset_password');
+Route::post('/resetwachtwoord', 'Auth\ForgotPasswordController@update_password')->name('wachtwoordreset');
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
