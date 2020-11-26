@@ -11693,12 +11693,18 @@ p {
   color: #284B63;
   background: #ffffff;
   border: 0;
+  border-bottom: 1px solid #284b63;
   box-shadow: #ffffff;
+}
+
+.accordion .accordion-header .accordion-button:last-of-type {
+  border-radius: 0;
 }
 
 .accordion .accordion-header .accordion-button:not(.collapsed) {
   background: #ffffff;
   border: 0;
+  border-bottom: 1px solid #284b63;
   box-shadow: #ffffff;
 }
 

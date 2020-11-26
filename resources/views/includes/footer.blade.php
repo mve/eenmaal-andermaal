@@ -7,11 +7,12 @@
                 <div class="fw-bold">Eenmaal Andermaal</div>
                 <div><a class="footer-link" href="#">Categorieën</a></div>
                 <div><a class="footer-link" href="#">Nieuwste veilingen</a></div>
+                <div><a class="footer-link" href="/faq">Veelgestelde vragen</a></div>
             </div>
             <div class="col-md-6 col-lg-4 mt-4">
                 <div class="fw-bold">Mijn account</div>
                 <div><a class="footer-link" href="/login">Inloggen</a></div>
-                <div><a class="footer-link" href="/register">Registreren</a></div>
+                <div><a class="footer-link" href="/registreren">Registreren</a></div>
             </div>
             <div class="col-md-6 col-lg-4 mt-4">
                 <div class="fw-bold">Contact</div>
