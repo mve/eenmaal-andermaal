@@ -38,10 +38,3 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('faq', function () {
     return view('faq.faq');
 });
-
-Route::get('foo', function () {
-    $cc = \App\DB::selectOne("SELECT * FROM security_questions WHERE id=:id",[
-        "id" => 1
-    ]);
-    dd($cc);
-});

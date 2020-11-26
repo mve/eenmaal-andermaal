@@ -2,6 +2,12 @@
 
 @section('content')
 
+    <div class="container">
+        <div class="row category-container">
+        @php(\App\Category::getCategories())
+        </div>
+    </div>
+
     <div class="hero-section">
         <h1 class="title text-white text-center">
             <i class="fas fa-gavel"></i> Eenmaal Andermaal
@@ -21,10 +27,7 @@
             ])
         @endforeach
 
-    </div>
-    
-    @foreach($topCategoryAuctions as $topCAKey => $topCAValue)
-        <div class="container pt-4">
+        @foreach($topCategoryAuctions as $topCAKey => $topCAValue)
             <h2>{{ $topCAKey }}</h2>
 
             <div class="row py-4">
@@ -52,9 +55,10 @@
                     </a>
                 @endforeach
             </div>
-        </div>
-        
-    
-    @endforeach
+        @endforeach
+
+    </div>
+
+
 
 @endsection
