@@ -31,7 +31,7 @@ class Category extends SuperModel
                 self::printTree($childCategories, $allCategories, $level + 1);
                 echo '</div>';
             }else{
-                echo '<a href="https://google.com" class="' . $classes . ' user-select-none">'. $i++. " " . $category->name;
+                echo '<a href="https://google.com" class="' . $classes . ' user-select-none">'. $i++. " " . $category->name. " <i class='fas fa-arrow-right category-arrow'></i>";
                 echo '</a>';
             }
 
