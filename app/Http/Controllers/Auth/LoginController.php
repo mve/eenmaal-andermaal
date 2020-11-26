@@ -71,7 +71,7 @@ class LoginController extends Controller
         $user = User::oneWhere('email', $request->get('email'));
 
         if(!$user){
-            return "Ongeldige inlog";
+            return redirect()->back()->withInput($request->all())->withErrors(["email" => "Er is geen account gevonden met het ingevulde e-mailadres"]);
         }
 
         $userLoggedIn = Hash::check($request->get('password'), $user->password);
@@ -80,6 +80,7 @@ class LoginController extends Controller
             $request->session()->put('user', $user);
             return redirect('/');
         }
+        return redirect()->back()->withInput($request->all())->withErrors(["password" => "Incorrect wachtwoord ingevuld"]);
     }
 
     public function logout(Request $request)
