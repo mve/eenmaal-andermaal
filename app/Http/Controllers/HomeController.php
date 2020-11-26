@@ -38,7 +38,7 @@ class HomeController extends Controller
 
         $data = [
             "popularAuctions" => Auction::getPopularAuctions(3),
-            "personalAuctions" => Auction::getPersonalAuctions(3, 3)
+            "personalAuctions" => Auction::getPersonalAuctions(3, 3),
             "topCategoryAuctions" => Auction::getAllTopCategoryAuctions()
         ];
         return view('home')->with($data);
