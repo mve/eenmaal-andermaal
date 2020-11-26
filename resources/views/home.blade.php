@@ -2,6 +2,12 @@
 
 @section('content')
 
+    <div class="container">
+        <div class="row category-container">
+        @php(\App\Category::getCategories())
+        </div>
+    </div>
+
     <div class="hero-section">
         <h1 class="title text-white text-center">
             <i class="fas fa-gavel"></i> Eenmaal Andermaal
@@ -20,14 +26,14 @@
                     "auctions" =>$category["auctions"]
             ])
         @endforeach
+
+        @foreach($topCategoryAuctions as $topCAKey => $topCAValue)
+                @include("includes.auctionsrow", [
+                    "title" => "$topCAKey",
+                    "auctions" => $topCAValue
+                ])
+        @endforeach
     </div>
-    
-    @foreach($topCategoryAuctions as $topCAKey => $topCAValue)
-        <div class="container pt-4">
-            @include("includes.auctionsrow", [
-                "title" => "$topCAKey",
-                "auctions" => $topCAValue
-            ])
-        </div>
-    @endforeach
+
+
 @endsection
