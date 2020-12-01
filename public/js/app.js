@@ -26963,6 +26963,17 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+function hideChildren(parent) {
+  var children = parent.parentElement.querySelectorAll(":scope>a,:scope>div");
+
+  for (var i = 0; i < children.length; i++) {
+    if (children[i].classList.contains("d-block")) {
+      children[i].classList.remove("d-block");
+      children[i].classList.add("d-none");
+    }
+  }
+}
+
 function toggleSubMenu() {
   var children = this.parentElement.querySelectorAll(":scope>a,:scope>div");
 
@@ -26982,6 +26993,17 @@ var hoverables = document.querySelectorAll(".clickable-submenu");
 for (var i = 0; i < hoverables.length; i++) {
   hoverables[i].addEventListener('click', toggleSubMenu);
 }
+
+var categoriesMenuElement = document.querySelector(".category-container");
+document.addEventListener('click', function (event) {
+  var isClickInside = categoriesMenuElement.contains(event.target);
+
+  if (!isClickInside) {
+    for (var i = 0; i < hoverables.length; i++) {
+      hideChildren(hoverables[i]);
+    }
+  }
+});
 
 /***/ }),
 
@@ -27042,8 +27064,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/sass/app.scss */"./resources/sass/app.scss");
+
 
 /***/ })
 
