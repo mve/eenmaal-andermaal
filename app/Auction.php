@@ -198,13 +198,15 @@ class Auction extends SuperModel
             return "Afgelopen";
         $diff = $parsedTime->diff();
         $formatString = "%H:%I:%S";
-        if ($diff->days > 0)
-            $formatString = "%d dagen " . $formatString;
-//        if($diff->m > 0)
-//            $formatString = "%m maanden " . $formatString;
-//        if($diff->y > 0)
-//            $formatString = "%y jaar " . $formatString;
+        if($diff->days > 1){
+            $formatString = "%d dagen %H:%I";
+        }else if($diff->days === 1){
+            $formatString = "%d dag %H:%I";
+        }else{
+            $formatString = "%H:%I:%S";
+        }
         return $diff->format($formatString);
+//        return ucfirst($parsedTime->diffForHumans());
     }
 
     /**
@@ -319,7 +321,7 @@ class Auction extends SuperModel
 
     /**
      * Get the subcategories for a certain category_id
-     * 
+     *
      */
     public function getSubcategoriesForCategoryId($categoryId) {
         return Bid::resultArrayToClassArray(DB::select("
@@ -332,7 +334,7 @@ class Auction extends SuperModel
                     FROM    dbo.categories c INNER JOIN
                             subcategories s ON c.parent_id = s.id
             )
-            
+
             SELECT  *
             FROM    subcategories
             ",
@@ -356,10 +358,10 @@ class Auction extends SuperModel
             FROM    dbo.categories c INNER JOIN
                     subcategories s ON c.parent_id = s.id
         )
-    
+
         SELECT c.id AS category_id, c.name AS category_name, c.parent_id AS category_parent_id,
         a.*
-        FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac 
+        FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac
         WHERE c.id = ac.category_id
         AND ac.auction_id = a.id
         AND ac.category_id IN (SELECT id FROM subcategories)
@@ -395,7 +397,7 @@ class Auction extends SuperModel
             $auctions[$cat['name']] = $auctionsPerTopCategory;
             // array_push($auctions, $auctionsPerTopCategory);
         }
-        
+
         return $auctions;
     }
 }
