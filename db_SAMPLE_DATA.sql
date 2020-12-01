@@ -1,5 +1,11 @@
+INSERT INTO dbo.countries (country_code, country)
+VALUES ('NL', 'Nederland'),
+    ('DE', 'Duitsland'),
+    ('BE', 'België')
+
 INSERT INTO dbo.security_questions (question)
-VALUES ('What is love?')
+VALUES ('Wat voor een huisdier heb je?')
+
 INSERT INTO dbo.users (
         username,
         email,
@@ -9,7 +15,7 @@ INSERT INTO dbo.users (
         address,
         postal_code,
         city,
-        country,
+        country_code,
         birth_date,
         security_question_id,
         security_answer
@@ -23,10 +29,10 @@ VALUES (
         'Straatnaam 1',
         '9999AA',
         'Stad',
-        'Nederland',
+        'NL',
         '2020-11-10',
         0,
-        'Baby don''t hurt me'
+        'Hond'
     ),
     (
         'seller',
@@ -37,104 +43,160 @@ VALUES (
         'Straatnaam 1',
         '9999AA',
         'Stad',
-        'Nederland',
+        'NL',
         '2020-11-10',
         0,
-        'Baby don''t hurt me'
+        'Kat'
     ),
     (
-        'admin',
-        'admin@mail.com',
+        'german',
+        'german@mail.com',
         '$2y$10$dyjvsG8FpkB13AAkGuEQsOxt84O9fJk9E6nTsUmYvk87Ei5z4XtRe',
-        'admin',
+        'german',
         'lastname',
-        'Straatnaam 1',
-        '9999AA',
-        'Stad',
-        'Nederland',
+        'Straße 1',
+        '46395',
+        'Stadt',
+        'DE',
         '2020-11-10',
         0,
-        'Baby don''t hurt me'
+        'Katze'
+    ),
+    (
+        'belgian',
+        'belgian@mail.com',
+        '$2y$10$dyjvsG8FpkB13AAkGuEQsOxt84O9fJk9E6nTsUmYvk87Ei5z4XtRe',
+        'belgian',
+        'lastname',
+        'Straat 1',
+        '2200',
+        'Stad',
+        'BE',
+        '2020-11-10',
+        0,
+        'Konijn'
     )
+
 INSERT INTO dbo.phone_numbers (user_id, phone_number)
-VALUES (0, 0612345678),
-    (1, 0612345678),
-    (2, 0612345678)
-INSERT INTO auction (
+VALUES (0, '0612345678'),
+    (1, '0612345678'),
+    (2, '0612345678')
+
+INSERT INTO dbo.seller_verifications (
+        user_id,
+        method,
+        bank_name,
+        bank_account_number
+    )
+VALUES (1, 'Bank', 'Rabobank', 'NL13RABO012345678')
+
+INSERT INTO dbo.auctions (
         title,
         description,
         start_price,
         payment_instruction,
-        start_datetime,
+        duration,
         end_datetime,
         city,
-        country,
+        country_code,
         user_id
     )
 VALUES (
         'Fiets te koop',
-        'Mooie fiets, mogelijk gestolen. Om die reden ook geen foto''s',
+        'Mooie fiets, gekregen van mijn vader. Ik heb hem niet langer nodig wegens aanschaf van een auto',
         10.00,
-        'Alleen munten!',
-        '2020-11-20',
-        '2020-11-27',
-        'Stad',
-        'Nederland',
+        'Het liefst contant',
+        3,
+        '2020-11-30',
+        'Arnhem',
+        'NL',
         1
     ),
     (
-        'Tantoesnelle brommer',
-        'Gaat moeilijk hard. Niet doorvertellen!',
+        'Stadsbrommer',
+        'Blauwe plaat en zeer compact. Ideaal voor korte reizen!',
         20.00,
         NULL,
-        '2020-11-22',
-        '2020-11-29',
-        'Stad',
-        'Nederland',
+        7,
+        '2020-12-03',
+        'Nijmegen',
+        'NL',
         1
     ),
     (
-        'Kutauto',
-        'Ik heb echt een hekel aan dit ding. Moet weg!',
-        25.00,
-        'Al betaal je met knikkers!',
-        '2020-11-24',
-        '2020-12-01',
-        'Stad',
-        'Nederland',
+        'Auto ALS NIEUW',
+        'Halfjaar geleden tweedehands gekocht, bleek achteraf niet nodig. OV is in mijn omgeving veel eenvoudiger, dus kan de auto beter van de hand doen.',
+        8000.00,
+        'Alle Nederlandse betaalmethodes worden geaccepteerd!',
+        10,
+        '2020-12-06',
+        'Amsterdam',
+        'NL',
         1
     ),
     (
         'Nvidia RTX 3090',
-        'Ik ben heel gul, dus gun jullie deze videokaart voor een vriendenprijsje',
-        2500.00,
+        'Nieuw gekocht maar ik kan nog wel even wachten. Mag weg, maar hoeft niet!',
+        2000.00,
         'Bij verzenden, eerst betalen!',
-        '2020-11-20',
+        3,
         '2020-12-15',
-        'Stad',
-        'Nederland',
+        'Utrecht',
+        'NL',
         1
     )
-INSERT INTO auction_images (auction_id, file_name)
-VALUES (1, '1picturepath 1 here'),
-    (1, '1picturepath2 here'),
-    (1, '1picture3 here')
-INSERT INTO shipping_methods (method)
+
+INSERT INTO dbo.auction_hits (auction_id, user_id, ip)
+VALUES (0, 0, '1.1.1.1'),
+    (1, 0, '1.1.1.1'),
+    (1, 0, '1.1.1.1'),
+    (1, 0, '1.1.1.1'),
+    (2, 0, '1.1.1.1'),
+    (3, 0, '1.1.1.1'),
+    (3, 0, '1.1.1.1'),
+    (3, 0, '1.1.1.1'),
+    (3, 0, '1.1.1.1'),
+    (3, 0, '1.1.1.1'),
+    (3, 0, '1.1.1.1'),
+    (3, 0, '1.1.1.1'),
+    (3, 0, '1.1.1.1')
+
+INSERT INTO dbo.bids (auction_id, user_id, amount)
+VALUES (0, 0, 15),
+    (0, 0, 20),
+    (0, 0, 22.50),
+    (1, 0, 20),
+    (1, 0, 25),
+    (1, 0, 40),
+    (2, 0, 8050),
+    (3, 0, 2000),
+    (3, 0, 2100)
+
+INSERT INTO dbo.auction_images (auction_id, file_name)
+VALUES (0, '../images/fiets.jpeg'),
+    (1, '../images/brommer.jpg'),
+    (2, '../images/unsplash-ferrari.jpg'),
+    (3, '../images/3090.png')
+
+INSERT INTO dbo.shipping_methods (method)
 VALUES ('Afhalen'),
     ('Verzenden (binnenland)'),
     ('Verzenden (buitenland)')
-INSERT INTO auction_shipping_methods (auction_id, shipping_id, price)
+
+INSERT INTO dbo.auction_shipping_methods (auction_id, shipping_id, price)
 VALUES (0, 0, 0),
     (1, 0, 0),
     (2, 0, 0),
     (3, 1, 6.95),
     (3, 2, 10.95)
-INSERT INTO payment_methods (method)
+
+INSERT INTO dbo.payment_methods (method)
 VALUES ('Contant'),
     ('iDeal'),
     ('Creditcard'),
     ('PayPal')
-INSERT INTO auction_payment_methods (auction_id, payment_id)
+
+INSERT INTO dbo.auction_payment_methods (auction_id, payment_id)
 VALUES (0, 0),
     (1, 0),
     (1, 1),
@@ -142,7 +204,8 @@ VALUES (0, 0),
     (2, 1),
     (3, 0),
     (3, 1)
-INSERT INTO categories (name, parent_id)
+
+INSERT INTO dbo.categories (name, parent_id)
 VALUES ('Computer', NULL),
     ('Accessoires', 0),
     ('Monitoren', 1),
@@ -183,12 +246,14 @@ VALUES ('Computer', NULL),
     ('Motoren', 33),
     ('Scooters', 34),
     ('Overig', 29)
-INSERT INTO auction_categories (auction_id, category_id)
+
+INSERT INTO dbo.auction_categories (auction_id, category_id)
 VALUES (0, 36),
     (1, 35),
     (2, 30),
     (3, 13)
-INSERT INTO reviews (
+
+INSERT INTO dbo.reviews (
         auction_id,
         user_id,
         review_datetime,
@@ -198,71 +263,35 @@ INSERT INTO reviews (
 VALUES (
         0,
         0,
-        '2020-11-20',
+        '2020-11-26',
         0,
-        'Fiets was inderdaad gestolen'
+        'Fiets was in slechte staat, was niet te zien in de foto''s. Heb er niet lang mee kunnen doen voordat ik op zoek kon naar een andere.'
     ),
     (
         1,
         0,
-        '2020-11-20',
+        '2020-11-26',
         1,
-        'Met 90 km/h door het centrum, helemaal prima!'
+        'Leuk klein dingetje, verkoper was ook zeer vriendelijk.'
     ),
     (
         2,
         0,
-        '2020-11-20',
+        '2020-11-26',
         1,
-        'Auto was als beschreven dus er is maar één schuldige'
+        'Auto was als beschreven, zeer tevreden!'
     ),
     (
         3,
         0,
-        '2020-11-20',
+        '2020-11-26',
         0,
-        'Vieze afzetter, en nog een lul ook!'
+        'Blij dat ik de kaart heb, maar toch ontevreden dat ik er een premium voor heb moeten betalen t.o.v. de winkelprijs!'
     )
-    
--- CATEGORIES:
-    -- Computer
-    --     Accessoires
-    --         Monitoren
-    --         Muizen
-    --         Speakers
-    --         Toetsenborden
-    --     Desktops
-    --         All-in-ones
-    --         Tower
-    --     Componenten 
-    --         Moederborden
-    --         Processoren
-    --         SSDs
-    --         Videokaarten
-    --     Laptops
-    -- Muziek
-    --     Instrumenten
-    --         Gitaren en versterkers
-    --             Akoestische gitaren
-    --             Elektrische Gitaren
-    --             Versterkers
-    --         Drumstellen
-    --         Blaasinstrumenten
-    --             Blokfluiten
-    --             Trombones
-    --             Trompetten
-    --             Tubas
-    --         Keyboards en pianos 
-    --             Keyboards,
-    --             Pianos
-    -- Transport 
-    --     Autos
-    --     Aanhangers
-    --     Boten
-    --     Tweewielers
-    --         Brommers en Scooters
-    --             Brommers
-    --             Fietsen
-    --             Motoren
-    --             Scooters
-    --     Overig
+
+INSERT INTO dbo.administrators (username, email, password)
+VALUES (
+        'admin',
+        'admin@mail.com',
+        '$2y$10$dyjvsG8FpkB13AAkGuEQsOxt84O9fJk9E6nTsUmYvk87Ei5z4XtRe'
+    )

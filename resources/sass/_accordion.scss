@@ -1,0 +1,33 @@
+.accordion{
+
+    padding: 50px 0;
+
+    .accordion-header{
+        .accordion-button{
+            font-size: 35px;
+            color: #284B63;
+            background: #ffffff;
+            border: 0;
+            border-bottom: 1px solid #284b63;
+            box-shadow: #ffffff;
+
+            &:last-of-type{
+                border-radius: 0;
+            }
+
+            &:not(.collapsed){
+                background: #ffffff;
+                border: 0;
+                border-bottom: 1px solid #284b63;
+                box-shadow: #ffffff;
+            }
+
+            &:focus{
+                box-shadow: none;
+            }
+        }
+    }
+    .accordion-collapse{
+        border: 0;
+    }
+}

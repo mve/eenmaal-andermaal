@@ -1,136 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
-.auction-card,
-.card {
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.auction-card-image {
-  height: 300px;
-  background-size: cover;
-  background-position: center;
-}
-
-.auction-card-data {
-  font-size: 16px;
-  font-weight: bold;
-  width: 100%;
-  text-align: center;
-}
-
-.auction-card-body {
-  padding: 20px;
-}
-
-.auction-card-head {
-  background: #c5ae91;
-  background: linear-gradient(27deg, #c5ae91 0%, #284b63 100%);
-  padding: 15px;
-}
-
-.auction-card-head h4,
-.auction-card-head .h4 {
-  margin: 0;
-  color: white;
-}
-
-.footer-link {
-  text-decoration: none;
-  color: #cbd5e0;
-  border-bottom: 1px solid transparent;
-  transition: all 0.2s ease-in;
-}
-
-.footer-link:hover {
-  text-decoration: none;
-  color: white;
-  border-bottom: 1px solid white;
-}
-
-.stars {
-  padding: 10px 25px;
-  border-radius: 35px;
-  background: #f2faff;
-}
-
-.stars .fa-star {
-  color: #FFD700;
-  font-size: 20px;
-}
-
-.rating-bar-empty {
-  margin: auto 5px;
-  width: 50%;
-  height: 12px;
-  border-radius: 35px;
-  border: 1px solid #bfbfbf;
-  background: #f2faff;
-}
-
-.rating-bar-empty .rating-bar-filled {
-  height: 10px;
-  border-radius: 35px;
-  background: #FFD700;
-}
-
-.rating-bar-empty .rating-bar-filled.five-star {
-  width: 84%;
-}
-
-.rating-bar-empty .rating-bar-filled.four-star {
-  width: 9%;
-}
-
-.rating-bar-empty .rating-bar-filled.three-star {
-  width: 4%;
-}
-
-.rating-bar-empty .rating-bar-filled.two-star {
-  width: 2%;
-}
-
-.rating-bar-empty .rating-bar-filled.one-star {
-  width: 1%;
-}
-
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6 {
-  font-weight: bold;
-}
-
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-h4,
-.h4,
-h5,
-.h5,
-h6,
-.h6,
-p {
-  color: #2d3748;
-}
-
-.title {
-  font-size: 40px;
-  font-weight: bold;
-}
-
 /*!
  * Bootstrap v5.0.0-alpha3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
@@ -11677,6 +11546,228 @@ fieldset:disabled .btn {
   }
 }
 
+.auction-card,
+.card {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.auction-card-image {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+}
+
+.auction-card-data {
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+.auction-card-body {
+  padding: 20px;
+}
+
+.auction-card-head {
+  background: #c5ae91;
+  background: linear-gradient(27deg, #c5ae91 0%, #284b63 100%);
+  padding: 15px;
+}
+
+.auction-card-head h4,
+.auction-card-head .h4 {
+  margin: 0;
+  color: white;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #cbd5e0;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease-in;
+}
+
+.footer-link:hover {
+  text-decoration: none;
+  color: white;
+  border-bottom: 1px solid white;
+}
+
+.stars {
+  padding: 10px 25px;
+  border-radius: 35px;
+  background: #f2faff;
+}
+
+.stars .fa-star {
+  color: #FFD700;
+  font-size: 20px;
+}
+
+.rating-bar-empty {
+  margin: auto 5px;
+  width: 50%;
+  height: 12px;
+  border-radius: 35px;
+  border: 1px solid #bfbfbf;
+  background: #f2faff;
+}
+
+.rating-bar-empty .rating-bar-filled {
+  height: 10px;
+  border-radius: 35px;
+  background: #FFD700;
+}
+
+.rating-bar-empty .rating-bar-filled.five-star {
+  width: 84%;
+}
+
+.rating-bar-empty .rating-bar-filled.four-star {
+  width: 9%;
+}
+
+.rating-bar-empty .rating-bar-filled.three-star {
+  width: 4%;
+}
+
+.rating-bar-empty .rating-bar-filled.two-star {
+  width: 2%;
+}
+
+.rating-bar-empty .rating-bar-filled.one-star {
+  width: 1%;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  font-weight: bold;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6,
+p {
+  color: #2d3748;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.accordion {
+  padding: 50px 0;
+}
+
+.accordion .accordion-header .accordion-button {
+  font-size: 35px;
+  color: #284B63;
+  background: #ffffff;
+  border: 0;
+  border-bottom: 1px solid #284b63;
+  box-shadow: #ffffff;
+}
+
+.accordion .accordion-header .accordion-button:last-of-type {
+  border-radius: 0;
+}
+
+.accordion .accordion-header .accordion-button:not(.collapsed) {
+  background: #ffffff;
+  border: 0;
+  border-bottom: 1px solid #284b63;
+  box-shadow: #ffffff;
+}
+
+.accordion .accordion-header .accordion-button:focus {
+  box-shadow: none;
+}
+
+.accordion .accordion-collapse {
+  border: 0;
+}
+
+.category-container {
+  padding: 18px 0;
+}
+
+.clickable-submenu {
+  font-weight: normal;
+  color: #284B63;
+  cursor: pointer;
+}
+
+a.category {
+  text-decoration: none;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+a.category:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.category-arrow {
+  font-size: 10px;
+}
+
+.category-0 > div,
+.category-0 > a {
+  display: block;
+}
+
+.category-0 > .clickable-submenu {
+  font-weight: bold;
+}
+
+.category-0 :last-child {
+  padding-bottom: 10px;
+}
+
+.category-1 {
+  font-weight: bold;
+  color: #284B63;
+  display: block;
+}
+
+.category-hoverable > * > div,
+.category-hoverable > * > a {
+  display: none;
+}
+
+.category a {
+  font-weight: normal;
+}
+
 .btn {
   border-radius: 0.75rem;
   padding: 0.375rem 1rem;
@@ -11719,7 +11810,7 @@ fieldset:disabled .btn {
 
 .sand-blue-gradient {
   background: #c5AE91;
-  background: linear-gradient(27deg, #c5AE91 0%, #284B63 100%);
+  background: linear-gradient(27deg, #c5AE91 0%, rgba(40, 75, 99, 0.9) 100%);
 }
 
 .profile-picture {
@@ -11740,5 +11831,35 @@ fieldset:disabled .btn {
   padding-bottom: 15px;
   border-left: 0;
   border-right: 0;
+}
+
+.bid-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background: linear-gradient(0deg, rgba(197, 174, 145, 0.9) 0%, rgba(40, 75, 99, 0.9) 100%);
+}
+
+.bid-overlay .card-head {
+  padding: 15px;
+}
+
+.bid-overlay .card-head h4,
+.bid-overlay .card-head .h4 {
+  margin: 0;
+  color: white;
+}
+
+.bid-overlay .bid-overlay-body {
+  margin: 100px 50px;
+  padding: 35px;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #000000;
+}
+
+.bid-overlay .bid-overlay-body .btn {
+  margin: 20px 0;
 }
 

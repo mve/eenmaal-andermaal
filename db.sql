@@ -1,235 +1,170 @@
--- DROP SCHEMA dbo;
+CREATE TABLE dbo.countries (
+	country_code varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	country varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	CONSTRAINT PK_countries PRIMARY KEY (country_code)
+)
 
--- eenmaalandermaal.dbo.auction definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction GO
-
-CREATE TABLE eenmaalandermaal.dbo.auction (
+CREATE TABLE dbo.auctions (
 	id int IDENTITY(0,1) NOT NULL,
 	title varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	description varchar(1000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	start_price decimal(9,2) DEFAULT 0 NOT NULL,
 	payment_instruction varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	start_datetime datetime DEFAULT getdate() NOT NULL,
+	duration tinyint NOT NULL DEFAULT 7,
 	end_datetime datetime NOT NULL,
 	city varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	country varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	country_code varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	user_id int NOT NULL,
-	CONSTRAINT auction_PK PRIMARY KEY (id)
+	CONSTRAINT PK_auctions PRIMARY KEY (id),
+	CONSTRAINT FK_countries_auctions FOREIGN KEY (country_code) REFERENCES dbo.countries(country_code),
+	CONSTRAINT CHK_duration CHECK (
+		duration IN (1, 3, 5, 7, 10)
+	)
 )
 
-
--- eenmaalandermaal.dbo.payment_methods definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.payment_methods GO
-
-CREATE TABLE eenmaalandermaal.dbo.payment_methods (
+CREATE TABLE dbo.payment_methods (
 	id int IDENTITY(0,1) NOT NULL,
-	[method] varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	CONSTRAINT payment_methods_PK PRIMARY KEY (id)
+	method varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	CONSTRAINT PK_paymentmethods PRIMARY KEY (id)
 )
 
-
--- eenmaalandermaal.dbo.security_questions definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.security_questions GO
-
-CREATE TABLE eenmaalandermaal.dbo.security_questions (
+CREATE TABLE dbo.security_questions (
 	id int IDENTITY(0,1) NOT NULL,
 	question varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	CONSTRAINT security_questions_PK PRIMARY KEY (id)
+	CONSTRAINT PK_securityquestions PRIMARY KEY (id)
 )
 
-
--- eenmaalandermaal.dbo.shipping_methods definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.shipping_methods GO
-
-CREATE TABLE eenmaalandermaal.dbo.shipping_methods (
+CREATE TABLE dbo.shipping_methods (
 	id int IDENTITY(0,1) NOT NULL,
-	[method] varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	CONSTRAINT shipping_methods_PK PRIMARY KEY (id)
+	method varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	CONSTRAINT PK_shippingmethods PRIMARY KEY (id)
 )
 
-
--- eenmaalandermaal.dbo.auction_images definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_images GO
-
-CREATE TABLE eenmaalandermaal.dbo.auction_images (
+CREATE TABLE dbo.auction_images (
 	id int IDENTITY(0,1) NOT NULL,
 	auction_id int NOT NULL,
 	file_name varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	CONSTRAINT auction_images_PK PRIMARY KEY (id),
-	CONSTRAINT auction_images_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id)
+	CONSTRAINT PK_auctionimages PRIMARY KEY (id),
+	CONSTRAINT FK_auctions_auctionimages FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id)
 )
 
-
--- eenmaalandermaal.dbo.auction_payment_methods definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_payment_methods GO
-
-CREATE TABLE eenmaalandermaal.dbo.auction_payment_methods (
+CREATE TABLE dbo.auction_payment_methods (
 	id int IDENTITY(0,1) NOT NULL,
 	auction_id int NOT NULL,
 	payment_id int NOT NULL,
-	CONSTRAINT auction_payment_methods_PK PRIMARY KEY (id),
-	CONSTRAINT auction_payment_methods_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
-	CONSTRAINT auction_payment_methods_FK_1 FOREIGN KEY (payment_id) REFERENCES eenmaalandermaal.dbo.payment_methods(id)
+	CONSTRAINT PK_auctionpaymentmethods PRIMARY KEY (id),
+	CONSTRAINT FK_auctions_auctionpaymentmethods FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
+	CONSTRAINT FK_paymentmethods_auctionpaymentmethods FOREIGN KEY (payment_id) REFERENCES dbo.payment_methods(id)
 )
 
-
--- eenmaalandermaal.dbo.auction_shipping_methods definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_shipping_methods GO
-
-CREATE TABLE eenmaalandermaal.dbo.auction_shipping_methods (
+CREATE TABLE dbo.auction_shipping_methods (
 	id int IDENTITY(0,1) NOT NULL,
 	auction_id int NOT NULL,
 	shipping_id int NOT NULL,
 	price decimal(9,2) NULL,
-	CONSTRAINT auction_shipping_methods_PK PRIMARY KEY (id),
-	CONSTRAINT auction_shipping_methods_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
-	CONSTRAINT auction_shipping_methods_FK_1 FOREIGN KEY (shipping_id) REFERENCES eenmaalandermaal.dbo.shipping_methods(id)
+	CONSTRAINT PK_auctionshippingmethods PRIMARY KEY (id),
+	CONSTRAINT FK_auctions_auctionshippingmethods FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
+	CONSTRAINT FK_shippingmethods_auctionshippingmethods FOREIGN KEY (shipping_id) REFERENCES dbo.shipping_methods(id)
 )
 
-
--- eenmaalandermaal.dbo.categories definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.categories GO
-
-CREATE TABLE eenmaalandermaal.dbo.categories (
+CREATE TABLE dbo.categories (
 	id int IDENTITY(0,1) NOT NULL,
 	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	parent_id int NULL,
-	CONSTRAINT category_PK PRIMARY KEY (id),
-	CONSTRAINT category_FK FOREIGN KEY (parent_id) REFERENCES eenmaalandermaal.dbo.categories(id)
+	CONSTRAINT PK_category PRIMARY KEY (id),
+	CONSTRAINT FK_categories_categories FOREIGN KEY (parent_id) REFERENCES dbo.categories(id)
 )
 
-
--- eenmaalandermaal.dbo.users definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.users GO
-
-CREATE TABLE eenmaalandermaal.dbo.users (
+CREATE TABLE dbo.users (
 	id int IDENTITY(0,1) NOT NULL,
 	username varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	email varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	password varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+    reset_token varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	first_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	last_name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	address varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	postal_code char(6) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	postal_code varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	city varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	country varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	country_code varchar(10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	birth_date date NOT NULL,
 	security_question_id int NOT NULL,
 	security_answer varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	is_seller bit DEFAULT 0 NOT NULL,
-	is_admin bit DEFAULT 0 NOT NULL,
-	created_at datetime DEFAULT getdate() NULL,
-	CONSTRAINT users_PK PRIMARY KEY (id),
-	CONSTRAINT security_question_FK FOREIGN KEY (security_question_id) REFERENCES eenmaalandermaal.dbo.security_questions(id)
+	created_at datetime DEFAULT getdate() NOT NULL,
+	CONSTRAINT PK_users PRIMARY KEY (id),
+	CONSTRAINT FK_securityquestions_users FOREIGN KEY (security_question_id) REFERENCES dbo.security_questions(id),
+	CONSTRAINT FK_countries_users FOREIGN KEY (country_code) REFERENCES dbo.countries(country_code),
+	CONSTRAINT UC_users UNIQUE (email)
 )
 
+CREATE TABLE dbo.seller_verifications (
+	user_id INT NOT NULL,
+	method VARCHAR(20) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	creditcard_number VARCHAR(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	bank_name VARCHAR(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	bank_account_number VARCHAR(50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	CONSTRAINT PK_userid PRIMARY KEY (user_id),
+	CONSTRAINT CHK_method CHECK (
+		method IN ('Bank', 'Creditcard', 'Post')
+	)
+)
 
--- eenmaalandermaal.dbo.auction_categories definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_categories GO
-
-CREATE TABLE eenmaalandermaal.dbo.auction_categories (
+CREATE TABLE dbo.auction_categories (
 	id int IDENTITY(0,1) NOT NULL,
 	auction_id int NOT NULL,
 	category_id int NOT NULL,
-	CONSTRAINT auction_categories_PK PRIMARY KEY (id),
-	CONSTRAINT auction_categories_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
-	CONSTRAINT auction_categories_FK_1 FOREIGN KEY (category_id) REFERENCES eenmaalandermaal.dbo.categories(id)
+	CONSTRAINT PK_auctioncategories PRIMARY KEY (id),
+	CONSTRAINT FK_auctions_auctioncategories FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
+	CONSTRAINT FK_categories_auctioncategories FOREIGN KEY (category_id) REFERENCES dbo.categories(id)
 )
 
-
--- eenmaalandermaal.dbo.auction_hits definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.auction_hits GO
-
-CREATE TABLE eenmaalandermaal.dbo.auction_hits (
+CREATE TABLE dbo.auction_hits (
 	id int IDENTITY(0,1) NOT NULL,
 	auction_id int NOT NULL,
 	user_id int NULL,
 	ip varchar(45) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	hit_datetime datetime DEFAULT getdate() NOT NULL,
-	CONSTRAINT auction_hits_FK FOREIGN KEY (user_id) REFERENCES eenmaalandermaal.dbo.users(id)
+	CONSTRAINT PK_auctionhits PRIMARY KEY (id),
+	CONSTRAINT FK_users_auctionhits FOREIGN KEY (user_id) REFERENCES dbo.users(id)
 )
 
-
--- eenmaalandermaal.dbo.bids definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.bids GO
-
-CREATE TABLE eenmaalandermaal.dbo.bids (
+CREATE TABLE dbo.bids (
 	id int IDENTITY(0,1) NOT NULL,
 	auction_id int NOT NULL,
 	user_id int NOT NULL,
 	amount decimal(9,2) NOT NULL,
 	bid_datetime datetime DEFAULT getdate() NOT NULL,
-	CONSTRAINT bids_PK PRIMARY KEY (id),
-	CONSTRAINT bids_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
-	CONSTRAINT bids_FK_1 FOREIGN KEY (user_id) REFERENCES eenmaalandermaal.dbo.users(id)
+	CONSTRAINT PK_bids PRIMARY KEY (id),
+	CONSTRAINT FK_auctions_bids FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
+	CONSTRAINT FK_users_bids FOREIGN KEY (user_id) REFERENCES dbo.users(id)
 )
 
-
--- eenmaalandermaal.dbo.phone_numbers definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.phone_numbers GO
-
-CREATE TABLE eenmaalandermaal.dbo.phone_numbers (
+CREATE TABLE dbo.phone_numbers (
 	id int IDENTITY(0,1) NOT NULL,
 	user_id int NOT NULL,
 	phone_number varchar(15) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	CONSTRAINT numbers_PK PRIMARY KEY (id),
-	CONSTRAINT numbers_FK FOREIGN KEY (user_id) REFERENCES eenmaalandermaal.dbo.users(id)
+	CONSTRAINT PK_phonenumbers PRIMARY KEY (id),
+	CONSTRAINT FK_users_phonenumbers FOREIGN KEY (user_id) REFERENCES dbo.users(id)
 )
 
-
--- eenmaalandermaal.dbo.reviews definition
-
--- Drop table
-
--- DROP TABLE eenmaalandermaal.dbo.reviews GO
-
-CREATE TABLE eenmaalandermaal.dbo.reviews (
+CREATE TABLE dbo.reviews (
 	id int IDENTITY(0,1) NOT NULL,
 	auction_id int NOT NULL,
 	user_id int NOT NULL,
 	review_datetime datetime DEFAULT getdate() NOT NULL,
 	is_positive bit DEFAULT 1 NOT NULL,
 	comment varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-	CONSTRAINT reviews_PK PRIMARY KEY (id),
-	CONSTRAINT reviews_FK FOREIGN KEY (auction_id) REFERENCES eenmaalandermaal.dbo.auction(id),
-	CONSTRAINT reviews_FK_1 FOREIGN KEY (user_id) REFERENCES eenmaalandermaal.dbo.users(id)
+	CONSTRAINT PK_reviews PRIMARY KEY (id),
+	CONSTRAINT FK_auctions_reviews FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
+	CONSTRAINT FK_users_reviews FOREIGN KEY (user_id) REFERENCES dbo.users(id)
+)
+
+CREATE TABLE dbo.administrators (
+	id int IDENTITY(0,1) NOT NULL,
+	username varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	email varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	password varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
+	CONSTRAINT PK_administrators PRIMARY KEY (id),
 )

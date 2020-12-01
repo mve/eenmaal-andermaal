@@ -4,6 +4,8 @@
 namespace App;
 
 
+use Carbon\Carbon;
+
 abstract class SuperModel
 {
     public function __construct()
@@ -22,6 +24,35 @@ abstract class SuperModel
             $values[$key] = $value;
         }
         $this->id = self::insert($values);
+    }
+
+    /**
+     * Update the model with attributes into the child's presumed table at the row with the ID of the object
+     */
+    public function update()
+    {
+        $values = [];
+        $arr = get_object_vars($this);
+        foreach ($arr as $key=>$value){
+            if($key=="created_at"||$key=="birth_date")
+                continue;
+            $values[$key] = $value;
+        }
+
+        $setString = "";
+        end($values);
+        $lastElement = key($values);
+        foreach ($values as $key => $value) {
+            if($key=="id")
+                continue;
+            $setString .= $key."=:" . $key;
+            if ($key != $lastElement) {
+                $setString .= ",";
+            }
+        }
+
+        $insertId = DB::insertOne("UPDATE " . self::getTableName(static::class) . " SET " . $setString . " WHERE id=:id", $values);
+        return $insertId;
     }
 
     /**
@@ -77,7 +108,7 @@ abstract class SuperModel
     public static function all()
     {
         $result = DB::select("SELECT * FROM " . self::getTableName(static::class));
-        return self::resultArrayToClassArray($result, static::class);
+        return self::resultArrayToClassArray($result);
     }
 
     /**
@@ -91,7 +122,7 @@ abstract class SuperModel
         $result = DB::select("SELECT * FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:value", array(
             'value' => $value
         ));
-        return self::resultArrayToClassArray($result, static::class);
+        return self::resultArrayToClassArray($result);
     }
 
     /**
@@ -103,7 +134,7 @@ abstract class SuperModel
     public static function allOrderBy($column = "id", $order = "ASC")
     {
         $result = DB::select("SELECT * FROM " . self::getTableName(static::class) . " ORDER BY " . $column . " " . $order);
-        return self::resultArrayToClassArray($result, static::class);
+        return self::resultArrayToClassArray($result);
     }
 
     /**
@@ -119,7 +150,7 @@ abstract class SuperModel
         ));
         if ($result == null)
             return false;
-        return self::resultToClass($result,static::class);
+        return self::resultToClass($result);
     }
 
     /**
@@ -148,11 +179,11 @@ abstract class SuperModel
     /**
      * Convert result array to $class array
      * @param $resultArray
-     * @param $class
      * @return array
      */
-    private static function resultArrayToClassArray($resultArray, $class)
+    public static function resultArrayToClassArray($resultArray)
     {
+        $class= static::class;
         $returnArray = [];
         foreach ($resultArray as $result) {
             $obj = new $class();
@@ -165,11 +196,11 @@ abstract class SuperModel
     /**
      * Convert result to $class object
      * @param $result
-     * @param $class
      * @return mixed
      */
-    private static function resultToClass($result, $class)
+    public static function resultToClass($result)
     {
+        $class= static::class;
         $obj = new $class();
         $obj->fillAttributes($result);
         return $obj;
