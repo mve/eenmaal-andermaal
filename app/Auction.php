@@ -244,29 +244,9 @@ class Auction extends SuperModel
      */
     public function getReviewAverage()
     {
-        $positiveReviews = $this->getPositiveReviews();
-        return count($this->getReviews()) > 0 ? round(($positiveReviews * 5) / ($positiveReviews + $this->getNegativeReviews())) : 0;
-    }
-
-    /**
-     * Get the auction's positive reviews
-     * @return mixed
-     */
-    public function getPositiveReviews()
-    {
-        $result = DB::selectOne("
-            SELECT COUNT(is_positive) as Cnt,reviews.auction_id
-            FROM reviews
-            WHERE auction_id=:id AND is_positive=1
-            GROUP BY auction_id
-            ORDER BY Cnt DESC
-            ",
-            [
-                "id" => $this->id
-            ]);
-        if ($result !== false)
-            return $result["Cnt"];
-        return 0;
+        return number_format(DB::selectOne("SELECT AVG(CAST(rating as FLOAT)) as average FROM reviews WHERE user_id=:user_id", [
+            "user_id" => $this->user_id
+        ])["average"], 2,",",".") ?: 0;
     }
 
     /**
@@ -281,27 +261,6 @@ class Auction extends SuperModel
     }
 
     /**
-     * Get the auction's negative reviews
-     * @return mixed
-     */
-    public function getNegativeReviews()
-    {
-        $result = DB::selectOne("
-            SELECT COUNT(is_positive) as Cnt,reviews.auction_id
-            FROM reviews
-            WHERE auction_id=:id AND is_positive=0
-            GROUP BY auction_id
-            ORDER BY Cnt DESC
-            ",
-            [
-                "id" => $this->id
-            ]);
-        if ($result !== false)
-            return $result["Cnt"];
-        return 0;
-    }
-
-    /**
      * Get the auction's reviews
      * @return mixed
      */
@@ -310,16 +269,33 @@ class Auction extends SuperModel
         return Review::resultArrayToClassArray(DB::select("
             SELECT *
             FROM reviews
-            WHERE auction_id=:id
+            WHERE user_id=:user_id
             ",
             [
-                "id" => $this->id
+                "user_id" => $this->user_id
+            ]));
+    }
+
+    /**
+     * Get the auction's reviews per star amount
+     * @return mixed
+     */
+    public function getReviewsByRating($rating)
+    {
+        return Review::resultArrayToClassArray(DB::select("
+            SELECT *
+            FROM reviews
+            WHERE user_id=:user_id AND rating=:rating_number
+            ",
+            [
+                "user_id" => $this->user_id,
+                "rating_number" => $rating
             ]));
     }
 
     /**
      * Get the subcategories for a certain category_id
-     * 
+     *
      */
     public function getSubcategoriesForCategoryId($categoryId) {
         return Bid::resultArrayToClassArray(DB::select("
@@ -332,7 +308,7 @@ class Auction extends SuperModel
                     FROM    dbo.categories c INNER JOIN
                             subcategories s ON c.parent_id = s.id
             )
-            
+
             SELECT  *
             FROM    subcategories
             ",
@@ -356,10 +332,10 @@ class Auction extends SuperModel
             FROM    dbo.categories c INNER JOIN
                     subcategories s ON c.parent_id = s.id
         )
-    
+
         SELECT c.id AS category_id, c.name AS category_name, c.parent_id AS category_parent_id,
         a.*
-        FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac 
+        FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac
         WHERE c.id = ac.category_id
         AND ac.auction_id = a.id
         AND ac.category_id IN (SELECT id FROM subcategories)
@@ -395,7 +371,7 @@ class Auction extends SuperModel
             $auctions[$cat['name']] = $auctionsPerTopCategory;
             // array_push($auctions, $auctionsPerTopCategory);
         }
-        
+
         return $auctions;
     }
 }

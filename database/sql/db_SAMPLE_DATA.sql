@@ -257,14 +257,14 @@ INSERT INTO dbo.reviews (
         auction_id,
         user_id,
         review_datetime,
-        is_positive,
+        rating,
         comment
     )
 VALUES (
         0,
         0,
         '2020-11-26',
-        0,
+        5,
         'Fiets was in slechte staat, was niet te zien in de foto''s. Heb er niet lang mee kunnen doen voordat ik op zoek kon naar een andere.'
     ),
     (
@@ -278,14 +278,14 @@ VALUES (
         2,
         0,
         '2020-11-26',
-        1,
+        2,
         'Auto was als beschreven, zeer tevreden!'
     ),
     (
         3,
         0,
         '2020-11-26',
-        0,
+        3,
         'Blij dat ik de kaart heb, maar toch ontevreden dat ik er een premium voor heb moeten betalen t.o.v. de winkelprijs!'
     )
 
