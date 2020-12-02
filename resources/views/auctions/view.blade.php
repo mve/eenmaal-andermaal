@@ -129,7 +129,7 @@
                         <ul class="list-group" style="max-height: 200px; overflow-y: scroll">
                             @if(count($auctionBids))
                                 @foreach($auctionBids as $bid)
-                                    <li class="list-group-item flex-centered"><strong>{{$bid->getBidder()->first_name}}: &euro;{{$bid->amount}}</strong></li>
+                                    <li class="list-group-item"><strong>{{$bid->getBidder()->first_name}}: &euro;{{$bid->amount}}</strong> <span class="float-right">{{$bid->getTime()}}</span></li>
                                 @endforeach
                             @else
                                 <li class="list-group-item flex-centered"><strong>Er is nog niet geboden</strong></li>

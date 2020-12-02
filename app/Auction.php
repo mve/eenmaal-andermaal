@@ -225,10 +225,10 @@ class Auction extends SuperModel
      * Get the auction's bids
      * @return mixed
      */
-    public function getBids()
+    public function getBids($max = 5)
     {
         return Bid::resultArrayToClassArray(DB::select("
-            SELECT *
+            SELECT TOP $max *
             FROM bids
             WHERE auction_id=:id
             ORDER BY amount DESC
@@ -319,7 +319,7 @@ class Auction extends SuperModel
 
     /**
      * Get the subcategories for a certain category_id
-     * 
+     *
      */
     public function getSubcategoriesForCategoryId($categoryId) {
         return Bid::resultArrayToClassArray(DB::select("
@@ -332,7 +332,7 @@ class Auction extends SuperModel
                     FROM    dbo.categories c INNER JOIN
                             subcategories s ON c.parent_id = s.id
             )
-            
+
             SELECT  *
             FROM    subcategories
             ",
@@ -356,10 +356,10 @@ class Auction extends SuperModel
             FROM    dbo.categories c INNER JOIN
                     subcategories s ON c.parent_id = s.id
         )
-    
+
         SELECT c.id AS category_id, c.name AS category_name, c.parent_id AS category_parent_id,
         a.*
-        FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac 
+        FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac
         WHERE c.id = ac.category_id
         AND ac.auction_id = a.id
         AND ac.category_id IN (SELECT id FROM subcategories)
@@ -395,7 +395,7 @@ class Auction extends SuperModel
             $auctions[$cat['name']] = $auctionsPerTopCategory;
             // array_push($auctions, $auctionsPerTopCategory);
         }
-        
+
         return $auctions;
     }
 }
