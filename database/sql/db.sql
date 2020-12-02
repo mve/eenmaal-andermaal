@@ -153,11 +153,14 @@ CREATE TABLE dbo.reviews (
 	auction_id int NOT NULL,
 	user_id int NOT NULL,
 	review_datetime datetime DEFAULT getdate() NOT NULL,
-	is_positive bit DEFAULT 1 NOT NULL,
+	rating tinyint DEFAULT 5 NOT NULL,
 	comment varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 	CONSTRAINT PK_reviews PRIMARY KEY (id),
 	CONSTRAINT FK_auctions_reviews FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
-	CONSTRAINT FK_users_reviews FOREIGN KEY (user_id) REFERENCES dbo.users(id)
+	CONSTRAINT FK_users_reviews FOREIGN KEY (user_id) REFERENCES dbo.users(id),
+    CONSTRAINT CHK_rating CHECK (
+        rating BETWEEN 1 AND 5
+    )
 )
 
 CREATE TABLE dbo.administrators (

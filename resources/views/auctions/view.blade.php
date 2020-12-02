@@ -129,7 +129,7 @@
                         <ul class="list-group" style="max-height: 200px; overflow-y: scroll">
                             @if(count($auctionBids))
                                 @foreach($auctionBids as $bid)
-                                    <li class="list-group-item flex-centered"><strong>{{$bid->getBidder()->first_name}}: &euro;{{$bid->amount}}</strong></li>
+                                    <li class="list-group-item"><strong>{{$bid->getBidder()->first_name}}: &euro;{{$bid->amount}}</strong> <span class="float-right">{{$bid->getTime()}}</span></li>
                                 @endforeach
                             @else
                                 <li class="list-group-item flex-centered"><strong>Er is nog niet geboden</strong></li>
@@ -146,29 +146,47 @@
                     <div class="auction-card-body ">
                         <div class="flex-centered">
                             <div class="stars">
-                                @if($auctionReviewAverage > 0) <i class="fas fa-star"></i> @endif
-                                @if($auctionReviewAverage > 1) <i class="fas fa-star"></i> @endif
-                                @if($auctionReviewAverage > 2) <i class="fas fa-star"></i> @endif
-                                @if($auctionReviewAverage > 3) <i class="fas fa-star"></i> @endif
-                                @if($auctionReviewAverage > 4) <i class="fas fa-star"></i> @endif
-                                {{$auctionReviewAverage}} van de 5
+                                @if($reviewsData["average"] > 0) <i class="fas fa-star"></i> @endif
+                                @if($reviewsData["average"] > 1) <i class="fas fa-star"></i> @endif
+                                @if($reviewsData["average"] > 2) <i class="fas fa-star"></i> @endif
+                                @if($reviewsData["average"] > 3) <i class="fas fa-star"></i> @endif
+                                @if($reviewsData["average"] > 4) <i class="fas fa-star"></i> @endif
+                                {{$reviewsData["average"]}} van de 5
                             </div>
                         </div>
                         <div class="flex-centered my-3">
-                            <i>{{count($auction->getReviews())}} beoordelingen</i>
+                            <i>{{$reviewsData["count"]}} {{$reviewsData["count"]==1 ? "beoordeling" : "beoordelingen"}}</i>
                         </div>
 
-                        <div class="flex-centered">Positief
+                        <div class="flex-centered">5 sterren
                             <div class="rating-bar-empty">
-                                <div class="rating-bar-filled" style="width:{{$auctionReviewsPositivePercent}};"></div>
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["fiveStars"]}};"></div>
                             </div>
-                            {{$auctionReviewsPositivePercent}}
+                            {{$reviewsData["fiveStars"]}}
                         </div>
-                        <div class="flex-centered">Negatief
+                        <div class="flex-centered">4 sterren
                             <div class="rating-bar-empty">
-                                <div class="rating-bar-filled" style="width:{{$auctionReviewsNegativePercent}};"></div>
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["fourStars"]}};"></div>
                             </div>
-                            {{$auctionReviewsNegativePercent}}
+                            {{$reviewsData["fourStars"]}}
+                        </div>
+                        <div class="flex-centered">3 sterren
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["threeStars"]}};"></div>
+                            </div>
+                            {{$reviewsData["threeStars"]}}
+                        </div>
+                        <div class="flex-centered">2 sterren
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["twoStars"]}};"></div>
+                            </div>
+                            {{$reviewsData["twoStars"]}}
+                        </div>
+                        <div class="flex-centered">1 ster
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["oneStars"]}};"></div>
+                            </div>
+                            {{$reviewsData["oneStars"]}}
                         </div>
 
                     </div>

@@ -26995,15 +26995,18 @@ for (var i = 0; i < hoverables.length; i++) {
 }
 
 var categoriesMenuElement = document.querySelector(".category-container");
-document.addEventListener('click', function (event) {
-  var isClickInside = categoriesMenuElement.contains(event.target);
 
-  if (!isClickInside) {
-    for (var i = 0; i < hoverables.length; i++) {
-      hideChildren(hoverables[i]);
+if (categoriesMenuElement) {
+  document.addEventListener('click', function (event) {
+    var isClickInside = categoriesMenuElement.contains(event.target);
+
+    if (!isClickInside) {
+      for (var i = 0; i < hoverables.length; i++) {
+        hideChildren(hoverables[i]);
+      }
     }
-  }
-});
+  });
+}
 
 /***/ }),
 
@@ -27064,8 +27067,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

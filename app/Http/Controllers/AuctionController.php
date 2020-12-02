@@ -15,22 +15,21 @@ class AuctionController extends Controller
 
         $auctionImages = $auction->getImages();
         $auctionBids = $auction->getBids();
-        $negativeReviews = $auction->getNegativeReviews();
-        $positiveReviews = $auction->getPositiveReviews();
-        $auctionReviews = $auction->getReviews();
-        $auctionReviewAverage = $auction->getReviewAverage();
-        $auctionReviewsNegativePercent = (count($auctionReviews) > 0? round(($negativeReviews / count($auctionReviews))*100):0) ."%";
-        $auctionReviewsPositivePercent = (count($auctionReviews) > 0? round(($positiveReviews / count($auctionReviews))*100):0) ."%";
+        $auctionReviewCount = count($auction->getReviews());
+        $reviewsData = [
+            "count" => $auctionReviewCount,
+            "average" => $auction->getReviewAverage(),
+            "fiveStars" => number_format(($auctionReviewCount===0 ? 0 : count($auction->getReviewsByRating(5)) / $auctionReviewCount) * 100)."%",
+            "fourStars" => number_format(($auctionReviewCount===0 ? 0 : count($auction->getReviewsByRating(4)) / $auctionReviewCount) * 100)."%",
+            "threeStars" => number_format(($auctionReviewCount===0 ? 0 : count($auction->getReviewsByRating(3)) / $auctionReviewCount) * 100)."%",
+            "twoStars" => number_format(($auctionReviewCount===0 ? 0 : count($auction->getReviewsByRating(2)) / $auctionReviewCount) * 100)."%",
+            "oneStars" => number_format(($auctionReviewCount===0 ? 0 : count($auction->getReviewsByRating(1)) / $auctionReviewCount) * 100)."%"
+        ];
         $data = [
             "auction" => $auction,
             "auctionImages" => $auctionImages,
             "auctionBids" => $auctionBids,
-            "negativeReviews" => $negativeReviews,
-            "positiveReviews" => $positiveReviews,
-            "auctionReviews" => $auctionReviews,
-            "auctionReviewAverage" => $auctionReviewAverage,
-            "auctionReviewsNegativePercent" => $auctionReviewsNegativePercent,
-            "auctionReviewsPositivePercent" => $auctionReviewsPositivePercent
+            "reviewsData" => $reviewsData
         ];
         return view("auctions.view")->with($data);
     }
