@@ -94,7 +94,7 @@ class RegisterController extends Controller
                 'first_name' => ['required', 'string'],
                 'last_name' => ['required', 'string'],
                 'address' => ['required', 'string'],
-                'postal_code' => ['required', 'string'],
+                'postal_code' => ['required', 'string','max:10'],
                 'city' => ['required', 'string'],
                 'country_code' => ['required', 'string'],
                 'birth_date' => ['required', 'date_format:Y-m-d'],
