@@ -26,12 +26,12 @@ class Category extends SuperModel
 
 
 
-            if (count($childCategories) > 0){
+            if ($level < 5 && count($childCategories) > 0){
                 echo '<div class="' . $classes . ' category-hoverable"><span class="clickable-submenu user-select-none">' . $i++. " " . $category->name. ($level!=0? " <i class='fas fa-arrow-down category-arrow'></i>" : "") ." </span>";
                 self::printTree($childCategories, $allCategories, $level + 1);
                 echo '</div>';
             }else{
-                echo '<a href="https://google.com" class="' . $classes . ' user-select-none">'. $i++. " " . $category->name. " <i class='fas fa-arrow-right category-arrow'></i>";
+                echo '<a href="/categorie/'.$category->id.'" class="' . $classes . ' user-select-none">'. $i++. " " . $category->name. " <i class='fas fa-arrow-right category-arrow'></i>";
                 echo '</a>';
             }
 

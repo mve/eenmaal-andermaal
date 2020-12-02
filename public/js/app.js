@@ -26996,21 +26996,44 @@ for (var i = 0; i < hoverables.length; i++) {
   hoverables[i].addEventListener('click', toggleSubMenu);
 }
 
-var categoriesMenuElement = document.querySelector(".category-container");
+var categoriesMenuElement = document.querySelector("#category-container-parent");
 var categoriesCopyElement = document.querySelector("#category-container-copy");
+
+function closeAllHoverablesChildren() {
+  for (var i = 0; i < hoverables.length; i++) {
+    hideChildren(hoverables[i]);
+  }
+}
+
 document.addEventListener('click', function (event) {
   var isClickInside = categoriesMenuElement.contains(event.target);
 
   if (!isClickInside) {
-    for (var i = 0; i < hoverables.length; i++) {
-      hideChildren(hoverables[i]);
-    }
+    closeAllHoverablesChildren();
   }
 });
-/*  Navigatie rubrieken einde */
 
-categoriesCopyElement.offsetHeight = categoriesMenuElement;
-console.log(categoriesCopyElement.offsetHeight);
+function debounce(func) {
+  var timer;
+  return function (event) {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(func, 100, event);
+  };
+}
+
+function setNavCopySize() {
+  categoriesCopyElement.style.height = categoriesMenuElement.offsetHeight + "px";
+}
+
+window.addEventListener("resize", debounce(function (e) {
+  closeAllHoverablesChildren();
+  setNavCopySize();
+}));
+window.addEventListener('load', function () {
+  setNavCopySize();
+  console.log(categoriesCopyElement.offsetHeight);
+});
+/*  Navigatie rubrieken einde */
 
 /***/ }),
 
