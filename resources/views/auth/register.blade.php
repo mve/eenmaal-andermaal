@@ -12,11 +12,11 @@
                         <div class="card-body">
 
                             <h2 class="text-center mt-2 mb-4">Registreren</h2>
-                            
+
                             <div class="alert alert-success d-none" role="alert" id="alert-success">
-                                <span class="success" id="success" style="margin-top:10px; margin-bottom: 10px;"></span>        
+                                <span class="success" id="success" style="margin-top:10px; margin-bottom: 10px;"></span>
                             </div>
-                            
+
                             <div class="alert alert-danger d-none" role="alert" id="alert-danger">
                                 <span class="error" id="error" style="margin-top:10px; margin-bottom: 10px;"></span>
                             </div>
@@ -25,6 +25,11 @@
                                 @csrf
 
                             <div id="form_1" class="@if(!$errors->any() || $errors->has("username") || $errors->has("email")) d-block @else d-none @endif">
+
+                                <div class="alert alert-success " role="alert" id="alert-success">
+                                    Vul hier je e-mailadres en gewenste gebruikersnaam in. Via de mail krijg je een code.
+                                </div>
+
                                 <div class="form-group row mb-2">
                                     <label for="Username"
                                            class="col-md-4 col-form-label text-md-right">{{ __('Gebruikersnaam') }}</label>
@@ -98,8 +103,6 @@
                                             Herstuur code email
                                         </button>
 
-
-
                                     </div>
                                     <div class="col-md-6">
 
@@ -108,11 +111,7 @@
                                         </button>
 
                                     </div>
-
-
-
                                 </div>
-
                             </div>
 
                             <div id="form_3" @if(!$errors->any() || $errors->has("email")) class="d-none" @endif>
@@ -321,7 +320,6 @@
                             </div>
                         </form>
 
-
                         </div>
                     </div>
                 </div>
@@ -340,8 +338,6 @@ function Send_verify() {
     let email = document.getElementById("email").value;
     let _token = document.getElementsByName("_token")[0].value;
 
-   
-
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -356,7 +352,6 @@ function Send_verify() {
             document.getElementById("form_1").className = "d-none";
             document.getElementById("form_2").className = "block";
         }
-
     }
     };
     xhttp.open("POST", "/registreren/verify", true);
@@ -369,7 +364,7 @@ function Send_verify() {
     }
 }
 
-//controlleer verificatie code
+// Controleer verificatiecode
 document.getElementById("check_verify").addEventListener("click", function() {
     event.preventDefault();
     let code = document.getElementById("verificatie_code").value;
