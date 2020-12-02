@@ -4,6 +4,8 @@
 namespace App;
 
 
+use Carbon\Carbon;
+
 class Bid extends SuperModel
 {
     /**
@@ -13,5 +15,14 @@ class Bid extends SuperModel
     public function getBidder()
     {
         return User::oneWhere("id", $this->user_id);
+    }
+
+    /**
+     * Get the bid's time
+     * @return string
+     */
+    public function getTime()
+    {
+        return Carbon::parse($this->bid_datetime, "UTC")->setTimezone(config('timezone'))->toTimeString();
     }
 }

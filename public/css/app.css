@@ -11555,7 +11555,7 @@ fieldset:disabled .btn {
 }
 
 .auction-card-image {
-  height: 300px;
+  height: 240px;
   background-size: cover;
   background-position: center;
 }
@@ -11784,7 +11784,7 @@ a.category:hover {
 .hero-section {
   background: #c5AE91;
   background: linear-gradient(27deg, #c5AE91 0%, #284B63 100%);
-  min-height: 400px;
+  min-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -75,7 +75,7 @@ class ForgotPasswordController extends Controller
 
         }
 
-        session()->flash('msg', 'Email verstuurd als email adress en beveiligings antwoord klopt');
+        session()->flash('msg', 'Email verstuurd als e-mailadres en beveiligings antwoord klopt');
         return redirect('/wachtwoordvergeten');
 
     }
@@ -122,7 +122,7 @@ class ForgotPasswordController extends Controller
 
         }else if ($user->email != $data['email']) {
 
-            session()->flash('msg', 'Verkeerd emailadress opgegeven');
+            session()->flash('msg', 'Verkeerd e-mailadres opgegeven');
             return redirect(url()->previous());
 
         }
