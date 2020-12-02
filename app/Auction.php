@@ -246,29 +246,15 @@ class Auction extends SuperModel
      */
     public function getReviewAverage()
     {
-        $positiveReviews = $this->getPositiveReviews();
-        return count($this->getReviews()) > 0 ? round(($positiveReviews * 5) / ($positiveReviews + $this->getNegativeReviews())) : 0;
-    }
-
-    /**
-     * Get the auction's positive reviews
-     * @return mixed
-     */
-    public function getPositiveReviews()
-    {
-        $result = DB::selectOne("
-            SELECT COUNT(is_positive) as Cnt,reviews.auction_id
-            FROM reviews
-            WHERE auction_id=:id AND is_positive=1
-            GROUP BY auction_id
-            ORDER BY Cnt DESC
-            ",
-            [
-                "id" => $this->id
-            ]);
-        if ($result !== false)
-            return $result["Cnt"];
-        return 0;
+        return number_format(DB::selectOne("
+                SELECT AVG(CAST(rating as FLOAT)) as average
+                FROM reviews
+                WHERE auction_id IN (
+                    SELECT auctions.id FROM auctions WHERE auctions.user_id=:user_id
+                )
+            ", [
+            "user_id" => $this->user_id
+        ])["average"], 2,",",".") ?: 0;
     }
 
     /**
@@ -283,27 +269,6 @@ class Auction extends SuperModel
     }
 
     /**
-     * Get the auction's negative reviews
-     * @return mixed
-     */
-    public function getNegativeReviews()
-    {
-        $result = DB::selectOne("
-            SELECT COUNT(is_positive) as Cnt,reviews.auction_id
-            FROM reviews
-            WHERE auction_id=:id AND is_positive=0
-            GROUP BY auction_id
-            ORDER BY Cnt DESC
-            ",
-            [
-                "id" => $this->id
-            ]);
-        if ($result !== false)
-            return $result["Cnt"];
-        return 0;
-    }
-
-    /**
      * Get the auction's reviews
      * @return mixed
      */
@@ -312,10 +277,31 @@ class Auction extends SuperModel
         return Review::resultArrayToClassArray(DB::select("
             SELECT *
             FROM reviews
-            WHERE auction_id=:id
+            WHERE auction_id IN (
+                SELECT auctions.id FROM auctions WHERE auctions.user_id=:user_id
+            )
             ",
             [
-                "id" => $this->id
+                "user_id" => $this->getSeller()->id
+            ]));
+    }
+
+    /**
+     * Get the auction's reviews per star amount
+     * @return mixed
+     */
+    public function getReviewsByRating($rating)
+    {
+        return Review::resultArrayToClassArray(DB::select("
+            SELECT *
+            FROM reviews
+            WHERE auction_id IN (
+                SELECT auctions.id FROM auctions WHERE auctions.user_id=:user_id
+            ) AND rating=:rating_number
+            ",
+            [
+                "user_id" => $this->user_id,
+                "rating_number" => $rating
             ]));
     }
 

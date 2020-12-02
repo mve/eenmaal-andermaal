@@ -167,7 +167,7 @@ class RegisterController extends Controller
 
             Mail::to($data["email"])->send(new SendVerify($request));
 
-            return response()->json(['success'=>'Vul de verificatie code in die gestuurd is naar je email']);
+            return response()->json(['success'=>'Vul de verificatie code in die gestuurd is naar je e-mailadres']);
         }
 
         if ($data["type"] == "2") {
