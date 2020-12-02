@@ -26995,15 +26995,18 @@ for (var i = 0; i < hoverables.length; i++) {
 }
 
 var categoriesMenuElement = document.querySelector(".category-container");
-document.addEventListener('click', function (event) {
-  var isClickInside = categoriesMenuElement.contains(event.target);
 
-  if (!isClickInside) {
-    for (var i = 0; i < hoverables.length; i++) {
-      hideChildren(hoverables[i]);
+if (categoriesMenuElement) {
+  document.addEventListener('click', function (event) {
+    var isClickInside = categoriesMenuElement.contains(event.target);
+
+    if (!isClickInside) {
+      for (var i = 0; i < hoverables.length; i++) {
+        hideChildren(hoverables[i]);
+      }
     }
-  }
-});
+  });
+}
 
 /***/ }),
 
