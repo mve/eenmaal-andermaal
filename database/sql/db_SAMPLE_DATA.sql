@@ -245,7 +245,15 @@ VALUES ('Computer', NULL),
     ('Fietsen', 33),
     ('Motoren', 33),
     ('Scooters', 34),
-    ('Overig', 29)
+    ('Overig', 29),
+    ('JDM', 30),
+    ('Subaru', 40),
+    ('Accessoires', 41),
+    ('Performance', 42),
+    ('Turbo''s', 44),
+    ('FISPA', 45),
+    ('RIDEX', 45),
+    ('Motorblokken', 44)
 
 INSERT INTO dbo.auction_categories (auction_id, category_id)
 VALUES (0, 36),

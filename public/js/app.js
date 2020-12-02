@@ -26962,6 +26962,8 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/*  Navigatie rubrieken */
+
 
 function hideChildren(parent) {
   var children = parent.parentElement.querySelectorAll(":scope>a,:scope>div");
@@ -26994,19 +26996,44 @@ for (var i = 0; i < hoverables.length; i++) {
   hoverables[i].addEventListener('click', toggleSubMenu);
 }
 
-var categoriesMenuElement = document.querySelector(".category-container");
+var categoriesMenuElement = document.querySelector("#category-container-parent");
+var categoriesCopyElement = document.querySelector("#category-container-copy");
 
-if (categoriesMenuElement) {
-  document.addEventListener('click', function (event) {
-    var isClickInside = categoriesMenuElement.contains(event.target);
-
-    if (!isClickInside) {
-      for (var i = 0; i < hoverables.length; i++) {
-        hideChildren(hoverables[i]);
-      }
-    }
-  });
+function closeAllHoverablesChildren() {
+  for (var i = 0; i < hoverables.length; i++) {
+    hideChildren(hoverables[i]);
+  }
 }
+
+document.addEventListener('click', function (event) {
+  var isClickInside = categoriesMenuElement.contains(event.target);
+
+  if (!isClickInside) {
+    closeAllHoverablesChildren();
+  }
+});
+
+function debounce(func) {
+  var timer;
+  return function (event) {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(func, 100, event);
+  };
+}
+
+function setNavCopySize() {
+  categoriesCopyElement.style.height = categoriesMenuElement.offsetHeight + "px";
+}
+
+window.addEventListener("resize", debounce(function (e) {
+  closeAllHoverablesChildren();
+  setNavCopySize();
+}));
+window.addEventListener('load', function () {
+  setNavCopySize();
+  console.log(categoriesCopyElement.offsetHeight);
+});
+/*  Navigatie rubrieken einde */
 
 /***/ }),
 
@@ -27067,8 +27094,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
