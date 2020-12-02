@@ -2,11 +2,15 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="row category-container">
-        @php(\App\Category::getCategories())
+    <div id="category-container-parent">
+        <div class="container">
+            <div class="row category-container">
+                @php(\App\Category::getCategories())
+            </div>
         </div>
     </div>
+
+    <div id="category-container-copy">&nbsp;</div>
 
     <div class="hero-section">
         <h1 class="title text-white text-center">

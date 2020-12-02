@@ -18,6 +18,15 @@
     padding: 18px 0;
 }
 
+#category-container-parent{
+    max-height: 50px;
+    background-color:red!important;
+}
+#category-container-copy{
+    max-height: 50px;
+    background-color:blue!important;
+}
+
 .clickable-submenu{
     font-weight: normal;
     color: $dark-blue;

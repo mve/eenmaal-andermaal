@@ -26962,6 +26962,8 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/*  Navigatie rubrieken */
+
 
 function hideChildren(parent) {
   var children = parent.parentElement.querySelectorAll(":scope>a,:scope>div");
@@ -26995,6 +26997,7 @@ for (var i = 0; i < hoverables.length; i++) {
 }
 
 var categoriesMenuElement = document.querySelector(".category-container");
+var categoriesCopyElement = document.querySelector("#category-container-copy");
 document.addEventListener('click', function (event) {
   var isClickInside = categoriesMenuElement.contains(event.target);
 
@@ -27004,6 +27007,10 @@ document.addEventListener('click', function (event) {
     }
   }
 });
+/*  Navigatie rubrieken einde */
+
+categoriesCopyElement.offsetHeight = categoriesMenuElement;
+console.log(categoriesCopyElement.offsetHeight);
 
 /***/ }),
 
