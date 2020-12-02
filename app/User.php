@@ -22,6 +22,38 @@ class User extends SuperModel
             ]);
     }
 
+    /**
+     * Get the user's seller verification details
+     * @return mixed
+     */
+    public function getSellerVerification()
+    {
+        return DB::selectOne("
+            SELECT *
+            FROM seller_verifications
+            WHERE user_id=:id
+            ",
+            [
+                "id" => $this->id
+            ]);
+    }
+
+    /**
+     * Get the user's contry
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return DB::selectOne("
+            SELECT *
+            FROM countries
+            WHERE country_code=:cc
+            ",
+            [
+                "cc" => $this->country_code
+            ])["country"];
+    }
+
     //moet naar de controllers
     public static function login($email_address, $password){
         $user = User::oneWhere("email",$email_address);

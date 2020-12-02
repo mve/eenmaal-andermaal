@@ -7,7 +7,6 @@ use App\Category;
 use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Middleware\CheckUser;
 
 class HomeController extends Controller
 {
@@ -18,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware(CheckUser::class);
+//        $this->middleware('check.user');
     }
 
     /**
