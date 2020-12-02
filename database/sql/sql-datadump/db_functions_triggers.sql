@@ -1,25 +1,4 @@
-CREATE OR REPLACE FUNCTION fnStripHtml()
-                           RETURNS trigger AS
-$BODY$
-BEGIN
-  IF NEW.beschrijving IS NOT NULL THEN
-    
-  END IF;
-  RETURN NEW;
-END;
-$BODY$
-LANGUAGE plpgsql;
-GO
-
-CREATE TRIGGER tgrStripItemDescription
-               BEFORE INSERT
-               ON dbo.Items
-               FOR EACH ROW
-               EXECUTE PROCEDURE fnStripHtml();
-
------------------------------------------------------
-
-CREATE TRIGGER InsteadOfINSERTTriggerExample on dbo.Items
+CREATE TRIGGER tgrOnItemsInsert on dbo.Items
 INSTEAD OF INSERT 
 AS
 BEGIN 
@@ -49,9 +28,9 @@ SELECT
 	Valuta,
 	Conditie,
 	Thumbnail,
-	Beschrijving
+	dbo.strip_html(Beschrijving)
 FROM INSERTED
-PRINT 'We Successfully Fired Our INSTEAD OF INSERT Triggers in SQL Server.'
+PRINT 'Triggered!'
 END
 GO
 
@@ -70,7 +49,7 @@ AS BEGIN
 END
 
 ---------------------------------------------------
-
+-- https://stackoverflow.com/questions/457701/how-to-strip-html-tags-from-a-string-in-sql-server
 CREATE FUNCTION [dbo].[udf_StripHTML]
 --by Patrick Honorez --- www.idevlop.com
 --inspired by http://stackoverflow.com/questions/457701/best-way-to-strip-html-tags-from-a-string-in-sql-server/39253602#39253602
