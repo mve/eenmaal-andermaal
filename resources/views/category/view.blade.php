@@ -2,6 +2,15 @@
 
 @section('content')
 
-    test
+    <div class="container">
+
+        @include("includes.auctionsrow", [
+            "title" => $category->name,
+            "auctions" =>$auctions
+        ])
+
+    </div>
+
+
 
 @endsection

@@ -39,4 +39,4 @@ Route::get('faq', function () {
     return view('faq.faq');
 });
 
-Route::get('categorie/{id}', 'CategoryController@index');
+Route::get('categorie/{id}', 'CategoryController@index')->name('auctionsInCategory');
