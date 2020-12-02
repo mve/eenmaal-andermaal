@@ -244,7 +244,13 @@ class Auction extends SuperModel
      */
     public function getReviewAverage()
     {
-        return number_format(DB::selectOne("SELECT AVG(CAST(rating as FLOAT)) as average FROM reviews WHERE user_id=:user_id", [
+        return number_format(DB::selectOne("
+                SELECT AVG(CAST(rating as FLOAT)) as average
+                FROM reviews
+                WHERE auction_id IN (
+                    SELECT auctions.id FROM auctions WHERE auctions.user_id=:user_id
+                )
+            ", [
             "user_id" => $this->user_id
         ])["average"], 2,",",".") ?: 0;
     }
@@ -269,10 +275,12 @@ class Auction extends SuperModel
         return Review::resultArrayToClassArray(DB::select("
             SELECT *
             FROM reviews
-            WHERE user_id=:user_id
+            WHERE auction_id IN (
+                SELECT auctions.id FROM auctions WHERE auctions.user_id=:user_id
+            )
             ",
             [
-                "user_id" => $this->user_id
+                "user_id" => $this->getSeller()->id
             ]));
     }
 
@@ -285,7 +293,9 @@ class Auction extends SuperModel
         return Review::resultArrayToClassArray(DB::select("
             SELECT *
             FROM reviews
-            WHERE user_id=:user_id AND rating=:rating_number
+            WHERE auction_id IN (
+                SELECT auctions.id FROM auctions WHERE auctions.user_id=:user_id
+            ) AND rating=:rating_number
             ",
             [
                 "user_id" => $this->user_id,
