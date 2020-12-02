@@ -6,7 +6,7 @@
     <div class="container">
         <h2>{{$auction->title}}</h2>
         <div class="row">
-            <div class="col-lg-7 col-xl-8">
+            <div class="col-lg-7">
                 <!-- CAROUSEL SLIDER -->
                 <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -17,7 +17,7 @@
                     <div class="carousel-inner">
                         @for($i = 0; $i < count($auctionImages); $i++)
                             <div class="carousel-item @if($i==0) active @endif">
-                                <img src="{{$auctionImages[$i]["file_name"]}}" class="d-block w-100" alt="...">
+                                <img src="{{$auctionImages[$i]["file_name"]}}" class="d-block" alt="...">
                             </div>
                         @endfor
                     </div>
@@ -73,7 +73,7 @@
                     </p>
                 </div>
             </div>
-            <div class="col-lg-5 col-xl-4">
+            <div class="col-lg-5 col-xl-4 offset-xl-1">
 
                 <div class="auction-card mb-5">
                     @if(!Session::has('user'))
