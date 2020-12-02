@@ -340,7 +340,7 @@ function Send_verify() {
     let email = document.getElementById("email").value;
     let _token = document.getElementsByName("_token")[0].value;
 
-    console.log(emailIsValid(email) );
+   
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
