@@ -298,7 +298,7 @@ VALUES (
         10.00,
         'Het liefst contant',
         3,
-        '2020-12-16',
+        '2020-12-01',
         'Arnhem',
         'NL',
         1
