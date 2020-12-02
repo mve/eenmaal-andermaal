@@ -198,13 +198,15 @@ class Auction extends SuperModel
             return "Afgelopen";
         $diff = $parsedTime->diff();
         $formatString = "%H:%I:%S";
-        if ($diff->days > 0)
-            $formatString = "%d dagen " . $formatString;
-//        if($diff->m > 0)
-//            $formatString = "%m maanden " . $formatString;
-//        if($diff->y > 0)
-//            $formatString = "%y jaar " . $formatString;
+        if($diff->days > 1){
+            $formatString = "%d dagen %H:%I";
+        }else if($diff->days === 1){
+            $formatString = "%d dag %H:%I";
+        }else{
+            $formatString = "%H:%I:%S";
+        }
         return $diff->format($formatString);
+//        return ucfirst($parsedTime->diffForHumans());
     }
 
     /**
