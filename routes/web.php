@@ -35,6 +35,8 @@ Route::post('/resetwachtwoord', 'Auth\ForgotPasswordController@update_password')
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
+
 Route::get('faq', function () {
     return view('faq.faq');
 });
