@@ -179,3 +179,15 @@ a.category{
         }
     }
 }
+
+.carousel{
+    .carousel-inner {
+        .carousel-item{
+            img{
+                max-height: 500px;
+                max-width: 100%;
+            }
+        }
+
+    }
+}

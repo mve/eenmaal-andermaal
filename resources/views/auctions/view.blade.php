@@ -17,7 +17,7 @@
                     <div class="carousel-inner">
                         @for($i = 0; $i < count($auctionImages); $i++)
                             <div class="carousel-item @if($i==0) active @endif">
-                                <img src="{{$auctionImages[$i]["file_name"]}}" class="d-block w-100" alt="...">
+                                <img src="{{$auctionImages[$i]["file_name"]}}" class="d-block" alt="...">
                             </div>
                         @endfor
                     </div>
