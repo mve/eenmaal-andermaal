@@ -11864,7 +11864,9 @@ a.category:hover {
 }
 
 .carousel .carousel-inner .carousel-item img {
+  margin: auto;
   max-height: 500px;
+  min-width: auto;
   max-width: 100%;
 }
 
