@@ -12,11 +12,13 @@
                         <div class="card-body">
 
                             <h2 class="text-center mt-2 mb-4">Registreren</h2>
-                            
+
+
+
                             <div class="alert alert-success d-none" role="alert" id="alert-success">
-                                <span class="success" id="success" style="margin-top:10px; margin-bottom: 10px;"></span>        
+                                <span class="success" id="success" style="margin-top:10px; margin-bottom: 10px;"></span>
                             </div>
-                            
+
                             <div class="alert alert-danger d-none" role="alert" id="alert-danger">
                                 <span class="error" id="error" style="margin-top:10px; margin-bottom: 10px;"></span>
                             </div>
@@ -25,6 +27,11 @@
                                 @csrf
 
                             <div id="form_1" class="@if(!$errors->any() || $errors->has("username") || $errors->has("email")) d-block @else d-none @endif">
+
+                                <div class="alert alert-success " role="alert" id="alert-success">
+                                    vul hier je gebruikersnaam en e-mailadres in. op het e-mailadres krijg je een code.
+                                </div>
+
                                 <div class="form-group row mb-2">
                                     <label for="Username"
                                            class="col-md-4 col-form-label text-md-right">{{ __('Gebruikersnaam') }}</label>
@@ -340,7 +347,7 @@ function Send_verify() {
     let email = document.getElementById("email").value;
     let _token = document.getElementsByName("_token")[0].value;
 
-   
+
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
