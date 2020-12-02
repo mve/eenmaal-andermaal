@@ -264,21 +264,21 @@ VALUES (
         0,
         0,
         '2020-11-26',
-        5,
+        1,
         'Fiets was in slechte staat, was niet te zien in de foto''s. Heb er niet lang mee kunnen doen voordat ik op zoek kon naar een andere.'
     ),
     (
         1,
         0,
         '2020-11-26',
-        1,
+        4,
         'Leuk klein dingetje, verkoper was ook zeer vriendelijk.'
     ),
     (
         2,
         0,
         '2020-11-26',
-        2,
+        5,
         'Auto was als beschreven, zeer tevreden!'
     ),
     (
