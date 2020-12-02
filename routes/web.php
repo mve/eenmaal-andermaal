@@ -38,3 +38,5 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('faq', function () {
     return view('faq.faq');
 });
+
+Route::get('categorie/{id}', 'CategoryController@index');
