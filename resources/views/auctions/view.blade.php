@@ -6,7 +6,7 @@
     <div class="container">
         <h2>{{$auction->title}}</h2>
         <div class="row">
-            <div class="col-lg-7 col-xl-8">
+            <div class="col-lg-7">
                 <!-- CAROUSEL SLIDER -->
                 <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -73,7 +73,7 @@
                     </p>
                 </div>
             </div>
-            <div class="col-lg-5 col-xl-4">
+            <div class="col-lg-5 col-xl-4 offset-xl-1">
 
                 <div class="auction-card mb-5">
                     @if(!Session::has('user'))
