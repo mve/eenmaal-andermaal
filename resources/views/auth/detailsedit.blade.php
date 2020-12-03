@@ -11,7 +11,7 @@
 
                         <div class="card-body">
 
-                            <h2 class="text-center mt-2 mb-4">Gegevens bewerken</h2>
+                            <h2 class="text-center mt-2 mb-4">Gegevens bewerken <a href="{{url()->previous()}}" class="btn btn-primary">Terug</a></h2>
 
                             @if(\Illuminate\Support\Facades\Session::has("success"))
                                 <div class="alert alert-success" role="alert" id="alert-success">
@@ -200,7 +200,6 @@
         e.preventDefault();
         var phoneFields = document.querySelectorAll(".form-phone-number");
         for(var i = 0; i < phoneFields.length; i++){
-            console.log(phoneFields[i].getAttribute("p-id"));
             if(phoneFields[i].getAttribute("p-id") == id){
                 phoneFields[i].parentNode.remove();
             }
