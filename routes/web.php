@@ -35,6 +35,13 @@ Route::post('/resetwachtwoord', 'Auth\ForgotPasswordController@update_password')
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
+Route::get('mijnaccount/bewerken', 'UserDetailsController@edit')->name('mijnaccount.bewerken');
+Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken');
+Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
+
 Route::get('faq', function () {
     return view('faq.faq');
 });
+
+Route::get('categorie/{id}', 'CategoryController@index')->name('auctionsInCategory');

@@ -6,7 +6,7 @@
     <div class="container">
         <h2>{{$auction->title}}</h2>
         <div class="row">
-            <div class="col-lg-7 col-xl-8">
+            <div class="col-lg-7">
                 <!-- CAROUSEL SLIDER -->
                 <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -17,7 +17,7 @@
                     <div class="carousel-inner">
                         @for($i = 0; $i < count($auctionImages); $i++)
                             <div class="carousel-item @if($i==0) active @endif">
-                                <img src="{{$auctionImages[$i]["file_name"]}}" class="d-block w-100" alt="...">
+                                <img src="{{$auctionImages[$i]["file_name"]}}" class="d-block" alt="...">
                             </div>
                         @endfor
                     </div>
@@ -73,7 +73,7 @@
                     </p>
                 </div>
             </div>
-            <div class="col-lg-5 col-xl-4">
+            <div class="col-lg-5 col-xl-4 offset-xl-1">
 
                 <div class="auction-card mb-5">
                     @if(!Session::has('user'))
@@ -129,7 +129,7 @@
                         <ul class="list-group" style="max-height: 200px; overflow-y: scroll">
                             @if(count($auctionBids))
                                 @foreach($auctionBids as $bid)
-                                    <li class="list-group-item flex-centered"><strong>{{$bid->getBidder()->first_name}}: &euro;{{$bid->amount}}</strong></li>
+                                    <li class="list-group-item"><strong>{{$bid->getBidder()->first_name}}: &euro;{{$bid->amount}}</strong> <span class="float-right">{{$bid->getTime()}}</span></li>
                                 @endforeach
                             @else
                                 <li class="list-group-item flex-centered"><strong>Er is nog niet geboden</strong></li>
@@ -146,29 +146,47 @@
                     <div class="auction-card-body ">
                         <div class="flex-centered">
                             <div class="stars">
-                                @if($auctionReviewAverage > 0) <i class="fas fa-star"></i> @endif
-                                @if($auctionReviewAverage > 1) <i class="fas fa-star"></i> @endif
-                                @if($auctionReviewAverage > 2) <i class="fas fa-star"></i> @endif
-                                @if($auctionReviewAverage > 3) <i class="fas fa-star"></i> @endif
-                                @if($auctionReviewAverage > 4) <i class="fas fa-star"></i> @endif
-                                {{$auctionReviewAverage}} van de 5
+                                @if($reviewsData["average"] > 0) <i class="fas fa-star"></i> @endif
+                                @if($reviewsData["average"] > 1) <i class="fas fa-star"></i> @endif
+                                @if($reviewsData["average"] > 2) <i class="fas fa-star"></i> @endif
+                                @if($reviewsData["average"] > 3) <i class="fas fa-star"></i> @endif
+                                @if($reviewsData["average"] > 4) <i class="fas fa-star"></i> @endif
+                                {{$reviewsData["average"]}} van de 5
                             </div>
                         </div>
                         <div class="flex-centered my-3">
-                            <i>{{count($auction->getReviews())}} beoordelingen</i>
+                            <i>{{$reviewsData["count"]}} {{$reviewsData["count"]==1 ? "beoordeling" : "beoordelingen"}}</i>
                         </div>
 
-                        <div class="flex-centered">Positief
+                        <div class="flex-centered">5 sterren
                             <div class="rating-bar-empty">
-                                <div class="rating-bar-filled" style="width:{{$auctionReviewsPositivePercent}};"></div>
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["fiveStars"]}};"></div>
                             </div>
-                            {{$auctionReviewsPositivePercent}}
+                            {{$reviewsData["fiveStars"]}}
                         </div>
-                        <div class="flex-centered">Negatief
+                        <div class="flex-centered">4 sterren
                             <div class="rating-bar-empty">
-                                <div class="rating-bar-filled" style="width:{{$auctionReviewsNegativePercent}};"></div>
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["fourStars"]}};"></div>
                             </div>
-                            {{$auctionReviewsNegativePercent}}
+                            {{$reviewsData["fourStars"]}}
+                        </div>
+                        <div class="flex-centered">3 sterren
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["threeStars"]}};"></div>
+                            </div>
+                            {{$reviewsData["threeStars"]}}
+                        </div>
+                        <div class="flex-centered">2 sterren
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["twoStars"]}};"></div>
+                            </div>
+                            {{$reviewsData["twoStars"]}}
+                        </div>
+                        <div class="flex-centered">1 ster
+                            <div class="rating-bar-empty">
+                                <div class="rating-bar-filled" style="width:{{$reviewsData["oneStars"]}};"></div>
+                            </div>
+                            {{$reviewsData["oneStars"]}}
                         </div>
 
                     </div>

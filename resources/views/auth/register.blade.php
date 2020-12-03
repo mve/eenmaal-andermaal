@@ -12,13 +12,24 @@
                         <div class="card-body">
 
                             <h2 class="text-center mt-2 mb-4">Registreren</h2>
-                            <span class="success" id="success" style="color:green; margin-top:10px; margin-bottom: 10px;"></span>
-                            <span class="error" id="error" style="color:red; margin-top:10px; margin-bottom: 10px;"></span>
+
+                            <div class="alert alert-success d-none" role="alert" id="alert-success">
+                                <span class="success" id="success" style="margin-top:10px; margin-bottom: 10px;"></span>
+                            </div>
+
+                            <div class="alert alert-danger d-none" role="alert" id="alert-danger">
+                                <span class="error" id="error" style="margin-top:10px; margin-bottom: 10px;"></span>
+                            </div>
 
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
 
                             <div id="form_1" class="@if(!$errors->any() || $errors->has("username") || $errors->has("email")) d-block @else d-none @endif">
+
+                                <div class="alert alert-success " role="alert" id="alert-success">
+                                    Vul hier je e-mailadres en gewenste gebruikersnaam in. Via de mail krijg je een code.
+                                </div>
+
                                 <div class="form-group row mb-2">
                                     <label for="Username"
                                            class="col-md-4 col-form-label text-md-right">{{ __('Gebruikersnaam') }}</label>
@@ -92,8 +103,6 @@
                                             Herstuur code email
                                         </button>
 
-
-
                                     </div>
                                     <div class="col-md-6">
 
@@ -102,11 +111,7 @@
                                         </button>
 
                                     </div>
-
-
-
                                 </div>
-
                             </div>
 
                             <div id="form_3" @if(!$errors->any() || $errors->has("email")) class="d-none" @endif>
@@ -315,7 +320,6 @@
                             </div>
                         </form>
 
-
                         </div>
                     </div>
                 </div>
@@ -323,6 +327,9 @@
         </div>
 
 <script>
+function emailIsValid (email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
 
 function Send_verify() {
     event.preventDefault();
@@ -339,19 +346,25 @@ function Send_verify() {
             document.getElementById("success").innerHTML =
             JSON.parse(this.responseText).success
 
+            document.getElementById("alert-success").className = "alert alert-success";
+            document.getElementById("alert-danger").className = "alert alert-danger d-none";
+
             document.getElementById("form_1").className = "d-none";
             document.getElementById("form_2").className = "block";
         }
-
     }
     };
     xhttp.open("POST", "/registreren/verify", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
-
+    if (emailIsValid(email)) {
+        xhttp.send("type=1&username="+username+"&email="+email+"&_token="+_token);
+    } else {
+        document.getElementById("alert-danger").className = "alert alert-danger";
+        document.getElementById("error").innerHTML = "Het ingevulde e-mailadres in ongeldig";
+    }
 }
 
-//controlleer verificatie code
+// Controleer verificatiecode
 document.getElementById("check_verify").addEventListener("click", function() {
     event.preventDefault();
     let code = document.getElementById("verificatie_code").value;
@@ -365,6 +378,9 @@ document.getElementById("check_verify").addEventListener("click", function() {
                 document.getElementById("success").innerHTML =
                 JSON.parse(this.responseText).success
 
+                document.getElementById("alert-success").className = "alert alert-success";
+                document.getElementById("alert-danger").className = "alert alert-danger d-none";
+
                 document.getElementById("form_2").className = "d-none";
                 document.getElementById("form_3").className = "block";
             }
@@ -373,6 +389,9 @@ document.getElementById("check_verify").addEventListener("click", function() {
                 document.getElementById("success").innerHTML = "";
                 document.getElementById("error").innerHTML =
                 JSON.parse(this.responseText).error
+
+                document.getElementById("alert-success").className = "alert alert-success d-none";
+                document.getElementById("alert-danger").className = "alert alert-danger";
 
                 document.getElementById("send_verify_again").className = "btn btn-primary block";
             }
