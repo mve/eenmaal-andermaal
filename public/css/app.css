@@ -11554,21 +11554,16 @@ fieldset:disabled .btn {
   position: relative;
 }
 
-.auction-card-image {
-  height: 240px;
-  background-size: cover;
-  background-position: center;
+.auction-card-mine {
+  box-shadow: 0 10px 20px rgba(40, 75, 99, 0.26), 0 0 6px rgba(40, 75, 99, 0.26) !important;
 }
 
-.auction-card-data {
-  font-size: 16px;
-  font-weight: bold;
-  width: 100%;
-  text-align: center;
-}
-
-.auction-card-body {
-  padding: 20px;
+.auction-card > div.mine {
+  position: absolute;
+  background-color: #284B63;
+  border-bottom-right-radius: 0.75rem;
+  padding: 10px;
+  color: #fff;
 }
 
 .auction-card-head {
@@ -11581,6 +11576,23 @@ fieldset:disabled .btn {
 .auction-card-head .h4 {
   margin: 0;
   color: white;
+}
+
+.auction-card-body {
+  padding: 20px;
+}
+
+.auction-card-data {
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+.auction-card-image {
+  height: 240px;
+  background-size: cover;
+  background-position: center;
 }
 
 .footer-link {
