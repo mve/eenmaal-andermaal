@@ -73,38 +73,3 @@
         </div>
     </div>
 @endsection
-<script>
-    // function removeBtnClick(e,id) {
-    //     e.preventDefault();
-    //     var phoneFields = document.querySelectorAll(".form-phone-number");
-    //     for(var i = 0; i < phoneFields.length; i++){
-    //         if(phoneFields[i].getAttribute("p-id") == id){
-    //             phoneFields[i].parentNode.remove();
-    //         }
-    //     }
-    // }
-    // function addPhoneField(e) {
-    //     e.preventDefault();
-    //     var formPhoneFieldsContainer = document.querySelector("#formPhoneFieldsContainer");
-    //     var phoneFields = document.querySelectorAll(".form-phone-number");
-    //     var maxId = 0;
-    //     for(var i = 0; i < phoneFields.length; i++){
-    //         var curInt = parseInt(phoneFields[i].getAttribute("p-id"));
-    //         if(curInt > maxId){
-    //             maxId = curInt;
-    //         }
-    //     }
-    //
-    //     var xhttp = new XMLHttpRequest();
-    //     xhttp.onreadystatechange = function() {
-    //         if (this.readyState == 4 && this.status == 200) {
-    //             var div = document.createElement('div');
-    //             div.innerHTML = this.responseText;
-    //             formPhoneFieldsContainer.appendChild(div);
-    //         }
-    //     };
-    //     xhttp.open("GET", "/mijnaccount/phonefield/"+(maxId+1), true);
-    //     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    //     xhttp.send();
-    // }
-</script>
