@@ -27044,7 +27044,7 @@ if (ratingDiv) {
   var ratingInputs = ratingDiv.querySelectorAll(".rating input");
 
   for (var i = 0; i < ratingInputs.length; i++) {
-    ratingInputs[i].addEventListener("change", function () {
+    ratingInputs[i].addEventListener("click", function () {
       var ratingLabels = ratingDiv.querySelectorAll(".rating .fa-star");
 
       for (var x = 0; x < ratingLabels.length; x++) {
