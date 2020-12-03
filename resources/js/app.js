@@ -67,7 +67,6 @@ if(categoriesMenuElement){
 
     window.addEventListener('load', function () {
         setNavCopySize();
-        console.log(categoriesCopyElement.offsetHeight);
     });
 }
 /*  Navigatie rubrieken einde */
