@@ -11642,6 +11642,30 @@ fieldset:disabled .btn {
   width: 1%;
 }
 
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  width: 11em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rating label {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.rating > label:before {
+  color: #FFD700;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > label.far:before,
+.rating > label.far ~ label:before {
+  color: #FFD700;
+}
+
 h1,
 .h1,
 h2,

@@ -70,3 +70,24 @@ if(categoriesMenuElement){
     });
 }
 /*  Navigatie rubrieken einde */
+
+/* Beoordeling rating selecteren */
+var ratingDiv = document.querySelector("div.rating");
+if(ratingDiv){
+    var ratingInputs = ratingDiv.querySelectorAll(".rating input");
+    for(var i = 0; i < ratingInputs.length; i++){
+        ratingInputs[i].addEventListener("change", function(){
+            var ratingLabels = ratingDiv.querySelectorAll(".rating .fa-star");
+            for(var x = 0; x < ratingLabels.length; x++) {
+                if(ratingLabels[x].querySelector("input").value <= this.value){
+                    ratingLabels[x].classList.remove("far", "fa-star");
+                    ratingLabels[x].classList.add("fa", "fa-star");
+                }else{
+                    ratingLabels[x].classList.remove("fa", "fa-star");
+                    ratingLabels[x].classList.add("far", "fa-star");
+                }
+            }
+        });
+    }
+}
+/* Beoordeling rating selecteren einde */

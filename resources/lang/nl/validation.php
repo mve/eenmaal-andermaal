@@ -177,6 +177,7 @@ return [
         'password_confirmation' => 'wachtwoordbevestiging',
         'phone'                 => 'telefoonnummer',
         'phone_number.*'        => 'telefoonnummer',
+        'comment'               => 'beoordeling',
         'price'                 => 'prijs',
         'second'                => 'seconde',
         'sex'                   => 'geslacht',
