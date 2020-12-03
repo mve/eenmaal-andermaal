@@ -148,24 +148,24 @@ GO
 ---------------------------------------------------
 -- Geurian's remove_spaces-functie
 
-CREATE FUNCTION dbo.remove_spaces(@input NVARCHAR(MAX))
- RETURNS NVARCHAR(MAX)
- AS BEGIN
-     DECLARE @stripped NVARCHAR(MAX)
- 	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
- 	FROM (
- 		SELECT input = 
-             CAST(REPLACE(
-				REPLACE(
-					REPLACE(
-						LTRIM(RTRIM(@input))
-					,'  ',' '+CHAR(182))
-				,CHAR(182)+' ','')
-			,CHAR(182),'') AS XML)
-	) r
- 	RETURN LTRIM(RTRIM(@stripped))
-END
-GO
+-- CREATE FUNCTION dbo.remove_spaces(@input NVARCHAR(MAX))
+--  RETURNS NVARCHAR(MAX)
+--  AS BEGIN
+--      DECLARE @stripped NVARCHAR(MAX)
+--  	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
+--  	FROM (
+--  		SELECT input = 
+--              CAST(REPLACE(
+-- 				REPLACE(
+-- 					REPLACE(
+-- 						LTRIM(RTRIM(@input))
+-- 					,'  ',' '+CHAR(182))
+-- 				,CHAR(182)+' ','')
+-- 			,CHAR(182),'') AS XML)
+-- 	) r
+--  	RETURN LTRIM(RTRIM(@stripped))
+-- END
+-- GO
 ---------------------------------------------------
 
 -- https://stackoverflow.com/questions/457701/how-to-strip-html-tags-from-a-string-in-sql-server
@@ -246,6 +246,18 @@ SET @End = CHARINDEX('</STYLE>', @html, CHARINDEX('</STYLE>', @html)) + 7
 SET @Length = (@End - @Start) + 1
 END
 
+-- Remove anything between <SCRIPT> tags
+SET @Start = CHARINDEX('<SCRIPT', @html)
+SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('<', @html)) + 7
+SET @Length = (@End - @Start) + 1
+
+WHILE (@Start > 0 AND @End > 0 AND @Length > 0) BEGIN
+SET @html = STUFF(@html, @Start, @Length, '')
+SET @Start = CHARINDEX('<SCRIPT', @html)
+SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('</SCRIPT>', @html)) + 7
+SET @Length = (@End - @Start) + 1
+END
+
 -- Remove any HTML
 SET @Start = CHARINDEX('<', @html)
 SET @End = CHARINDEX('>', @html, CHARINDEX('<', @html))
@@ -279,22 +291,22 @@ GO
 
 ---------------------------------------------------
 -- Roel's remove_spaces-functie
--- CREATE FUNCTION [dbo].[remove_spaces](@html varchar(MAX))
--- RETURNS varchar(MAX)
--- AS
--- BEGIN
--- 	DECLARE @Demo TABLE(OriginalString VARCHAR(8000))
--- 	DECLARE @stripped varchar(MAX)
--- 	INSERT INTO @Demo (OriginalString)
--- 	SELECT @html
--- 	SELECT @stripped = REPLACE(
--- 			REPLACE(
--- 				REPLACE(
--- 					LTRIM(RTRIM(OriginalString))
--- 				,'  ',' '+CHAR(182))
--- 			,CHAR(182)+' ','')
--- 		,CHAR(182),'')
--- 	FROM @Demo
--- 	WHERE CHARINDEX('  ',OriginalString) > 0
--- 	RETURN REPLACE(@stripped, '  ', '')
--- END
+CREATE FUNCTION [dbo].[remove_spaces](@html varchar(MAX))
+RETURNS varchar(MAX)
+AS
+BEGIN
+	DECLARE @Demo TABLE(OriginalString VARCHAR(8000))
+	DECLARE @stripped varchar(MAX)
+	INSERT INTO @Demo (OriginalString)
+	SELECT @html
+	SELECT @stripped = REPLACE(
+			REPLACE(
+				REPLACE(
+					LTRIM(RTRIM(OriginalString))
+				,'  ',' '+CHAR(182))
+			,CHAR(182)+' ','')
+		,CHAR(182),'')
+	FROM @Demo
+	WHERE CHARINDEX('  ',OriginalString) > 0
+	RETURN REPLACE(@stripped, '  ', '')
+END
