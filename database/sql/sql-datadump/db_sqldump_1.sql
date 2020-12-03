@@ -17,7 +17,6 @@ CREATE TABLE tblIMAOLand
   CONSTRAINT CHK_CODE CHECK ( LEN(GBA_CODE) = 4 ),
   CONSTRAINT CHK_DATUM CHECK ( BEGINDATUM < EINDDATUM )
 )
-
 GO
 
 INSERT INTO tblIMAOLand ( [GBA_CODE],[NAAM_LAND],[BEGINDATUM],[EINDDATUM],[EER_Lid] ) VALUES ('0000','Onbekend',NULL,NULL,'0')
@@ -407,8 +406,6 @@ INSERT INTO tblIMAOLand ( [GBA_CODE],[NAAM_LAND],[BEGINDATUM],[EINDDATUM],[EER_L
 INSERT INTO tblIMAOLand ( [GBA_CODE],[NAAM_LAND],[BEGINDATUM],[EINDDATUM],[EER_Lid] ) VALUES ('5110','Sint Maarten','Oct 10 2010 12:00AM',NULL,'1')
 INSERT INTO tblIMAOLand ( [GBA_CODE],[NAAM_LAND],[BEGINDATUM],[EINDDATUM],[EER_Lid] ) VALUES ('5111','Zuid-Soedan','Jul  9 2012 12:00AM',NULL,'0')
 
-
-
 CREATE TABLE Users
 ( 
   Username VARCHAR(200),
@@ -425,7 +422,6 @@ CREATE TABLE Categorieen
 	Parent int NULL,
 	CONSTRAINT PK_Categorieen PRIMARY KEY (ID)
 )
-
 
 CREATE TABLE Items
 (
@@ -452,7 +448,6 @@ CREATE TABLE Illustraties
     CONSTRAINT PK_ItemPlaatjes PRIMARY KEY (ItemID, IllustratieFile),
 	CONSTRAINT [ItemsVoorPlaatje] FOREIGN KEY(ItemID) REFERENCES Items (ID)
 )
-
 
 CREATE INDEX IX_Items_Categorie ON Items (Categorie)
 CREATE INDEX IX_Categorieen_Parent ON Categorieen (Parent)
@@ -5968,4 +5963,3 @@ INSERT Users (Username,Postalcode,Location,Country,Rating) VALUES ('zero-to-five
 INSERT Users (Username,Postalcode,Location,Country,Rating) VALUES ('zette59320','59320','Frankrijk','FR',80.0)
 INSERT Users (Username,Postalcode,Location,Country,Rating) VALUES ('zibro-shop-de','26629','Duitsland','DE',99.6)
 INSERT Users (Username,Postalcode,Location,Country,Rating) VALUES ('zwiebelzwiebel99','22041','Duitsland','DE',63.0)
-
