@@ -200,7 +200,6 @@
         e.preventDefault();
         var phoneFields = document.querySelectorAll(".form-phone-number");
         for(var i = 0; i < phoneFields.length; i++){
-            console.log(phoneFields[i].getAttribute("p-id"));
             if(phoneFields[i].getAttribute("p-id") == id){
                 phoneFields[i].parentNode.remove();
             }
