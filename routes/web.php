@@ -37,6 +37,8 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 
+Route::get('/beoordeling/plaatsen','ReviewController@create')->name('');
+
 Route::get('faq', function () {
     return view('faq.faq');
 });
