@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class AuctionController extends Controller
 {
+
+    public function create(){
+        return view("auctions.create");
+    }
+
+
     public function show($id)
     {
         $auction = Auction::oneWhere("id", $id);

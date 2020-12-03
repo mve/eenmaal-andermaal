@@ -11878,3 +11878,7 @@ a.category:hover {
   max-width: 100%;
 }
 
+.make-auction label {
+  font-weight: bold;
+}
+

@@ -32,6 +32,7 @@
                     </li>
 
                 @else
+                    <li class="nav-item"><a href="{{ route('veilingmaken') }}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Veiling maken" class="nav-link"><i class="fas fa-plus"></i></a></li>
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
