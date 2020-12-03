@@ -71,7 +71,7 @@ set @HTMLText = replace(@htmlText, '&euro;' collate Latin1_General_CS_AS, '€' 
 set @HTMLText = replace(@htmlText, '&lt;' collate Latin1_General_CS_AS, '<'  collate Latin1_General_CS_AS)
 set @HTMLText = replace(@htmlText, '&gt;' collate Latin1_General_CS_AS, '>'  collate Latin1_General_CS_AS)
 set @HTMLText = replace(@htmlText, '&oelig;' collate Latin1_General_CS_AS, 'oe'  collate Latin1_General_CS_AS)
-set @HTMLText = replace(@htmlText, '&nbsp;' collate Latin1_General_CS_AS, ' '  collate Latin1_General_CS_AS)
+set @HTMLText = replace(@htmlText, '&nbsp;' collate Latin1_General_CS_AS, ''  collate Latin1_General_CS_AS)
 set @HTMLText = replace(@htmlText, '&copy;' collate Latin1_General_CS_AS, '©'  collate Latin1_General_CS_AS)
 set @HTMLText = replace(@htmlText, '&laquo;' collate Latin1_General_CS_AS, '«'  collate Latin1_General_CS_AS)
 set @HTMLText = replace(@htmlText, '&reg;' collate Latin1_General_CS_AS, '®'  collate Latin1_General_CS_AS)
@@ -156,7 +156,29 @@ BEGIN
 					,'  ',' '+CHAR(182))  --Changes 2 spaces to the OX model
 				,CHAR(182)+' ','')        --Changes the XO model to nothing
 			,CHAR(182),'') --Changes the remaining X's to nothing
+	FROM @HTMLText
 	WHERE CHARINDEX('  ',@HTMLText) > 0
 RETURN LTRIM(RTRIM(@HTMLText))
 
+END
+
+---------------------------------------------------
+--geurian remove spaces functie
+
+CREATE FUNCTION dbo.remove_spaces(@input NVARCHAR(MAX))
+ RETURNS NVARCHAR(MAX)
+ AS BEGIN
+     DECLARE @stripped NVARCHAR(MAX)
+ 	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
+ 	FROM (
+ 		SELECT input = 
+             CAST(REPLACE(
+				REPLACE(
+					REPLACE(
+						LTRIM(RTRIM(@input))
+					,'  ',' '+CHAR(182))  --Changes 2 spaces to the OX model
+				,CHAR(182)+' ','')        --Changes the XO model to nothing
+			,CHAR(182),'') AS XML)
+	) r
+ 	RETURN LTRIM(RTRIM(@stripped))
 END
