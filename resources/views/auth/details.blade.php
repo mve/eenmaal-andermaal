@@ -11,7 +11,7 @@
 
                         <div class="card-body">
 
-                            <h2 class="text-center mt-2 mb-4">Mijn account</h2>
+                            <h2 class="text-center mt-2 mb-4">Mijn account <a href="{{route("mijnaccount.bewerken")}}" class="btn btn-primary">Bewerken</a></h2>
 
                             <div class="row">
                                 <div class="col-lg-4 fw-bold">Gebruikersnaam</div>
