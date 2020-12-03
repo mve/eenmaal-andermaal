@@ -11,7 +11,7 @@ CREATE TABLE dbo.countries (
 )
 
 CREATE TABLE dbo.auctions (
-	id int IDENTITY(0,1) NOT NULL,
+	id bigint IDENTITY(0,1) NOT NULL,
 	title varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	description varchar(1000) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	start_price decimal(9,2) DEFAULT 0 NOT NULL,
@@ -47,8 +47,8 @@ CREATE TABLE dbo.shipping_methods (
 )
 
 CREATE TABLE dbo.auction_images (
-	id int IDENTITY(0,1) NOT NULL,
-	auction_id int NOT NULL,
+	id bigint IDENTITY(0,1) NOT NULL,
+	auction_id bigint NOT NULL,
 	file_name varchar(255) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	CONSTRAINT PK_auctionimages PRIMARY KEY (id),
 	CONSTRAINT FK_auctions_auctionimages FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id)
@@ -56,7 +56,7 @@ CREATE TABLE dbo.auction_images (
 
 CREATE TABLE dbo.auction_payment_methods (
 	id int IDENTITY(0,1) NOT NULL,
-	auction_id int NOT NULL,
+	auction_id bigint NOT NULL,
 	payment_id int NOT NULL,
 	CONSTRAINT PK_auctionpaymentmethods PRIMARY KEY (id),
 	CONSTRAINT FK_auctions_auctionpaymentmethods FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
@@ -65,7 +65,7 @@ CREATE TABLE dbo.auction_payment_methods (
 
 CREATE TABLE dbo.auction_shipping_methods (
 	id int IDENTITY(0,1) NOT NULL,
-	auction_id int NOT NULL,
+	auction_id bigint NOT NULL,
 	shipping_id int NOT NULL,
 	price decimal(9,2) NULL,
 	CONSTRAINT PK_auctionshippingmethods PRIMARY KEY (id),
@@ -76,9 +76,9 @@ CREATE TABLE dbo.auction_shipping_methods (
 CREATE TABLE dbo.categories (
 	id int IDENTITY(0,1) NOT NULL,
 	name varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
-	parent_id int NULL,
+	parent_id bigint NULL,
 	CONSTRAINT PK_category PRIMARY KEY (id),
-	CONSTRAINT FK_categories_categories FOREIGN KEY (parent_id) REFERENCES dbo.categories(id)
+	--CONSTRAINT FK_categories_categories FOREIGN KEY (parent_id) REFERENCES dbo.categories(id)
 )
 
 CREATE TABLE dbo.users (
@@ -118,7 +118,7 @@ CREATE TABLE dbo.seller_verifications (
 
 CREATE TABLE dbo.auction_categories (
 	id int IDENTITY(0,1) NOT NULL,
-	auction_id int NOT NULL,
+	auction_id bigint NOT NULL,
 	category_id int NOT NULL,
 	CONSTRAINT PK_auctioncategories PRIMARY KEY (id),
 	CONSTRAINT FK_auctions_auctioncategories FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
@@ -127,7 +127,7 @@ CREATE TABLE dbo.auction_categories (
 
 CREATE TABLE dbo.auction_hits (
 	id int IDENTITY(0,1) NOT NULL,
-	auction_id int NOT NULL,
+	auction_id bigint NOT NULL,
 	user_id int NULL,
 	ip varchar(45) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	hit_datetime datetime DEFAULT getdate() NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE dbo.auction_hits (
 
 CREATE TABLE dbo.bids (
 	id int IDENTITY(0,1) NOT NULL,
-	auction_id int NOT NULL,
+	auction_id bigint NOT NULL,
 	user_id int NOT NULL,
 	amount decimal(9,2) NOT NULL,
 	bid_datetime datetime DEFAULT getdate() NOT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE dbo.phone_numbers (
 
 CREATE TABLE dbo.reviews (
 	id int IDENTITY(0,1) NOT NULL,
-	auction_id int NOT NULL,
+	auction_id bigint NOT NULL,
 	user_id int NOT NULL,
 	review_datetime datetime DEFAULT getdate() NOT NULL,
 	rating tinyint DEFAULT 5 NOT NULL,

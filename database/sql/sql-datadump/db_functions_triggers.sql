@@ -1,3 +1,115 @@
+SET IDENTITY_INSERT dbo.MyTable ON  -- Statement Allows explicit values to be inserted into 
+                                -- the identity column of a table.
+GO
+
+-------------------------------------------
+CREATE TRIGGER insertusers on dbo.users
+INSTEAD OF INSERT 
+AS
+BEGIN 
+INSERT INTO dbo.users(
+	username,
+	email,
+	password,
+	first_name,
+	last_name,
+	address,
+	postal_code,
+	city,
+	country_code,
+	birth_date,
+	security_question_id,
+	security_answer,
+	is_seller
+)
+SELECT 
+	Username,
+	"email",
+	"password",
+	"first_name",
+	"last_name",
+	"adress",
+	Postalcode,
+	"City",
+	Country,
+	birth_date,
+	security_question_id,
+	security_answer,
+	is_seller
+FROM INSERTED
+END
+
+---------------------------------------------------
+
+CREATE TRIGGER insert_illustraties on dbo.Illustraties
+INSTEAD OF INSERT 
+AS
+BEGIN 
+INSERT INTO dbo.auction_images(
+	auction_id,
+	file_name
+)
+SELECT 
+	ItemID,
+	'../images/' + IllustratieFile
+FROM INSERTED
+END
+
+-----------------------------------------------------
+
+
+CREATE TRIGGER insert_categories on dbo.Categorieen
+INSTEAD OF INSERT 
+AS
+BEGIN 
+INSERT INTO dbo.categories(
+	id,
+	name,
+	parent_id
+)
+SELECT 
+	ID,
+	Name,
+	Parent
+FROM INSERTED
+END
+
+--------------------------------------------------------
+
+CREATE TRIGGER insert_auctions on dbo.Items
+INSTEAD OF INSERT 
+AS
+BEGIN 
+INSERT INTO dbo.auctions(
+	id,
+	title,
+	description,
+	start_price,
+	payment_instruction,
+	duration,
+	end_datetime,
+	city,
+	country_code ,
+	user_id
+)
+SELECT 
+	ID,
+	Titel,
+	dbo.strip_html(Beschrijving),
+	Prijs,
+	Land,
+	'2',
+	GETDATE(),
+	Locatie,
+	Land,
+	(SELECT us.id FROM dbo.users as us WHERE us.username=Verkoper collate SQL_Latin1_General_CP1_CI_AS)
+
+FROM INSERTED
+END
+
+--------------------------------------------------------
+
+
 CREATE TRIGGER tgrOnItemsInsert on dbo.Items
 INSTEAD OF INSERT 
 AS
