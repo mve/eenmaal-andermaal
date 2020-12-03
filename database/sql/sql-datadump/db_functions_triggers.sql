@@ -30,32 +30,27 @@ SELECT
 	Thumbnail,
 	dbo.strip_html(Beschrijving)
 FROM INSERTED
-PRINT 'Triggered!'
 END
 GO
 
 -----------------------------------------------------
 
-CREATE FUNCTION strip_html(@input NVARCHAR(MAX))
-RETURNS NVARCHAR(MAX)
-AS BEGIN
-    DECLARE @stripped NVARCHAR(MAX)
-	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
-	FROM (
-		SELECT input = 
-            CAST(REPLACE(REPLACE(REPLACE(REPLACE(@input, '>', '/> '), '</', '<'), '--/>', '-->'), '&nbsp;', '') AS XML)
-	) r
-	RETURN @stripped
-END
+-- CREATE FUNCTION strip_html(@input NVARCHAR(MAX))
+-- RETURNS NVARCHAR(MAX)
+-- AS BEGIN
+--     DECLARE @stripped NVARCHAR(MAX)
+-- 	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
+-- 	FROM (
+-- 		SELECT input = 
+--             CAST(REPLACE(REPLACE(REPLACE(REPLACE(@input, '>', '/> '), '</', '<'), '--/>', '-->'), '&nbsp;', '') AS XML)
+-- 	) r
+-- 	RETURN @stripped
+-- END
 
 ---------------------------------------------------
+
 -- https://stackoverflow.com/questions/457701/how-to-strip-html-tags-from-a-string-in-sql-server
-CREATE FUNCTION [dbo].[udf_StripHTML]
---by Patrick Honorez --- www.idevlop.com
---inspired by http://stackoverflow.com/questions/457701/best-way-to-strip-html-tags-from-a-string-in-sql-server/39253602#39253602
-(
-@HTMLText varchar(MAX)
-)
+CREATE FUNCTION [dbo].[strip_html] (@HTMLText varchar(MAX))
 RETURNS varchar(MAX)
 AS
 BEGIN
@@ -119,7 +114,6 @@ set @HTMLText = replace(@htmlText, '&amp;' collate Latin1_General_CS_AS, '&'  co
 set @HTMLText = replace(@htmlText, '&lsaquo;' collate Latin1_General_CS_AS, '<'  collate Latin1_General_CS_AS)
 set @HTMLText = replace(@htmlText, '&rsaquo;' collate Latin1_General_CS_AS, '>'  collate Latin1_General_CS_AS)
 
-
 -- Remove anything between <STYLE> tags
 SET @Start = CHARINDEX('<STYLE', @HTMLText)
 SET @End = CHARINDEX('</STYLE>', @HTMLText, CHARINDEX('<', @HTMLText)) + 7
@@ -132,7 +126,7 @@ SET @End = CHARINDEX('</STYLE>', @HTMLText, CHARINDEX('</STYLE>', @HTMLText)) + 
 SET @Length = (@End - @Start) + 1
 END
 
--- Remove anything between <whatever> tags
+-- Remove any HTML at all
 SET @Start = CHARINDEX('<', @HTMLText)
 SET @End = CHARINDEX('>', @HTMLText, CHARINDEX('<', @HTMLText))
 SET @Length = (@End - @Start) + 1
@@ -144,6 +138,25 @@ SET @End = CHARINDEX('>', @HTMLText, CHARINDEX('<', @HTMLText))
 SET @Length = (@End - @Start) + 1
 END
 
+RETURN dbo.remove_spaces(@HTMLText)
+
+END
+
+---------------------------------------------------
+
+CREATE FUNCTION remove_spaces(@HTMLText varchar(MAX))
+RETURNS varchar(MAX)
+AS
+BEGIN
+	DECLARE @stripped varchar(MAX)
+	SELECT @stripped = REPLACE(
+				REPLACE(
+					REPLACE(
+						LTRIM(RTRIM(@HTMLText))
+					,'  ',' '+CHAR(182))  --Changes 2 spaces to the OX model
+				,CHAR(182)+' ','')        --Changes the XO model to nothing
+			,CHAR(182),'') --Changes the remaining X's to nothing
+	WHERE CHARINDEX('  ',@HTMLText) > 0
 RETURN LTRIM(RTRIM(@HTMLText))
 
 END
