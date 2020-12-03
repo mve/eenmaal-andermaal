@@ -27094,8 +27094,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

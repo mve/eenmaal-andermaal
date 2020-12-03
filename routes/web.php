@@ -42,3 +42,4 @@ Route::get('faq', function () {
 });
 
 Route::get('categorie/{id}', 'CategoryController@index')->name('auctionsInCategory');
+Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
