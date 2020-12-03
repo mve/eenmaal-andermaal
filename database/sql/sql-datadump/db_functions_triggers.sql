@@ -3,6 +3,7 @@ SET IDENTITY_INSERT dbo.MyTable ON  -- Statement Allows explicit values to be in
 GO
 
 -------------------------------------------
+
 CREATE TRIGGER insertusers on dbo.users
 INSTEAD OF INSERT 
 AS
@@ -57,7 +58,6 @@ END
 
 -----------------------------------------------------
 
-
 CREATE TRIGGER insert_categories on dbo.Categorieen
 INSTEAD OF INSERT 
 AS
@@ -108,65 +108,6 @@ FROM INSERTED
 END
 
 --------------------------------------------------------
-
-
-CREATE TRIGGER tgrOnItemsInsert on dbo.Items
-INSTEAD OF INSERT 
-AS
-BEGIN 
-INSERT INTO dbo.Items(
-	ID,
-	Titel,
-	Categorie,
-	Postcode,
-	Locatie,
-	Land,
-	Verkoper,
-	Prijs,
-	Valuta,
-	Conditie,
-	Thumbnail,
-	Beschrijving
-)
-SELECT 
-	ID,
-	Titel,
-	Categorie,
-	Postcode,
-	Locatie,
-	Land,
-	Verkoper,
-	Prijs,
-	Valuta,
-	Conditie,
-	Thumbnail,
-	dbo.strip_html(Beschrijving)
-FROM INSERTED
-END
-GO
-
----------------------------------------------------
--- Geurian's remove_spaces-functie
-
--- CREATE FUNCTION dbo.remove_spaces(@input NVARCHAR(MAX))
---  RETURNS NVARCHAR(MAX)
---  AS BEGIN
---      DECLARE @stripped NVARCHAR(MAX)
---  	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
---  	FROM (
---  		SELECT input = 
---              CAST(REPLACE(
--- 				REPLACE(
--- 					REPLACE(
--- 						LTRIM(RTRIM(@input))
--- 					,'  ',' '+CHAR(182))
--- 				,CHAR(182)+' ','')
--- 			,CHAR(182),'') AS XML)
--- 	) r
---  	RETURN LTRIM(RTRIM(@stripped))
--- END
--- GO
----------------------------------------------------
 
 -- https://stackoverflow.com/questions/457701/how-to-strip-html-tags-from-a-string-in-sql-server
 CREATE FUNCTION [dbo].[strip_html] (@html varchar(MAX))
@@ -276,27 +217,12 @@ END
 GO
 
 ---------------------------------------------------
-
--- CREATE FUNCTION strip_html(@input NVARCHAR(MAX))
--- RETURNS NVARCHAR(MAX)
--- AS BEGIN
---     DECLARE @stripped NVARCHAR(MAX)
--- 	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
--- 	FROM (
--- 		SELECT input = 
---             CAST(REPLACE(REPLACE(REPLACE(REPLACE(@input, '>', '/> '), '</', '<'), '--/>', '-->'), '&nbsp;', '') AS XML)
--- 	) r
--- 	RETURN @stripped
--- END
-
----------------------------------------------------
 -- Roel's remove_spaces-functie
 CREATE FUNCTION [dbo].[remove_spaces](@html varchar(MAX))
 RETURNS varchar(MAX)
 AS
 BEGIN
 	DECLARE @Demo TABLE(OriginalString VARCHAR(8000))
-	DECLARE @stripped varchar(MAX)
 	INSERT INTO @Demo (OriginalString)
 	SELECT @html
 	SELECT @stripped = REPLACE(
@@ -308,5 +234,7 @@ BEGIN
 		,CHAR(182),'')
 	FROM @Demo
 	WHERE CHARINDEX('  ',OriginalString) > 0
-	RETURN REPLACE(@stripped, '  ', '')
+	RETURN @stripped
 END
+
+---------------------------------------------------
