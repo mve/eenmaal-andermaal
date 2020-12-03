@@ -14,11 +14,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 
-//Route::get('auction', function () {
-//    return view('auctions.view');
-//});
-
 Route::resource('auctions', AuctionController::class);
+Route::get('mijnveilingen', 'AuctionController@myAuctions')->name('veilingen.mijn');
 
 Route::get('/registreren', 'Auth\RegisterController@index')->name('register');
 Route::post('/registreren', 'Auth\RegisterController@create');
@@ -39,6 +36,7 @@ Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 Route::get('mijnaccount/bewerken', 'UserDetailsController@edit')->name('mijnaccount.bewerken');
 Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken');
 Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
+Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 
 Route::get('faq', function () {
     return view('faq.faq');
