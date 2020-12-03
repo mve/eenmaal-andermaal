@@ -41,5 +41,5 @@ Route::get('faq', function () {
     return view('faq.faq');
 });
 
-Route::get('categorie/{id}', 'CategoryController@index')->name('auctionsInCategory');
+Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');

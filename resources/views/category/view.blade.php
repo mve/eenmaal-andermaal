@@ -7,16 +7,17 @@
         <div>
             Filters:
 
-            <form action="/categorie/{{$category->id}}">
+            <form method="post" action="/categorie/{{$category->id}}">
+                @csrf
 
                 <div class="mb-3">
                     <label for="inputMinPrice" class="form-label">Minimale prijs</label>
-                    <input type="number" class="form-control" id="inputMinPrice">
+                    <input name="inputMinPrice" type="number" class="form-control" id="inputMinPrice" value="{{$filters['minPrice']}}">
                 </div>
 
                 <div class="mb-3">
                     <label for="inputMaxPrice" class="form-label">Maximale prijs</label>
-                    <input type="number" class="form-control" id="inputMaxPrice">
+                    <input name="inputMaxPrice" type="number" class="form-control" id="inputMaxPrice" value="{{$filters['maxPrice']}}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Filter</button>
