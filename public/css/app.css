@@ -11878,6 +11878,10 @@ a.category:hover {
   max-width: 100%;
 }
 
+.make-auction .form-check-label {
+  font-weight: normal !important;
+}
+
 .make-auction label {
   font-weight: bold;
 }

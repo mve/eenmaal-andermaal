@@ -203,7 +203,12 @@ a.category{
 }
 
 .make-auction{
+    .form-check-label{
+        font-weight: normal!important;
+    }
+
     label{
         font-weight: bold;
+
     }
 }

@@ -3,13 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Auction;
+use App\Country;
+use App\PaymentMethod;
+use App\ShippingMethod;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AuctionController extends Controller
 {
 
     public function create(){
-        return view("auctions.create");
+
+
+
+        $data = [
+            "shippingMethods" => ShippingMethod::all(),
+            "paymentMethods" => PaymentMethod::all(),
+            "countries" => Country::all()
+        ];
+        return view("auctions.create")->with($data);
+
+    }
+
+    public function store(Request $request){
+
+  //      dd($request->session()->get("user")->id);
+        $auction = new Auction();
+        $auction->user_id = $request->session()->get("user")->id;
+        $auction->title = $request->inputTitle;
+        $auction->description = $request->inputDescription;
+        $auction->payment_instruction = $request->inputPaymentInstruction;
+        $auction->start_price = $request->inputStartPrice;
+        $auction->duration = $request->inputDuration;
+        $auction->end_datetime = Carbon::now()->addDays($auction->duration);
+        $auction->city = $request->inputCity;
+        $auction->country_code = $request->inputCountryCode;
+
+        $auction->save();
+
+   //     dd($request);
+
     }
 
 

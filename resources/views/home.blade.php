@@ -21,7 +21,7 @@
     <div class="container pt-4">
         @include("includes.auctionsrow", [
                 "title" => "Uitgelichte veilingen",
-                "auctions" =>$popularAuctions
+                "auctions" =>$popularAuctions ?? ''
             ])
 
         @foreach($personalAuctions as $category)
