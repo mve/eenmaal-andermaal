@@ -3,7 +3,7 @@
 @section('content')
     <div class="mb-4"></div>
 
-    {{\App\Breadcrumbs::createAndPrint($category, 3)}}
+    {{\App\Breadcrumbs::createAndPrint($category, 5)}}
 
     <div class="container">
 
