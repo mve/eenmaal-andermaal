@@ -46,3 +46,14 @@ Route::get('faq', function () {
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
+
+//Route::get('foo', function () {
+//    //Handmatige breadcrumbs voorbeeld
+//    $data = [
+//        "Appels",
+//        "<a href='https://google.com'>Google</a>",
+//        "Nederland",
+//    ];
+//    \App\Breadcrumbs::createAndPrint($data);
+//    return "";
+//});

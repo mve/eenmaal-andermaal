@@ -11716,6 +11716,20 @@ p {
   border: 0;
 }
 
+#breadcrumbs-container a {
+  text-decoration: none;
+}
+
+#breadcrumbs-container a:link,
+#breadcrumbs-container a:visited,
+#breadcrumbs-container a:active {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+#breadcrumbs-container a:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
 .category-container {
   padding: 18px 0;
 }
