@@ -46,6 +46,7 @@ Route::get('faq', function () {
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
+Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld

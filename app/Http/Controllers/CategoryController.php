@@ -12,6 +12,12 @@ class CategoryController extends Controller
     public function filtered($id, Request $request)
     {
         $category = Category::oneWhere("id", $id);
+        if ($category === false)
+            return redirect()->route("home");
+
+        $children = Category::allWhere("parent_id", $category->id);
+        if (count($children))
+            return self::categoryChildren($category, $children);
 
         // Get auctions in category.
         $auctions = DB::select("SELECT a.id, a.title, a.description, a.start_price, a.payment_instruction, a.duration, a.end_datetime, a.city, a.country_code
@@ -35,6 +41,28 @@ class CategoryController extends Controller
         ];
 
         return view('category.view')->with($data);
+    }
+
+    public function categories()
+    {
+        $category = new Category();
+        $category->id = null;
+        $category->name = "Categorieën";
+        $category->parent_id = null;
+
+        $children = Category::allWhere("parent_id", $category->id);
+        if (count($children))
+            return self::categoryChildren($category, $children);
+
+    }
+
+    private function categoryChildren($category, $children)
+    {
+        $data = [
+            "category" => $category,
+            "children" => $children
+        ];
+        return view('category.children')->with($data);
     }
 
     /**
