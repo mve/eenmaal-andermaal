@@ -1,6 +1,6 @@
-SET IDENTITY_INSERT dbo.MyTable ON  -- Statement Allows explicit values to be inserted into 
-                                -- the identity column of a table.
-GO
+-- SET IDENTITY_INSERT dbo.MyTable ON  -- Statement Allows explicit values to be inserted into 
+--                                 -- the identity column of a table.
+-- GO
 
 
 CREATE TABLE dbo.gebruiker
@@ -41,9 +41,10 @@ CREATE TABLE dbo.Illustraties
 	IllustratieFile varchar(100) NOT NULL,
 )
 GO
+
 -------------------------------------------
 
-CREATE TRIGGER insertusers on dbo.gebruiker
+CREATE TRIGGER insert_users on dbo.gebruiker
 INSTEAD OF INSERT 
 AS
 BEGIN 
@@ -160,9 +161,11 @@ FROM INSERTED
 END
 GO
 
+---------------------------------------------------
+
 -- https://stackoverflow.com/questions/457701/how-to-strip-html-tags-from-a-string-in-sql-server
-CREATE FUNCTION [dbo].[strip_html] (@html varchar(MAX))
-RETURNS varchar(MAX)
+CREATE FUNCTION [dbo].[strip_html] (@html NVARCHAR(MAX))
+RETURNS NVARCHAR(MAX)
 AS
 BEGIN
 DECLARE @Start  int
@@ -268,12 +271,13 @@ END
 GO
 
 ---------------------------------------------------
+
 -- Roel's remove_spaces-functie
-CREATE FUNCTION [dbo].[remove_spaces](@html varchar(MAX))
-RETURNS varchar(MAX)
+CREATE FUNCTION [dbo].[remove_spaces](@html NVARCHAR(MAX))
+RETURNS NVARCHAR(MAX)
 AS
 BEGIN
-	DECLARE @Demo TABLE(OriginalString VARCHAR(8000))
+	DECLARE @Demo TABLE(OriginalString NVARCHAR(MAX))
 	INSERT INTO @Demo (OriginalString)
 	SELECT @html
 	SELECT @html = REPLACE(
@@ -288,10 +292,11 @@ BEGIN
 	RETURN @html
 END
 GO
+
 ---------------------------------------------------
 
-CREATE FUNCTION [dbo].[clean_text](@html varchar(MAX))
-RETURNS varchar(MAX)
+CREATE FUNCTION [dbo].[clean_text](@html NVARCHAR(MAX))
+RETURNS NVARCHAR(MAX)
 AS
 BEGIN
 	SET @html = dbo.strip_html(@html)

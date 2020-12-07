@@ -42,7 +42,7 @@ SELECT
 	Valuta,
 	Conditie,
 	Thumbnail,
-	dbo.strip_html(Beschrijving)
+	dbo.clean_text(Beschrijving)
 FROM INSERTED
 END
 GO
