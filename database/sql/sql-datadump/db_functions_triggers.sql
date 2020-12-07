@@ -39,6 +39,7 @@ SELECT
 	is_seller
 FROM INSERTED
 END
+GO
 
 ---------------------------------------------------
 
@@ -55,6 +56,7 @@ SELECT
 	'../images/' + IllustratieFile
 FROM INSERTED
 END
+GO
 
 -----------------------------------------------------
 
@@ -73,6 +75,7 @@ SELECT
 	Parent
 FROM INSERTED
 END
+GO
 
 --------------------------------------------------------
 
@@ -105,9 +108,80 @@ SELECT
 	(SELECT us.id FROM dbo.users as us WHERE us.username=Verkoper collate SQL_Latin1_General_CP1_CI_AS)
 
 FROM INSERTED
+
+INSERT INTO dbo.auction_images(
+	auction_id,
+	file_name
+)
+SELECT 
+	ID,
+	'../images/' + Thumbnail
+FROM INSERTED
+
 END
 
+GO
+
 --------------------------------------------------------
+
+
+-- CREATE TRIGGER tgrOnItemsInsert on dbo.Items
+-- INSTEAD OF INSERT 
+-- AS
+-- BEGIN 
+-- INSERT INTO dbo.Items(
+-- 	ID,
+-- 	Titel,
+-- 	Categorie,
+-- 	Postcode,
+-- 	Locatie,
+-- 	Land,
+-- 	Verkoper,
+-- 	Prijs,
+-- 	Valuta,
+-- 	Conditie,
+-- 	Thumbnail,
+-- 	Beschrijving
+-- )
+-- SELECT 
+-- 	ID,
+-- 	Titel,
+-- 	Categorie,
+-- 	Postcode,
+-- 	Locatie,
+-- 	Land,
+-- 	Verkoper,
+-- 	Prijs,
+-- 	Valuta,
+-- 	Conditie,
+-- 	Thumbnail,
+-- 	dbo.strip_html(Beschrijving)
+-- FROM INSERTED
+-- END
+-- GO
+
+---------------------------------------------------
+-- Geurian's remove_spaces-functie
+
+-- CREATE FUNCTION dbo.remove_spaces(@input NVARCHAR(MAX))
+--  RETURNS NVARCHAR(MAX)
+--  AS BEGIN
+--      DECLARE @stripped NVARCHAR(MAX)
+--  	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
+--  	FROM (
+--  		SELECT input = 
+--              CAST(REPLACE(
+-- 				REPLACE(
+-- 					REPLACE(
+-- 						LTRIM(RTRIM(@input))
+-- 					,'  ',' '+CHAR(182))
+-- 				,CHAR(182)+' ','')
+-- 			,CHAR(182),'') AS XML)
+-- 	) r
+--  	RETURN LTRIM(RTRIM(@stripped))
+-- END
+-- GO
+---------------------------------------------------
 
 -- https://stackoverflow.com/questions/457701/how-to-strip-html-tags-from-a-string-in-sql-server
 CREATE FUNCTION [dbo].[strip_html] (@html varchar(MAX))
