@@ -2,9 +2,48 @@ SET IDENTITY_INSERT dbo.MyTable ON  -- Statement Allows explicit values to be in
                                 -- the identity column of a table.
 GO
 
+
+CREATE TABLE dbo.gebruiker
+( 
+  Username VARCHAR(200),
+  Postalcode VARCHAR(9),
+  Location VARCHAR(MAX),
+  Country VARCHAR(100),
+  Rating NUMERIC(4,1) 
+)
+
+CREATE TABLE dbo.Categorieen
+(
+	ID int NOT NULL,
+	Name varchar(100) NULL,
+	Parent int NULL,
+)
+
+CREATE TABLE dbo.Items
+(
+	ID bigint NOT NULL,
+	Titel varchar(max) NULL,
+	Beschrijving nvarchar(max) NULL,
+	Categorie int NULL,
+	Postcode varchar(max) NULL,
+	Locatie varchar(max) NULL,
+	Land varchar(max) NULL,
+	Verkoper varchar(max) NULL,
+	Prijs varchar(max) NULL,
+	Valuta varchar(max) NULL,
+	Conditie varchar(max) NULL,
+	Thumbnail varchar(max) NULL,
+)
+
+CREATE TABLE dbo.Illustraties
+(
+	ItemID bigint NOT NULL,
+	IllustratieFile varchar(100) NOT NULL,
+)
+GO
 -------------------------------------------
 
-CREATE TRIGGER insertusers on dbo.users
+CREATE TRIGGER insertusers on dbo.gebruiker
 INSTEAD OF INSERT 
 AS
 BEGIN 
@@ -25,18 +64,18 @@ INSERT INTO dbo.users(
 )
 SELECT 
 	Username,
-	"email",
-	"password",
-	"first_name",
-	"last_name",
-	"adress",
+	Username + '@mail.com',
+	'$2y$10$dyjvsG8FpkB13AAkGuEQsOxt84O9fJk9E6nTsUmYvk87Ei5z4XtRe',
+	Username,
+	Username,
+	Location,
 	Postalcode,
-	"City",
+	Location,
 	Country,
-	birth_date,
-	security_question_id,
-	security_answer,
-	is_seller
+	'2020-12-07',
+	0,
+	'hond',
+	0
 FROM INSERTED
 END
 GO
