@@ -26992,8 +26992,7 @@ if (categoriesMenuElement) {
         children[i].classList.add("d-block");
       }
     }
-  }; //
-
+  };
 
   var closeAllHoverablesChildren = function closeAllHoverablesChildren() {
     for (var i = 0; i < hoverables.length; i++) {
