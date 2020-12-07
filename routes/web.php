@@ -40,9 +40,23 @@ Route::get('mijnaccount/bewerken', 'UserDetailsController@edit')->name('mijnacco
 Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken');
 Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
 
+Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
+Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
+
 Route::get('faq', function () {
     return view('faq.faq');
 });
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
+
+//Route::get('foo', function () {
+//    //Handmatige breadcrumbs voorbeeld
+//    $data = [
+//        "Appels",
+//        "<a href='https://google.com'>Google</a>",
+//        "Nederland",
+//    ];
+//    \App\Breadcrumbs::createAndPrint($data);
+//    return "";
+//});

@@ -11642,6 +11642,30 @@ fieldset:disabled .btn {
   width: 1%;
 }
 
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  width: 11em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rating label {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.rating > label:before {
+  color: #FFD700;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > label.far:before,
+.rating > label.far ~ label:before {
+  color: #FFD700;
+}
+
 h1,
 .h1,
 h2,
@@ -11714,6 +11738,20 @@ p {
 
 .accordion .accordion-collapse {
   border: 0;
+}
+
+#breadcrumbs-container a {
+  text-decoration: none;
+}
+
+#breadcrumbs-container a:link,
+#breadcrumbs-container a:visited,
+#breadcrumbs-container a:active {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+#breadcrumbs-container a:hover {
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .category-container {

@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-5"></div>
+    <div class="mb-4"></div>
+
+    {{\App\Breadcrumbs::createAndPrint($auction, 5)}}
 
     <div class="container">
         <h2>{{$auction->title}}</h2>
@@ -11,7 +13,8 @@
                 <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
                     <ol class="carousel-indicators">
                         @for($i = 0; $i < count($auctionImages); $i++)
-                            <li data-target="#carouselExampleIndicators" @if($i==0) class="active" @endif data-slide-to="{{$i}}"></li>
+                            <li data-target="#carouselExampleIndicators" @if($i==0) class="active"
+                                @endif data-slide-to="{{$i}}"></li>
                         @endfor
                     </ol>
                     <div class="carousel-inner">
@@ -55,21 +58,21 @@
                             {{$auction->payment_instruction}}<br/><br/>
                         @endif
                         De verkoper accepteert de volgende betalingsmethoden:<br/>
-                        <ul>
-                            @foreach($auction->getPaymentMethods() as $paymentMethod)
-                                <li>{{$paymentMethod["method"]}}</li>
-                            @endforeach
-                        </ul>
+                    <ul>
+                        @foreach($auction->getPaymentMethods() as $paymentMethod)
+                            <li>{{$paymentMethod["method"]}}</li>
+                        @endforeach
+                    </ul>
                     </p>
                     <h4>Verzending</h4>
                     <hr>
                     <p>
                         De verkoper accepteert de volgende verzendmethoden:<br/>
-                        <ul>
-                            @foreach($auction->getShippingMethods() as $shippingMethod)
-                                <li>{{$shippingMethod["method"]}}: &euro;{{$shippingMethod["price"]}}</li>
-                            @endforeach
-                        </ul>
+                    <ul>
+                        @foreach($auction->getShippingMethods() as $shippingMethod)
+                            <li>{{$shippingMethod["method"]}}: &euro;{{$shippingMethod["price"]}}</li>
+                        @endforeach
+                    </ul>
                     </p>
                 </div>
             </div>
@@ -84,7 +87,7 @@
                             <div class="bid-overlay-body">
                                 <h3 class="flex-centered">Ook mee bieden?</h3>
                                 <div class="flex-centered">
-                                    <a href="{{ route('login') }}"  class="btn btn-primary">
+                                    <a href="{{ route('login') }}" class="btn btn-primary">
                                         Log in en bied mee
                                     </a>
                                 </div>
@@ -105,7 +108,8 @@
                                 <i class="fas fa-envelope"></i> Bericht
                             </div>
                             @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
-                                <a class="btn btn-primary" href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
+                                <a class="btn btn-primary"
+                                   href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
                                     <i class="fas fa-phone-alt"></i> Neem contact op!
                                 </a>
                             @endif
@@ -113,8 +117,10 @@
 
                     </div>
                     <ul class="list-group">
-                        <li class="list-group-item flex-centered"><strong>Startbod: &euro;{{$auction->start_price}}</strong></li>
-                        <li class="list-group-item flex-centered"><strong>Huidig bod: &euro;{{$auction->getLatestBid()}}</strong></li>
+                        <li class="list-group-item flex-centered"><strong>Startbod:
+                                &euro;{{$auction->start_price}}</strong></li>
+                        <li class="list-group-item flex-centered"><strong>Huidig bod:
+                                &euro;{{$auction->getLatestBid()}}</strong></li>
                     </ul>
                     <div class="auction-card-body">
                         <label for="Bieden" class="form-label fw-bold">Plaats bod</label>
@@ -129,7 +135,9 @@
                         <ul class="list-group" style="max-height: 200px; overflow-y: scroll">
                             @if(count($auctionBids))
                                 @foreach($auctionBids as $bid)
-                                    <li class="list-group-item"><strong>{{$bid->getBidder()->first_name}}: &euro;{{$bid->amount}}</strong> <span class="float-right">{{$bid->getTime()}}</span></li>
+                                    <li class="list-group-item"><strong>{{$bid->getBidder()->first_name}}:
+                                            &euro;{{$bid->amount}}</strong> <span
+                                            class="float-right">{{$bid->getTime()}}</span></li>
                                 @endforeach
                             @else
                                 <li class="list-group-item flex-centered"><strong>Er is nog niet geboden</strong></li>

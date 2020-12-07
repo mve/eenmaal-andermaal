@@ -27035,6 +27035,32 @@ if (categoriesMenuElement) {
 }
 /*  Navigatie rubrieken einde */
 
+/* Beoordeling rating selecteren */
+
+
+var ratingDiv = document.querySelector("div.rating");
+
+if (ratingDiv) {
+  var ratingInputs = ratingDiv.querySelectorAll(".rating input");
+
+  for (var i = 0; i < ratingInputs.length; i++) {
+    ratingInputs[i].addEventListener("click", function () {
+      var ratingLabels = ratingDiv.querySelectorAll(".rating .fa-star");
+
+      for (var x = 0; x < ratingLabels.length; x++) {
+        if (ratingLabels[x].querySelector("input").value <= this.value) {
+          ratingLabels[x].classList.remove("far", "fa-star");
+          ratingLabels[x].classList.add("fa", "fa-star");
+        } else {
+          ratingLabels[x].classList.remove("fa", "fa-star");
+          ratingLabels[x].classList.add("far", "fa-star");
+        }
+      }
+    });
+  }
+}
+/* Beoordeling rating selecteren einde */
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -27094,8 +27120,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
