@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="mb-4"></div>
+
+    {{\App\Breadcrumbs::createAndPrint($category, 5)}}
 
     <div class="container">
 
