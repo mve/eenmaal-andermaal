@@ -12,40 +12,40 @@
 
 ---------------------------------------------------
 
--- CREATE TRIGGER tgrOnItemsInsert on dbo.Items
--- INSTEAD OF INSERT 
--- AS
--- BEGIN 
--- INSERT INTO dbo.Items(
--- 	ID,
--- 	Titel,
--- 	Categorie,
--- 	Postcode,
--- 	Locatie,
--- 	Land,
--- 	Verkoper,
--- 	Prijs,
--- 	Valuta,
--- 	Conditie,
--- 	Thumbnail,
--- 	Beschrijving
--- )
--- SELECT 
--- 	ID,
--- 	Titel,
--- 	Categorie,
--- 	Postcode,
--- 	Locatie,
--- 	Land,
--- 	Verkoper,
--- 	Prijs,
--- 	Valuta,
--- 	Conditie,
--- 	Thumbnail,
--- 	dbo.strip_html(Beschrijving)
--- FROM INSERTED
--- END
--- GO
+CREATE TRIGGER tgrOnItemsInsert on dbo.Items
+INSTEAD OF INSERT 
+AS
+BEGIN 
+INSERT INTO dbo.Items(
+	ID,
+	Titel,
+	Categorie,
+	Postcode,
+	Locatie,
+	Land,
+	Verkoper,
+	Prijs,
+	Valuta,
+	Conditie,
+	Thumbnail,
+	Beschrijving
+)
+SELECT 
+	ID,
+	Titel,
+	Categorie,
+	Postcode,
+	Locatie,
+	Land,
+	Verkoper,
+	Prijs,
+	Valuta,
+	Conditie,
+	Thumbnail,
+	dbo.strip_html(Beschrijving)
+FROM INSERTED
+END
+GO
 
 ---------------------------------------------------
 -- Geurian's remove_spaces-functie

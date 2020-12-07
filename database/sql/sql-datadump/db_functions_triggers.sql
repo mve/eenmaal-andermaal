@@ -137,7 +137,7 @@ INSERT INTO dbo.auctions(
 SELECT 
 	ID,
 	Titel,
-	dbo.strip_html(Beschrijving),
+	dbo.clean_text(Beschrijving),
 	Prijs,
 	Land,
 	'2',
@@ -158,69 +158,7 @@ SELECT
 FROM INSERTED
 
 END
-
 GO
-
---------------------------------------------------------
-
-
--- CREATE TRIGGER tgrOnItemsInsert on dbo.Items
--- INSTEAD OF INSERT 
--- AS
--- BEGIN 
--- INSERT INTO dbo.Items(
--- 	ID,
--- 	Titel,
--- 	Categorie,
--- 	Postcode,
--- 	Locatie,
--- 	Land,
--- 	Verkoper,
--- 	Prijs,
--- 	Valuta,
--- 	Conditie,
--- 	Thumbnail,
--- 	Beschrijving
--- )
--- SELECT 
--- 	ID,
--- 	Titel,
--- 	Categorie,
--- 	Postcode,
--- 	Locatie,
--- 	Land,
--- 	Verkoper,
--- 	Prijs,
--- 	Valuta,
--- 	Conditie,
--- 	Thumbnail,
--- 	dbo.strip_html(Beschrijving)
--- FROM INSERTED
--- END
--- GO
-
----------------------------------------------------
--- Geurian's remove_spaces-functie
-
--- CREATE FUNCTION dbo.remove_spaces(@input NVARCHAR(MAX))
---  RETURNS NVARCHAR(MAX)
---  AS BEGIN
---      DECLARE @stripped NVARCHAR(MAX)
---  	SELECT @stripped = input.value('.', 'NVARCHAR(MAX)')
---  	FROM (
---  		SELECT input = 
---              CAST(REPLACE(
--- 				REPLACE(
--- 					REPLACE(
--- 						LTRIM(RTRIM(@input))
--- 					,'  ',' '+CHAR(182))
--- 				,CHAR(182)+' ','')
--- 			,CHAR(182),'') AS XML)
--- 	) r
---  	RETURN LTRIM(RTRIM(@stripped))
--- END
--- GO
----------------------------------------------------
 
 -- https://stackoverflow.com/questions/457701/how-to-strip-html-tags-from-a-string-in-sql-server
 CREATE FUNCTION [dbo].[strip_html] (@html varchar(MAX))
@@ -324,7 +262,7 @@ SET @End = CHARINDEX('>', @html, CHARINDEX('<', @html))
 SET @Length = (@End - @Start) + 1
 END
 
-RETURN dbo.remove_spaces(@html)
+RETURN @html
 
 END
 GO
@@ -338,7 +276,7 @@ BEGIN
 	DECLARE @Demo TABLE(OriginalString VARCHAR(8000))
 	INSERT INTO @Demo (OriginalString)
 	SELECT @html
-	SELECT @stripped = REPLACE(
+	SELECT @html = REPLACE(
 			REPLACE(
 				REPLACE(
 					LTRIM(RTRIM(OriginalString))
@@ -347,7 +285,19 @@ BEGIN
 		,CHAR(182),'')
 	FROM @Demo
 	WHERE CHARINDEX('  ',OriginalString) > 0
-	RETURN @stripped
+	RETURN @html
 END
-
+GO
 ---------------------------------------------------
+
+CREATE FUNCTION [dbo].[clean_text](@html varchar(MAX))
+RETURNS varchar(MAX)
+AS
+BEGIN
+	SET @html = dbo.strip_html(@html)
+	SET @html = dbo.remove_spaces(@html)
+	SET @html = dbo.strip_html(@html)
+	SET @html = dbo.remove_spaces(@html)
+	RETURN @html
+END
+GO
