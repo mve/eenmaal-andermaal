@@ -210,7 +210,7 @@ class Auction extends SuperModel
     }
 
     /**
-     * Get the latest bit as variable
+     * Get the latest bid's amount
      * @return mixed
      */
     public function getLatestBid()
@@ -221,6 +221,18 @@ class Auction extends SuperModel
         if ($result === false)
             return $this->start_price;
         return Bid::resultToClass($result)->amount;
+    }
+
+    /**
+     * Get the highest bid
+     * @return mixed
+     */
+    public function getHighestBid()
+    {
+        $result = DB::selectOne("SELECT TOP 1 * FROM bids WHERE auction_id=:auction_id ORDER BY amount DESC", [
+            "auction_id" => $this->id
+        ]);
+        return $result? Bid::resultToClass($result) : false;
     }
 
     /**

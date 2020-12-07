@@ -40,6 +40,9 @@ Route::get('mijnaccount/bewerken', 'UserDetailsController@edit')->name('mijnacco
 Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken');
 Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
 
+Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
+Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
+
 Route::get('faq', function () {
     return view('faq.faq');
 });
