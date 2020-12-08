@@ -26992,8 +26992,7 @@ if (categoriesMenuElement) {
         children[i].classList.add("d-block");
       }
     }
-  }; //
-
+  };
 
   var closeAllHoverablesChildren = function closeAllHoverablesChildren() {
     for (var i = 0; i < hoverables.length; i++) {
@@ -27035,6 +27034,119 @@ if (categoriesMenuElement) {
   });
 }
 /*  Navigatie rubrieken einde */
+
+/* Beoordeling rating selecteren */
+
+
+var ratingDiv = document.querySelector("div.rating");
+
+if (ratingDiv) {
+  var ratingInputs = ratingDiv.querySelectorAll(".rating input");
+
+  for (var i = 0; i < ratingInputs.length; i++) {
+    ratingInputs[i].addEventListener("click", function () {
+      var ratingLabels = ratingDiv.querySelectorAll(".rating .fa-star");
+
+      for (var x = 0; x < ratingLabels.length; x++) {
+        if (ratingLabels[x].querySelector("input").value <= this.value) {
+          ratingLabels[x].classList.remove("far", "fa-star");
+          ratingLabels[x].classList.add("fa", "fa-star");
+        } else {
+          ratingLabels[x].classList.remove("fa", "fa-star");
+          ratingLabels[x].classList.add("far", "fa-star");
+        }
+      }
+    });
+  }
+}
+/* Beoordeling rating selecteren einde */
+
+/* Bieden */
+
+
+var btnBid = document.getElementById("btn-bid");
+
+if (btnBid) {
+  var loadBids = function loadBids(response) {
+    currentBid.innerText = response.currentBid; // textBid.value = response.currentBid + 1;
+
+    lastFiveBidsList.innerHTML = response.lastFiveBidsHTML;
+    lastFiveBidsList.scrollTop = 0;
+  };
+
+  var timeOutSuccessAlert = function timeOutSuccessAlert() {
+    clearTimeout(alertTimeout);
+    alertTimeout = setTimeout(function () {
+      document.getElementById("alert-success").className = "alert alert-success d-none";
+    }, 3000);
+  };
+
+  var bidFunction = function bidFunction() {
+    event.preventDefault();
+    var bidAmount = textBid.value;
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        if (JSON.parse(this.responseText).success) {
+          document.getElementById("error").innerHTML = "";
+          document.getElementById("success").innerHTML = JSON.parse(this.responseText).success;
+          document.getElementById("alert-success").className = "alert alert-success";
+          document.getElementById("alert-danger").className = "alert alert-danger d-none";
+          loadBids(JSON.parse(this.responseText));
+          timeOutSuccessAlert();
+        }
+
+        if (JSON.parse(this.responseText).error) {
+          document.getElementById("success").innerHTML = "";
+          document.getElementById("error").innerHTML = JSON.parse(this.responseText).error;
+          document.getElementById("alert-success").className = "alert alert-success d-none";
+          document.getElementById("alert-danger").className = "alert alert-danger";
+        }
+      }
+    };
+
+    xhttp.open("GET", "/bid/" + auctionId + "/" + bidAmount, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+  };
+
+  var refreshData = function refreshData() {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        if (JSON.parse(this.responseText).success) {
+          loadBids(JSON.parse(this.responseText));
+        }
+
+        if (JSON.parse(this.responseText).error) {
+          clearInterval(refreshInterval);
+          document.getElementById("error").innerHTML = JSON.parse(this.responseText).error;
+          document.getElementById("alert-danger").className = "alert alert-danger";
+        }
+      }
+    };
+
+    xhttp.open("GET", "/bid/" + auctionId, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+  };
+
+  var alertTimeout;
+  var lastFiveBidsList = document.getElementById("last-five-bids-list");
+  var currentBid = document.getElementById("auction-current-bid");
+  var textBid = document.getElementById("text-bid");
+  var auctionId = document.getElementById("auction-id").value;
+  document.getElementById("btn-bid").addEventListener("click", bidFunction);
+  textBid.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      bidFunction();
+    }
+  });
+  var refreshInterval = window.setInterval(refreshData, 1000);
+}
+/* Bieden einde */
 
 /***/ }),
 

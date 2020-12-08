@@ -21,20 +21,23 @@
     <div class="container pt-4">
         @include("includes.auctionsrow", [
                 "title" => "Uitgelichte veilingen",
-                "auctions" =>$popularAuctions
+                "auctions" =>$popularAuctions,
+                "large" => false
             ])
 
         @foreach($personalAuctions as $category)
             @include("includes.auctionsrow", [
                     "title" => $category["name"],
-                    "auctions" =>$category["auctions"]
+                    "auctions" =>$category["auctions"],
+                    "large" => false
             ])
         @endforeach
 
         @foreach($topCategoryAuctions as $topCAKey => $topCAValue)
                 @include("includes.auctionsrow", [
                     "title" => "$topCAKey",
-                    "auctions" => $topCAValue
+                    "auctions" => $topCAValue,
+                    "large" => false
                 ])
         @endforeach
     </div>

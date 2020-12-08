@@ -54,6 +54,8 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'check.user' => \App\Http\Middleware\CheckUser::class,
+        'check.user.won.auction' => \App\Http\Middleware\CheckUserWonAuction::class,
+        'check.user.reviewed.auction' => \App\Http\Middleware\CheckUserReviewedAuction::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

@@ -147,7 +147,7 @@ class Auction extends SuperModel
     public static function getPersonalAuctions($maxc = 3, $maxn = 10)
     {
         $categories = [];
-        if(Session::has("user")){
+        if (Session::has("user")) {
             $userid = Session::get("user")->id;
             $categories = DB::select("
                 SELECT TOP $maxc id,name
@@ -168,7 +168,7 @@ class Auction extends SuperModel
                     ) AND category_id = categories .id
                 )
             ");
-            for($i = 0; $i < count($categories); $i++){
+            for ($i = 0; $i < count($categories); $i++) {
                 $auctions = Auction::resultArrayToClassArray(DB::select("
                     SELECT TOP $maxn *
                     FROM auctions
@@ -177,7 +177,7 @@ class Auction extends SuperModel
                         FROM auction_categories
                         WHERE category_id = :cat_id AND auctions.id=id
                     ) AND end_datetime >= DATEADD(MINUTE, 1, GETDATE())
-                ",[
+                ", [
                     "cat_id" => $categories[$i]["id"]
                 ]));
                 $categories[$i]["auctions"] = $auctions;
@@ -198,11 +198,11 @@ class Auction extends SuperModel
             return "Afgelopen";
         $diff = $parsedTime->diff();
         $formatString = "%H:%I:%S";
-        if($diff->days > 1){
+        if ($diff->days > 1) {
             $formatString = "%d dagen %H:%I";
-        }else if($diff->days === 1){
+        } else if ($diff->days === 1) {
             $formatString = "%d dag %H:%I";
-        }else{
+        } else {
             $formatString = "%H:%I:%S";
         }
         return $diff->format($formatString);
@@ -210,7 +210,7 @@ class Auction extends SuperModel
     }
 
     /**
-     * Get the latest bit as variable
+     * Get the latest bid's amount
      * @return mixed
      */
     public function getLatestBid()
@@ -221,6 +221,57 @@ class Auction extends SuperModel
         if ($result === false)
             return $this->start_price;
         return Bid::resultToClass($result)->amount;
+    }
+
+    /**
+     * Get the necessary increment
+     * @return float|int
+     */
+    public function getIncrement()
+    {
+        $latestBid = $this->getLatestBid();
+        if($latestBid >= 5000){
+            return 50;
+        }else if($latestBid >= 1000){
+            return 10;
+        }else if($latestBid >= 500){
+            return 5;
+        }else if($latestBid >= 49.99){
+            return 1;
+        }else{
+            return 0.50;
+        }
+    }
+
+    /**
+     * Get the last $max bids and put them into list items
+     * @param int $max
+     * @return string
+     */
+    public function getLastNBidsHTML($max = 5)
+    {
+        $lastFiveBidsHTML = "";
+        $lastFiveBids = $this->getBids($max);
+        if (count($lastFiveBids)) {
+            foreach ($lastFiveBids as $bid) {
+                $lastFiveBidsHTML .= "<li class=\"list-group-item\"><strong>" . $bid->getBidder()->first_name . ": &euro;" . $bid->amount . "</strong> <span class=\"float-right\">" . $bid->getTime() . "</span></li>";
+            }
+            return $lastFiveBidsHTML;
+        } else {
+            return "<li class=\"list-group-item flex-centered\"><strong>Er is nog niet geboden</strong></li>";
+        }
+    }
+
+    /**
+     * Get the highest bid
+     * @return mixed
+     */
+    public function getHighestBid()
+    {
+        $result = DB::selectOne("SELECT TOP 1 * FROM bids WHERE auction_id=:auction_id ORDER BY amount DESC", [
+            "auction_id" => $this->id
+        ]);
+        return $result ? Bid::resultToClass($result) : false;
     }
 
     /**
@@ -254,7 +305,7 @@ class Auction extends SuperModel
                 )
             ", [
             "user_id" => $this->user_id
-        ])["average"], 2,",",".") ?: 0;
+        ])["average"], 2, ",", ".") ?: 0;
     }
 
     /**
@@ -309,7 +360,8 @@ class Auction extends SuperModel
      * Get the subcategories for a certain category_id
      *
      */
-    public function getSubcategoriesForCategoryId($categoryId) {
+    public function getSubcategoriesForCategoryId($categoryId)
+    {
         return Bid::resultArrayToClassArray(DB::select("
             WITH subcategories AS(
                     SELECT  *
@@ -333,7 +385,8 @@ class Auction extends SuperModel
      * Get all auctions in a category (even subcategories)
      * @return array with auctions
      */
-    public static function getAllAuctionsFromParent($parentId, $limit = 6) {
+    public static function getAllAuctionsFromParent($parentId, $limit = 6)
+    {
         return Auction::resultArrayToClassArray(DB::select("
         WITH subcategories AS(
             SELECT  *
@@ -360,7 +413,8 @@ class Auction extends SuperModel
      * Return all auctions per category
      * @return array of objects with name == categoryName && auctions
      */
-    public static function getAllTopCategoryAuctions($limit = 6) {
+    public static function getAllTopCategoryAuctions($limit = 6)
+    {
         $topCategories = DB::select("
             SELECT *
             FROM dbo.categories

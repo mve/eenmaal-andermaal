@@ -352,6 +352,15 @@ function Send_verify() {
             document.getElementById("form_1").className = "d-none";
             document.getElementById("form_2").className = "block";
         }
+
+        if( JSON.parse(this.responseText).error){
+            document.getElementById("success").innerHTML = "";
+            document.getElementById("error").innerHTML =
+                JSON.parse(this.responseText).error
+
+            document.getElementById("alert-success").className = "alert alert-success d-none";
+            document.getElementById("alert-danger").className = "alert alert-danger";
+        }
     }
     };
     xhttp.open("POST", "/registreren/verify", true);
