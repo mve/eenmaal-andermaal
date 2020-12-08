@@ -255,13 +255,37 @@ END
 
 -- Remove anything between <SCRIPT> tags
 SET @Start = CHARINDEX('<SCRIPT', @html)
-SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('<', @html)) + 7
+SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('<', @html)) + 8
 SET @Length = (@End - @Start) + 1
 
 WHILE (@Start > 0 AND @End > 0 AND @Length > 0) BEGIN
 SET @html = STUFF(@html, @Start, @Length, '')
 SET @Start = CHARINDEX('<SCRIPT', @html)
-SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('</SCRIPT>', @html)) + 7
+SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('</SCRIPT>', @html)) + 8
+SET @Length = (@End - @Start) + 1
+END
+
+-- Remove anyting between <XML> tags
+SET @Start = CHARINDEX('<XML', @html)
+SET @End = CHARINDEX('</XML>', @html, CHARINDEX('<', @html)) + 5
+SET @Length = (@End - @Start) + 1
+
+WHILE (@Start > 0 AND @End > 0 AND @Length > 0) BEGIN
+SET @html = STUFF(@html, @Start, @Length, '')
+SET @Start = CHARINDEX('<XML', @html)
+SET @End = CHARINDEX('</XML>', @html, CHARINDEX('</XML>', @html)) + 5
+SET @Length = (@End - @Start) + 1
+END
+
+-- Remove all comments
+SET @Start = CHARINDEX('<!--', @html)
+SET @End = CHARINDEX('-->', @html, CHARINDEX('<', @html)) + 2
+SET @Length = (@End - @Start) + 1
+
+WHILE (@Start > 0 AND @End > 0 AND @Length > 0) BEGIN
+SET @html = STUFF(@html, @Start, @Length, '')
+SET @Start = CHARINDEX('<!--', @html)
+SET @End = CHARINDEX('-->', @html, CHARINDEX('-->', @html)) + 2
 SET @Length = (@End - @Start) + 1
 END
 

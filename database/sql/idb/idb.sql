@@ -155,6 +155,13 @@ BEGIN
 		BEGIN
 			SET IDENTITY_INSERT eenmaalandermaal.dbo.auctions ON
 		END
+
+	IF NOT EXISTS (SELECT country FROM eenmaalandermaal.dbo.countries WHERE country_code = (SELECT Land FROM INSERTED))
+		BEGIN
+			INSERT INTO eenmaalandermaal.dbo.countries (country_code, country)
+			SELECT Land, Locatie FROM INSERTED
+		END
+
 	INSERT INTO eenmaalandermaal.dbo.auctions(
 		id,
 		title,
@@ -178,7 +185,6 @@ BEGIN
 		Locatie,
 		Land,
 		(SELECT us.id FROM eenmaalandermaal.dbo.users as us WHERE us.username = Verkoper)
-
 	FROM INSERTED
 
 	INSERT INTO eenmaalandermaal.dbo.auction_images(
@@ -275,13 +281,37 @@ BEGIN
 
 	-- Remove anything between <SCRIPT> tags
 	SET @Start = CHARINDEX('<SCRIPT', @html)
-	SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('<', @html)) + 7
+	SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('<', @html)) + 8
 	SET @Length = (@End - @Start) + 1
 
 	WHILE (@Start > 0 AND @End > 0 AND @Length > 0) BEGIN
 	SET @html = STUFF(@html, @Start, @Length, '')
 	SET @Start = CHARINDEX('<SCRIPT', @html)
-	SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('</SCRIPT>', @html)) + 7
+	SET @End = CHARINDEX('</SCRIPT>', @html, CHARINDEX('</SCRIPT>', @html)) + 8
+	SET @Length = (@End - @Start) + 1
+	END
+
+	-- Remove anyting between <XML> tags
+	SET @Start = CHARINDEX('<XML', @html)
+	SET @End = CHARINDEX('</XML>', @html, CHARINDEX('<', @html)) + 5
+	SET @Length = (@End - @Start) + 1
+
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0) BEGIN
+	SET @html = STUFF(@html, @Start, @Length, '')
+	SET @Start = CHARINDEX('<XML', @html)
+	SET @End = CHARINDEX('</XML>', @html, CHARINDEX('</XML>', @html)) + 5
+	SET @Length = (@End - @Start) + 1
+	END
+
+	-- Remove all comments
+	SET @Start = CHARINDEX('<!--', @html)
+	SET @End = CHARINDEX('-->', @html, CHARINDEX('<', @html)) + 2
+	SET @Length = (@End - @Start) + 1
+
+	WHILE (@Start > 0 AND @End > 0 AND @Length > 0) BEGIN
+	SET @html = STUFF(@html, @Start, @Length, '')
+	SET @Start = CHARINDEX('<!--', @html)
+	SET @End = CHARINDEX('-->', @html, CHARINDEX('-->', @html)) + 2
 	SET @Length = (@End - @Start) + 1
 	END
 
@@ -303,6 +333,7 @@ END
 GO
 
 ---------------------------------------------------
+
 -- Roel's remove_spaces-functie
 CREATE FUNCTION [dbo].[remove_spaces](@html NVARCHAR(MAX))
 RETURNS NVARCHAR(MAX)
@@ -329,8 +360,6 @@ CREATE FUNCTION [dbo].[clean_text](@html NVARCHAR(MAX))
 RETURNS NVARCHAR(MAX)
 AS
 BEGIN
-	SET @html = dbo.strip_html(@html)
-	SET @html = dbo.remove_spaces(@html)
 	SET @html = dbo.strip_html(@html)
 	SET @html = dbo.remove_spaces(@html)
 	RETURN @html
