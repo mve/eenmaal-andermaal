@@ -26,9 +26,10 @@ class BidController extends Controller
         if (Carbon::now() >= Carbon::parse($auction->end_datetime))
             return response()->json(['error' => 'De veiling is al afgelopen']);
         $latestBid = $auction->getLatestBid();
-        if ($amount <= $latestBid) {
+        $minimumBid = $latestBid + $auction->getIncrement();
+        if ($amount < $minimumBid) {
             return response()->json([
-                'error' => 'Bod is niet hoger dan het huidige bod',
+                'error' => 'Bod moet minimaal &euro;'.$minimumBid." zijn",
                 'currentBid' => $latestBid,
                 'lastFiveBidsHTML' => $auction->getLastNBidsHTML()
             ]);

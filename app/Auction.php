@@ -224,6 +224,26 @@ class Auction extends SuperModel
     }
 
     /**
+     * Get the necessary increment
+     * @return float|int
+     */
+    public function getIncrement()
+    {
+        $latestBid = $this->getLatestBid();
+        if($latestBid >= 5000){
+            return 50;
+        }else if($latestBid >= 1000){
+            return 10;
+        }else if($latestBid >= 500){
+            return 5;
+        }else if($latestBid >= 49.99){
+            return 1;
+        }else{
+            return 0.50;
+        }
+    }
+
+    /**
      * Get the last $max bids and put them into list items
      * @param int $max
      * @return string
@@ -232,12 +252,12 @@ class Auction extends SuperModel
     {
         $lastFiveBidsHTML = "";
         $lastFiveBids = $this->getBids($max);
-        if(count($lastFiveBids)){
-            foreach($lastFiveBids as $bid){
-                $lastFiveBidsHTML .= "<li class=\"list-group-item\"><strong>".$bid->getBidder()->first_name.": &euro;".$bid->amount."</strong> <span class=\"float-right\">".$bid->getTime()."</span></li>";
+        if (count($lastFiveBids)) {
+            foreach ($lastFiveBids as $bid) {
+                $lastFiveBidsHTML .= "<li class=\"list-group-item\"><strong>" . $bid->getBidder()->first_name . ": &euro;" . $bid->amount . "</strong> <span class=\"float-right\">" . $bid->getTime() . "</span></li>";
             }
             return $lastFiveBidsHTML;
-        }else{
+        } else {
             return "<li class=\"list-group-item flex-centered\"><strong>Er is nog niet geboden</strong></li>";
         }
     }

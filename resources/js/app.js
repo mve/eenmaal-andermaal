@@ -97,7 +97,7 @@ var btnBid = document.getElementById("btn-bid");
 if (btnBid) {
     function loadBids(response) {
         currentBid.innerText = response.currentBid;
-        textBid.value = response.currentBid + 1;
+        // textBid.value = response.currentBid + 1;
         lastFiveBidsList.innerHTML = response.lastFiveBidsHTML;
         lastFiveBidsList.scrollTop = 0;
     }

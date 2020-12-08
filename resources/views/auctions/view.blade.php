@@ -133,7 +133,7 @@
                         <div class="input-group mb-3">
                             <input type="hidden" id="auction-id" value="{{$auction->id}}"/>
                             <input type="number" class="form-control" id="text-bid" aria-describedby="Plaats bod"
-                                   value="{{$auction->getLatestBid()+1}}">
+                                   value="{{$auction->getLatestBid()+$auction->getIncrement()}}">
                             <button id="btn-bid" type="submit" class="btn btn-primary">Bied</button>
                         </div>
                         <div class="alert alert-success d-none" role="alert" id="alert-success">
