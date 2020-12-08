@@ -103,14 +103,11 @@ class CategoryController extends Controller
     {
         $filteredAuctions = [];
 
-        $userLatAndLon = $this->getLatAndLon($user);
-
         foreach ($auctions as $auction) {
 
             $seller = $auction->getSeller();
-            $sellerLatAndLon = $this->getLatAndLon($seller);
 
-            if ($maxDistance > $this->getDistance($sellerLatAndLon[0], $sellerLatAndLon[1], $userLatAndLon[0], $userLatAndLon[1]))
+            if ($maxDistance > $this->getDistance($user->latitude, $user->longitude, $seller->latitude, $seller->longitude))
             {
 
                 array_push($filteredAuctions, $auction);
@@ -135,16 +132,6 @@ class CategoryController extends Controller
         $km = $r * $c;
         //echo ' '.$km;
         return $km;
-    }
-
-    function getLatAndLon(User $user)
-    {
-        $response = Http::get('https://nominatim.openstreetmap.org/search/' . $user->city . '?format=json&limit=1');
-
-        $lat = $response->json()[0]['lat'];
-        $lon = $response->json()[0]['lon'];
-
-        return [$lat, $lon];
     }
 
 }

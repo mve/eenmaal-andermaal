@@ -6,6 +6,7 @@ use App\DB;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -120,6 +121,8 @@ class RegisterController extends Controller
                 return redirect()->back()->withInput($request->all())->withErrors(["country_code" => "De geselecteerde beveiligingsvraag bestaat niet"]);
             }
 
+            $latAndLon = $this->getLatAndLon($request->city);
+
             $user = new \App\User();
             $user->username = $request->username;
             $user->email = $request->email;
@@ -137,6 +140,8 @@ class RegisterController extends Controller
             $user->birth_date = $request->birth_date;
             $user->security_question_id = $request->security_question_id;
             $user->security_answer = $request->security_answer;
+            $user ->latitude = $latAndLon[0];
+            $user ->longitude = $latAndLon[1];
             $user->save();
 
             // inloggen na registreren
@@ -183,5 +188,15 @@ class RegisterController extends Controller
                 return response()->json(['error'=>'Verificatie code is onjuist vul opnieuw in of vraag een nieuwe code aan']);
             }
         }
+    }
+
+    function getLatAndLon($city)
+    {
+        $response = Http::get('https://nominatim.openstreetmap.org/search/' . $city . '?format=json&limit=1');
+
+        $lat = $response->json()[0]['lat'];
+        $lon = $response->json()[0]['lon'];
+
+        return [$lat, $lon];
     }
 }

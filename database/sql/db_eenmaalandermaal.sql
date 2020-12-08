@@ -97,6 +97,8 @@ CREATE TABLE dbo.users (
 	security_question_id int NOT NULL,
 	security_answer varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	is_seller bit DEFAULT 0 NOT NULL,
+	latitude varchar(30),
+    longitude varchar(30),
 	created_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_users PRIMARY KEY (id),
 	CONSTRAINT FK_securityquestions_users FOREIGN KEY (security_question_id) REFERENCES dbo.security_questions(id),
