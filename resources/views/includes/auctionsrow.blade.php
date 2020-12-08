@@ -18,12 +18,17 @@
                         <div class="auction-card-data">{{$auction->getTimeLeft()}}</div>
                     </div>
 
+
                     <div class="flex-centered mt-2">
                         <div class="btn btn-outline-primary">
-                            @if(Session::has("user") && Session::get("user")->id===$auction->user_id)
-                                Voortgang bekijken
+                            @if(\Carbon\Carbon::now() < \Carbon\Carbon::parse($auction->end_datetime))
+                                @if(Session::has("user") && Session::get("user")->id===$auction->user_id)
+                                    Voortgang bekijken
+                                @else
+                                    Bieden
+                                @endif
                             @else
-                                Bieden
+                                Veiling bekijken
                             @endif
                         </div>
                     </div>

@@ -11,7 +11,7 @@
 
                         <div class="card-body">
 
-                            <h2 class="text-center mt-2 mb-4">Beoordeling schrijven <a href="{{url("/")}}"
+                            <h2 class="text-center mt-2 mb-4">Beoordeling schrijven <a href="{{route("veilingen.gewonnen")}}"
                                                                                        class="btn btn-primary">Terug</a>
                             </h2>
                             <p class="text-center">Beoordeling schrijven over <span

@@ -16,6 +16,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('auctions', AuctionController::class);
 Route::get('mijnveilingen', 'AuctionController@myAuctions')->name('veilingen.mijn');
+Route::get('gewonnenveilingen', 'AuctionController@wonAuctions')->name('veilingen.gewonnen');
 
 Route::get('/registreren', 'Auth\RegisterController@index')->name('register');
 Route::post('/registreren', 'Auth\RegisterController@create');
