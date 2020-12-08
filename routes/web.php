@@ -18,6 +18,9 @@ Route::resource('auctions', AuctionController::class);
 Route::get('mijnveilingen', 'AuctionController@myAuctions')->name('veilingen.mijn');
 Route::get('gewonnenveilingen', 'AuctionController@wonAuctions')->name('veilingen.gewonnen');
 
+Route::get('bid/{id}/{amount}', 'BidController@bid')->name('veilingen.bieden');
+Route::get('bid/{id}', 'BidController@loadData')->name('veilingen.ophalen');
+
 Route::get('/registreren', 'Auth\RegisterController@index')->name('register');
 Route::post('/registreren', 'Auth\RegisterController@create');
 Route::post('/registreren/verify', 'Auth\RegisterController@send_verify');
@@ -48,6 +51,7 @@ Route::get('faq', function () {
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
+Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld

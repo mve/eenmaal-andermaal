@@ -13,7 +13,7 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Categorieën</a>
+                    <a class="nav-link" href="{{route("categories")}}">Categorieën</a>
                 </li>
 
             </ul>
