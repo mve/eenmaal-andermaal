@@ -22,7 +22,7 @@ class CategoryController extends Controller
         // Get auctions in category.
         $auctions = DB::select("SELECT a.id, a.title, a.description, a.start_price, a.payment_instruction, a.duration, a.end_datetime, a.city, a.country_code, a.user_id
             FROM auctions a
-            LEFT JOIN auction_categories ac ON a.id = ac.auction_id WHERE ac.category_id = " . $category->id);
+            LEFT JOIN auction_categories ac ON a.id = ac.auction_id WHERE ac.category_id = " . $category->id . "AND end_datetime >= GETDATE()");
 
         $auctions = Auction::resultArrayToClassArray($auctions);
 
