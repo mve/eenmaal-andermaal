@@ -178,8 +178,8 @@ BEGIN
 		ID,
 		Titel,
 		dbo.clean_text(Beschrijving),
-		Prijs,
-		Land,
+		(SELECT CAST(CAST(Prijs as FLOAT) AS DECIMAL(15,2))),
+		Valuta,
 		7,
 		GETDATE(),
 		Locatie,
@@ -196,6 +196,14 @@ BEGIN
 		'../images/' + Thumbnail
 	FROM INSERTED
 
+	INSERT INTO eenmaalandermaal.dbo.auction_categories(
+		auction_id,
+		category_id
+	)
+	SELECT
+		ID,
+		Categorie
+	FROM INSERTED
 END
 GO
 

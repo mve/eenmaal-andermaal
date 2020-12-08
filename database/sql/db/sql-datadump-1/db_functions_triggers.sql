@@ -151,9 +151,9 @@ SELECT
 	ID,
 	Titel,
 	dbo.clean_text(Beschrijving),
-	Prijs,
-	Land,
-	'3',
+	(SELECT CAST(CAST(Prijs as FLOAT) AS DECIMAL(15,2))),,
+	Valuta,
+	7,
 	GETDATE(),
 	Locatie,
 	Land,
@@ -168,6 +168,15 @@ INSERT INTO dbo.auction_images(
 SELECT 
 	ID,
 	'../images/' + Thumbnail
+FROM INSERTED
+
+INSERT INTO eenmaalandermaal.dbo.auction_categories(
+		auction_id,
+		category_id
+	)
+SELECT
+	ID,
+	Categorie
 FROM INSERTED
 
 END
