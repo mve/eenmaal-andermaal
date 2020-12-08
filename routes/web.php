@@ -47,7 +47,7 @@ Route::get('faq', function () {
 
 Route::get('categorie/{id}', 'CategoryController@index')->name('auctionsInCategory');
 
-Route::get('/veilingmaken', 'AuctionController@create')->name('veilingmaken');
+Route::get('/veilingmaken', 'AuctionController@create')->name('veilingmaken')->middleware('check.user.seller');
 
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
