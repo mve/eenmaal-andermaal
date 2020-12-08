@@ -40,7 +40,7 @@
                 <div class="my-4">
                     <h4>Omschrijving</h4>
                     <hr>
-                    <p>{{nl2br($auction->description)}}</p>
+                    <p>{!! nl2br($auction->description) !!}</p>
                     <h4>Gegevens</h4>
                     <hr>
                     <p>
