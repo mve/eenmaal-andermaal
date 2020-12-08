@@ -6,6 +6,7 @@ use App\Auction;
 use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AuctionController extends Controller
 {
@@ -16,7 +17,7 @@ class AuctionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('check.user')->only(['myAuctions']);
+        $this->middleware('check.user')->except(['show']);
     }
 
     /**
@@ -51,6 +52,16 @@ class AuctionController extends Controller
         return view("auctions.view")->with($data);
     }
 
+    function dateSortDesc($a, $b)
+    {
+        return strtotime($b) - strtotime($a);
+    }
+
+    /**
+     * Get the user's auctions
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myAuctions(Request $request)
     {
         $myAuctions = Auction::resultArrayToClassArray(DB::select("SELECT * FROM auctions WHERE user_id=:user_id ORDER BY end_datetime ASC", [
@@ -87,7 +98,27 @@ class AuctionController extends Controller
         return view("auctions.myauctions")->with($data);
     }
 
-    function dateSortDesc($a, $b) {
-        return strtotime($b) - strtotime($a);
+    /**
+     * Get the user's won auctions
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function wonAuctions(Request $request)
+    {
+        $userId = Session::get("user")->id;
+        $auctions = Auction::resultArrayToClassArray(DB::select("
+                SELECT *
+                FROM auctions
+                WHERE GETDATE()>auctions.end_datetime AND EXISTS(
+                    SELECT * FROM bids a WHERE auction_id=auctions.id AND user_id=$userId AND a.amount IN(
+                        SELECT MAX(amount) FROM bids b GROUP BY auction_id
+                    )
+                )
+            "));
+
+        $data = [
+            'auctions' => $auctions
+        ];
+        return view("auctions.wonauctions")->with($data);
     }
 }

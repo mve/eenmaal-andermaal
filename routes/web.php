@@ -16,6 +16,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('auctions', AuctionController::class);
 Route::get('mijnveilingen', 'AuctionController@myAuctions')->name('veilingen.mijn');
+Route::get('gewonnenveilingen', 'AuctionController@wonAuctions')->name('veilingen.gewonnen');
+
 Route::get('bid/{id}/{amount}', 'BidController@bid')->name('veilingen.bieden');
 Route::get('bid/{id}', 'BidController@loadData')->name('veilingen.ophalen');
 
