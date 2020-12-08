@@ -43,10 +43,22 @@ CREATE TABLE dbo.Illustraties
 GO
 -------------------------------------------
 
-CREATE TRIGGER insertusers on dbo.gebruiker
+CREATE TRIGGER insert_users on dbo.gebruiker
 INSTEAD OF INSERT 
 AS
-BEGIN 
+BEGIN
+ IF NOT EXISTS (SELECT * FROM dbo.countries 
+                   WHERE country_code = country_code)
+BEGIN
+	INSERT INTO dbo.countries(
+		country_code,
+		country
+	)SELECT 
+		Country,
+		Location
+	FROM INSERTED
+END
+BEGIN
 INSERT INTO dbo.users(
 	username,
 	email,
@@ -140,7 +152,7 @@ SELECT
 	dbo.clean_text(Beschrijving),
 	Prijs,
 	Land,
-	'2',
+	'3',
 	GETDATE(),
 	Locatie,
 	Land,
