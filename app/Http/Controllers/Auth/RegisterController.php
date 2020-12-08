@@ -160,6 +160,9 @@ class RegisterController extends Controller
         $data = $request->all();
 
         if ($data["type"] == "1"){
+            if(User::oneWhere("email", $request->email)!==false)
+                return response()->json(['error'=>'Er bestaat al een gebruiker met het ingevulde e-mailadres']);
+
             $code = Str::random(32);
 
             $request->verify_code = $code;
@@ -180,7 +183,5 @@ class RegisterController extends Controller
                 return response()->json(['error'=>'Verificatie code is onjuist vul opnieuw in of vraag een nieuwe code aan']);
             }
         }
-
-        //dd($request->session());
     }
 }

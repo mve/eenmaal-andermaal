@@ -13,7 +13,7 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Categorieën</a>
+                    <a class="nav-link" href="{{route("categories")}}">Categorieën</a>
                 </li>
 
             </ul>
@@ -41,6 +41,9 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
+                            <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
+                                Mijn veilingen
+                            </a>
                             <a class="dropdown-item" href="{{route("mijnaccount")}}">
                                 Mijn account
                             </a>

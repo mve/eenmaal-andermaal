@@ -14,11 +14,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 
-//Route::get('auction', function () {
-//    return view('auctions.view');
-//});
-
 Route::resource('auctions', AuctionController::class);
+Route::get('mijnveilingen', 'AuctionController@myAuctions')->name('veilingen.mijn');
+Route::get('bid/{id}/{amount}', 'BidController@bid')->name('veilingen.bieden');
+Route::get('bid/{id}', 'BidController@loadData')->name('veilingen.ophalen');
 
 Route::get('/registreren', 'Auth\RegisterController@index')->name('register');
 Route::post('/registreren', 'Auth\RegisterController@create');
@@ -39,6 +38,7 @@ Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 Route::get('mijnaccount/bewerken', 'UserDetailsController@edit')->name('mijnaccount.bewerken');
 Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken');
 Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
+Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 
 Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
 Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
@@ -49,6 +49,7 @@ Route::get('faq', function () {
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
+Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld
