@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Auction;
+use App\auctionPaymentMethod;
+use App\AuctionShippingMethod;
 use App\Country;
 use App\PaymentMethod;
 use App\ShippingMethod;
@@ -27,7 +29,6 @@ class AuctionController extends Controller
 
     public function store(Request $request){
 
-  //      dd($request->session()->get("user")->id);
         $auction = new Auction();
         $auction->user_id = $request->session()->get("user")->id;
         $auction->title = $request->inputTitle;
@@ -38,10 +39,27 @@ class AuctionController extends Controller
         $auction->end_datetime = Carbon::now()->addDays($auction->duration);
         $auction->city = $request->inputCity;
         $auction->country_code = $request->inputCountryCode;
-
         $auction->save();
 
-   //     dd($request);
+
+        foreach($request->inputShipping as $method){
+
+            $auctionShippingMethod = new auctionShippingMethod();
+            $auctionShippingMethod->auction_id = $auction->id;
+            $auctionShippingMethod->shipping_id = $method;
+            $auctionShippingMethod->save();
+        }
+
+        foreach($request->inputPayment as $method){
+
+            $auctionPaymentMethod = new auctionPaymentMethod();
+            $auctionPaymentMethod->auction_id = $auction->id;
+            $auctionPaymentMethod->payment_id = $method;
+            $auctionPaymentMethod->save();
+        }
+
+
+
 
     }
 

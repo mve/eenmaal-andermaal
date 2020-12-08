@@ -18,9 +18,10 @@
 
                         <div class="mb-3 col-md-12">
                             <label for="title" class="form-label">Vul een titel in</label>
-                            <input name="inputTitle" type="text" class="form-control" id="title">
+                            <input name="inputTitle" type="text" class="form-control" id="title" required>
                         </div>
-                        <label for="name" class="form-label">Kies een rubriek</label>
+
+                        <label for="rubrieken" class="form-label">Kies een rubriek</label>
                         <div class="mb-3 col-md-4">
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>Kies groep</option>
@@ -50,19 +51,19 @@
                         <label for="formFile" class="form-label">Foto's</label>
                         <i>plaats hier de foto's van je product</i>
                         <div class="mb-3">
-                            <input class="form-control" type="file" id="formFileMultiple" multiple>
+                            <input class="form-control" type="file" id="formFileMultiple" multiple >
                         </div>
 
                         <label for="inputDescription" class="form-label">Omschrijving</label>
                         <i>geef hier een omschrijving van je product</i>
                         <div class="mb-3 col-md-12">
-                            <textarea name="inputDescription" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea name="inputDescription" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
                         </div>
 
                         <label for="inputDuration" class="form-label">Veiling duur</label>
                         <i>vul hier het aantal dagen van je veiling in</i>
                         <div class="mb-3 col-md-12">
-                            <input type="number" value="1" name="inputDuration" id="inputDuration" class="form-control">
+                            <input type="number" value="1" name="inputDuration" id="inputDuration" class="form-control" required>
                         </div>
 
                         <div class="mb-3 col-md-4">
@@ -76,7 +77,7 @@
 
                         <div class="mb-3 col-md-4">
                         <label for="inputCity" class="form-label">Stad</label>
-                            <input type="text" name="inputCity" id="inputCity" class="form-control">
+                            <input type="text" name="inputCity" id="inputCity" class="form-control" required>
                         </div>
 
 
@@ -84,14 +85,14 @@
 
                         <div class="col-md-12">
                             <label for="inputPaymentInstruction" class="form-label">Extra betalingsinstructies</label>
-                                <textarea name="inputPaymentInstruction" class="form-control"></textarea>
+                                <textarea name="inputPaymentInstruction" class="form-control" required></textarea>
                         </div>
 
                         <div class="col-md-3">
                             <label for="inputStartPrice" class="form-label">Startprijs</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">€</span>
-                                    <input name="inputStartPrice" type="number" class="form-control">
+                                    <input name="inputStartPrice" type="number" class="form-control" required>
                                 <span class="input-group-text">.00</span>
                             </div>
                         </div>
@@ -101,9 +102,9 @@
                             @foreach ($paymentMethods as $paymentMethod)
                             <div class="form-check">
 
-                                    <input class="form-check-input" type="checkbox" value="{{ $paymentMethod->id }}" id="flexCheckDefault">
+                                    <input name="inputPayment[]" class="form-check-input" type="checkbox" value="{{ $paymentMethod->id }}" id="{{ $paymentMethod->method }}">
 
-                                    <label class="form-check-label" for="flexCheckDefault">
+                                    <label class="form-check-label" for="{{ $paymentMethod->method }}">
                                         {{ $paymentMethod->method }}
                                     </label>
                             </div>
@@ -117,10 +118,10 @@
                             @foreach ($shippingMethods as $shippingMethod)
                                 <div class="form-check">
 
-                                    <input class="form-check-input" type="checkbox" value="{{ $shippingMethod->id }}" id="flexCheckDefault">
+                                    <input name="inputShipping[]"  class="form-check-input" type="checkbox" value="{{ $shippingMethod->id }}" id="{{ $shippingMethod->method  }}">
 
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        {{ $shippingMethod->method  }}
+                                    <label class="form-check-label" for="{{ $shippingMethod->method  }}">
+                                        {{ $shippingMethod->method }}
                                     </label>
                                 </div>
                             @endforeach
