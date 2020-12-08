@@ -46,7 +46,7 @@ class CategoryController extends Controller
     public function categories()
     {
         $category = new Category();
-        $category->id = null;
+        $category->id = -1;
         $category->name = "Categorieën";
         $category->parent_id = null;
 
