@@ -47,7 +47,7 @@ class Category extends SuperModel
 
         $mainCategories = [];
         foreach ($allCategories as $category) {
-            if ($category->parent_id === -1)
+            if ($category->parent_id == -1)
                 array_push($mainCategories, $category);
         }
 
