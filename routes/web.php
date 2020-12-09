@@ -54,6 +54,13 @@ Route::get('faq', function () {
     return view('faq.faq');
 });
 
+Route::get('search', function () {
+    return view('search.view');
+});
+Route::get('not-found', function () {
+    return view('search.not-found');
+});
+
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');
