@@ -133,8 +133,6 @@ class UserDetailsController extends Controller
         $currentUser->latitude = $latAndLon['lat'];
         $currentUser->longitude = $latAndLon['lon'];
 
-        dd($currentUser);
-
         $currentUser->update();
 
         $request->session()->flash("success","Uw gegevens zijn opgeslagen!");
