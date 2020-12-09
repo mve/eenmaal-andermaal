@@ -75,7 +75,7 @@ class ForgotPasswordController extends Controller
 
         }
 
-        session()->flash('msg', 'Email verstuurd als e-mailadres en beveiligings antwoord klopt');
+        session()->flash('msg', 'Email verstuurd als e-mailadres en beveiligings antwoord juist zijn');
         return redirect('/wachtwoordvergeten');
 
     }
