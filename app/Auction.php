@@ -40,6 +40,25 @@ class Auction extends SuperModel
     }
 
     /**
+     * Get the auction's shipping methods
+     * @return array
+     */
+    public static function SearchAuctions($keyword)
+    {
+        //aanpassen naar like title en description
+        $auctions = DB::select("
+            DECLARE @keyword VARCHAR(100)
+            SET @keyword = :keyword
+            SELECT *
+            FROM auctions
+            WHERE title LIKE @keyword OR description LIKE @keyword",
+            [
+                "keyword" => '%'.$keyword.'%'
+            ]);
+        return $auctions;
+    }
+
+    /**
      * Get the auction's payment methods
      * @return array
      */
