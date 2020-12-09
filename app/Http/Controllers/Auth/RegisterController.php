@@ -137,6 +137,7 @@ class RegisterController extends Controller
             $user->birth_date = $request->birth_date;
             $user->security_question_id = $request->security_question_id;
             $user->security_answer = $request->security_answer;
+            $user->is_seller = 0;
             $user->save();
 
             // inloggen na registreren

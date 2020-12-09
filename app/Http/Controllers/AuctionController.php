@@ -6,6 +6,7 @@ use App\Auction;
 use App\auctionPaymentMethod;
 use App\AuctionShippingMethod;
 use App\Category;
+use App\AuctionImage;
 use App\Country;
 use App\PaymentMethod;
 use App\ShippingMethod;
@@ -13,6 +14,8 @@ use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 class AuctionController extends Controller
 {
@@ -34,7 +37,6 @@ class AuctionController extends Controller
 
     public function create()
     {
-
 
         $data = [
             "mainCategories" => Category::allWhere("parent_id", -1),
@@ -68,9 +70,9 @@ class AuctionController extends Controller
                 $catId=$value;
             }
         }
-        if (count(Category::allWhere("parent_id", $catId)))
+        if (count(Category::allWhere("parent_id", $catId))){
             return redirect()->back()->withInput($request->all())->withErrors(["category" => "Je mag geen rubriek kiezen die zelf rubrieken heeft"]);
-
+        }
 
         $auction = new Auction();
         $auction->user_id = $request->session()->get("user")->id;
@@ -84,6 +86,14 @@ class AuctionController extends Controller
         $auction->country_code = $request->inputCountryCode;
         $auction->save();
 
+        foreach($request->file('image') as $img){   
+            $img->store('public/'.$auction->id);
+           
+            $auctionImage = new AuctionImage();
+            $auctionImage->auction_id = $auction->id;
+            $auctionImage->file_name = '../storage/' . $auction->id . '/' . $img->hashName();
+            $auctionImage->save();
+        }
 
         foreach ($request->inputShipping as $method) {
 

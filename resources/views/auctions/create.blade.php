@@ -9,7 +9,7 @@
 
         <div class="card my-3">
             <div class="card-body">
-                <form class="make-auction" method="POST" action="/auctions">
+                <form class="make-auction" method="POST" action="/auctions" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -61,7 +61,7 @@
                         <label for="formFile" class="form-label">Foto's</label>
                         <i>Plaats hier de foto's van je product</i>
                         <div class="mb-3">
-                            <input class="form-control" type="file" id="formFileMultiple" multiple >
+                            <input class="form-control" type="file" name="image[]" id="formFileMultiple" multiple>
                         </div>
 
                         <label for="inputDescription" class="form-label">Omschrijving</label>
