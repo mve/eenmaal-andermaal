@@ -209,9 +209,17 @@ a.category{
                 max-width: 100%;
             }
         }
-
     }
 }
+
+.search-item{
+    border-bottom: $dark-blue solid 1px;
+
+    .search-price{
+        font-size: 22px;
+    }
+}
+
 
 .make-auction{
     .form-check-label{
@@ -222,4 +230,7 @@ a.category{
         font-weight: bold;
 
     }
+}
+.not-found{
+    padding: 158px 0;
 }
