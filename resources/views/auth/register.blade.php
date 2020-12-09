@@ -80,7 +80,7 @@
                             <div id="form_2" class="d-none">
 
                                 <div class="form-group row mb-2">
-                                    <label for="verificatie_code" class="col-md-4 col-form-label text-md-right">Verificatie code</label>
+                                    <label for="verificatie_code" class="col-md-4 col-form-label text-md-right">Verificatiecode</label>
 
                                     <div class="col-md-6">
                                         <input id="verificatie_code" type="text"
@@ -100,7 +100,7 @@
                                     <div class="col-md-6">
 
                                         <button class="btn btn-primary d-none" onclick="Send_verify()" id="send_verify_again">
-                                            Herstuur code email
+                                            Herstuur code
                                         </button>
 
                                     </div>
@@ -124,7 +124,7 @@
                                                class="form-control @error('password') is-invalid @enderror"
                                                name="password" required autocomplete="new-password">
                                         <small id="passwordHelpInline" class="text-muted">
-                                          Wachtwoord moet minimaal 8 tekens bevatten, 1 hoofdletter en 1 speciaal teken
+                                          Wachtwoord moet minimaal 8 tekens bevatten, 1 hoofdletter en 1 speciaal teken bevatten
                                         </small>
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">

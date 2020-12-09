@@ -43,4 +43,22 @@ class HomeController extends Controller
         ];
         return view('home')->with($data);
     }
+
+    public function search(Request $request){
+        
+        if($request->keyword){
+            $data = [
+                "keyword" => $request->keyword,
+                "auctions" => Auction::SearchAuctions($request->keyword)
+            ];
+            return view('search.view')->with($data);
+        } else {
+            return view('search.view');
+
+        }
+        
+      
+    }
+
+
 }
