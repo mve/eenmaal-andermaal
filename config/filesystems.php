@@ -51,7 +51,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL').'/storage/public',
             'visibility' => 'public',
         ],
 
@@ -62,6 +62,11 @@ return [
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
+        ],
+
+        'auction_images' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/images/auctions',
         ],
 
     ],

@@ -42,13 +42,15 @@
                     </li>
 
                 @else
+                    @if (Session::get('user')->is_seller)
+                        <li class="nav-item"><a href="{{ route('veilingmaken') }}" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Veiling maken" class="nav-link"><i class="fas fa-plus"></i></a></li>
+                    @endif
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             Welkom <span class="fw-bold">{{ Session::get('user')->username }}</span>
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                             <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">

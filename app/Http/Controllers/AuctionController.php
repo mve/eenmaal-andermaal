@@ -3,10 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Auction;
+use App\AuctionCategory;
+use App\AuctionPaymentMethod;
+use App\AuctionShippingMethod;
+use App\Category;
+use App\AuctionImage;
+use App\Country;
+use App\PaymentMethod;
+use App\ShippingMethod;
 use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class AuctionController extends Controller
 {
@@ -25,6 +37,118 @@ class AuctionController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|void
      */
+
+    public function create()
+    {
+
+        $data = [
+            "mainCategories" => Category::allWhere("parent_id", -1),
+            "shippingMethods" => ShippingMethod::all(),
+            "paymentMethods" => PaymentMethod::all(),
+            "countries" => Country::all()
+        ];
+        return view("auctions.create")->with($data);
+
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, array(
+            'title' => ['required', 'string', 'max:100'],
+            'description' => ['nullable', 'string'],
+            'start_price' => ['require', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'payment_instruction' => ['nullable', 'string', 'max:255'],
+            'duration' => ['required', 'numeric'],
+            'image.*' => ['required', 'mimes:jpeg,jpg,png','max:10000'],//10000kb/10mb
+            'city' => ['required', 'string', 'max:100'],
+        ));
+
+        $catId = -1;
+        foreach ($request->get("category") as $key => $value) {
+            if ($value != -2) {
+                $catId = $value;
+            }
+        }
+        if (count(Category::allWhere("parent_id", $catId)))
+            return redirect()->back()->withInput($request->all())->withErrors(["category" => "Je mag geen rubriek kiezen die zelf rubrieken heeft"]);
+        if (
+            $request->get("duration")!="1" &&
+            $request->get("duration")!="3" &&
+            $request->get("duration")!="5" &&
+            $request->get("duration")!="7" &&
+            $request->get("duration")!="10"
+        )
+            return redirect()->back()->withInput($request->all())->withErrors(["duration" => "Je mag alleen 1, 3, 5, 7 of 10 invullen"]);
+        if(
+            DB::selectOne("SELECT * FROM countries WHERE country_code=:country_code",[
+                "country_code" => $request->countryCode
+            ])===false
+        )
+            return redirect()->back()->withInput($request->all())->withErrors(["countryCode" => "Er bestaat geen land in onze database met de ingevulde landcode"]);
+
+        $auction = new Auction();
+        $auction->user_id = $request->session()->get("user")->id;
+        $auction->title = $request->title;
+        $auction->description = $request->description;
+        $auction->payment_instruction = $request->paymentInstruction;
+        $auction->start_price = $request->startPrice;
+        $auction->duration = $request->duration;
+        $auction->end_datetime = Carbon::now()->addDays($auction->duration);
+        $auction->city = $request->city;
+        $auction->country_code = $request->countryCode;
+        $auction->save();
+
+        foreach ($request->file('image') as $img) {
+            $fileName = $auction->id."/".Str::random(10).".png";
+            Storage::disk('auction_images')->put($fileName, file_get_contents($img));
+
+            $auctionImage = new AuctionImage();
+            $auctionImage->auction_id = $auction->id;
+            $auctionImage->file_name = '/images/auctions/' . $fileName;
+            $auctionImage->save();
+        }
+
+        $auctionCategory = new AuctionCategory();
+        $auctionCategory->auction_id = $auction->id;
+        $auctionCategory->category_id = $catId;
+        $auctionCategory->save();
+
+        foreach ($request->shipping as $method) {
+            $auctionShippingMethod = new AuctionShippingMethod();
+            $auctionShippingMethod->auction_id = $auction->id;
+            $auctionShippingMethod->shipping_id = $method;
+            $auctionShippingMethod->save();
+        }
+
+        foreach ($request->payment as $method) {
+            $auctionPaymentMethod = new AuctionPaymentMethod();
+            $auctionPaymentMethod->auction_id = $auction->id;
+            $auctionPaymentMethod->payment_id = $method;
+            $auctionPaymentMethod->save();
+        }
+
+        return redirect()->route("auctions.show",$auction->id);
+    }
+
+    /**
+     * Request new category select HTML
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function categorySelect($id, $level)
+    {
+        $cats = Category::allWhere("parent_id", $id);
+        if (count($cats) === 0)
+            abort(404);
+
+        $data = [
+            "level" => $level,
+            "categories" => $cats,
+            "selected" => false
+        ];
+        return view("includes.categoryselection")->with($data);
+    }
+
     public function show($id)
     {
         $auction = Auction::oneWhere("id", $id);

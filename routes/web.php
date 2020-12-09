@@ -54,8 +54,16 @@ Route::get('faq', function () {
     return view('faq.faq');
 });
 
+
+Route::get('categorie/{id}', 'CategoryController@index')->name('auctionsInCategory');
+
+Route::get('/veilingmaken', 'AuctionController@create')->name('veilingmaken')->middleware('check.user.seller');
+Route::get('veilingmaken/categoryselect/{id}/{level}/', 'AuctionController@categorySelect')->name('veilingmaken.categoryselect');
+
+
 Route::get('search', 'HomeController@search')->name('zoeken');
 Route::post('search', 'HomeController@search')->name('zoeken');
+
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
