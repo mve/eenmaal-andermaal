@@ -111,7 +111,7 @@ class Auction extends SuperModel
                     FROM auction_hits WHERE auction_id=auctions.id AND hit_datetime >= DATEADD(HOUR, -1, GETDATE())
                     GROUP BY auction_id
                     ORDER BY Cnt DESC
-                )
+                ) AND end_datetime >= GETDATE()
             "));
         $popularAuctionsCount = count($popularAuctions);
         if ($popularAuctionsCount < $maxn) {
@@ -402,7 +402,7 @@ class Auction extends SuperModel
         a.*
         FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac
         WHERE c.id = ac.category_id
-        AND ac.auction_id = a.id
+        AND ac.auction_id = a.id AND a.end_datetime >= GETDATE()
         AND ac.category_id IN (SELECT id FROM subcategories)
         ", [
             "parentId" => $parentId
