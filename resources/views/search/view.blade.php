@@ -11,24 +11,36 @@
                     <button id="btn-search" type="submit" class="btn btn-light"><i class="fas fa-search"></i></button>
                 </div>
             </div>
+           
+            @if (isset($auctions))
+                @foreach ($auctions as $auction)
+                    <h2 class="text-center my-3">Zoekresultaten voor: "{{$keyword}}"</h2>
 
-            <h2 class="text-center my-3">Zoekresultaten voor: "testdata"</h2>
+                    <div class="search-item my-3 offset-md-2 col-md-8">
+                        <h3><a href="#">{{$auction['title']}}</a></h3>
+                        <p>{{$auction['description']}}</p>
+                        <strong class="search-price">{{$auction['start_price']}}</strong>
+                    </div>
+                @endforeach
+            @else 
+                <h2 class="text-center my-3">Zoekresultaten voor: "testdata"</h2>
 
-            <div class="search-item my-3 offset-md-2 col-md-8">
-                <h3><a href="#">Testitem</a></h3>
-                <p>omschrijving van item</p>
-                <strong class="search-price">€ 45,00</strong>
-            </div>
-            <div class="search-item my-3 offset-md-2 col-md-8">
-                <h3><a href="#">Testitem</a></h3>
-                <p>omschrijving van item</p>
-                <strong class="search-price">€ 45,00</strong>
-            </div>
-            <div class="search-item my-3 offset-md-2 col-md-8">
-                <h3><a href="#">Testitem</a></h3>
-                <p>omschrijving van item</p>
-                <strong class="search-price">€ 45,00</strong>
-            </div>
+                <div class="search-item my-3 offset-md-2 col-md-8">
+                    <h3><a href="#">Testitem</a></h3>
+                    <p>omschrijving van item</p>
+                    <strong class="search-price">€ 45,00</strong>
+                </div>
+                <div class="search-item my-3 offset-md-2 col-md-8">
+                    <h3><a href="#">Testitem</a></h3>
+                    <p>omschrijving van item</p>
+                    <strong class="search-price">€ 45,00</strong>
+                </div>
+                <div class="search-item my-3 offset-md-2 col-md-8">
+                    <h3><a href="#">Testitem</a></h3>
+                    <p>omschrijving van item</p>
+                    <strong class="search-price">€ 45,00</strong>
+                </div>
+            @endif
         </div>
     </div>
 

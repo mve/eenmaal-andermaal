@@ -39,6 +39,23 @@ class Auction extends SuperModel
         return $shippingMethods;
     }
 
+      /**
+     * Get the auction's shipping methods
+     * @return array
+     */
+    public static function SearchAuctions($keyword)
+    {
+        //aanpassen naar like title en description
+        $auctions = DB::select("
+            SELECT *
+            FROM auctions
+            WHERE title LIKE :keyword",
+            [
+                "keyword" => '%'.$keyword.'%'
+            ]);
+        return $auctions;
+    }
+
     /**
      * Get the auction's payment methods
      * @return array

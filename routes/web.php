@@ -54,9 +54,9 @@ Route::get('faq', function () {
     return view('faq.faq');
 });
 
-Route::get('search', function () {
-    return view('search.view');
-});
+Route::get('search', 'HomeController@search')->name('zoeken');
+Route::post('search', 'HomeController@search')->name('zoeken');
+
 Route::get('not-found', function () {
     return view('search.not-found');
 });
