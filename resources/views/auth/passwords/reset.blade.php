@@ -19,7 +19,7 @@
                                 <input type="hidden" name="token" value="{{ $token }}">
 
                                 <div class="form-group row mb-2">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">Email adres</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">E-mailadres</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email"
@@ -44,8 +44,7 @@
                                                class="form-control @error('password') is-invalid @enderror"
                                                name="password" required autocomplete="new-password">
                                         <small id="passwordHelpInline" class="text-muted">
-                                            Wachtwoord moet minimaal 8 tekens bevatten, 1 hoofdletter en 1 speciaal
-                                            teken
+                                            Wachtwoord moet minimaal 8 tekens bevatten, 1 hoofdletter en 1 speciaal teken bevatten
                                         </small>
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">

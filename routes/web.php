@@ -61,6 +61,10 @@ Route::get('/veilingmaken', 'AuctionController@create')->name('veilingmaken')->m
 Route::get('veilingmaken/categoryselect/{id}/{level}/', 'AuctionController@categorySelect')->name('veilingmaken.categoryselect');
 
 
+Route::get('search', 'HomeController@search')->name('zoeken');
+Route::post('search', 'HomeController@search')->name('zoeken');
+
+
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');

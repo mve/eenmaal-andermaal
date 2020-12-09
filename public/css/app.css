@@ -11938,11 +11938,23 @@ a.category:hover {
   max-width: 100%;
 }
 
+
 .make-auction .form-check-label {
   font-weight: normal !important;
 }
 
 .make-auction label {
   font-weight: bold;
+
+.search-item {
+  border-bottom: #284B63 solid 1px;
+}
+
+.search-item .search-price {
+  font-size: 22px;
+}
+
+.not-found {
+  padding: 158px 0;
 }
 
