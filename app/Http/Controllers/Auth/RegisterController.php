@@ -6,6 +6,7 @@ use App\DB;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -120,6 +121,13 @@ class RegisterController extends Controller
                 return redirect()->back()->withInput($request->all())->withErrors(["country_code" => "De geselecteerde beveiligingsvraag bestaat niet"]);
             }
 
+            $latAndLon = $this->getLatAndLon($request->postal_code, $request->country_code);
+
+            if (array_key_exists('error', $latAndLon))
+            {
+                return redirect()->back()->withInput($request->all())->withErrors(["postal_code" => $latAndLon['error']]);
+            }
+
             $user = new \App\User();
             $user->username = $request->username;
             $user->email = $request->email;
@@ -138,6 +146,8 @@ class RegisterController extends Controller
             $user->security_question_id = $request->security_question_id;
             $user->security_answer = $request->security_answer;
             $user->is_seller = 0;
+            $user ->latitude = $latAndLon['lat'];
+            $user ->longitude = $latAndLon['lon'];
             $user->save();
 
             // inloggen na registreren
@@ -184,5 +194,27 @@ class RegisterController extends Controller
                 return response()->json(['error'=>'Verificatie code is onjuist vul opnieuw in of vraag een nieuwe code aan']);
             }
         }
+    }
+
+    function getLatAndLon($postalCode, $countryCode)
+    {
+        // If postal code is from CA or GB, add space 3 characters before end of postal code.
+        if ($countryCode === "CA" || $countryCode === "GB")
+        {
+            $postalCode = str_replace(' ', '', $postalCode);
+            $postalCode = strrev($postalCode);
+            $postalCode = substr($postalCode, 0, 3) . ' ' . substr($postalCode, 3);
+            $postalCode = strrev($postalCode);
+        }
+
+        $response = Http::get('https://nominatim.openstreetmap.org/search?country=' . $countryCode . '&postalcode=' . $postalCode . '&format=json&limit=1');
+
+        if (!count($response->json()))
+            return ['error'=>'Geen plaats gevonden met deze postcode en landcode combinatie.'];
+
+        $lat = $response->json()[0]['lat'];
+        $lon = $response->json()[0]['lon'];
+
+        return ['lat' => $lat, 'lon' => $lon];
     }
 }
