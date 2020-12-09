@@ -42,6 +42,7 @@ class ReviewController extends Controller
         if($request->comment!==null)
             $review->comment = $request->comment;
         $review->save();
-        return redirect()->route('auctions.show',$request->get("auction")->id);
+        $request->session()->flash('success', 'Beoordeling voor <b>'.$request->get("auction")->title.'</b> is geplaatst!');
+        return redirect()->route('veilingen.gewonnen');
     }
 }

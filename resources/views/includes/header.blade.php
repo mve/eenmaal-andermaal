@@ -41,6 +41,9 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
+                            <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">
+                                Gewonnen veilingen
+                            </a>
                             <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
                                 Mijn veilingen
                             </a>

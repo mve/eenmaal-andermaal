@@ -16,6 +16,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('auctions', AuctionController::class);
 Route::get('mijnveilingen', 'AuctionController@myAuctions')->name('veilingen.mijn');
+Route::get('gewonnenveilingen', 'AuctionController@wonAuctions')->name('veilingen.gewonnen');
+
 Route::get('bid/{id}/{amount}', 'BidController@bid')->name('veilingen.bieden');
 Route::get('bid/{id}', 'BidController@loadData')->name('veilingen.ophalen');
 
@@ -39,6 +41,11 @@ Route::get('mijnaccount/bewerken', 'UserDetailsController@edit')->name('mijnacco
 Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken');
 Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
 Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
+
+Route::get('verkoperworden', 'SellerVerificationController@verificationStart')->name('verkoperworden');
+Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->name('verkoperworden');
+Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
+Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
 
 Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
 Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');

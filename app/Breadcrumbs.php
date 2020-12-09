@@ -121,6 +121,8 @@ class Breadcrumbs
     private static function categoryParent(&$categoriesArray, $allCategories, $parentId)
     {
         foreach ($allCategories as $category) {
+            if($category->id===-1)
+                continue;
             if ($category->id === $parentId) {
                 array_push($categoriesArray, "<a href='" . route('auctionsInCategory', $category->id) . "'>$category->name</a>");
                 self::categoryParent($categoriesArray, $allCategories, $category->parent_id);

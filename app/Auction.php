@@ -111,7 +111,7 @@ class Auction extends SuperModel
                     FROM auction_hits WHERE auction_id=auctions.id AND hit_datetime >= DATEADD(HOUR, -1, GETDATE())
                     GROUP BY auction_id
                     ORDER BY Cnt DESC
-                )
+                ) AND end_datetime >= GETDATE()
             "));
         $popularAuctionsCount = count($popularAuctions);
         if ($popularAuctionsCount < $maxn) {
@@ -175,7 +175,7 @@ class Auction extends SuperModel
                     WHERE EXISTS (
                         SELECT TOP 3 auction_id
                         FROM auction_categories
-                        WHERE category_id = :cat_id AND auctions.id=id
+                        WHERE category_id = :cat_id AND auctions.id=auction_categories.auction_id
                     ) AND end_datetime >= DATEADD(MINUTE, 1, GETDATE())
                 ", [
                     "cat_id" => $categories[$i]["id"]
@@ -398,11 +398,11 @@ class Auction extends SuperModel
                     subcategories s ON c.parent_id = s.id
         )
 
-        SELECT c.id AS category_id, c.name AS category_name, c.parent_id AS category_parent_id,
+        SELECT TOP $limit c.id AS category_id, c.name AS category_name, c.parent_id AS category_parent_id,
         a.*
         FROM dbo.categories AS c, dbo.auctions AS a, dbo.auction_categories AS ac
         WHERE c.id = ac.category_id
-        AND ac.auction_id = a.id
+        AND ac.auction_id = a.id AND a.end_datetime >= GETDATE()
         AND ac.category_id IN (SELECT id FROM subcategories)
         ", [
             "parentId" => $parentId
@@ -416,10 +416,9 @@ class Auction extends SuperModel
     public static function getAllTopCategoryAuctions($limit = 6)
     {
         $topCategories = DB::select("
-            SELECT *
+            SELECT TOP $limit *
             FROM dbo.categories
-            WHERE parent_id
-            IS NULL
+            WHERE parent_id=-1
             ORDER BY name ASC
         ");
 
@@ -430,7 +429,7 @@ class Auction extends SuperModel
         $auctions = [];
 
         foreach ($topCategories as $cat) {
-            $auctionsPerTopCategory = Auction::getAllAuctionsFromParent($cat['id']);
+            $auctionsPerTopCategory = Auction::getAllAuctionsFromParent($cat['id'],4);
             if (empty($auctionsPerTopCategory)) {
                 continue;
             }

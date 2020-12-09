@@ -1,6 +1,6 @@
 
 
-CREATE TABLE Users
+CREATE TABLE gebruiker
 ( 
   Username VARCHAR(200),
   Postalcode VARCHAR(9),
@@ -14,7 +14,6 @@ CREATE TABLE Categorieen
 	ID int NOT NULL,
 	Name varchar(100) NULL,
 	Parent int NULL,
-	CONSTRAINT PK_Categorieen PRIMARY KEY (ID)
 )
 
 
@@ -32,16 +31,12 @@ CREATE TABLE Items
 	Valuta varchar(max) NULL,
 	Conditie varchar(max) NULL,
 	Thumbnail varchar(max) NULL,
-	CONSTRAINT PK_Items PRIMARY KEY (ID),
-	CONSTRAINT FK_Items_In_Categorie FOREIGN KEY (Categorie) REFERENCES Categorieen (ID)
 )
 
 CREATE TABLE Illustraties
 (
 	ItemID bigint NOT NULL,
 	IllustratieFile varchar(100) NOT NULL,
-    CONSTRAINT PK_ItemPlaatjes PRIMARY KEY (ItemID, IllustratieFile),
-	CONSTRAINT [ItemsVoorPlaatje] FOREIGN KEY(ItemID) REFERENCES Items (ID)
 )
 
 

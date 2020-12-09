@@ -24,7 +24,8 @@ class CheckUserReviewedAuction
             ]);
             if($review===false)
                 return $next($request);
-            return redirect()->home();
+            $request->session()->flash('error', 'Je hebt al een beoordeling geschreven voor <b>'.$request->get("auction")->title.'</b>!');
+            return redirect()->route("veilingen.gewonnen");
         });
     }
 }

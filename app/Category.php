@@ -18,7 +18,7 @@ class Category extends SuperModel
             $classes = 'category category-' . $level;
 
             if ($level == 0) {
-                $classes .= ' col-sm-6 col-md-2';
+                $classes .= ' col-sm-6 col-md-3';
             }
             if($level != 0){
                 $classes .= ' d-none';
@@ -47,7 +47,7 @@ class Category extends SuperModel
 
         $mainCategories = [];
         foreach ($allCategories as $category) {
-            if ($category->parent_id === null)
+            if ($category->parent_id === -1)
                 array_push($mainCategories, $category);
         }
 
