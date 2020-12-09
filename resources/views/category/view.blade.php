@@ -27,11 +27,15 @@
                                value="{{$filters['maxPrice']}}">
                     </div>
 
+                    @if (Session::has('user'))
+
                     <div class="mb-3">
                         <label for="inputMaxDistance" class="form-label">Maximale afstand (km)</label>
                         <input name="inputMaxDistance" type="number" class="form-control" id="inputMaxDistance"
                                value="{{$filters['maxDistance']}}">
                     </div>
+
+                    @endif
 
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
