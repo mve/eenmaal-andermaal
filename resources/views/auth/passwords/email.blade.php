@@ -41,7 +41,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="security_question_id"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Beveiligings vraag') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Beveiligingsvraag') }}</label>
 
                                     <div class="col-md-6">
                                         <select name="security_question_id" id="security_question_id"
@@ -64,7 +64,7 @@
 
                                     <div class="form-group row mb-2">
                                     <label for="security_answer"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Beveiligings antwoord') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Beveiligingsantwoord') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="security_answer" type="text"
@@ -83,7 +83,7 @@
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            Stuur wachtwoord reset link
+                                            Stuur wachtwoordresetlink
                                         </button>
                                     </div>
                                 </div>

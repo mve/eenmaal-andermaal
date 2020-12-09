@@ -19,10 +19,10 @@
                     <div class="accordion-body">
                         <ul>
                             <li>Zorg dat je bent ingelogd met een account.</li>
-                            <li>klik op een veiling waarop je wil je bieden. Vervolgens heb je hier de mogelijkheid om
-                                een veiling te bekijken en daarop te bieden.
+                            <li>Klik op een veiling waar je op wil je bieden. Vervolgens heb je hier de mogelijkheid om
+                                de veilingdetails te bekijken en een bod uit te brengen.
                             </li>
-                            <li>Is de veiling verlopen en heb jij het hoogste bod. dan krijg je een bericht met de
+                            <li>Is de veiling verlopen en heb jij het hoogste bod? Je ontvangt dan een bericht met de
                                 details van de veiling.
                             </li>
                         </ul>
@@ -40,10 +40,10 @@
                      data-parent="#vragenlijst">
                     <div class="accordion-body">
                         <ul>
-                            <li>Ga naar de pagina registreren. Volg hier de stappen die te nemen zijn om te registreren:</li>
-                            <li>Stap 1: Voer je gebruikersnaam en je email adres in. Vervolgens ontvang je een verificatie code op je mail adres.</li>
-                            <li>Stap 2: Voer je gekregen verificatie code in die je gekregen hebt op de mail.</li>
-                            <li>Stap 3: Wanneer de verificatie code klopt kun je de rest van je account gegevens invoeren.</li>
+                            <li>Ga naar de registreerpagina. Volg hier de volgende stappen:</li>
+                            <li>Stap 1: Voer je gebruikersnaam en je email adres in. Vervolgens ontvang je een verificatie code op je e-mailadres.</li>
+                            <li>Stap 2: Voer de ontvangen verificatiecode in.</li>
+                            <li>Stap 3: Wanneer de verificatie code klopt kun je de rest van de accountgegevens invoeren en de registratie afronden.</li>
                         </ul>
                     </div>
                 </div>
