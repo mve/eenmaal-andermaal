@@ -4,42 +4,24 @@
 
     <div class="container">
         <div class="row py-3">
-
-            <div class="my-5 offset-md-3 col-md-6">
-                <div class="input-group ">
-                    <input type="text" class="form-control" placeholder="Zoeken...">
-                    <button id="btn-search" type="submit" class="btn btn-light"><i class="fas fa-search"></i></button>
-                </div>
-            </div>
-           
-            @if (isset($auctions))
+            @if (isset($auctions) && !empty($auctions))
+                <h2 class="text-center my-3">Zoekresultaten voor: "{{$keyword}}"</h2>
                 @foreach ($auctions as $auction)
-                    <h2 class="text-center my-3">Zoekresultaten voor: "{{$keyword}}"</h2>
-
+                
                     <div class="search-item my-3 offset-md-2 col-md-8">
-                        <h3><a href="#">{{$auction['title']}}</a></h3>
+                    <h3><a href="{{ env('APP_URL') }}/auctions/{{$auction['id']}}">{{$auction['title']}}</a></h3>
                         <p>{{$auction['description']}}</p>
                         <strong class="search-price">{{$auction['start_price']}}</strong>
                     </div>
                 @endforeach
-            @else 
-                <h2 class="text-center my-3">Zoekresultaten voor: "testdata"</h2>
+            @elseif (isset($auctions) && empty($auctions))
+            <h2 class="text-center my-3">Helaas geen resultaten voor: "{{$keyword}}"</h2>
 
-                <div class="search-item my-3 offset-md-2 col-md-8">
-                    <h3><a href="#">Testitem</a></h3>
-                    <p>omschrijving van item</p>
-                    <strong class="search-price">€ 45,00</strong>
-                </div>
-                <div class="search-item my-3 offset-md-2 col-md-8">
-                    <h3><a href="#">Testitem</a></h3>
-                    <p>omschrijving van item</p>
-                    <strong class="search-price">€ 45,00</strong>
-                </div>
-                <div class="search-item my-3 offset-md-2 col-md-8">
-                    <h3><a href="#">Testitem</a></h3>
-                    <p>omschrijving van item</p>
-                    <strong class="search-price">€ 45,00</strong>
-                </div>
+            <p class="text-center" >Sorry, uw zoekopdracht heeft helaas niks opgeleverd, probeer het nogmaals met andere zoekwoorden.</p>
+            @else 
+            <h2 class="text-center my-3">Je hebt geen zoekwoord of woorden gedefinitieerd</h2>
+
+            <p class="text-center" >Vul een zoekwoord in om te zoeken.</p>
             @endif
         </div>
     </div>
