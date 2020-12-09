@@ -42,6 +42,11 @@ Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijna
 Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
 Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 
+Route::get('verkoperworden', 'SellerVerificationController@verificationStart')->name('verkoperworden');
+Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->name('verkoperworden');
+Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
+Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
+
 Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
 Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
 
