@@ -39,7 +39,7 @@ class Auction extends SuperModel
         return $shippingMethods;
     }
 
-      /**
+    /**
      * Get the auction's shipping methods
      * @return array
      */
@@ -47,9 +47,11 @@ class Auction extends SuperModel
     {
         //aanpassen naar like title en description
         $auctions = DB::select("
+            DECLARE @keyword VARCHAR(100)
+            SET @keyword = :keyword
             SELECT *
             FROM auctions
-            WHERE title LIKE :keyword",
+            WHERE title LIKE @keyword OR description LIKE @keyword",
             [
                 "keyword" => '%'.$keyword.'%'
             ]);
