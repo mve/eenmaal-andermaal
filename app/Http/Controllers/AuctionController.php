@@ -48,6 +48,20 @@ class AuctionController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, array(
+            'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'postal_code' => ['required', 'string','max:10'],
+            'city' => ['required', 'string'],
+            'country_code' => ['required', 'string'],
+            'birth_date' => ['required', 'date_format:Y-m-d'],
+            'security_question_id' => ['required'],
+            'security_answer' => ['required', 'string']
+        ));
+
         $catId = -1;
         foreach ($request->get("category") as $key=>$value) {
             if($value!=-2){
@@ -103,7 +117,8 @@ class AuctionController extends Controller
 
         $data = [
             "level" => $level,
-            "categories" => $cats
+            "categories" => $cats,
+            "selected" => false
         ];
         return view("includes.categoryselection")->with($data);
     }
