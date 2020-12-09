@@ -30,7 +30,7 @@
                             <form method="POST" action="{{ route('verkoperworden.verifieren') }}">
                                 @csrf
 
-                                <small>Vul de code in die staat in de e-mail die u heeft gekregen.</small>
+                                <small>Vul de code in die in de ontvangen e-mail staat.</small>
 
                                 <div class="form-group row mb-2">
                                     <label for="code"
@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
 
-                                <small>Als de code correct is en u klikt op "Verzenden" wordt u verkoper op onze website.</small>
+                                <small>Als de code correct is, kunt u op "Verzenden" klikken. Daarna bent u verkoper op onze website!</small>
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-8 offset-md-4">
