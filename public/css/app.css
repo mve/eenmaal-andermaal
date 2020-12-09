@@ -11831,6 +11831,16 @@ a.category:hover {
   padding: 0.375rem 1rem;
 }
 
+.btn-light {
+  color: white;
+  border: white 1px solid;
+  background-color: #284B63;
+}
+
+.btn-light:hover {
+  background-color: #F3F4F6;
+}
+
 .hero-section {
   background: #c5AE91;
   background: linear-gradient(27deg, #c5AE91 0%, #284B63 100%);

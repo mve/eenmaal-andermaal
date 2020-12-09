@@ -99,6 +99,16 @@ a.category{
     padding: 0.375rem 1rem;
 }
 
+.btn-light{
+    color: white;
+    border: white 1px solid;
+    background-color: #284B63;
+
+    &:hover{
+        background-color: $light;
+    }
+}
+
 .hero-section {
     background: $sand;
     background: linear-gradient(27deg, $sand 0%, $dark-blue 100%);
