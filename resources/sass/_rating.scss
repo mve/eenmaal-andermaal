@@ -20,7 +20,7 @@
     .rating-bar-filled {
         height: 10px;
         border-radius: 35px;
-        background: #FFD700;
+        background: $starYellow;
 
         &.five-star {
             width: 84%;
@@ -43,3 +43,30 @@
         }
     }
 }
+
+
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    width: 11em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rating label {
+    font-size:20px;
+    cursor: pointer;
+}
+
+.rating > label:before {
+    //color: #ccc;
+    color: $starYellow;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > label.far:before,
+.rating > label.far ~ label:before {
+    color: $starYellow;
+}
+

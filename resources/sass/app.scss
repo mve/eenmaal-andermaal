@@ -13,6 +13,7 @@
 @import 'typography';
 @import 'header';
 @import 'accordion';
+@import 'breadcrumbs';
 
 .category-container {
     padding: 18px 0;
@@ -96,6 +97,16 @@ a.category{
 .btn {
     border-radius: $border-radius;
     padding: 0.375rem 1rem;
+}
+
+.btn-light{
+    color: white;
+    border: white 1px solid;
+    background-color: #284B63;
+
+    &:hover{
+        background-color: $light;
+    }
 }
 
 .hero-section {

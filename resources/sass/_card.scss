@@ -5,30 +5,44 @@
     position: relative;
 }
 
-.auction-card-image {
-    height: 240px;
-    background-size: cover;
-    background-position: center;
-}
+.auction-card{
+    &-mine{
+        box-shadow: 0 10px 20px rgba(40, 75, 99, 0.26), 0 0 6px rgba(40, 75, 99, 0.26) !important;
+    }
 
-.auction-card-data {
-    font-size: 16px;
-    font-weight: bold;
-    width: 100%;
-    text-align: center;
-}
+    > div.mine{
+        position:absolute;
+        background-color:$dark-blue;
+        border-bottom-right-radius: 0.75rem;
+        padding: 10px;
+        color: $white;
+    }
 
-.auction-card-body {
-    padding: 20px;
-}
+    &-head {
+        background: rgb(197, 174, 145);
+        background: linear-gradient(27deg, rgba(197, 174, 145, 1) 0%, rgba(40, 75, 99, 1) 100%);
+        padding: 15px;
 
-.auction-card-head {
-    background: rgb(197, 174, 145);
-    background: linear-gradient(27deg, rgba(197, 174, 145, 1) 0%, rgba(40, 75, 99, 1) 100%);
-    padding: 15px;
+        h4 {
+            margin: 0;
+            color: white;
+        }
+    }
 
-    h4 {
-        margin: 0;
-        color: white;
+    &-body {
+        padding: 20px;
+    }
+
+    &-data {
+        font-size: 16px;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+    }
+
+    &-image {
+        height: 240px;
+        background-size: cover;
+        background-position: center;
     }
 }

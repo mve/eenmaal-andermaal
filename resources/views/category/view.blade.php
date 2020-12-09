@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="mb-4"></div>
+
+    {{\App\Breadcrumbs::createAndPrint($category, 5)}}
 
     <div class="container">
 
@@ -30,11 +33,16 @@
             </div>
 
             <div class="col-md-10">
-                @include("includes.auctionsrow", [
-                "title" => $category->name,
-                "auctions" => $auctions,
-                "large" => true
-            ])
+                @if(count($auctions))
+                    @include("includes.auctionsrow", [
+                        "title" => $category->name,
+                        "auctions" => $auctions,
+                        "large" => true
+                    ])
+                @else
+                    <h2>{{$category->name}}</h2>
+                    Geen veilingen gevonden
+                @endif
             </div>
 
         </div>

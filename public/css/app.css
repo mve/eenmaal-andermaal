@@ -11554,21 +11554,16 @@ fieldset:disabled .btn {
   position: relative;
 }
 
-.auction-card-image {
-  height: 240px;
-  background-size: cover;
-  background-position: center;
+.auction-card-mine {
+  box-shadow: 0 10px 20px rgba(40, 75, 99, 0.26), 0 0 6px rgba(40, 75, 99, 0.26) !important;
 }
 
-.auction-card-data {
-  font-size: 16px;
-  font-weight: bold;
-  width: 100%;
-  text-align: center;
-}
-
-.auction-card-body {
-  padding: 20px;
+.auction-card > div.mine {
+  position: absolute;
+  background-color: #284B63;
+  border-bottom-right-radius: 0.75rem;
+  padding: 10px;
+  color: #fff;
 }
 
 .auction-card-head {
@@ -11581,6 +11576,23 @@ fieldset:disabled .btn {
 .auction-card-head .h4 {
   margin: 0;
   color: white;
+}
+
+.auction-card-body {
+  padding: 20px;
+}
+
+.auction-card-data {
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+.auction-card-image {
+  height: 240px;
+  background-size: cover;
+  background-position: center;
 }
 
 .footer-link {
@@ -11640,6 +11652,30 @@ fieldset:disabled .btn {
 
 .rating-bar-empty .rating-bar-filled.one-star {
   width: 1%;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  width: 11em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rating label {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.rating > label:before {
+  color: #FFD700;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > label.far:before,
+.rating > label.far ~ label:before {
+  color: #FFD700;
 }
 
 h1,
@@ -11716,6 +11752,20 @@ p {
   border: 0;
 }
 
+#breadcrumbs-container a {
+  text-decoration: none;
+}
+
+#breadcrumbs-container a:link,
+#breadcrumbs-container a:visited,
+#breadcrumbs-container a:active {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+#breadcrumbs-container a:hover {
+  color: rgba(0, 0, 0, 0.7);
+}
+
 .category-container {
   padding: 18px 0;
 }
@@ -11779,6 +11829,16 @@ a.category:hover {
 .btn {
   border-radius: 0.75rem;
   padding: 0.375rem 1rem;
+}
+
+.btn-light {
+  color: white;
+  border: white 1px solid;
+  background-color: #284B63;
+}
+
+.btn-light:hover {
+  background-color: #F3F4F6;
 }
 
 .hero-section {

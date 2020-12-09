@@ -13,13 +13,20 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Categorieën</a>
+                    <a class="nav-link" href="{{route("categories")}}">Categorieën</a>
                 </li>
 
             </ul>
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item mr-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Zoeken...">
+                        <button id="btn-search" type="submit" class="btn btn-light"> <i class="fas fa-search"></i></button>
+                    </div>
+                </li>
                 <!-- Authentication Links -->
                 @if (!Session::has('user'))
 
@@ -43,6 +50,12 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
+                            <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">
+                                Gewonnen veilingen
+                            </a>
+                            <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
+                                Mijn veilingen
+                            </a>
                             <a class="dropdown-item" href="{{route("mijnaccount")}}">
                                 Mijn account
                             </a>
