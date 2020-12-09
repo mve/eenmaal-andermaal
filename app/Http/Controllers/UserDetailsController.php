@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DB;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
 class UserDetailsController extends Controller
@@ -71,6 +72,7 @@ class UserDetailsController extends Controller
         if ($checkUser !== false && $checkUser->id !== $currentUser->id) {
             return redirect()->back()->withInput($request->all())->withErrors(["username" => "De ingevulde gebruikersnaam is al in gebruik"]);
         }
+
         if (
             DB::selectOne("SELECT * FROM countries WHERE country_code=:country_code", [
                 "country_code" => $request->country_code
@@ -78,9 +80,11 @@ class UserDetailsController extends Controller
         ) {
             return redirect()->back()->withInput($request->all())->withErrors(["country_code" => "Er bestaat geen land in onze database met de ingevulde landcode"]);
         }
+
         $oldPhoneNumbers = DB::select("SELECT * FROM phone_numbers WHERE user_id=:user_id",[
             "user_id" => $currentUser->id
         ]);
+
         if($request->has("phone_number")){
             $notExists = [];
             for($i = 0; $i < count($request->phone_number);$i++){
@@ -111,6 +115,14 @@ class UserDetailsController extends Controller
                 'user_id' => $currentUser->id
             ]);
         }
+
+        $latAndLon = $this->getLatAndLon($request->postal_code, $request->country_code);
+
+        if (array_key_exists('error', $latAndLon))
+        {
+            return redirect()->back()->withInput($request->all())->withErrors(["postal_code" => $latAndLon['error']]);
+        }
+
         $currentUser->username = $request->username;
         $currentUser->first_name = $request->first_name;
         $currentUser->last_name = $request->last_name;
@@ -118,6 +130,11 @@ class UserDetailsController extends Controller
         $currentUser->address = $request->address;
         $currentUser->city = $request->city;
         $currentUser->country_code = $request->country_code;
+        $currentUser->latitude = $latAndLon['lat'];
+        $currentUser->longitude = $latAndLon['lon'];
+
+        dd($currentUser);
+
         $currentUser->update();
 
         $request->session()->flash("success","Uw gegevens zijn opgeslagen!");
@@ -137,4 +154,27 @@ class UserDetailsController extends Controller
         ];
         return view("includes.phonefield")->with($data);
     }
+
+    function getLatAndLon($postalCode, $countryCode)
+    {
+        // If postal code is from CA or GB, add space 3 characters before end of postal code.
+        if ($countryCode === "CA" || $countryCode === "GB")
+        {
+            $postalCode = str_replace(' ', '', $postalCode);
+            $postalCode = strrev($postalCode);
+            $postalCode = substr($postalCode, 0, 3) . ' ' . substr($postalCode, 3);
+            $postalCode = strrev($postalCode);
+        }
+
+        $response = Http::get('https://nominatim.openstreetmap.org/search?country=' . $countryCode . '&postalcode=' . $postalCode . '&format=json&limit=1');
+
+        if (!count($response->json()))
+            return ['error'=>'Geen plaats gevonden met deze postcode en landcode combinatie.'];
+
+        $lat = $response->json()[0]['lat'];
+        $lon = $response->json()[0]['lon'];
+
+        return ['lat' => $lat, 'lon' => $lon];
+    }
+
 }

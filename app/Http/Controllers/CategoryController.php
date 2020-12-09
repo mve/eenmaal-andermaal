@@ -24,7 +24,7 @@ class CategoryController extends Controller
             return self::categoryChildren($category, $children);
 
         // Get auctions in category.
-        $auctions = DB::select("SELECT a.id, a.title, a.description, a.start_price, a.payment_instruction, a.duration, a.end_datetime, a.city, a.country_code, a.user_id
+        $auctions = DB::select("SELECT a.id, a.title, a.description, a.start_price, a.payment_instruction, a.duration, a.end_datetime, a.city, a.country_code, a.user_id, a.latitude, a.longitude
             FROM auctions a
             LEFT JOIN auction_categories ac ON a.id = ac.auction_id WHERE ac.category_id = " . $category->id . "AND end_datetime >= GETDATE()");
 
@@ -105,11 +105,8 @@ class CategoryController extends Controller
 
         foreach ($auctions as $auction) {
 
-            $seller = $auction->getSeller();
-
-            if ($maxDistance > $this->getDistance($user->latitude, $user->longitude, $seller->latitude, $seller->longitude))
+            if ($maxDistance > $this->getDistance($user->latitude, $user->longitude, $auction->latitude, $auction->longitude))
             {
-
                 array_push($filteredAuctions, $auction);
             }
         }
