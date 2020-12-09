@@ -104,12 +104,17 @@
                         <i class="fas fa-user profile-picture"></i>
                         <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
                         <div class="my-3">
-                            <div class="btn btn-outline-primary">
+                            <a class="btn btn-outline-primary" 
+                                @if(Session::has('user'))
+                                    href="mailto:{{$auction->getSeller()->email}}">
+                                @endif 
                                 <i class="fas fa-envelope"></i> Bericht
-                            </div>
+                            </a>
                             @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
                                 <a class="btn btn-primary"
-                                   href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
+                                   @if(Session::has('user'))
+                                    href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
+                                   @endif
                                     <i class="fas fa-phone-alt"></i> Neem contact op!
                                 </a>
                             @endif
