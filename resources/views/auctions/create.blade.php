@@ -18,12 +18,17 @@
 
                         <div class="mb-3 col-md-12">
                             <label for="title" class="form-label">Vul een titel in</label>
-                            <input name="inputTitle" type="text" class="form-control" id="title" value="{{old('inputTitle')}}" required>
+                            <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" id="title" value="{{old('title')}}" required>
                         </div>
+                        @error('title')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
                         <label for="rubrieken" class="form-label">Kies een rubriek</label>
                         <div id="category-select-container" class="row">
-                            @if(count(session()->getOldInput()["category"]))
+                            @if(count(session()->getOldInput()))
                                 @php($i = 0)
                                 @php($last = 0)
                                 @php($loopI = 0)
@@ -58,61 +63,97 @@
                         @enderror
 
                         <h3 class="my-3">Details</h3>
-                        <label for="formFile" class="form-label">Foto's</label>
+                        <label for="image" class="form-label">Foto's</label>
                         <i>Plaats hier de foto's van je product</i>
                         <div class="mb-3">
-                            <input class="form-control" type="file" name="image[]" id="formFileMultiple" multiple>
+                            <input class="form-control @error('image') is-invalid @enderror" type="file" accept=".jpg,.jpeg,.png" name="image[]" id="formFileMultiple" multiple>
                         </div>
+                        @if($errors->has("image.*"))
+                            @foreach($errors->get("image.*") as $error)
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $error[0] }}</strong>
+                                </span>
+                            @endforeach
+                        @endif
 
-                        <label for="inputDescription" class="form-label">Omschrijving</label>
+                        <label for="description" class="form-label">Omschrijving</label>
                         <i>Geef hier een omschrijving van je product</i>
                         <div class="mb-3 col-md-12">
-                            <textarea name="inputDescription" class="form-control" id="exampleFormControlTextarea1" rows="3" required>{{old("inputDescription")}}</textarea>
+                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" required>{{old("description")}}</textarea>
                         </div>
+                        @error('description')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
-                        <label for="inputDuration" class="form-label">Veiling duur</label>
+                        <label for="duration" class="form-label">Veiling duur</label>
                         <i>Vul hier het aantal dagen van je veiling in</i>
                         <div class="mb-3 col-md-12">
-                            <input type="number" name="inputDuration" value="{{old('inputDuration','7')}}" id="inputDuration" class="form-control" required>
+                            <input type="number" name="duration" value="{{old('duration','7')}}" id="duration" class="form-control @error('duration') is-invalid @enderror" required>
                         </div>
+                        @error('duration')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
                         <div class="mb-3 col-md-4">
-                            <label for="inputCountryCode" class="form-label">Landcode</label>
-                            <select name="inputCountryCode" class="form-select" aria-label="Default select example">
+                            <label for="countryCode" class="form-label">Landcode</label>
+                            <select name="countryCode" class="form-select @error('countryCode') is-invalid @enderror" aria-label="Default select example">
                                 @foreach ($countries as $country)
-                                    <option value="{{ $country->country_code }}" @if(old('inputCountryCode') || $country->country_code=="NL") selected @endif>{{ $country->country }}</option>
+                                    <option value="{{ $country->country_code }}" @if(old('countryCode')==$country->country_code || !old('countryCode')&&$country->country_code=="NL") selected @endif>{{ $country->country }}</option>
                                 @endforeach
                             </select>
                         </div>
+                        @error('countryCode')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
                         <div class="mb-3 col-md-4">
-                        <label for="inputCity" class="form-label">Stad</label>
-                            <input type="text" name="inputCity" value="{{old('inputCity')}}" id="inputCity" class="form-control" required>
+                        <label for="city" class="form-label">Stad</label>
+                            <input type="text" name="city" value="{{old('city')}}" id="city" class="form-control @error('city') is-invalid @enderror" required>
                         </div>
-
+                        @error('city')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
                         <h3 class="my-3">Betaling</h3>
 
                         <div class="col-md-12">
-                            <label for="inputPaymentInstruction" class="form-label">Extra betalingsinstructies</label>
-                                <textarea name="inputPaymentInstruction" class="form-control" required>{{old("inputPaymentInstruction")}}</textarea>
+                            <label for="paymentInstruction" class="form-label">Extra betalingsinstructies</label>
+                                <textarea name="paymentInstruction" class="form-control @error('paymentInstruction') is-invalid @enderror" required>{{old("paymentInstruction")}}</textarea>
                         </div>
+                        @error('paymentInstruction')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
                         <div class="col-md-3">
-                            <label for="inputStartPrice" class="form-label">Startprijs</label>
+                            <label for="startPrice" class="form-label">Startprijs</label>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">€</span>
-                                    <input name="inputStartPrice" value="{{old('inputStartPrice')}}" type="number" class="form-control" required>
+                                    <input name="startPrice" value="{{old('startPrice')}}" type="number" class="form-control @error('startPrice') is-invalid @enderror" required>
                                 <span class="input-group-text">.00</span>
                             </div>
                         </div>
+                        @error('startPrice')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
                         <div class="mb-3 col-md-12">
-                            <label for="name" class="form-label">Betaalmethodes</label>
+                            <label for="payment" class="form-label">Betaalmethodes</label>
                             @foreach ($paymentMethods as $paymentMethod)
                             <div class="form-check">
 
-                                    <input name="inputPayment[]" class="form-check-input" type="checkbox" value="{{ $paymentMethod->id }}" id="{{ $paymentMethod->method }}">
+                                    <input name="payment[]" class="form-check-input" type="checkbox" value="{{ $paymentMethod->id }}" id="{{ $paymentMethod->method }}">
 
                                     <label class="form-check-label" for="{{ $paymentMethod->method }}">
                                         {{ $paymentMethod->method }}
@@ -120,15 +161,20 @@
                             </div>
                             @endforeach
                         </div>
+                        @error('payment')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
                         <h3 class="my-3">Levering</h3>
 
                         <div class="mb-3 col-md-12">
-                            <label for="name" class="form-label">Betaalmethodes</label>
+                            <label for="shipping" class="form-label">Betaalmethodes</label>
                             @foreach ($shippingMethods as $shippingMethod)
                                 <div class="form-check">
 
-                                    <input name="inputShipping[]"  class="form-check-input" type="checkbox" value="{{ $shippingMethod->id }}" id="{{ $shippingMethod->method  }}">
+                                    <input name="shipping[]"  class="form-check-input" type="checkbox" value="{{ $shippingMethod->id }}" id="{{ $shippingMethod->method  }}">
 
                                     <label class="form-check-label" for="{{ $shippingMethod->method  }}">
                                         {{ $shippingMethod->method }}
@@ -136,6 +182,11 @@
                                 </div>
                             @endforeach
                         </div>
+                        @error('shipping')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
 
                     </div>

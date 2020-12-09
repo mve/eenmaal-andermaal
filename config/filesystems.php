@@ -64,6 +64,11 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'auction_images' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/images/auctions',
+        ],
+
     ],
 
     /*
