@@ -18,7 +18,9 @@ class CheckUserIsNotSeller
     {
         //First check if the user has been logged in
         return app(CheckUser::class)->handle($request, function ($request) use ($next) {
-            if($request->session()->get('user')->is_seller===0) {
+
+            if($request->session()->get('user')->is_seller == 0) {
+
                 return $next($request);
             }
             return redirect()->route("veilingen.mijn");
