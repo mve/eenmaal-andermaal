@@ -22,46 +22,32 @@
                         </div>
 
                         <label for="rubrieken" class="form-label">Kies een rubriek</label>
-                        <div class="mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Kies groep</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                        <div id="category-select-container" class="row">
+                                <div class="mb-3 col-md-2">
+                                    @include("includes.categoryselection", ['categories'=>$mainCategories, 'level' => 0])
+                                </div>
                         </div>
-                        <div class="mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Kies subgroep</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="mb-3 col-md-4">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Kies subgroep</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
+                        @error('category')
+                            <span class="invalid-feedback" style="display:block;" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
 
                         <h3 class="my-3">Details</h3>
                         <label for="formFile" class="form-label">Foto's</label>
-                        <i>plaats hier de foto's van je product</i>
+                        <i>Plaats hier de foto's van je product</i>
                         <div class="mb-3">
                             <input class="form-control" type="file" id="formFileMultiple" multiple >
                         </div>
 
                         <label for="inputDescription" class="form-label">Omschrijving</label>
-                        <i>geef hier een omschrijving van je product</i>
+                        <i>Geef hier een omschrijving van je product</i>
                         <div class="mb-3 col-md-12">
                             <textarea name="inputDescription" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
                         </div>
 
                         <label for="inputDuration" class="form-label">Veiling duur</label>
-                        <i>vul hier het aantal dagen van je veiling in</i>
+                        <i>Vul hier het aantal dagen van je veiling in</i>
                         <div class="mb-3 col-md-12">
                             <input type="number" value="1" name="inputDuration" id="inputDuration" class="form-control" required>
                         </div>

@@ -27035,6 +27035,55 @@ if (categoriesMenuElement) {
 }
 /*  Navigatie rubrieken einde */
 
+/* Auction rubrieken selectie */
+
+
+window.categorySelect = function (level) {
+  var field = document.querySelector("select[c-level='" + level + "']");
+  var fielsNo = parseInt(field.value);
+  var fields = document.querySelectorAll("select[name='category[]']");
+
+  for (var i = 0; i < fields.length; i++) {
+    if (parseInt(fields[i].getAttribute("c-level")) > parseInt(level)) {
+      fields[i].parentNode.remove();
+    }
+  }
+
+  if (fielsNo > -1) {
+    addCategorySelect(fielsNo);
+  }
+};
+
+function addCategorySelect(categoryId) {
+  var fields = document.querySelectorAll("select[name='category[]']");
+  var maxId = 0;
+
+  for (var i = 0; i < fields.length; i++) {
+    var curInt = parseInt(fields[i].getAttribute("c-level"));
+
+    if (curInt > maxId) {
+      maxId = curInt;
+    }
+  }
+
+  var categorySelectContainer = document.querySelector("#category-select-container");
+  var xhttp = new XMLHttpRequest();
+
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      var div = document.createElement('div');
+      div.innerHTML = this.responseText;
+      div.className = "mb-3 col-md-2";
+      categorySelectContainer.appendChild(div);
+    }
+  };
+
+  xhttp.open("GET", "/veilingmaken/categoryselect/" + categoryId + "/" + (maxId + 1), true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+}
+/* Auction rubrieken selectie einde */
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -27094,8 +27143,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
