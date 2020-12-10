@@ -57,7 +57,7 @@ class RegisterController extends Controller
     {
         $data = [
             'securityQuestions' => DB::select("SELECT * FROM security_questions"),
-            'countries' => Country::all()
+            'countries' => Country::allOrderBy('country')
         ];
         return view('auth.register')->with($data);
     }

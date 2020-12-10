@@ -46,7 +46,7 @@ class AuctionController extends Controller
             "mainCategories" => Category::allWhere("parent_id", -1),
             "shippingMethods" => ShippingMethod::all(),
             "paymentMethods" => PaymentMethod::all(),
-            "countries" => Country::all()
+            "countries" => Country::allOrderBy('country')
         ];
         return view("auctions.create")->with($data);
 
