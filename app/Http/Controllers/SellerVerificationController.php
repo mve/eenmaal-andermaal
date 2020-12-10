@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DB;
 use App\Mail\SellerVerification;
 use App\Mail\SendVerify;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
@@ -105,9 +106,10 @@ class SellerVerificationController extends Controller
         if($request->get("code") != Cookie::get("seller_verification"))
             return redirect()->back()->withInput($request->all())->withErrors(["code" => "De ingevulde code komt niet overeen"]);
 
-        $user = Session::get("user");
-        $user->is_seller = 1;
-        $user->update();
+        $oldUser = Session::get("user");
+        DB::insertOne("UPDATE users SET is_seller=1 WHERE id=:id", ["id" => $oldUser->id]);
+        $user = User::oneWhere('id', $oldUser->id);
+        $request->session()->put('user', $user);
 
         $cookie = Cookie::forget("seller_verification");
         $request->session()->flash('success', 'U bent nu verkoper en kunt veilingen aanmaken!');
