@@ -20,6 +20,8 @@ CREATE TABLE dbo.auctions (
 	city varchar(100) NULL,
 	country_code varchar(10) NOT NULL,
 	user_id bigint NOT NULL,
+	latitude varchar(30) NULL,
+    longitude varchar(30) NULL,
 	CONSTRAINT PK_auctions PRIMARY KEY (id),
 	CONSTRAINT FK_countries_auctions FOREIGN KEY (country_code) REFERENCES dbo.countries(country_code),
 	CONSTRAINT CHK_duration CHECK (
@@ -97,6 +99,8 @@ CREATE TABLE dbo.users (
 	security_answer varchar(100) NOT NULL,
 	is_seller bit DEFAULT 0 NOT NULL,
 	created_at datetime DEFAULT getdate() NOT NULL,
+	latitude varchar(30) NULL,
+    longitude varchar(30) NULL,
 	CONSTRAINT PK_users PRIMARY KEY (id),
 	CONSTRAINT FK_securityquestions_users FOREIGN KEY (security_question_id) REFERENCES dbo.security_questions(id),
 	CONSTRAINT FK_countries_users FOREIGN KEY (country_code) REFERENCES dbo.countries(country_code),
