@@ -1,3 +1,4 @@
+require('./fontawesome');
 require('./bootstrap');
 
 
