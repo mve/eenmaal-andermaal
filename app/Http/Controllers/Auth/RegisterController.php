@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Country;
 use App\DB;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -55,7 +56,8 @@ class RegisterController extends Controller
     public function index()
     {
         $data = [
-            'securityQuestions' => DB::select("SELECT * FROM security_questions")
+            'securityQuestions' => DB::select("SELECT * FROM security_questions"),
+            'countries' => Country::all()
         ];
         return view('auth.register')->with($data);
     }

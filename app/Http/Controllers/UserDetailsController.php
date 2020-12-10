@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use App\DB;
 use App\User;
 use Illuminate\Http\Request;
@@ -43,7 +44,8 @@ class UserDetailsController extends Controller
     {
         $user = Session::get('user');
         $data = [
-            'user' => $user
+            'user' => $user,
+            'countries' => Country::all()
         ];
         return view("auth.detailsedit")->with($data);
     }
@@ -58,12 +60,12 @@ class UserDetailsController extends Controller
     {
         $currentUser = Session::get('user');
         $this->validate($request, array(
-            'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
-            'first_name' => ['required', 'string'],
-            'last_name' => ['required', 'string'],
-            'address' => ['required', 'string'],
+            'username' => ['required', 'string', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
+            'first_name' => ['required', 'string', 'max:100'],
+            'last_name' => ['required', 'string', 'max:100'],
+            'address' => ['required', 'string', 'max:100'],
             'postal_code' => ['required', 'string','max:10'],
-            'city' => ['required', 'string'],
+            'city' => ['required', 'string', 'max:100'],
             'country_code' => ['required', 'string'],
             'phone_number.*' => ['required', 'string','max:15'],
         ));
