@@ -238,11 +238,11 @@
                                            class="col-md-4 col-form-label text-md-right">{{ __('Landcode') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="country_code" type="text"
-                                               class="form-control @error('country_code') is-invalid @enderror"
-                                               name="country_code" value="{{ old('country_code') }}" required
-                                               autocomplete="country_code">
-
+                                        <select name="country_code" class="form-select @error('country_code') is-invalid @enderror" aria-label="Default select example">
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->country_code }}" @if(old('country_code')==$country->country_code || !old('countryCode')&&$country->country_code=="NL") selected @endif>{{ $country->country }}</option>
+                                            @endforeach
+                                        </select>
                                         @error('country_code')
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

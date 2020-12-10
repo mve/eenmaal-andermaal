@@ -123,7 +123,6 @@
                                                name="postal_code"
                                                value="{{ old('postal_code')?: $user->postal_code }}" required
                                                autocomplete="postal_code">
-
                                         @error('postal_code')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -137,11 +136,11 @@
                                            class="col-md-4 col-form-label text-md-right">Landcode</label>
 
                                     <div class="col-md-8">
-                                        <input id="country_code" type="text"
-                                               class="form-control @error('country_code') is-invalid @enderror"
-                                               name="country_code"
-                                               value="{{ old('country_code')?: $user->country_code }}" required
-                                               autocomplete="country_code">
+                                        <select name="country_code" class="form-select @error('country_code') is-invalid @enderror" aria-label="Default select example">
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->country_code }}" @if(old('country_code')==$country->country_code || !old('country_code')&&$country->country_code==$user->country_code) selected @endif>{{ $country->country }}</option>
+                                            @endforeach
+                                        </select>
 
                                         @error('country_code')
                                         <span class="invalid-feedback" role="alert">
