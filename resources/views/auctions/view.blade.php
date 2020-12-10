@@ -4,7 +4,7 @@
     <div class="mb-4"></div>
 
     {{\App\Breadcrumbs::createAndPrint($auction, 5)}}
-    
+
     <div class="container">
         <h2>{{$auction->title}}</h2>
         <h5><span class="h3"><i class="fas fa-fire-alt"></i> {{$auctionHits}}</span> unieke bezoekers in het laatste uur.</h5>
@@ -83,7 +83,15 @@
                     @if(!Session::has('user'))
                         <div class="bid-overlay">
                             <div class="card-head flex-centered">
-                                <h4 id="countdownTimer">Sluit over {{$auction->getTimeLeft()}}</h4>
+                                <h4>
+                                    @if(\Carbon\Carbon::now() >= \Carbon\Carbon::parse($auction->end_datetime))
+                                        Afgelopen
+                                    @else
+                                        <span class="ea-live-time" ea-live-time-big="true" ea-date="{{$auction->end_datetime}}">
+                                            Sluit over {{$auction->getTimeLeft()}}
+                                        </span>
+                                    @endif
+                                </h4>
                             </div>
                             <div class="bid-overlay-body">
                                 <h3 class="flex-centered">Ook mee bieden?</h3>
@@ -99,29 +107,37 @@
                         </div>
                     @endif
                     <div class="auction-card-head flex-centered">
-                        <h4 id="countdownTimer">Sluit over {{$auction->getTimeLeft()}}</h4>
+                        <h4>
+                            @if(\Carbon\Carbon::now() >= \Carbon\Carbon::parse($auction->end_datetime))
+                                Afgelopen
+                            @else
+                                <span class="ea-live-time" ea-live-time-big="true" ea-date="{{$auction->end_datetime}}">
+                                    Sluit over {{$auction->getTimeLeft()}}
+                                </span>
+                            @endif
+                        </h4>
                     </div>
                     <div class="auction-card-body">
                         <i class="fas fa-user profile-picture"></i>
                         <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
                         <p>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</p>
-                        
+
                         <div class="my-3">
                             <a class="btn btn-outline-primary"
-                                @if(Session::has('user'))
-                                    href="mailto:{{$auction->getSeller()->email}}">
+                               @if(Session::has('user'))
+                               href="mailto:{{$auction->getSeller()->email}}">
                                 @endif
                                 <i class="fas fa-envelope"></i> Bericht
                             </a>
                             @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
                                 <a class="btn btn-primary"
                                    @if(Session::has('user'))
-                                    href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
-                                   @endif
+                                   href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
+                                    @endif
                                     <i class="fas fa-phone-alt"></i> Neem contact op!
                                 </a>
                             @endif
-                            
+
                         </div>
 
                     </div>
@@ -215,33 +231,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var endDate = new Date("<?php echo $auction->end_datetime; ?>").getTime();
-
-        var countdown = setInterval(() => {
-            var now = new Date().getTime();
-            var timeLeft = endDate - now;
-
-            var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            var hours = String(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-            var minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-            var seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2, '0');
-
-            var text = "Sluit over ";
-            if (timeLeft < 0) {
-                text = "Afgelopen";
-            } else {
-                if (days > 0) {
-                    text += days+" dagen ";
-                } else if (days === 1) {
-                    text += days+" dag "
-                }
-                text += hours+":"+minutes+":"+seconds;
-            }
-
-            document.getElementById("countdownTimer").innerHTML = text;
-        }, 1000);
-    </script>
 
 @endsection
