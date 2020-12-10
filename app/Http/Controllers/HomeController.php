@@ -45,9 +45,14 @@ class HomeController extends Controller
     }
 
     public function search(Request $request){
+
         $auctions = array();
-        $keywords = explode(" ", $request->keywords);
-        if($keywords){
+        
+        if($request->keywords) {
+            $keywords = explode(" ", $request->keywords);
+        }
+      
+        if(isset($keywords)){
             foreach($keywords as $keyword) {
                 $value = Auction::SearchAuctions($keyword);
                 $auctions = array_merge($auctions, $value);
