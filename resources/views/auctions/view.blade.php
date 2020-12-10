@@ -7,6 +7,7 @@
 
     <div class="container">
         <h2>{{$auction->title}}</h2>
+        <h5><span class="h3"><i class="fas fa-fire-alt"></i> {{$auctionHits}}</span> unieke bezoekers in het laatste uur.</h5>
         <div class="row">
             <div class="col-lg-7">
                 <!-- CAROUSEL SLIDER -->
@@ -104,10 +105,10 @@
                         <i class="fas fa-user profile-picture"></i>
                         <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
                         <div class="my-3">
-                            <a class="btn btn-outline-primary" 
+                            <a class="btn btn-outline-primary"
                                 @if(Session::has('user'))
                                     href="mailto:{{$auction->getSeller()->email}}">
-                                @endif 
+                                @endif
                                 <i class="fas fa-envelope"></i> Bericht
                             </a>
                             @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
