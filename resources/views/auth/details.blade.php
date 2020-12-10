@@ -104,6 +104,13 @@
                                 @endfor
                             @endif
 
+                            <hr/>
+
+                            <div class="row">
+                                <div class="col-lg-4 fw-bold">Lid sinds</div>
+                                <div class="col-lg-8">{{date('d-m-Y', strtotime($user->created_at))}}</div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
