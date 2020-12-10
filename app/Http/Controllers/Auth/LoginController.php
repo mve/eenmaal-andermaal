@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -87,7 +88,8 @@ class LoginController extends Controller
     {
         if($request->session()->has('user')) {
             $request->session()->forget('user');
-            return redirect('login');
+            $cookie = Cookie::forget("seller_verification");
+            return redirect('login')->withCookie($cookie);
         }
     }
 }

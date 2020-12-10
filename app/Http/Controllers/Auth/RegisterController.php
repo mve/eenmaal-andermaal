@@ -150,6 +150,8 @@ class RegisterController extends Controller
             $user ->longitude = $latAndLon['lon'];
             $user->save();
 
+            $user = User::oneWhere('id', $user->id);
+
             // inloggen na registreren
             $request->session()->put('user', $user);
 
