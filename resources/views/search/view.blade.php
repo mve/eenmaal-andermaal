@@ -17,10 +17,12 @@
             <h2 class="text-center my-3">Helaas geen resultaten voor: "@foreach ($keywords as $keyword) {{$keyword}} @endforeach"</h2>
 
             <p class="text-center" >Sorry, uw zoekopdracht heeft helaas niks opgeleverd, probeer het nogmaals met andere zoekwoorden.</p>
-            @else 
+            @else
+                <div class="not-found">
             <h2 class="text-center my-3">Je hebt geen zoekwoord of woorden gedefinitieerd</h2>
 
             <p class="text-center" >Vul een zoekwoord in om te zoeken.</p>
+                </div>
             @endif
         </div>
     </div>
