@@ -47,9 +47,10 @@ class HomeController extends Controller
     public function search(Request $request){
 
         $auctions = array();
-        
+
         if($request->keywords) {
-            $keywords = explode(" ", $request->keywords);
+            $keywords = explode(", ", $request->keywords);
+            
         }
       
         if(isset($keywords)){
