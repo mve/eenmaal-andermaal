@@ -45,18 +45,30 @@ class HomeController extends Controller
     }
 
     public function search(Request $request){
-        
-        if($request->keyword){
+
+        $auctions = array();
+
+        if($request->keywords) {
+            $keywords = explode(", ", $request->keywords);
+            
+        }
+      
+        if(isset($keywords)){
+            foreach($keywords as $keyword) {
+                $value = Auction::SearchAuctions($keyword);
+                $auctions = array_merge($auctions, $value);
+            }
+           
             $data = [
-                "keyword" => $request->keyword,
-                "auctions" => Auction::SearchAuctions($request->keyword)
+                "keywords" => $keywords,
+                "auctions" => array_unique($auctions, SORT_REGULAR)
             ];
+     
             return view('search.view')->with($data);
         } else {
             return view('search.view');
 
-        }
-        
+        }  
       
     }
 

@@ -25,7 +25,7 @@
                     <form method="POST" action="{{ route('zoeken') }}">
                         @csrf
                         <div class="input-group">
-                            <input value="" name="keyword" type="text" class="form-control" placeholder="Zoeken...">
+                            <input value="" name="keywords" type="text" class="form-control" placeholder="Zoeken...">
                             <button id="btn-search" type="submit" class="btn btn-light"> <i class="fas fa-search"></i></button>
                         </div>
                     </form>
