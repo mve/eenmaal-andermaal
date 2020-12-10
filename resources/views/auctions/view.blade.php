@@ -4,7 +4,7 @@
     <div class="mb-4"></div>
 
     {{\App\Breadcrumbs::createAndPrint($auction, 5)}}
-
+    
     <div class="container">
         <h2>{{$auction->title}}</h2>
         <h5><span class="h3"><i class="fas fa-fire-alt"></i> {{$auctionHits}}</span> unieke bezoekers in het laatste uur.</h5>
@@ -83,7 +83,7 @@
                     @if(!Session::has('user'))
                         <div class="bid-overlay">
                             <div class="card-head flex-centered">
-                                <h4>Sluit over {{$auction->getTimeLeft()}}</h4>
+                                <h4 id="countdownTimer">Sluit over {{$auction->getTimeLeft()}}</h4>
                             </div>
                             <div class="bid-overlay-body">
                                 <h3 class="flex-centered">Ook mee bieden?</h3>
@@ -99,7 +99,7 @@
                         </div>
                     @endif
                     <div class="auction-card-head flex-centered">
-                        <h4>Sluit over {{$auction->getTimeLeft()}}</h4>
+                        <h4 id="countdownTimer">Sluit over {{$auction->getTimeLeft()}}</h4>
                     </div>
                     <div class="auction-card-body">
                         <i class="fas fa-user profile-picture"></i>
@@ -215,5 +215,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var endDate = new Date("<?php echo $auction->end_datetime; ?>").getTime();
+
+        var countdown = setInterval(() => {
+            var now = new Date().getTime();
+            var timeLeft = endDate - now;
+
+            var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            var hours = String(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            var minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            var seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2, '0');
+
+            var text = "Sluit over ";
+            if (timeLeft < 0) {
+                text = "Afgelopen";
+            } else {
+                if (days > 0) {
+                    text += days+" dagen ";
+                } else if (days === 1) {
+                    text += days+" dag "
+                }
+                text += hours+":"+minutes+":"+seconds;
+            }
+
+            document.getElementById("countdownTimer").innerHTML = text;
+        }, 1000);
+    </script>
 
 @endsection
