@@ -9,12 +9,15 @@ use App\AuctionShippingMethod;
 use App\Category;
 use App\AuctionImage;
 use App\Country;
+use App\Mail\AuctionEnded;
+use App\Mail\SellerVerification;
 use App\PaymentMethod;
 use App\ShippingMethod;
 use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +32,7 @@ class AuctionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('check.user')->except(['show']);
+        $this->middleware('check.user')->except(['show', 'mailFinishedAuctionOwners']);
     }
 
     /**
@@ -59,7 +62,7 @@ class AuctionController extends Controller
             'start_price' => ['require', 'regex:/^\d+(\.\d{1,2})?$/'],
             'payment_instruction' => ['nullable', 'string', 'max:255'],
             'duration' => ['required', 'numeric'],
-            'image.*' => ['required', 'mimes:jpeg,jpg,png','max:10000'],//10000kb/10mb
+            'image.*' => ['required', 'mimes:jpeg,jpg,png', 'max:10000'],//10000kb/10mb
             'city' => ['required', 'string', 'max:100'],
         ));
 
@@ -72,17 +75,17 @@ class AuctionController extends Controller
         if (count(Category::allWhere("parent_id", $catId)))
             return redirect()->back()->withInput($request->all())->withErrors(["category" => "Je mag geen rubriek kiezen die zelf rubrieken heeft"]);
         if (
-            $request->get("duration")!="1" &&
-            $request->get("duration")!="3" &&
-            $request->get("duration")!="5" &&
-            $request->get("duration")!="7" &&
-            $request->get("duration")!="10"
+            $request->get("duration") != "1" &&
+            $request->get("duration") != "3" &&
+            $request->get("duration") != "5" &&
+            $request->get("duration") != "7" &&
+            $request->get("duration") != "10"
         )
             return redirect()->back()->withInput($request->all())->withErrors(["duration" => "Je mag alleen 1, 3, 5, 7 of 10 invullen"]);
-        if(
-            DB::selectOne("SELECT * FROM countries WHERE country_code=:country_code",[
+        if (
+            DB::selectOne("SELECT * FROM countries WHERE country_code=:country_code", [
                 "country_code" => $request->countryCode
-            ])===false
+            ]) === false
         )
             return redirect()->back()->withInput($request->all())->withErrors(["countryCode" => "Er bestaat geen land in onze database met de ingevulde landcode"]);
 
@@ -99,7 +102,7 @@ class AuctionController extends Controller
         $auction->save();
 
         foreach ($request->file('image') as $img) {
-            $fileName = $auction->id."/".Str::random(10).".png";
+            $fileName = $auction->id . "/" . Str::random(10) . ".png";
             Storage::disk('auction_images')->put($fileName, file_get_contents($img));
 
             $auctionImage = new AuctionImage();
@@ -127,7 +130,7 @@ class AuctionController extends Controller
             $auctionPaymentMethod->save();
         }
 
-        return redirect()->route("auctions.show",$auction->id);
+        return redirect()->route("auctions.show", $auction->id);
     }
 
     /**
@@ -244,5 +247,25 @@ class AuctionController extends Controller
             'auctions' => $auctions
         ];
         return view("auctions.wonauctions")->with($data);
+    }
+
+    /**
+     * Send emails to owners of auctions finished within the last minute
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function mailFinishedAuctionOwners()
+    {
+        $auctions = Auction::resultArrayToClassArray(DB::select("
+                SELECT id,title,user_id
+                FROM auctions
+                WHERE auctions.end_datetime > DATEADD(MINUTE, -1, GETDATE()) AND auctions.end_datetime < GETDATE()
+            "));
+        foreach ($auctions as $auction) {
+            Mail::to($auction->getSeller()->email)->send(new AuctionEnded($auction->title));
+        }
+        $data = [
+            'auctionsCount' => count($auctions)
+        ];
+        return view("auctions.finishedauctions")->with($data);
     }
 }
