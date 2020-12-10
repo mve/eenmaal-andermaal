@@ -45,7 +45,7 @@ class UserDetailsController extends Controller
         $user = Session::get('user');
         $data = [
             'user' => $user,
-            'countries' => Country::all()
+            'countries' => Country::allOrderBy('country')
         ];
         return view("auth.detailsedit")->with($data);
     }
