@@ -65,7 +65,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -87,7 +87,7 @@ class RegisterController extends Controller
     {
         $data = $request->all();
 
-        if($data["verificatie_code"] == $request->session()->get('verify_code') ) {
+        if ($data["verificatie_code"] == $request->session()->get('verify_code')) {
             $request->session()->forget('verify_code');
 
             $this->validate($request, array(
@@ -97,7 +97,7 @@ class RegisterController extends Controller
                 'first_name' => ['required', 'string'],
                 'last_name' => ['required', 'string'],
                 'address' => ['required', 'string'],
-                'postal_code' => ['required', 'string','max:10'],
+                'postal_code' => ['required', 'string', 'max:10'],
                 'city' => ['required', 'string'],
                 'country_code' => ['required', 'string'],
                 'birth_date' => ['required', 'date_format:Y-m-d'],
@@ -105,28 +105,27 @@ class RegisterController extends Controller
                 'security_answer' => ['required', 'string']
             ));
 
-            if(User::oneWhere("email", $request->email)!==false){
+            if (User::oneWhere("email", $request->email) !== false) {
                 return redirect()->back()->withInput($request->all())->withErrors(["email" => "Er bestaat al een gebruiker met het ingevulde e-mailadres"]);
             }
-            if(
-                DB::selectOne("SELECT * FROM countries WHERE country_code=:country_code",[
+            if (
+                DB::selectOne("SELECT * FROM countries WHERE country_code=:country_code", [
                     "country_code" => $request->country_code
-                ])===false
-            ){
+                ]) === false
+            ) {
                 return redirect()->back()->withInput($request->all())->withErrors(["country_code" => "Er bestaat geen land in onze database met de ingevulde landcode"]);
             }
-            if(
-                DB::selectOne("SELECT * FROM security_questions WHERE id=:id",[
+            if (
+                DB::selectOne("SELECT * FROM security_questions WHERE id=:id", [
                     "id" => $request->security_question_id
-                ])===false
-            ){
+                ]) === false
+            ) {
                 return redirect()->back()->withInput($request->all())->withErrors(["country_code" => "De geselecteerde beveiligingsvraag bestaat niet"]);
             }
 
             $latAndLon = $this->getLatAndLon($request->postal_code, $request->country_code);
 
-            if (array_key_exists('error', $latAndLon))
-            {
+            if (array_key_exists('error', $latAndLon)) {
                 return redirect()->back()->withInput($request->all())->withErrors(["postal_code" => $latAndLon['error']]);
             }
 
@@ -137,7 +136,7 @@ class RegisterController extends Controller
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->address = $request->address;
-            if ( !preg_match('/\s/',$request->postal_code) ) {
+            if (!preg_match('/\s/', $request->postal_code)) {
                 $user->postal_code = chunk_split($request->postal_code, 4, ' ');
             } else {
                 $user->postal_code = $request->postal_code;
@@ -148,8 +147,8 @@ class RegisterController extends Controller
             $user->security_question_id = $request->security_question_id;
             $user->security_answer = $request->security_answer;
             $user->is_seller = 0;
-            $user ->latitude = $latAndLon['lat'];
-            $user ->longitude = $latAndLon['lon'];
+            $user->latitude = $latAndLon['lat'];
+            $user->longitude = $latAndLon['lon'];
             $user->save();
 
             $user = User::oneWhere('id', $user->id);
@@ -174,9 +173,9 @@ class RegisterController extends Controller
 
         $data = $request->all();
 
-        if ($data["type"] == "1"){
-            if(User::oneWhere("email", $request->email)!==false)
-                return response()->json(['error'=>'Er bestaat al een gebruiker met het ingevulde e-mailadres']);
+        if ($data["type"] == "1") {
+            if (User::oneWhere("email", $request->email) !== false)
+                return response()->json(['error' => 'Er bestaat al een gebruiker met het ingevulde e-mailadres']);
 
             $code = Str::random(32);
 
@@ -185,17 +184,17 @@ class RegisterController extends Controller
 
             Mail::to($data["email"])->send(new SendVerify($request));
 
-            return response()->json(['success'=>'Vul de verificatie code in die gestuurd is naar je e-mailadres']);
+            return response()->json(['success' => 'Vul de verificatie code in die gestuurd is naar je e-mailadres']);
         }
 
         if ($data["type"] == "2") {
 
-            if($data["code"] == $request->session()->get('verify_code') ) {
+            if ($data["code"] == $request->session()->get('verify_code')) {
 
-                return response()->json(['success'=>'Verificatie code is correct, Vul de rest van je gegevens in']);
+                return response()->json(['success' => 'Verificatie code is correct, Vul de rest van je gegevens in']);
             } else {
 
-                return response()->json(['error'=>'Verificatie code is onjuist vul opnieuw in of vraag een nieuwe code aan']);
+                return response()->json(['error' => 'Verificatie code is onjuist vul opnieuw in of vraag een nieuwe code aan']);
             }
         }
     }
@@ -203,21 +202,24 @@ class RegisterController extends Controller
     function getLatAndLon($postalCode, $countryCode)
     {
         // If postal code is from CA or GB, add space 3 characters before end of postal code.
-        if ($countryCode === "CA" || $countryCode === "GB")
-        {
+        if ($countryCode === "CA" || $countryCode === "GB") {
             $postalCode = str_replace(' ', '', $postalCode);
             $postalCode = strrev($postalCode);
             $postalCode = substr($postalCode, 0, 3) . ' ' . substr($postalCode, 3);
             $postalCode = strrev($postalCode);
         }
 
-        $response = Http::get('https://nominatim.openstreetmap.org/search?country=' . $countryCode . '&postalcode=' . $postalCode . '&format=json&limit=1');
+        $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&postalcode=' . $postalCode . '&format=json&limit=1';
 
-        if (!count($response->json()))
-            return ['error'=>'Geen plaats gevonden met deze postcode en landcode combinatie.'];
+        ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 6.0)');
 
-        $lat = $response->json()[0]['lat'];
-        $lon = $response->json()[0]['lon'];
+        $response = json_decode(file_get_contents($url));
+
+        if (!count($response))
+            return ['error' => 'Geen plaats gevonden met deze postcode en landcode combinatie.'];
+
+        $lat = $response[0]->lat;
+        $lon = $response[0]->lon;
 
         return ['lat' => $lat, 'lon' => $lon];
     }
