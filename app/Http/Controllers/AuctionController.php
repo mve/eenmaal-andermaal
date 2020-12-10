@@ -104,7 +104,11 @@ class AuctionController extends Controller
 
         foreach ($request->file('image') as $img) {
             $fileName = $auction->id . "/" . Str::random(10) . ".png";
-            Storage::disk('auction_images')->put($fileName, file_get_contents($img));
+            if(env("APP_ENV")=="local"){
+                Storage::disk('auction_images')->put($fileName, file_get_contents($img));
+            }else{
+                Storage::disk('auction_images_server')->put($fileName, file_get_contents($img));
+            }
 
             $auctionImage = new AuctionImage();
             $auctionImage->auction_id = $auction->id;
