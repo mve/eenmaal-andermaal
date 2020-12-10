@@ -51,7 +51,7 @@ class Auction extends SuperModel
             SET @keyword = :keyword
             SELECT *
             FROM auctions
-            WHERE title LIKE @keyword OR description LIKE @keyword",
+            WHERE (title LIKE @keyword OR description LIKE @keyword) AND end_datetime >= GETDATE()",
             [
                 "keyword" => '%'.$keyword.'%'
             ]);
