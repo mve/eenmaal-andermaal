@@ -210,7 +210,6 @@ class RegisterController extends Controller
         }
 
         $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&postalcode=' . $postalCode . '&format=json&limit=1';
-//        $url = 'http://nominatim.openstreetmap.org/search?country=1111&postalcode=' . $postalCode . '&format=json&limit=1';
 
         ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 6.0)');
 

@@ -158,21 +158,24 @@ class UserDetailsController extends Controller
     function getLatAndLon($postalCode, $countryCode)
     {
         // If postal code is from CA or GB, add space 3 characters before end of postal code.
-        if ($countryCode === "CA" || $countryCode === "GB")
-        {
+        if ($countryCode === "CA" || $countryCode === "GB") {
             $postalCode = str_replace(' ', '', $postalCode);
             $postalCode = strrev($postalCode);
             $postalCode = substr($postalCode, 0, 3) . ' ' . substr($postalCode, 3);
             $postalCode = strrev($postalCode);
         }
 
-        $response = Http::get('https://nominatim.openstreetmap.org/search?country=' . $countryCode . '&postalcode=' . $postalCode . '&format=json&limit=1');
+        $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&postalcode=' . $postalCode . '&format=json&limit=1';
 
-        if (!count($response->json()))
-            return ['error'=>'Geen plaats gevonden met deze postcode en landcode combinatie.'];
+        ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 6.0)');
 
-        $lat = $response->json()[0]['lat'];
-        $lon = $response->json()[0]['lon'];
+        $response = json_decode(file_get_contents($url));
+
+        if (!count($response))
+            return ['error' => 'Geen plaats gevonden met deze postcode en landcode combinatie.'];
+
+        $lat = $response[0]->lat;
+        $lon = $response[0]->lon;
 
         return ['lat' => $lat, 'lon' => $lon];
     }
