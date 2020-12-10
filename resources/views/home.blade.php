@@ -10,7 +10,9 @@
         </div>
     </div>
 
+
     <div id="category-container-copy">&nbsp;</div>
+    <script>document.querySelector("#category-container-copy").style.height = document.querySelector("#category-container-parent").offsetHeight + "px";</script>
 
     <div class="hero-section">
         <h1 class="title text-white text-center">
@@ -36,11 +38,11 @@
         @endforeach
 
         @foreach($topCategoryAuctions as $topCAKey => $topCAValue)
-                @include("includes.auctionsrow", [
-                    "title" => "$topCAKey",
-                    "auctions" => $topCAValue,
-                    "large" => false
-                ])
+            @include("includes.auctionsrow", [
+                "title" => "$topCAKey",
+                "auctions" => $topCAValue,
+                "large" => false
+            ])
         @endforeach
     </div>
 
