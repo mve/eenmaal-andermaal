@@ -55,7 +55,8 @@ class Auction extends SuperModel
             [
                 "keyword" => '%'.$keyword.'%'
             ]);
-        return $auctions;
+        
+        return Auction::resultArrayToClassArray($auctions);
     }
 
     /**

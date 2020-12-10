@@ -8,10 +8,10 @@
                 <h2 class="text-center my-3">Zoekresultaten voor: "@foreach ($keywords as $keyword) {{$keyword}} @endforeach"</h2>
                 @foreach ($auctions as $auction)
                     <div class="search-item my-3 offset-md-2 col-md-8">
-                    <h3><a href="{{ env('APP_URL') }}/auctions/{{$auction['id']}}">{{$auction['title']}}</a></h3>
-                        <p>{{$auction['description']}}</p>
-                        <strong class="search-price">€ {{$auction['start_price']}}</strong><br>
-                        <strong class="search-price">GEURIAN HIER MOET DE TIJD KOMEN VAN DE AUCTION</strong>
+                    <h3><a href="{{ env('APP_URL') }}/auctions/{{$auction->id}}">{{$auction->title}}</a></h3>
+                        <p>{{$auction->description}}</p>
+                        <strong class="search-price">€ {{$auction->start_price}}</strong>
+                        <strong class="search-price float-right">Sluit over {{$auction->getTimeLeft()}}</strong>
                     </div>
                 @endforeach
             @elseif (isset($auctions) && empty($auctions))
