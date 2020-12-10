@@ -10,13 +10,16 @@
                     <div class="search-item my-3 offset-md-2 col-md-8">
                     <h3><a href="{{ env('APP_URL') }}/auctions/{{$auction['id']}}">{{$auction['title']}}</a></h3>
                         <p>{{$auction['description']}}</p>
-                        <strong class="search-price">{{$auction['start_price']}}</strong>
+                        <strong class="search-price">€ {{$auction['start_price']}}</strong>
+                        <strong class="search-price">GEURIAN HIER MOET DE TIJD KOMEN VAN DE AUCTION</strong>
                     </div>
                 @endforeach
             @elseif (isset($auctions) && empty($auctions))
+                <div class="not-found">
             <h2 class="text-center my-3">Helaas geen resultaten voor: "@foreach ($keywords as $keyword) {{$keyword}} @endforeach"</h2>
 
             <p class="text-center" >Sorry, uw zoekopdracht heeft helaas niks opgeleverd, probeer het nogmaals met andere zoekwoorden.</p>
+                </div>
             @else
                 <div class="not-found">
             <h2 class="text-center my-3">Je hebt geen zoekwoord of woorden gedefinitieerd</h2>
