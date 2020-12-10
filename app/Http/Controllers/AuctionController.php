@@ -10,12 +10,15 @@ use App\AuctionShippingMethod;
 use App\Category;
 use App\AuctionImage;
 use App\Country;
+use App\Mail\AuctionEnded;
+use App\Mail\SellerVerification;
 use App\PaymentMethod;
 use App\ShippingMethod;
 use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +33,7 @@ class AuctionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('check.user')->except(['show']);
+        $this->middleware('check.user')->except(['show', 'mailFinishedAuctionOwners']);
     }
 
     /**
@@ -249,5 +252,25 @@ class AuctionController extends Controller
             'auctions' => $auctions
         ];
         return view("auctions.wonauctions")->with($data);
+    }
+
+    /**
+     * Send emails to owners of auctions finished within the last minute
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function mailFinishedAuctionOwners()
+    {
+        $auctions = Auction::resultArrayToClassArray(DB::select("
+                SELECT id,title,user_id
+                FROM auctions
+                WHERE auctions.end_datetime > DATEADD(MINUTE, -1, GETDATE()) AND auctions.end_datetime < GETDATE()
+            "));
+        foreach ($auctions as $auction) {
+            Mail::to($auction->getSeller()->email)->send(new AuctionEnded($auction->title));
+        }
+        $data = [
+            'auctionsCount' => count($auctions)
+        ];
+        return view("auctions.finishedauctions")->with($data);
     }
 }
