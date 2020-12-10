@@ -104,6 +104,8 @@
                     <div class="auction-card-body">
                         <i class="fas fa-user profile-picture"></i>
                         <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
+                        <p>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</p>
+                        
                         <div class="my-3">
                             <a class="btn btn-outline-primary"
                                 @if(Session::has('user'))
@@ -119,6 +121,7 @@
                                     <i class="fas fa-phone-alt"></i> Neem contact op!
                                 </a>
                             @endif
+                            
                         </div>
 
                     </div>
