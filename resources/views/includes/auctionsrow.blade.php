@@ -16,7 +16,15 @@
 
                     <div class="flex-centered">
                         <div class="auction-card-data">€ {{$auction->getLatestBid()}}</div>
-                        <div class="auction-card-data">{{$auction->getTimeLeft()}}</div>
+                        <div class="auction-card-data">
+                            @if(\Carbon\Carbon::now() >= \Carbon\Carbon::parse($auction->end_datetime))
+                                Afgelopen
+                            @else
+                                <span class="ea-live-time" ea-date="{{$auction->end_datetime}}">
+                                    Sluit over {{$auction->getTimeLeft()}}
+                                </span>
+                            @endif
+                        </div>
                     </div>
 
 
