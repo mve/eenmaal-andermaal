@@ -69,6 +69,11 @@ return [
             'root'   => public_path() . '/images/auctions',
         ],
 
+        'auction_images_server' => [
+            'driver' => 'local',
+            'root'   => base_path().'/images/auctions',
+        ],
+
     ],
 
     /*
