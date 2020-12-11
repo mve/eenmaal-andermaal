@@ -83,7 +83,15 @@
                     @if(!Session::has('user'))
                         <div class="bid-overlay">
                             <div class="card-head flex-centered">
-                                <h4>Sluit over {{$auction->getTimeLeft()}}</h4>
+                                <h4>
+                                    @if(\Carbon\Carbon::now() >= \Carbon\Carbon::parse($auction->end_datetime))
+                                        Afgelopen
+                                    @else
+                                        <span class="ea-live-time" ea-live-time-big="true" ea-date="{{$auction->end_datetime}}">
+                                            Sluit over {{$auction->getTimeLeft()}}
+                                        </span>
+                                    @endif
+                                </h4>
                             </div>
                             <div class="bid-overlay-body">
                                 <h3 class="flex-centered">Ook mee bieden?</h3>
@@ -99,29 +107,37 @@
                         </div>
                     @endif
                     <div class="auction-card-head flex-centered">
-                        <h4>Sluit over {{$auction->getTimeLeft()}}</h4>
+                        <h4>
+                            @if(\Carbon\Carbon::now() >= \Carbon\Carbon::parse($auction->end_datetime))
+                                Afgelopen
+                            @else
+                                <span class="ea-live-time" ea-live-time-big="true" ea-date="{{$auction->end_datetime}}">
+                                    Sluit over {{$auction->getTimeLeft()}}
+                                </span>
+                            @endif
+                        </h4>
                     </div>
                     <div class="auction-card-body">
                         <i class="fas fa-user profile-picture"></i>
                         <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
                         <p>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</p>
-                        
+
                         <div class="my-3">
                             <a class="btn btn-outline-primary"
-                                @if(Session::has('user'))
-                                    href="mailto:{{$auction->getSeller()->email}}">
+                               @if(Session::has('user'))
+                               href="mailto:{{$auction->getSeller()->email}}">
                                 @endif
                                 <i class="fas fa-envelope"></i> Bericht
                             </a>
                             @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
                                 <a class="btn btn-primary"
                                    @if(Session::has('user'))
-                                    href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
-                                   @endif
+                                   href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
+                                    @endif
                                     <i class="fas fa-phone-alt"></i> Neem contact op!
                                 </a>
                             @endif
-                            
+
                         </div>
 
                     </div>
