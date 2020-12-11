@@ -141,7 +141,7 @@ BEGIN
 	)
 	SELECT 
 		ItemID,
-		'../images/' + IllustratieFile
+		'../pics/' + IllustratieFile
 	FROM INSERTED
 END
 GO
@@ -192,7 +192,7 @@ BEGIN
 	)
 	SELECT 
 		ID,
-		'../images/' + Thumbnail
+		'../pics/' + Thumbnail
 	FROM INSERTED
 
 	INSERT INTO eenmaalandermaal.dbo.auction_categories(

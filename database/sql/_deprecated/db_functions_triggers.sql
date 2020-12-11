@@ -105,7 +105,7 @@ INSERT INTO dbo.auction_images(
 )
 SELECT 
 	ItemID,
-	'../images/' + IllustratieFile
+	'../pics/' + IllustratieFile
 FROM INSERTED
 END
 GO
@@ -167,7 +167,7 @@ INSERT INTO dbo.auction_images(
 )
 SELECT 
 	ID,
-	'../images/' + Thumbnail
+	'../pics/' + Thumbnail
 FROM INSERTED
 
 INSERT INTO eenmaalandermaal.dbo.auction_categories(
