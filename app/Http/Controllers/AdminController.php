@@ -16,7 +16,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        
+        $this->middleware('check.admin');
     }
 
     /**
@@ -30,46 +30,5 @@ class AdminController extends Controller
 
         dd($request);
         //return view('admin.login');
-    }
-
-
-     /**
-     * Show the login page
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function loginView(Request $request)
-    {
-
-    
-        return view('Admin.login');
-    }
-
-     /**
-     * Show the login page
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function login(Request $request)
-    {
-
-        $admin = Administrator::oneWhere('email', $request->get('email'));
-
-        if(!$admin){
-            return redirect()->back()->withInput($request->all())->withErrors(["email" => "Ongeldige gegevens ingevuld"]);
-        }
-
-        $adminLoggedIn = Hash::check($request->get('password'), $admin->password);
-
-        if ($adminLoggedIn) {
-            $request->session()->put('admin', $admin);
-            return redirect('/admin');
-        }
-        return redirect()->back()->withInput($request->all())->withErrors(["password" => "Ongeldige gegevens ingevuld"]);
-
-    }
-
-        
+    }        
 }
