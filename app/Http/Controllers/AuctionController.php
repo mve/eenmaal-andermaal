@@ -11,6 +11,7 @@ use App\Category;
 use App\AuctionImage;
 use App\Country;
 use App\Mail\AuctionEnded;
+use App\Mail\AuctionEnding;
 use App\Mail\SellerVerification;
 use App\PaymentMethod;
 use App\ShippingMethod;
@@ -269,9 +270,6 @@ class AuctionController extends Controller
                 FROM auctions
                 WHERE auctions.end_datetime > DATEADD(MINUTE, -1, GETDATE()) AND auctions.end_datetime < GETDATE()
             "));
-        foreach ($finishedAuctions as $auction) {
-            Mail::to($auction->getSeller()->email)->send(new AuctionEnded($auction->title));
-        }
 
         $endingAuctions = Auction::resultArrayToClassArray(DB::select("
                 WITH finalInfo AS(
@@ -304,9 +302,12 @@ class AuctionController extends Controller
                         ON users.id=rs.user_id
                         WHERE Rank <= 5
             "));
-        dd($endingAuctions);
-        foreach ($endingAuctions as $auction) {
+
+        foreach ($finishedAuctions as $auction) {
             Mail::to($auction->getSeller()->email)->send(new AuctionEnded($auction->title));
+        }
+        foreach ($endingAuctions as $auction) {
+            Mail::to($auction->email)->send(new AuctionEnding($auction->title));
         }
 
 
