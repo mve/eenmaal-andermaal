@@ -18,7 +18,7 @@
 
                         <div class="mb-3 col-md-12">
                             <label for="title" class="form-label">Vul een titel in</label>
-                            <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" id="title" value="{{old('title')}}" required>
+                            <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" id="title" value="{{old('title')}}" maxlength="100" required>
                             <span id="limit-title-length" class="text-right float-right">Maximaal 100 tekens: 0/100</span>
                         </div>
                         @error('title')
@@ -84,7 +84,7 @@
                         <label for="description" class="form-label">Omschrijving</label>
                         <i>Geef hier een omschrijving van je product</i>
                         <div class="mb-3 col-md-12">
-                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" required>{{old("description")}}</textarea>
+                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" maxlength="500" required>{{old("description")}}</textarea>
                             <span id="limit-description-length" class="text-right float-right">Maximaal 500 tekens: 0/500</span>
                         </div>
                         @error('description')
@@ -132,7 +132,7 @@
 
                         <div class="col-md-12">
                             <label for="paymentInstruction" class="form-label">Extra betalingsinstructies</label>
-                            <textarea name="paymentInstruction" class="form-control @error('paymentInstruction') is-invalid @enderror" required>{{old("paymentInstruction")}}</textarea>
+                            <textarea name="paymentInstruction" class="form-control @error('paymentInstruction') is-invalid @enderror" maxlength="255" required>{{old("paymentInstruction")}}</textarea>
                             <span id="limit-payment-instruction-length" class="text-right float-right">Maximaal 255 tekens: 0/255</span>
                         </div>
                         @error('paymentInstruction')
