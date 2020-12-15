@@ -89,8 +89,14 @@
 
                         <label for="duration" class="form-label">Veiling duur</label>
                         <i>Vul hier het aantal dagen van je veiling in</i>
-                        <div class="mb-3 col-md-12">
-                            <input type="number" name="duration" value="{{old('duration','7')}}" id="duration" class="form-control @error('duration') is-invalid @enderror" required>
+                        <div class="mb-3 col-md-4">
+                            <select name="duration" id="duration" class="form-select @error('countryCode') is-invalid @enderror" required>
+                                <option value="1" selected>1 dag</option>
+                                <option value="3">3 dagen</option>
+                                <option value="5">5 dagen</option>
+                                <option value="7">7 dagen</option>
+                                <option value="10">10 dagen</option>
+                            </select>
                         </div>
                         @error('duration')
                             <span class="invalid-feedback" style="display: block" role="alert">

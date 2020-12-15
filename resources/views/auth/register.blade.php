@@ -235,7 +235,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="country_code"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Landcode') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Land</label>
 
                                     <div class="col-md-6">
                                         <select name="country_code" class="form-select @error('country_code') is-invalid @enderror" aria-label="Default select example">
