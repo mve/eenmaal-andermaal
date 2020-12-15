@@ -44,9 +44,12 @@ class AuctionController extends Controller
 
     public function create()
     {
+        $mainCategories = Category::resultArrayToClassArray(DB::select(
+            "SELECT * FROM categories WHERE parent_id=-1 ORDER BY name ASC"
+        ));
 
         $data = [
-            "mainCategories" => Category::allWhere("parent_id", -1),
+            "mainCategories" => $mainCategories,
             "shippingMethods" => ShippingMethod::all(),
             "paymentMethods" => PaymentMethod::all(),
             "countries" => Country::allOrderBy('country')
@@ -145,7 +148,11 @@ class AuctionController extends Controller
      */
     public function categorySelect($id, $level)
     {
-        $cats = Category::allWhere("parent_id", $id);
+        $cats = Category::resultArrayToClassArray(DB::select(
+            "SELECT * FROM categories WHERE parent_id=:id ORDER BY name ASC",[
+                "id" => $id
+            ]
+        ));
         if (count($cats) === 0)
             abort(404);
 
