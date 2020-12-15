@@ -31,7 +31,7 @@ class AuctionEnded extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.auction_ended')->with([
+        return $this->subject('Veiling gesloten - EenmaalAndermaal')->view('emails.auction_ended')->with([
             'title' => $this->title,
         ]);
     }
