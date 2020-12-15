@@ -55,7 +55,7 @@ class Auction extends SuperModel
             [
                 "keyword" => '%'.$keyword.'%'
             ]);
-        
+
         return Auction::resultArrayToClassArray($auctions);
     }
 
@@ -274,7 +274,8 @@ class Auction extends SuperModel
         $lastFiveBids = $this->getBids($max);
         if (count($lastFiveBids)) {
             foreach ($lastFiveBids as $bid) {
-                $lastFiveBidsHTML .= "<li class=\"list-group-item\"><strong>" . $bid->getBidder()->first_name . ": &euro;" . $bid->amount . "</strong> <span class=\"float-right\">" . $bid->getTime() . "</span></li>";
+//                $lastFiveBidsHTML .= "<li class=\"list-group-item\"><strong>" . $bid->getBidder()->first_name . ": &euro;" . $bid->amount . "</strong> <span class=\"float-right\">" . $bid->getTime() . "</span></li>";
+                $lastFiveBidsHTML .= "<li class=\"list-group-item\"><strong>&euro;" . $bid->amount . "</strong> <span class=\"float-right\">" . $bid->getBidder()->first_name . " " . $bid->getTimeForHumans() . "</span></li>";
             }
             return $lastFiveBidsHTML;
         } else {

@@ -1,3 +1,3 @@
 <div>
-    Vul de volgende code in op de website: {{$code}}
+    Om de verificatie te voltooien, dient u de volgende code in te vullen op de website: {{$code}}
 </div>

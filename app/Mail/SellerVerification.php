@@ -31,6 +31,6 @@ class SellerVerification extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.seller_verification')->with(['code' => $this->code]);
+        return $this->subject('Verkoperverificatie - EenmaalAndermaal')->view('emails.seller_verification')->with(['code' => $this->code]);
     }
 }

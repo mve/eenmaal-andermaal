@@ -29,7 +29,8 @@ class BidController extends Controller
         $minimumBid = $latestBid + $auction->getIncrement();
         if ($amount < $minimumBid) {
             return response()->json([
-                'error' => 'Bod moet minimaal &euro;'.$minimumBid." zijn",
+//                'error' => 'Bod moet minimaal &euro;'.$minimumBid." zijn",
+                'error' => 'Bod is te laag',
                 'currentBid' => $latestBid,
                 'lastFiveBidsHTML' => $auction->getLastNBidsHTML()
             ]);

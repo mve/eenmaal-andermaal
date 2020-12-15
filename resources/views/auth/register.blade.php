@@ -277,7 +277,7 @@
                                         <select name="security_question_id" id="security_question_id"
                                                 class="form-control @error('security_question_id') is-invalid @enderror"
                                                 required autocomplete="security_question_id">
-                                            <option value="">Select a question...</option>
+                                            <option value="">Kies een beveiligingsvraag...</option>
                                             @foreach($securityQuestions as $securityQuestion)
                                                 <option value="{{$securityQuestion["id"]}}"
                                                         @if(old("security_question_id")==$securityQuestion["id"]) selected @endif>{{$securityQuestion["question"]}}</option>

@@ -36,13 +36,17 @@
                                 @foreach(session()->getOldInput()["category"] as $category)
                                     @php($cat = \App\Category::oneWhere("id", $category))
                                     @if($cat)
+
                                         @php($cats = \App\Category::allWhereOrderBy("parent_id", $cat->parent_id, 'name'))
+
                                         <div class="mb-3 col-md-2">
                                             @include("includes.categoryselection", ['categories'=>$cats, 'level' => $i++, 'selected' => $category])
                                         </div>
                                     @endif
                                     @if($loopI == count(session()->getOldInput()["category"])-2)
+
                                         @php($children = \App\Category::allWhereOrderBy("parent_id", $category, 'name'))
+
                                         @if(count($children))
                                             <div class="mb-3 col-md-2">
                                                 @include("includes.categoryselection", ['categories'=>$children, 'level' => $i++, 'selected' => false])
