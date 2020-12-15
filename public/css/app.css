@@ -11766,6 +11766,36 @@ p {
   color: rgba(0, 0, 0, 0.7);
 }
 
+.admin h1,
+.admin .h1,
+.admin h2,
+.admin .h2,
+.admin h3,
+.admin .h3,
+.admin h4,
+.admin .h4,
+.admin h5,
+.admin .h5,
+.admin h6,
+.admin .h6,
+.admin p,
+.admin label {
+  color: #a6a6a6;
+}
+
+.admin .card {
+  background-color: #353535;
+  border-color: #616161;
+}
+
+.admin .navbar {
+  background-color: #404040;
+}
+
+.admin .navbar-brand {
+  color: #c5AE91;
+}
+
 .category-container {
   padding: 18px 0;
 }
