@@ -35,13 +35,23 @@
                                 @foreach(session()->getOldInput()["category"] as $category)
                                     @php($cat = \App\Category::oneWhere("id", $category))
                                     @if($cat)
-                                        @php($cats = \App\Category::allWhere("parent_id", $cat->parent_id))
+{{--                                        @php($cats = \App\Category::allWhere("parent_id", $cat->parent_id))--}}
+                                        @php($cats = \App\Category::resultArrayToClassArray(DB::select(
+                                                "SELECT * FROM categories WHERE parent_id=:id ORDER BY name ASC",[
+                                                    "id" => $cat->parent_id
+                                                ]
+                                            )))
                                         <div class="mb-3 col-md-2">
                                             @include("includes.categoryselection", ['categories'=>$cats, 'level' => $i++, 'selected' => $category])
                                         </div>
                                     @endif
                                     @if($loopI == count(session()->getOldInput()["category"])-2)
-                                        @php($children = \App\Category::allWhere("parent_id", $category))
+{{--                                        @php($children = \App\Category::allWhere("parent_id", $category))--}}
+                                        @php($children = \App\Category::resultArrayToClassArray(DB::select(
+                                                "SELECT * FROM categories WHERE parent_id=:id ORDER BY name ASC",[
+                                                    "id" => $category
+                                                ]
+                                            )))
                                         @if(count($children))
                                             <div class="mb-3 col-md-2">
                                                 @include("includes.categoryselection", ['categories'=>$children, 'level' => $i++, 'selected' => false])
