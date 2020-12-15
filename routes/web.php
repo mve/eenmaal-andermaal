@@ -70,6 +70,8 @@ Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCat
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
+//Admin Routes
+
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld
 //    $data = [
