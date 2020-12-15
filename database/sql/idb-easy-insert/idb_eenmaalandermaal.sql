@@ -12,7 +12,7 @@ CREATE TABLE dbo.countries (
 CREATE TABLE dbo.auctions (
 	id bigint IDENTITY(0,1) NOT NULL,
 	title varchar(100) NOT NULL,
-	description varchar(MAX) NULL,
+	description varchar(500) NULL,
 	start_price decimal(15,2) DEFAULT 0 NOT NULL,
 	payment_instruction varchar(255) NULL,
 	duration tinyint NOT NULL DEFAULT 7,
@@ -22,6 +22,7 @@ CREATE TABLE dbo.auctions (
 	user_id bigint NOT NULL,
 	latitude varchar(30) NULL,
     longitude varchar(30) NULL,
+	is_blocked bit DEFAULT 0 NOT NULL,
 	CONSTRAINT PK_auctions PRIMARY KEY (id),
 	CONSTRAINT FK_countries_auctions FOREIGN KEY (country_code) REFERENCES dbo.countries(country_code),
 	CONSTRAINT CHK_duration CHECK (
@@ -78,6 +79,7 @@ CREATE TABLE dbo.categories (
 	id bigint IDENTITY(0,1) NOT NULL,
 	name varchar(100) NOT NULL,
 	parent_id bigint NULL,
+	manual_order int NULL,
 	CONSTRAINT PK_category PRIMARY KEY (id),
 	--CONSTRAINT FK_categories_categories FOREIGN KEY (parent_id) REFERENCES dbo.categories(id)
 )
@@ -101,6 +103,7 @@ CREATE TABLE dbo.users (
 	created_at datetime DEFAULT getdate() NOT NULL,
 	latitude varchar(30) NULL,
     longitude varchar(30) NULL,
+	is_blocked bit DEFAULT 0 NOT NULL,
 	CONSTRAINT PK_users PRIMARY KEY (id),
 	CONSTRAINT FK_securityquestions_users FOREIGN KEY (security_question_id) REFERENCES dbo.security_questions(id),
 	CONSTRAINT FK_countries_users FOREIGN KEY (country_code) REFERENCES dbo.countries(country_code),

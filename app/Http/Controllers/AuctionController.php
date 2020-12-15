@@ -46,7 +46,7 @@ class AuctionController extends Controller
     {
 
         $data = [
-            "mainCategories" => Category::allWhere("parent_id", -1),
+            "mainCategories" => Category::allWhereOrderBy("parent_id", -1, 'name'),
             "shippingMethods" => ShippingMethod::all(),
             "paymentMethods" => PaymentMethod::all(),
             "countries" => Country::allOrderBy('country')
@@ -73,7 +73,7 @@ class AuctionController extends Controller
                 $catId = $value;
             }
         }
-        if (count(Category::allWhere("parent_id", $catId)))
+        if (count(Category::allWhereOrderBy("parent_id", $catId, 'name')))
             return redirect()->back()->withInput($request->all())->withErrors(["category" => "Je mag geen rubriek kiezen die zelf rubrieken heeft"]);
         if (
             $request->get("duration") != "1" &&
@@ -145,7 +145,7 @@ class AuctionController extends Controller
      */
     public function categorySelect($id, $level)
     {
-        $cats = Category::allWhere("parent_id", $id);
+        $cats = Category::allWhereOrderBy("parent_id", $id, 'name');
         if (count($cats) === 0)
             abort(404);
 

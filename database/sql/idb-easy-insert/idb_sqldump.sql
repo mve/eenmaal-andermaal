@@ -361,6 +361,7 @@ BEGIN
 	RETURN @html
 END
 GO
+
 ---------------------------------------------------
 
 CREATE FUNCTION [dbo].[clean_text](@html NVARCHAR(MAX))
@@ -369,6 +370,7 @@ AS
 BEGIN
 	SET @html = dbo.strip_html(@html)
 	SET @html = dbo.remove_spaces(@html)
+	SET @html = LEFT(@html, 500)
 	RETURN @html
 END
 GO
