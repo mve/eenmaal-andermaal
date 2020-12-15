@@ -11778,13 +11778,22 @@ p {
 .admin .h5,
 .admin h6,
 .admin .h6,
-.admin p {
+.admin p,
+.admin label {
   color: #a6a6a6;
 }
 
 .admin .card {
   background-color: #353535;
   border-color: #616161;
+}
+
+.admin .navbar {
+  background-color: #404040;
+}
+
+.admin .navbar-brand {
+  color: #c5AE91;
 }
 
 .category-container {
