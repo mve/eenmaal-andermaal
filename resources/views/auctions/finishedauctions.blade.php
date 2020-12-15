@@ -10,6 +10,14 @@
     </head>
 
     <body>
-        {{$auctionsCount}}
+        <div>
+            <h1>Mails verzonden</h1>
+            <div>
+                Aflopende veilingen: {{$endingAuctionsCount}}
+            </div>
+            <div>
+                Afgesloten veilingen: {{$finishedAuctionsCount}}
+            </div>
+        </div>
     </body>
 </html>
