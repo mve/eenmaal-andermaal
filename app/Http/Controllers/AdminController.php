@@ -28,7 +28,6 @@ class AdminController extends Controller
     public function index(Request $request)
     {
 
-        dd($request);
-        //return view('admin.login');
+        return view('admin.index');
     }        
 }
