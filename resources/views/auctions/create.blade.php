@@ -98,6 +98,8 @@
                                 <option value="10">10 dagen</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="row">
                         @error('duration')
                             <span class="invalid-feedback" style="display: block" role="alert">
                                 <strong>{{ $message }}</strong>
