@@ -31,7 +31,7 @@ class Outbid extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.outbid')->with([
+        return $this->subject('U bent overboden - EenmaalAndermaal')->view('emails.outbid')->with([
             'title' => $this->title,
         ]);
     }
