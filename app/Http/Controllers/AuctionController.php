@@ -289,7 +289,7 @@ class AuctionController extends Controller
                     )
                 )
 
-                SELECT DISTINCT title,email
+                SELECT DISTINCT auction_id,title,email
                     FROM (
                         SELECT auction_id,user_id,amount, Rank()
                           over (Partition BY auction_id
@@ -307,7 +307,7 @@ class AuctionController extends Controller
             Mail::to($auction->getSeller()->email)->send(new AuctionEnded($auction->title));
         }
         foreach ($endingAuctions as $auction) {
-            Mail::to($auction->email)->send(new AuctionEnding($auction->title));
+            Mail::to($auction->email)->send(new AuctionEnding($auction->title, $auction->auction_id));
         }
 
 
