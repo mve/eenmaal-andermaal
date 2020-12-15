@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Administrator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -24,10 +28,23 @@ class AdminController extends Controller
     public function index(Request $request)
     {
 
-    
-        //return view('home')->with($data);
+        dd($request);
+        //return view('admin.login');
     }
 
+
+     /**
+     * Show the login page
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function loginView(Request $request)
+    {
+
+    
+        return view('Admin.login');
+    }
 
      /**
      * Show the login page
@@ -38,8 +55,20 @@ class AdminController extends Controller
     public function login(Request $request)
     {
 
-    
-        //return view('home')->with($data);
+        $admin = Administrator::oneWhere('email', $request->get('email'));
+
+        if(!$admin){
+            return redirect()->back()->withInput($request->all())->withErrors(["email" => "Ongeldige gegevens ingevuld"]);
+        }
+
+        $adminLoggedIn = Hash::check($request->get('password'), $admin->password);
+
+        if ($adminLoggedIn) {
+            $request->session()->put('admin', $admin);
+            return redirect('/admin');
+        }
+        return redirect()->back()->withInput($request->all())->withErrors(["password" => "Ongeldige gegevens ingevuld"]);
+
     }
 
         
