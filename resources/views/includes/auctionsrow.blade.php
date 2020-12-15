@@ -18,7 +18,7 @@
                     <div class="auction-card-body-title">
 
                         @if(strlen($auction->title) > 35)
-                            <h4>{{ substr($auction->title, 0,  35) }}...</h4>
+                            <h4 title="{{$auction->title}}">{{ substr($auction->title, 0,  35) }}...</h4>
                         @else
                             <h4>{{ $auction->title }}</h4>
                         @endif
