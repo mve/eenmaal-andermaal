@@ -11582,6 +11582,10 @@ fieldset:disabled .btn {
   padding: 20px;
 }
 
+.auction-card-body-title {
+  height: 53px;
+}
+
 .auction-card-data {
   font-size: 16px;
   font-weight: bold;
