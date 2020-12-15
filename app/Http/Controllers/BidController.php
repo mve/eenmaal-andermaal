@@ -49,7 +49,7 @@ class BidController extends Controller
             $lastBidder = $latestBid->getBidder();
             $user = Session::get('user');
             if($lastBidder->id != $user->id)
-                Mail::to($lastBidder->email)->send(new Outbid($auction->title));
+                Mail::to($lastBidder->email)->send(new Outbid($auction->title, $auction->id));
         }
 
         return response()->json([
