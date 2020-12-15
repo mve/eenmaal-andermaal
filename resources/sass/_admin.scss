@@ -10,3 +10,87 @@
 
 }
 
+.sidebar {
+    width: 250px;
+    height: 100%;
+
+    .hamburgermenu {
+        position: absolute;
+    }
+
+    .sidepanel {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        color: #c5AE91;
+        background-color: #404040;
+        overflow-x: hidden;
+        padding-top: 60px !important;
+        transition: 0.5s;
+
+
+        .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            cursor: pointer;
+        }
+
+        .title{
+            color: #a6a6a6;
+            font-size: 23px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+
+
+        ul{
+            list-style-type: none;
+            padding-left: 0!important;
+
+            li{
+                margin-bottom: 10px;
+
+                a {
+                    text-decoration: none;
+                    color: #c5AE91;
+
+                    &:hover {
+                        color: #c5AE91;
+                        background-color: #565656;
+                    }
+
+                    i{
+                         font-size: 18px;
+                         margin-right: 5px;
+                     }
+                    .fa-fw{
+                        width: 2.25em!important;
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: transparent;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+
+        &:hover {
+            background-color: #444;
+        }
+    }
+
+}

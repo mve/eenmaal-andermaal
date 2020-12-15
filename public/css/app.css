@@ -11787,6 +11787,86 @@ p {
   border-color: #616161;
 }
 
+.sidebar {
+  width: 250px;
+  height: 100%;
+}
+
+.sidebar .hamburgermenu {
+  position: absolute;
+}
+
+.sidebar .sidepanel {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  color: #c5AE91;
+  background-color: #404040;
+  overflow-x: hidden;
+  padding-top: 60px !important;
+  transition: 0.5s;
+}
+
+.sidebar .sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  cursor: pointer;
+}
+
+.sidebar .sidepanel .title {
+  color: #a6a6a6;
+  font-size: 23px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar .sidepanel ul {
+  list-style-type: none;
+  padding-left: 0 !important;
+}
+
+.sidebar .sidepanel ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar .sidepanel ul li a {
+  text-decoration: none;
+  color: #c5AE91;
+}
+
+.sidebar .sidepanel ul li a:hover {
+  color: #c5AE91;
+  background-color: #565656;
+}
+
+.sidebar .sidepanel ul li a i {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.sidebar .sidepanel ul li a .fa-fw {
+  width: 2.25em !important;
+}
+
+.sidebar .openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.sidebar .openbtn:hover {
+  background-color: #444;
+}
+
 .category-container {
   padding: 18px 0;
 }

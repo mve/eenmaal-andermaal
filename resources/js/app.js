@@ -6,6 +6,9 @@ require('./bootstrap');
 var categoriesMenuElement = document.querySelector("#category-container-parent");
 var categoriesCopyElement = document.querySelector("#category-container-copy");
 
+
+
+
 if (categoriesMenuElement) {
     function hideChildren(parent) {
         var children = parent.parentElement.querySelectorAll(":scope>a,:scope>div");
@@ -262,3 +265,17 @@ if (auctionTimes.length) {
     }
 }
 /* Auction live tijd einde */
+
+/* Admin sidepanel open/close */
+
+document.getElementById("openbtn").addEventListener("click", function() {
+    /* Set the width of the sidebar to 250px (show it) */
+
+    document.getElementById("mySidepanel").style.width = "250px";
+});
+
+document.getElementById("closebtn").addEventListener("click", function() {
+    /* Set the width of the sidebar to 250px (show it) */
+
+    document.getElementById("mySidepanel").style.width = "0";
+});

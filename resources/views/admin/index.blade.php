@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container-fluid admin"
-         style="padding-left: 290px; padding-top: 40px; background-color: #353535; height: 100vh;">
+         style=" padding-top: 40px; background-color: #353535; height: 100vh;">
 
         <h1>Beheer omgeving</h1>
 
