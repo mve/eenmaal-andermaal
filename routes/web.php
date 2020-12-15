@@ -75,6 +75,10 @@ Route::get('admin', 'AdminController@index')->name('Admin.Index');
 Route::get('admin/login', 'Auth\AdminLoginController@index')->name('Admin.login');
 Route::post('admin/login', 'Auth\AdminLoginController@login')->name('Admin.login');
 
+Route::get('admin', function () {
+    return view('admin.index');
+});
+
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld
 //    $data = [
