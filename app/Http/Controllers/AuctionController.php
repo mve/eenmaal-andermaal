@@ -93,6 +93,11 @@ class AuctionController extends Controller
         )
             return redirect()->back()->withInput($request->all())->withErrors(["countryCode" => "Er bestaat geen land in onze database met de ingevulde landcode"]);
 
+        $latAndLon = $this->getLatAndLon($request->city, $request->countryCode);
+        if (array_key_exists('error', $latAndLon)) {
+            return redirect()->back()->withInput($request->all())->withErrors(["postal_code" => $latAndLon['error']]);
+        }
+
         $auction = new Auction();
         $auction->user_id = $request->session()->get("user")->id;
         $auction->title = $request->title;
@@ -103,8 +108,11 @@ class AuctionController extends Controller
         $auction->end_datetime = Carbon::now()->addDays($auction->duration);
         $auction->city = $request->city;
         $auction->country_code = $request->countryCode;
+        $auction->latitude = $latAndLon['lat'];
+        $auction->longitude = $latAndLon['lon'];
         $auction->save();
 
+        // TODO als er geen afbeeldingen zijn meegegeven krijg je in deze foreach een error.
         foreach ($request->file('image') as $img) {
             $fileName = $auction->id . "/" . Str::random(10) . ".png";
             if(env("APP_ENV")=="local"){
@@ -281,4 +289,24 @@ class AuctionController extends Controller
         ];
         return view("auctions.finishedauctions")->with($data);
     }
+
+    function getLatAndLon($city, $countryCode)
+    {
+//        $postalCode = str_replace(' ', '', $postalCode);
+
+        $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&city=' . $city . '&format=json&limit=1';
+
+        ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 6.0)');
+
+        $response = json_decode(file_get_contents($url));
+
+        if (!count($response))
+            return ['error' => 'Geen plaats gevonden met deze stad en landcode combinatie.'];
+
+        $lat = $response[0]->lat;
+        $lon = $response[0]->lon;
+
+        return ['lat' => $lat, 'lon' => $lon];
+    }
+
 }

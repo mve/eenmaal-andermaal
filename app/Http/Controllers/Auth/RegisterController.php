@@ -201,6 +201,8 @@ class RegisterController extends Controller
 
     function getLatAndLon($postalCode, $countryCode)
     {
+        $postalCode = str_replace(' ', '', $postalCode);
+
         // If postal code is from CA or GB, add space 3 characters before end of postal code.
         if ($countryCode === "CA" || $countryCode === "GB") {
             $postalCode = str_replace(' ', '', $postalCode);

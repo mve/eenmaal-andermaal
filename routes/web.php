@@ -70,6 +70,16 @@ Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCat
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
+//Admin Routes
+Route::get('admin', 'AdminController@index')->name('Admin.Index');
+Route::get('admin/login', 'Auth\AdminLoginController@index')->name('Admin.login');
+Route::get('admin/logout', 'Auth\AdminLoginController@logout')->name('Admin.logout');
+Route::post('admin/login', 'Auth\AdminLoginController@login')->name('Admin.login');
+
+Route::get('adminview', function () {
+    return view('admin.index');
+});
+
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld
 //    $data = [
