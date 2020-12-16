@@ -11,6 +11,7 @@ use App\Category;
 use App\AuctionImage;
 use App\Country;
 use App\Mail\AuctionEnded;
+use App\Mail\AuctionEnding;
 use App\Mail\SellerVerification;
 use App\PaymentMethod;
 use App\ShippingMethod;
@@ -282,16 +283,55 @@ class AuctionController extends Controller
      */
     public function mailFinishedAuctionOwners()
     {
-        $auctions = Auction::resultArrayToClassArray(DB::select("
+        $finishedAuctions = Auction::resultArrayToClassArray(DB::select("
                 SELECT id,title,user_id
                 FROM auctions
                 WHERE auctions.end_datetime > DATEADD(MINUTE, -1, GETDATE()) AND auctions.end_datetime < GETDATE()
             "));
-        foreach ($auctions as $auction) {
+
+        $endingAuctions = Auction::resultArrayToClassArray(DB::select("
+                WITH finalInfo AS(
+                    SELECT *
+                    FROM bids
+                    WHERE EXISTS(
+                    SELECT bids.auction_id, bids.amount as amount
+                        FROM bids bd
+                        LEFT JOIN auctions
+                        ON bids.auction_id=auctions.id
+                        WHERE EXISTS (
+                            SELECT auctions.id
+                            FROM auctions
+                            WHERE auctions.end_datetime > DATEADD(MINUTE, -1, DATEADD(MINUTE,10,GETDATE())) AND auctions.end_datetime < DATEADD(MINUTE,10,GETDATE()) AND bids.auction_id=auctions.id
+                        )
+                        AND bids.auction_id=bd.auction_id AND bids.amount=bd.amount
+                    )
+                )
+
+                SELECT DISTINCT auction_id,title,email
+                    FROM (
+                        SELECT auction_id,user_id,amount, Rank()
+                          over (Partition BY auction_id
+                                ORDER BY amount DESC ) AS Rank
+                        FROM finalInfo
+                        ) rs
+                        LEFT JOIN auctions
+                        ON auctions.id=rs.auction_id
+                        LEFT JOIN users
+                        ON users.id=rs.user_id
+                        WHERE Rank <= 5
+            "));
+
+        foreach ($finishedAuctions as $auction) {
             Mail::to($auction->getSeller()->email)->send(new AuctionEnded($auction->title));
         }
+        foreach ($endingAuctions as $auction) {
+            Mail::to($auction->email)->send(new AuctionEnding($auction->title, $auction->auction_id));
+        }
+
+
         $data = [
-            'auctionsCount' => count($auctions)
+            'endingAuctionsCount' => count($endingAuctions),
+            'finishedAuctionsCount' => count($finishedAuctions)
         ];
         return view("auctions.finishedauctions")->with($data);
     }
