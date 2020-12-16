@@ -112,19 +112,22 @@ class AuctionController extends Controller
         $auction->longitude = $latAndLon['lon'];
         $auction->save();
 
-        // TODO als er geen afbeeldingen zijn meegegeven krijg je in deze foreach een error.
-        foreach ($request->file('image') as $img) {
-            $fileName = $auction->id . "/" . Str::random(10) . ".png";
-            if(env("APP_ENV")=="local"){
-                Storage::disk('auction_images')->put($fileName, file_get_contents($img));
-            }else{
-                Storage::disk('auction_images_server')->put($fileName, file_get_contents($img));
-            }
+        if($request->file('image')!=null){
+            foreach ($request->file('image') as $img) {
+                $fileName = $auction->id . "/" . Str::random(10) . ".png";
+                if(env("APP_ENV")=="local"){
+                    Storage::disk('auction_images')->put($fileName, file_get_contents($img));
+                }else{
+                    Storage::disk('auction_images_server')->put($fileName, file_get_contents($img));
+                }
 
-            $auctionImage = new AuctionImage();
-            $auctionImage->auction_id = $auction->id;
-            $auctionImage->file_name = '/images/auctions/' . $fileName;
-            $auctionImage->save();
+                $auctionImage = new AuctionImage();
+                $auctionImage->auction_id = $auction->id;
+                $auctionImage->file_name = '/images/auctions/' . $fileName;
+                $auctionImage->save();
+            }
+        }else{
+            return redirect()->back()->withInput($request->all())->withErrors(["image.0" => ["Je moet minimaal 1 afbeelding selecteren"]]);
         }
 
         $auctionCategory = new AuctionCategory();
