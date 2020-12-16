@@ -238,7 +238,7 @@ class Auction extends SuperModel
         $result = DB::selectOne("SELECT TOP 1 * FROM bids WHERE auction_id=:auction_id ORDER BY amount DESC", [
             "auction_id" => $this->id
         ]);
-        return $result===false ? false : Bid::resultToClass($result);
+        return $result === false ? false : Bid::resultToClass($result);
     }
 
     /**
@@ -443,16 +443,46 @@ class Auction extends SuperModel
     }
 
     /**
+     * Get $limit auctions from $parentId
+     * @param $parentId
+     * @param int $limit
+     * @return array
+     */
+    public static function getAuctionsFromParent($parentId, $limit = 6)
+    {
+        return Auction::resultArrayToClassArray(DB::select("
+            SELECT TOP $limit * FROM auctions
+            WHERE EXISTS(
+                SELECT * FROM auction_categories ac WHERE ac.category_id=$parentId AND ac.auction_id=auctions.id AND auctions.end_datetime >= GETDATE()
+            )
+            "));
+    }
+
+    /**
      * Return all auctions per category
      * @return array of objects with name == categoryName && auctions
      */
     public static function getAllTopCategoryAuctions($limit = 6)
     {
         $topCategories = DB::select("
-            SELECT TOP $limit *
-            FROM dbo.categories
-            WHERE parent_id=-1
-            ORDER BY name ASC
+            WITH mostpopularauctioncategories AS(
+                SELECT TOP $limit COUNT(category_id) as cnt, category_id
+                FROM auction_categories ac
+                GROUP BY category_id
+                ORDER BY cnt DESC
+
+            )
+            , mostpopularcategories AS(
+                SELECT *
+                FROM categories c
+                WHERE EXISTS(
+                    SELECT category_id
+                    FROM mostpopularauctioncategories
+                    WHERE mostpopularauctioncategories.category_id=c.id
+                )
+            )
+
+            SELECT * FROM mostpopularcategories
         ");
 
         if (empty($topCategories)) {
@@ -461,13 +491,10 @@ class Auction extends SuperModel
 
         $auctions = [];
 
-        foreach ($topCategories as $cat) {
-            $auctionsPerTopCategory = Auction::getAllAuctionsFromParent($cat['id'], 4);
-            if (empty($auctionsPerTopCategory)) {
-                continue;
-            }
-            $auctions[$cat['name']] = $auctionsPerTopCategory;
-            // array_push($auctions, $auctionsPerTopCategory);
+        foreach ($topCategories as $category) {
+            $tmpAuctions = Auction::getAuctionsFromParent($category["id"], 4);
+            if(!empty($tmpAuctions))
+                $auctions[$category["name"]] = $tmpAuctions;
         }
 
         return $auctions;
