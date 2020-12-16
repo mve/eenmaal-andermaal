@@ -27524,11 +27524,11 @@ if (auctionTimes.length) {
 
 document.getElementById("openbtn").addEventListener("click", function () {
   /* Set the width of the sidebar to 250px (show it) */
-  document.getElementById("mySidepanel").style.width = "250px";
+  document.getElementById("mySidepanel").style.left = "0";
 });
 document.getElementById("closebtn").addEventListener("click", function () {
   /* Set the width of the sidebar to 250px (show it) */
-  document.getElementById("mySidepanel").style.width = "0";
+  document.getElementById("mySidepanel").style.left = "-250px";
 });
 
 /***/ }),
@@ -28078,8 +28078,8 @@ window.FontAwesomeKitConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
