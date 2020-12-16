@@ -175,14 +175,15 @@ class AuctionController extends Controller
         return view("includes.categoryselection")->with($data);
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
         $auction = Auction::oneWhere("id", $id);
         if ($auction === false)
             return abort(404);
 
         $user = session('user');
-        AuctionHit::hit($auction, $user);
+        //als ingelogd pak alleen userid geen ip
+        AuctionHit::hit($auction, $user, $request);
 
         $auctionImages = $auction->getImages();
         $auctionBids = $auction->getBids();
