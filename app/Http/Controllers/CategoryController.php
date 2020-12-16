@@ -19,7 +19,7 @@ class CategoryController extends Controller
         if ($category === false)
             return redirect()->route("home");
 
-        $children = Category::allWhere("parent_id", $category->id);
+        $children = Category::allWhereOrderBy("parent_id", $category->id, 'name');
         if (count($children))
             return self::categoryChildren($category, $children);
 
@@ -60,7 +60,7 @@ class CategoryController extends Controller
         $category->name = "Categorieën";
         $category->parent_id = null;
 
-        $children = Category::allWhere("parent_id", $category->id);
+        $children = Category::allWhereOrderBy("parent_id", $category->id, 'name');
         if (count($children))
             return self::categoryChildren($category, $children);
 
