@@ -11793,7 +11793,8 @@ p {
 .admin h6,
 .admin .h6,
 .admin p,
-.admin label {
+.admin label,
+.admin .table {
   color: #a6a6a6;
 }
 
