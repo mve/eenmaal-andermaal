@@ -126,6 +126,17 @@ abstract class SuperModel
     }
 
     /**
+     * Select all rows from the child table WHERE $column=$value and orders 
+     * 
+     */
+    public static function allWhereOrderBy($column, $value, $orderBy, $order = "ASC") {
+        $result = DB::select("SELECT * FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:value ORDER BY " . $orderBy . " " . $order, array(
+            'value' => $value
+        ));
+        return self::resultArrayToClassArray($result);
+    }
+
+    /**
      * Selects all rows from the child table in the provided order and by the provided column
      * @param string $column column to sort by
      * @param string $order order to sort in

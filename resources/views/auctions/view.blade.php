@@ -142,15 +142,13 @@
 
                     </div>
                     <ul class="list-group">
-                        <li class="list-group-item flex-centered">
-                            <span class="fw-bold">
-                                Startbod: &euro;{{$auction->start_price}}
-                            </span>
-                        </li>
-                        <li class="list-group-item flex-centered">
-                            <span class="fw-bold">
+                        <li class="list-group-item text-center">
+                            <div class="fw-bold">
                                 Huidig bod: &euro;<span id="auction-current-bid">{{$auction->getLatestBid()}}</span>
-                            </span>
+                            </div>
+                            <div>
+                                <small>Startbod: &euro;{{$auction->start_price}}</small>
+                            </div>
                         </li>
                     </ul>
                     <div class="auction-card-body">

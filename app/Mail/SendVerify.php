@@ -31,6 +31,6 @@ class SendVerify extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.send_verify')->with(['data' => $this->request]);
+        return $this->subject('Accountregistratie - EenmaalAndermaal')->view('emails.send_verify')->with(['data' => $this->request]);
     }
 }

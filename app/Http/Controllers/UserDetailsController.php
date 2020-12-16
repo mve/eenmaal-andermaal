@@ -119,7 +119,6 @@ class UserDetailsController extends Controller
         }
 
         $latAndLon = $this->getLatAndLon($request->postal_code, $request->country_code);
-
         if (array_key_exists('error', $latAndLon))
         {
             return redirect()->back()->withInput($request->all())->withErrors(["postal_code" => $latAndLon['error']]);
@@ -157,6 +156,8 @@ class UserDetailsController extends Controller
 
     function getLatAndLon($postalCode, $countryCode)
     {
+        $postalCode = str_replace(' ', '', $postalCode);
+
         // If postal code is from CA or GB, add space 3 characters before end of postal code.
         if ($countryCode === "CA" || $countryCode === "GB") {
             $postalCode = str_replace(' ', '', $postalCode);

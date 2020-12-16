@@ -31,6 +31,6 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.reset_password')->with(['data' => $this->request]);
+        return $this->subject('Wachtwoord resetten - EenmaalAndermaal')->view('emails.reset_password')->with(['data' => $this->request]);
     }
 }

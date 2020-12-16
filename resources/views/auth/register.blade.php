@@ -235,7 +235,7 @@
 
                                 <div class="form-group row mb-2">
                                     <label for="country_code"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Landcode') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">Land</label>
 
                                     <div class="col-md-6">
                                         <select name="country_code" class="form-select @error('country_code') is-invalid @enderror" aria-label="Default select example">
@@ -277,7 +277,7 @@
                                         <select name="security_question_id" id="security_question_id"
                                                 class="form-control @error('security_question_id') is-invalid @enderror"
                                                 required autocomplete="security_question_id">
-                                            <option value="">Select a question...</option>
+                                            <option value="">Kies een beveiligingsvraag...</option>
                                             @foreach($securityQuestions as $securityQuestion)
                                                 <option value="{{$securityQuestion["id"]}}"
                                                         @if(old("security_question_id")==$securityQuestion["id"]) selected @endif>{{$securityQuestion["question"]}}</option>

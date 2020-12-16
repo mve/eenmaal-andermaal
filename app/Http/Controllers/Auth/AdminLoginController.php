@@ -36,7 +36,7 @@ class AdminLoginController extends Controller
      */
     public function index()
     {
-        return view('Admin.login');
+        return view('admin/login');
     }
 
     /**
@@ -57,7 +57,7 @@ class AdminLoginController extends Controller
 
         if ($adminLoggedIn) {
             $request->session()->put('admin', $admin);
-            return redirect('/admin');
+            return redirect('admin');
         }
         return redirect()->back()->withInput($request->all())->withErrors(["password" => "Ongeldige gegevens ingevuld"]);
     }
@@ -66,7 +66,7 @@ class AdminLoginController extends Controller
     {
         if($request->session()->has('admin')) {
             $request->session()->forget('admin');
-            return redirect('admin.login')->withCookie($cookie);
+            return redirect('admin/login');
         }
     }
 }
