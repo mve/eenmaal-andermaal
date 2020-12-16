@@ -295,7 +295,7 @@ class AuctionController extends Controller
 
     function getLatAndLon($city, $countryCode)
     {
-        $postalCode = str_replace(' ', '', $postalCode);
+//        $postalCode = str_replace(' ', '', $postalCode);
 
         $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&city=' . $city . '&format=json&limit=1';
 
