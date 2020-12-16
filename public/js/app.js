@@ -27472,6 +27472,53 @@ function addCategorySelect(categoryId) {
 }
 /* Auction rubrieken selectie einde */
 
+/* Auction live tijd */
+
+
+var auctionTimes = document.querySelectorAll(".ea-live-time");
+var liveTimesInterval;
+
+if (auctionTimes.length) {
+  var updateTimes = function updateTimes() {
+    auctionTimes = document.querySelectorAll(".ea-live-time");
+
+    for (var i = 0; i < auctionTimes.length; i++) {
+      var now = new Date().getTime();
+      var timeLeft = Date.parse(auctionTimes[i].getAttribute("ea-date")) - now;
+      var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      var hours = String(Math.floor(timeLeft % (1000 * 60 * 60 * 24) / (1000 * 60 * 60))).padStart(2, '0');
+      var minutes = String(Math.floor(timeLeft % (1000 * 60 * 60) / (1000 * 60))).padStart(2, '0');
+      var seconds = String(Math.floor(timeLeft % (1000 * 60) / 1000)).padStart(2, '0');
+      var text = "";
+
+      if (auctionTimes[i].hasAttribute("ea-live-time-big")) {
+        text = "Sluit over ";
+      }
+
+      if (timeLeft < 0) {
+        text = "Afgelopen";
+      } else {
+        if (days > 1) {
+          text += days + " dagen ";
+        } else if (days === 1) {
+          text += days + " dag ";
+        }
+
+        text += hours + ":" + minutes;
+
+        if (days < 1) {
+          text += ":" + seconds;
+        }
+      }
+
+      auctionTimes[i].innerText = text;
+    }
+  };
+
+  liveTimesInterval = setInterval(updateTimes, 1000);
+}
+/* Auction live tijd einde */
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -28019,8 +28066,8 @@ window.FontAwesomeKitConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

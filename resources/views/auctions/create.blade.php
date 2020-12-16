@@ -35,13 +35,23 @@
                                 @foreach(session()->getOldInput()["category"] as $category)
                                     @php($cat = \App\Category::oneWhere("id", $category))
                                     @if($cat)
-                                        @php($cats = \App\Category::allWhere("parent_id", $cat->parent_id))
+{{--                                        @php($cats = \App\Category::allWhere("parent_id", $cat->parent_id))--}}
+                                        @php($cats = \App\Category::resultArrayToClassArray(DB::select(
+                                                "SELECT * FROM categories WHERE parent_id=:id ORDER BY name ASC",[
+                                                    "id" => $cat->parent_id
+                                                ]
+                                            )))
                                         <div class="mb-3 col-md-2">
                                             @include("includes.categoryselection", ['categories'=>$cats, 'level' => $i++, 'selected' => $category])
                                         </div>
                                     @endif
                                     @if($loopI == count(session()->getOldInput()["category"])-2)
-                                        @php($children = \App\Category::allWhere("parent_id", $category))
+{{--                                        @php($children = \App\Category::allWhere("parent_id", $category))--}}
+                                        @php($children = \App\Category::resultArrayToClassArray(DB::select(
+                                                "SELECT * FROM categories WHERE parent_id=:id ORDER BY name ASC",[
+                                                    "id" => $category
+                                                ]
+                                            )))
                                         @if(count($children))
                                             <div class="mb-3 col-md-2">
                                                 @include("includes.categoryselection", ['categories'=>$children, 'level' => $i++, 'selected' => false])
@@ -89,9 +99,17 @@
 
                         <label for="duration" class="form-label">Veiling duur</label>
                         <i>Vul hier het aantal dagen van je veiling in</i>
-                        <div class="mb-3 col-md-12">
-                            <input type="number" name="duration" value="{{old('duration','7')}}" id="duration" class="form-control @error('duration') is-invalid @enderror" required>
+                        <div class="mb-3 col-md-4">
+                            <select name="duration" id="duration" class="form-select @error('countryCode') is-invalid @enderror" required>
+                                <option value="1" selected>1 dag</option>
+                                <option value="3">3 dagen</option>
+                                <option value="5">5 dagen</option>
+                                <option value="7">7 dagen</option>
+                                <option value="10">10 dagen</option>
+                            </select>
                         </div>
+                    </div>
+                    <div class="row">
                         @error('duration')
                             <span class="invalid-feedback" style="display: block" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -99,7 +117,7 @@
                         @enderror
 
                         <div class="mb-3 col-md-4">
-                            <label for="countryCode" class="form-label">Landcode</label>
+                            <label for="countryCode" class="form-label">Land</label>
                             <select name="countryCode" class="form-select @error('countryCode') is-invalid @enderror" aria-label="Default select example">
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->country_code }}" @if(old('countryCode')==$country->country_code || !old('countryCode')&&$country->country_code=="NL") selected @endif>{{ $country->country }}</option>

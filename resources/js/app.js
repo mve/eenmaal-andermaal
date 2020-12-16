@@ -152,8 +152,8 @@ if (btnBid) {
     }
 
     document.getElementById("btn-bid").addEventListener("click", bidFunction);
-    textBid.addEventListener("keypress", function(e){
-        if(e.key === "Enter"){
+    textBid.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
             bidFunction();
         }
     });
@@ -189,7 +189,7 @@ window.categorySelect = function (level) {
     var fielsNo = parseInt(field.value);
     var fields = document.querySelectorAll("select[name='category[]']");
     for (var i = 0; i < fields.length; i++) {
-        if(parseInt(fields[i].getAttribute("c-level")) > parseInt(level)){
+        if (parseInt(fields[i].getAttribute("c-level")) > parseInt(level)) {
             fields[i].parentNode.remove();
         }
     }
@@ -198,7 +198,7 @@ window.categorySelect = function (level) {
     }
 }
 
-function addCategorySelect(categoryId){
+function addCategorySelect(categoryId) {
     var fields = document.querySelectorAll("select[name='category[]']");
     var maxId = 0;
     for (var i = 0; i < fields.length; i++) {
@@ -218,8 +218,47 @@ function addCategorySelect(categoryId){
             categorySelectContainer.appendChild(div);
         }
     };
-    xhttp.open("GET", "/veilingmaken/categoryselect/" + categoryId +"/"+(maxId+1), true);
+    xhttp.open("GET", "/veilingmaken/categoryselect/" + categoryId + "/" + (maxId + 1), true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
+
 /* Auction rubrieken selectie einde */
+
+/* Auction live tijd */
+var auctionTimes = document.querySelectorAll(".ea-live-time");
+var liveTimesInterval;
+if (auctionTimes.length) {
+    liveTimesInterval = setInterval(updateTimes, 1000);
+
+    function updateTimes() {
+        auctionTimes = document.querySelectorAll(".ea-live-time");
+        for (var i = 0; i < auctionTimes.length; i++) {
+            var now = new Date().getTime();
+            var timeLeft = Date.parse(auctionTimes[i].getAttribute("ea-date")) - now;
+            var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            var hours = String(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+            var minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            var seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2, '0');
+            var text = "";
+            if(auctionTimes[i].hasAttribute("ea-live-time-big")){
+                text = "Sluit over ";
+            }
+            if (timeLeft < 0) {
+                text = "Afgelopen";
+            } else {
+                if (days > 1) {
+                    text += days+" dagen ";
+                } else if (days === 1) {
+                    text += days+" dag "
+                }
+                text += hours+":"+minutes;
+                if(days < 1){
+                    text += ":"+seconds
+                }
+            }
+            auctionTimes[i].innerText = text;
+        }
+    }
+}
+/* Auction live tijd einde */
