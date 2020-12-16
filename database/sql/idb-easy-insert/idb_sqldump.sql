@@ -370,7 +370,7 @@ AS
 BEGIN
 	SET @html = dbo.strip_html(@html)
 	SET @html = dbo.remove_spaces(@html)
-	SET @html = LEFT(@html, 500)
+	SET @html = LEFT(@html, 495)
 	RETURN @html
 END
 GO
