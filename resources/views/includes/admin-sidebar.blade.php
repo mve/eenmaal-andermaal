@@ -16,17 +16,19 @@
             </ul>
 
 
-            <div class="bottom-0"><ul class="nav flex-column">
+            <div class="bottom-info">
+                <ul class="nav flex-column ">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-fw fa-chart-line"></i>JE MOET DE ADMINISTRATOR KNOP EN UITLOGGEN BOU"WEN</a>
+                        <i>U bent ingelogd als:</i>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-fw fa-users"></i>ONDERIN</a>
+                        <b>"admin"</b>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
+                        <a href="#">Uitloggen</a>
                     </li>
-                </ul></div>
+                </ul>
+            </div>
 
         </div>
 

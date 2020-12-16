@@ -11766,6 +11766,11 @@ p {
   color: rgba(0, 0, 0, 0.7);
 }
 
+.admin {
+  background-color: #353535;
+  height: 100vh;
+}
+
 .admin h1,
 .admin .h1,
 .admin h2,
@@ -11785,6 +11790,10 @@ p {
 .admin .card {
   background-color: #353535;
   border-color: #616161;
+}
+
+.admin .content {
+  padding-top: 35px;
 }
 
 .sidebar {
@@ -11852,6 +11861,26 @@ p {
 
 .sidebar .sidepanel ul li a .fa-fw {
   width: 2.25em !important;
+}
+
+.sidebar .sidepanel .bottom-info {
+  position: absolute;
+  bottom: 10px;
+  left: 55px;
+}
+
+.sidebar .sidepanel .bottom-info li {
+  margin-bottom: 2px;
+}
+
+.sidebar .sidepanel .bottom-info a:hover {
+  background-color: #404040;
+  text-decoration: underline;
+}
+
+.sidebar .sidepanel .bottom-info b {
+  margin-bottom: 0;
+  color: #c5AE91;
 }
 
 .sidebar .openbtn {

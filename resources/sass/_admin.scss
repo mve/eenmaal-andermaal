@@ -8,6 +8,12 @@
         border-color: #616161;
     }
 
+    background-color: #353535;
+    height: 100vh;
+
+    .content{
+        padding-top: 35px;
+    }
 }
 
 .sidebar {
@@ -74,10 +80,29 @@
                         width: 2.25em!important;
                     }
                 }
-
             }
         }
 
+        .bottom-info{
+            position: absolute;
+            bottom: 10px;
+            left: 55px;
+
+            li{
+                margin-bottom: 2px;
+            }
+
+            a{
+                &:hover{
+                    background-color: #404040;
+                    text-decoration: underline;
+                }
+            }
+            b{
+                margin-bottom: 0;
+                color: #c5AE91;
+            }
+        }
     }
 
     .openbtn {
@@ -92,5 +117,4 @@
             background-color: #444;
         }
     }
-
 }
