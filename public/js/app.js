@@ -27519,6 +27519,18 @@ if (auctionTimes.length) {
 }
 /* Auction live tijd einde */
 
+/* Admin sidepanel open/close */
+
+
+document.getElementById("openbtn").addEventListener("click", function () {
+  /* Set the width of the sidebar to 250px (show it) */
+  document.getElementById("mySidepanel").style.left = "0";
+});
+document.getElementById("closebtn").addEventListener("click", function () {
+  /* Set the width of the sidebar to 250px (show it) */
+  document.getElementById("mySidepanel").style.left = "-250px";
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
