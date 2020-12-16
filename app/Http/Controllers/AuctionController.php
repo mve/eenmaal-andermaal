@@ -62,7 +62,7 @@ class AuctionController extends Controller
     {
         $this->validate($request, array(
             'title' => ['required', 'string', 'max:100'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:500'],
             'start_price' => ['require', 'regex:/^\d+(\.\d{1,2})?$/'],
             'payment_instruction' => ['nullable', 'string', 'max:255'],
             'duration' => ['required', 'numeric'],
