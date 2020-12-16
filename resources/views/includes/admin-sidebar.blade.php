@@ -25,7 +25,7 @@
                         <b>"admin"</b>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Uitloggen</a>
+                        <a href="{{ route('Admin.logout') }}">Uitloggen</a>
                     </li>
                 </ul>
             </div>
