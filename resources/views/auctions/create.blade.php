@@ -18,7 +18,8 @@
 
                         <div class="mb-3 col-md-12">
                             <label for="title" class="form-label">Vul een titel in</label>
-                            <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" id="title" value="{{old('title')}}" required>
+                            <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" id="title" value="{{old('title')}}" maxlength="100" required>
+                            <span id="limit-title-length" class="text-right float-right">Maximaal 100 tekens: 0/100</span>
                         </div>
                         @error('title')
                             <span class="invalid-feedback" style="display: block" role="alert">
@@ -35,23 +36,17 @@
                                 @foreach(session()->getOldInput()["category"] as $category)
                                     @php($cat = \App\Category::oneWhere("id", $category))
                                     @if($cat)
-{{--                                        @php($cats = \App\Category::allWhere("parent_id", $cat->parent_id))--}}
-                                        @php($cats = \App\Category::resultArrayToClassArray(DB::select(
-                                                "SELECT * FROM categories WHERE parent_id=:id ORDER BY name ASC",[
-                                                    "id" => $cat->parent_id
-                                                ]
-                                            )))
+
+                                        @php($cats = \App\Category::allWhereOrderBy("parent_id", $cat->parent_id, 'name'))
+
                                         <div class="mb-3 col-md-2">
                                             @include("includes.categoryselection", ['categories'=>$cats, 'level' => $i++, 'selected' => $category])
                                         </div>
                                     @endif
                                     @if($loopI == count(session()->getOldInput()["category"])-2)
-{{--                                        @php($children = \App\Category::allWhere("parent_id", $category))--}}
-                                        @php($children = \App\Category::resultArrayToClassArray(DB::select(
-                                                "SELECT * FROM categories WHERE parent_id=:id ORDER BY name ASC",[
-                                                    "id" => $category
-                                                ]
-                                            )))
+
+                                        @php($children = \App\Category::allWhereOrderBy("parent_id", $category, 'name'))
+
                                         @if(count($children))
                                             <div class="mb-3 col-md-2">
                                                 @include("includes.categoryselection", ['categories'=>$children, 'level' => $i++, 'selected' => false])
@@ -89,7 +84,8 @@
                         <label for="description" class="form-label">Omschrijving</label>
                         <i>Geef hier een omschrijving van je product</i>
                         <div class="mb-3 col-md-12">
-                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" required>{{old("description")}}</textarea>
+                            <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" maxlength="500" required>{{old("description")}}</textarea>
+                            <span id="limit-description-length" class="text-right float-right">Maximaal 500 tekens: 0/500</span>
                         </div>
                         @error('description')
                             <span class="invalid-feedback" style="display: block" role="alert">
@@ -144,7 +140,8 @@
 
                         <div class="col-md-12">
                             <label for="paymentInstruction" class="form-label">Extra betalingsinstructies</label>
-                                <textarea name="paymentInstruction" class="form-control @error('paymentInstruction') is-invalid @enderror" required>{{old("paymentInstruction")}}</textarea>
+                            <textarea name="paymentInstruction" class="form-control @error('paymentInstruction') is-invalid @enderror" maxlength="255" required>{{old("paymentInstruction")}}</textarea>
+                            <span id="limit-payment-instruction-length" class="text-right float-right">Maximaal 255 tekens: 0/255</span>
                         </div>
                         @error('paymentInstruction')
                             <span class="invalid-feedback" style="display: block" role="alert">
@@ -213,5 +210,29 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function changeLimit(textElement, textLimitElement, limit) {
+            textLimitElement.innerHTML = 'Maximaal ' + limit + ' tekens: ' + textElement.value.length + '/' + limit;
+        }
+
+        var title = document.getElementsByName('title')[0];
+        var titleLimit = document.getElementById('limit-title-length');
+        title.addEventListener('keyup', e => {
+            changeLimit(title, titleLimit, 100);
+        });
+
+        var description = document.getElementsByName('description')[0];
+        var descLimit = document.getElementById('limit-description-length');
+        description.addEventListener('keyup', e => {
+            changeLimit(description, descLimit, 500);
+        });
+
+        var paymentInstruction = document.getElementsByName('paymentInstruction')[0];
+        var payInsLimit = document.getElementById('limit-payment-instruction-length');
+        paymentInstruction.addEventListener('keyup', e => {
+            changeLimit(paymentInstruction, payInsLimit, 255);
+        });
+    </script>
 
 @endsection
