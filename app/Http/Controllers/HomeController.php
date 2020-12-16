@@ -7,6 +7,7 @@ use App\Category;
 use App\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class HomeController extends Controller
 {
@@ -28,7 +29,6 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
 //        dump(request()->ip());
 //        $user = session('user');
 //        $binary = inet_pton('127.0.0.1');
@@ -37,6 +37,7 @@ class HomeController extends Controller
 //        dump(Carbon::now());
 
         $data = [
+            "categoryMenuHTML" => Category::getCategories(),
             "popularAuctions" => Auction::getPopularAuctions(4),
             "personalAuctions" => Auction::getPersonalAuctions(3, 4),
             "topCategoryAuctions" => Auction::getAllTopCategoryAuctions(3)
@@ -50,26 +51,26 @@ class HomeController extends Controller
 
         if($request->keywords) {
             $keywords = explode(", ", $request->keywords);
-            
+
         }
-      
+
         if(isset($keywords)){
             foreach($keywords as $keyword) {
                 $value = Auction::SearchAuctions($keyword);
                 $auctions = array_merge($auctions, $value);
             }
-           
+
             $data = [
                 "keywords" => $keywords,
                 "auctions" => array_unique($auctions, SORT_REGULAR)
             ];
-     
+
             return view('search.view')->with($data);
         } else {
             return view('search.view');
 
-        }  
-      
+        }
+
     }
 
 

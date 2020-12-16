@@ -5,7 +5,7 @@
     <div id="category-container-parent">
         <div class="container">
             <div class="row category-container">
-                @php(\App\Category::getCategories())
+                @php(print($categoryMenuHTML))
             </div>
         </div>
     </div>
