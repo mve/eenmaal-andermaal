@@ -11,7 +11,7 @@
 
                         <div class="card-body">
 
-                            <h2 class="text-center mt-2 mb-4">Gegevens bewerken <a href="{{route('mijnaccount')}}" class="btn btn-primary">Terug</a></h2>
+                            <h2 class="text-center mt-2 mb-4">Account bewerken <a href="{{route('mijnaccount')}}" class="btn btn-primary">Terug</a></h2>
 
                             @if(\Illuminate\Support\Facades\Session::has("success"))
                                 <div class="alert alert-success" role="alert" id="alert-success">
