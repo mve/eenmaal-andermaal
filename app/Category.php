@@ -20,30 +20,24 @@ class Category extends SuperModel
             if ($level == 0) {
                 $classes .= ' col-sm-6 col-md-3';
             }
-            if($level != 0){
+            if ($level != 0){
                 $classes .= ' d-none';
             }
 
-
-
             if ($level < 5 && count($childCategories) > 0){
-                echo '<div class="' . $classes . ' category-hoverable"><span class="clickable-submenu user-select-none">' . $i++. " " . $category->name. ($level!=0? " <i class='fas fa-arrow-down category-arrow'></i>" : "") ." </span>";
+                echo '<div class="' . $classes . ' category-hoverable"><span class="clickable-submenu user-select-none">' . $category->name. ($level!=0? " <i class='fas fa-arrow-down category-arrow'></i>" : "") ." </span>";
                 self::printTree($childCategories, $allCategories, $level + 1);
                 echo '</div>';
-            }else{
-                echo '<a href="/categorie/'.$category->id.'" class="' . $classes . ' user-select-none">'. $i++. " " . $category->name. " <i class='fas fa-arrow-right category-arrow'></i>";
+            } else {
+                echo '<a href="/categorie/'.$category->id.'" class="' . $classes . ' user-select-none">'. $category->name. " <i class='fas fa-arrow-right category-arrow'></i>";
                 echo '</a>';
             }
-
-
         }
-
     }
 
     public static function getCategories()
     {
-
-        $allCategories = self::all();
+        $allCategories = self::allOrderBy('name');
 
         $mainCategories = [];
         foreach ($allCategories as $category) {
