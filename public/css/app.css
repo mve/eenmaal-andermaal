@@ -11583,7 +11583,12 @@ fieldset:disabled .btn {
 }
 
 .auction-card-body-title {
-  height: 53px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 50px;
 }
 
 .auction-card-data {
