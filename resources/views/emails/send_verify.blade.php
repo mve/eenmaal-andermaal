@@ -1,5 +1,6 @@
 <div>
-    username: {{ $data->username }}
-    <br>email: {{ $data->email }}
-    <br>token: {{ $data->verify_code }}
+    Uw nieuwe gebruikersnaam: {{ $data->username }}
+    <br>Uw geregistreerde e-mailadres: {{ $data->email }}
+    <br>
+    <br>Verificatiecode: {{ $data->verify_code }}
 </div>

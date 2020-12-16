@@ -88,7 +88,6 @@ class RegisterController extends Controller
         $data = $request->all();
 
         if ($data["verificatie_code"] == $request->session()->get('verify_code')) {
-            $request->session()->forget('verify_code');
 
             $this->validate($request, array(
                 'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
@@ -128,6 +127,9 @@ class RegisterController extends Controller
             if (array_key_exists('error', $latAndLon)) {
                 return redirect()->back()->withInput($request->all())->withErrors(["postal_code" => $latAndLon['error']]);
             }
+
+            //After all validation
+            $request->session()->forget('verify_code');
 
             $user = new \App\User();
             $user->username = $request->username;
@@ -201,6 +203,8 @@ class RegisterController extends Controller
 
     function getLatAndLon($postalCode, $countryCode)
     {
+        $postalCode = str_replace(' ', '', $postalCode);
+
         // If postal code is from CA or GB, add space 3 characters before end of postal code.
         if ($countryCode === "CA" || $countryCode === "GB") {
             $postalCode = str_replace(' ', '', $postalCode);

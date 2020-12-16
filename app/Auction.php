@@ -53,7 +53,7 @@ class Auction extends SuperModel
             FROM auctions
             WHERE (title LIKE @keyword OR description LIKE @keyword) AND end_datetime >= GETDATE()",
             [
-                "keyword" => '%'.$keyword.'%'
+                "keyword" => '%' . $keyword . '%'
             ]);
 
         return Auction::resultArrayToClassArray($auctions);
@@ -230,6 +230,18 @@ class Auction extends SuperModel
     }
 
     /**
+     * Get the latest bid as object
+     * @return bool|mixed
+     */
+    public function getLatestBidObject()
+    {
+        $result = DB::selectOne("SELECT TOP 1 * FROM bids WHERE auction_id=:auction_id ORDER BY amount DESC", [
+            "auction_id" => $this->id
+        ]);
+        return $result===false ? false : Bid::resultToClass($result);
+    }
+
+    /**
      * Get the latest bid's amount
      * @return mixed
      */
@@ -250,15 +262,15 @@ class Auction extends SuperModel
     public function getIncrement()
     {
         $latestBid = $this->getLatestBid();
-        if($latestBid >= 5000){
+        if ($latestBid >= 5000) {
             return 50;
-        }else if($latestBid >= 1000){
+        } else if ($latestBid >= 1000) {
             return 10;
-        }else if($latestBid >= 500){
+        } else if ($latestBid >= 500) {
             return 5;
-        }else if($latestBid >= 49.99){
+        } else if ($latestBid >= 49.99) {
             return 1;
-        }else{
+        } else {
             return 0.50;
         }
     }
@@ -450,7 +462,7 @@ class Auction extends SuperModel
         $auctions = [];
 
         foreach ($topCategories as $cat) {
-            $auctionsPerTopCategory = Auction::getAllAuctionsFromParent($cat['id'],4);
+            $auctionsPerTopCategory = Auction::getAllAuctionsFromParent($cat['id'], 4);
             if (empty($auctionsPerTopCategory)) {
                 continue;
             }

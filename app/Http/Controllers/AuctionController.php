@@ -11,6 +11,7 @@ use App\Category;
 use App\AuctionImage;
 use App\Country;
 use App\Mail\AuctionEnded;
+use App\Mail\AuctionEnding;
 use App\Mail\SellerVerification;
 use App\PaymentMethod;
 use App\ShippingMethod;
@@ -93,6 +94,11 @@ class AuctionController extends Controller
         )
             return redirect()->back()->withInput($request->all())->withErrors(["countryCode" => "Er bestaat geen land in onze database met de ingevulde landcode"]);
 
+        $latAndLon = $this->getLatAndLon($request->city, $request->countryCode);
+        if (array_key_exists('error', $latAndLon)) {
+            return redirect()->back()->withInput($request->all())->withErrors(["postal_code" => $latAndLon['error']]);
+        }
+
         $auction = new Auction();
         $auction->user_id = $request->session()->get("user")->id;
         $auction->title = $request->title;
@@ -103,20 +109,26 @@ class AuctionController extends Controller
         $auction->end_datetime = Carbon::now()->addDays($auction->duration);
         $auction->city = $request->city;
         $auction->country_code = $request->countryCode;
+        $auction->latitude = $latAndLon['lat'];
+        $auction->longitude = $latAndLon['lon'];
         $auction->save();
 
-        foreach ($request->file('image') as $img) {
-            $fileName = $auction->id . "/" . Str::random(10) . ".png";
-            if(env("APP_ENV")=="local"){
-                Storage::disk('auction_images')->put($fileName, file_get_contents($img));
-            }else{
-                Storage::disk('auction_images_server')->put($fileName, file_get_contents($img));
-            }
+        if($request->file('image')!=null){
+            foreach ($request->file('image') as $img) {
+                $fileName = $auction->id . "/" . Str::random(10) . ".png";
+                if(env("APP_ENV")=="local"){
+                    Storage::disk('auction_images')->put($fileName, file_get_contents($img));
+                }else{
+                    Storage::disk('auction_images_server')->put($fileName, file_get_contents($img));
+                }
 
-            $auctionImage = new AuctionImage();
-            $auctionImage->auction_id = $auction->id;
-            $auctionImage->file_name = '/images/auctions/' . $fileName;
-            $auctionImage->save();
+                $auctionImage = new AuctionImage();
+                $auctionImage->auction_id = $auction->id;
+                $auctionImage->file_name = '/images/auctions/' . $fileName;
+                $auctionImage->save();
+            }
+        }else{
+            return redirect()->back()->withInput($request->all())->withErrors(["image.0" => ["Je moet minimaal 1 afbeelding selecteren"]]);
         }
 
         $auctionCategory = new AuctionCategory();
@@ -271,17 +283,76 @@ class AuctionController extends Controller
      */
     public function mailFinishedAuctionOwners()
     {
-        $auctions = Auction::resultArrayToClassArray(DB::select("
+        $finishedAuctions = Auction::resultArrayToClassArray(DB::select("
                 SELECT id,title,user_id
                 FROM auctions
                 WHERE auctions.end_datetime > DATEADD(MINUTE, -1, GETDATE()) AND auctions.end_datetime < GETDATE()
             "));
-        foreach ($auctions as $auction) {
+
+        $endingAuctions = Auction::resultArrayToClassArray(DB::select("
+                WITH finalInfo AS(
+                    SELECT *
+                    FROM bids
+                    WHERE EXISTS(
+                    SELECT bids.auction_id, bids.amount as amount
+                        FROM bids bd
+                        LEFT JOIN auctions
+                        ON bids.auction_id=auctions.id
+                        WHERE EXISTS (
+                            SELECT auctions.id
+                            FROM auctions
+                            WHERE auctions.end_datetime > DATEADD(MINUTE, -1, DATEADD(MINUTE,10,GETDATE())) AND auctions.end_datetime < DATEADD(MINUTE,10,GETDATE()) AND bids.auction_id=auctions.id
+                        )
+                        AND bids.auction_id=bd.auction_id AND bids.amount=bd.amount
+                    )
+                )
+
+                SELECT DISTINCT auction_id,title,email
+                    FROM (
+                        SELECT auction_id,user_id,amount, Rank()
+                          over (Partition BY auction_id
+                                ORDER BY amount DESC ) AS Rank
+                        FROM finalInfo
+                        ) rs
+                        LEFT JOIN auctions
+                        ON auctions.id=rs.auction_id
+                        LEFT JOIN users
+                        ON users.id=rs.user_id
+                        WHERE Rank <= 5
+            "));
+
+        foreach ($finishedAuctions as $auction) {
             Mail::to($auction->getSeller()->email)->send(new AuctionEnded($auction->title));
         }
+        foreach ($endingAuctions as $auction) {
+            Mail::to($auction->email)->send(new AuctionEnding($auction->title, $auction->auction_id));
+        }
+
+
         $data = [
-            'auctionsCount' => count($auctions)
+            'endingAuctionsCount' => count($endingAuctions),
+            'finishedAuctionsCount' => count($finishedAuctions)
         ];
         return view("auctions.finishedauctions")->with($data);
     }
+
+    function getLatAndLon($city, $countryCode)
+    {
+//        $postalCode = str_replace(' ', '', $postalCode);
+
+        $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&city=' . $city . '&format=json&limit=1';
+
+        ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 6.0)');
+
+        $response = json_decode(file_get_contents($url));
+
+        if (!count($response))
+            return ['error' => 'Geen plaats gevonden met deze stad en landcode combinatie.'];
+
+        $lat = $response[0]->lat;
+        $lon = $response[0]->lon;
+
+        return ['lat' => $lat, 'lon' => $lon];
+    }
+
 }

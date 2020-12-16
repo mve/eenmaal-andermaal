@@ -8,20 +8,22 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Http\Request;
 
-class AuctionEnded extends Mailable
+class Outbid extends Mailable
 {
     use Queueable, SerializesModels;
 
     protected $title;
+    protected $id;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($title)
+    public function __construct($title, $id)
     {
         $this->title = $title;
+        $this->id = $id;
     }
 
     /**
@@ -31,8 +33,9 @@ class AuctionEnded extends Mailable
      */
     public function build()
     {
-        return $this->subject('Veiling gesloten - EenmaalAndermaal')->view('emails.auction_ended')->with([
+        return $this->subject('U bent overboden - EenmaalAndermaal')->view('emails.outbid')->with([
             'title' => $this->title,
+            'id' => $this->id,
         ]);
     }
 }

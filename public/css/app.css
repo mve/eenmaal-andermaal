@@ -11582,6 +11582,15 @@ fieldset:disabled .btn {
   padding: 20px;
 }
 
+.auction-card-body-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 50px;
+}
+
 .auction-card-data {
   font-size: 16px;
   font-weight: bold;
@@ -11764,6 +11773,36 @@ p {
 
 #breadcrumbs-container a:hover {
   color: rgba(0, 0, 0, 0.7);
+}
+
+.admin h1,
+.admin .h1,
+.admin h2,
+.admin .h2,
+.admin h3,
+.admin .h3,
+.admin h4,
+.admin .h4,
+.admin h5,
+.admin .h5,
+.admin h6,
+.admin .h6,
+.admin p,
+.admin label {
+  color: #a6a6a6;
+}
+
+.admin .card {
+  background-color: #353535;
+  border-color: #616161;
+}
+
+.admin .navbar {
+  background-color: #404040;
+}
+
+.admin .navbar-brand {
+  color: #c5AE91;
 }
 
 .category-container {
