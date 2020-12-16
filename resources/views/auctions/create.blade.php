@@ -107,7 +107,7 @@
                         @enderror
 
                         <div class="mb-3 col-md-4">
-                            <label for="countryCode" class="form-label">Landcode</label>
+                            <label for="countryCode" class="form-label">Land</label>
                             <select name="countryCode" class="form-select @error('countryCode') is-invalid @enderror" aria-label="Default select example">
                                 @foreach ($countries as $country)
                                     <option value="{{ $country->country_code }}" @if(old('countryCode')==$country->country_code || !old('countryCode')&&$country->country_code=="NL") selected @endif>{{ $country->country }}</option>
