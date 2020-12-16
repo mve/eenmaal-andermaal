@@ -25,12 +25,23 @@
                         <b>"admin"</b>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('Admin.logout') }}">Uitloggen</a>
+                        <a class="nav-item" href="{{ route('Admin.logout') }}"
+                        onclick="event.preventDefault();
+                                              document.getElementById('logout-form').submit();">
+                         Uitloggen
+                     </a>
+                
+                     <form id="logout-form" action="{{ route('Admin.logout') }}" method="POST" class="d-none">
+                         @csrf
+                     </form>
                     </li>
                 </ul>
             </div>
 
         </div>
+
+
+       
 
         <button id="openbtn" class="openbtn">&#9776;</button>
 
