@@ -20,7 +20,7 @@
                             repellendus veniam voluptate, voluptatum!
                         </p>
 
-                        <div class="btn btn-outline-secondary">Action  <i class="fas fa-arrow-right"></i></div>
+                        <div class="btn btn-outline-secondary">Action <i class="fas fa-arrow-right"></i></div>
 
                     </div>
                 </div>
