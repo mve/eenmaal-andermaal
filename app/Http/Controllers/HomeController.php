@@ -35,12 +35,12 @@ class HomeController extends Controller
 //        dump(inet_ntop($binary));
 //        dump($user->id);
 //        dump(Carbon::now());
-
+        
         $data = [
             "categoryMenuHTML" => Category::getCategories(),
             "popularAuctions" => Auction::getPopularAuctions(4),
             "recentlyAddedAuctions" => Auction::getRecentlyAddedAuctions(4),
-            "personalAuctions" => Auction::getPersonalAuctions(3, 4),
+            "personalAuctions" => Auction::getPersonalAuctions(2, 4),
             "topCategoryAuctions" => Auction::getAllTopCategoryAuctions(3)
         ];
         return view('home')->with($data);

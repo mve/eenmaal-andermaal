@@ -35,10 +35,10 @@
 
             ])
 
-        @foreach($personalAuctions as $category)
+        @foreach($personalAuctions as $key=>$category)
             @include("includes.auctionsrow", [
-                    "title" => $category["name"],
-                    "auctions" =>$category["auctions"],
+                    "title" => $key,
+                    "auctions" =>$category,
                     "large" => false
             ])
         @endforeach
