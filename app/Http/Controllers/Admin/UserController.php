@@ -28,13 +28,12 @@ class UserController extends Controller
      */
     public function list()
     {
-        $users = User::all();
-        $activeAuctions = User::getActiveAuctionsByUser();
-        $allAuctions = User::getallAuctionsByUser();
+        $Auctions = User::getAuctionsByUser();
+
+        $user = User::resultArrayToClassArray($Auctions);
         $data = [
-            'users' => $users,
-            'activeAuctions' => $activeAuctions,
-            'allAuctions' => $allAuctions
+            'users' => $user
+
         ];
         return view('admin.users.list')->with($data);
     }

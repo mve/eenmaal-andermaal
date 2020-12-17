@@ -11933,6 +11933,19 @@ p {
   opacity: 1;
 }
 
+.table tbody tr:hover {
+  background-color: #4c4c4c;
+  cursor: pointer;
+}
+
+.table tbody tr .fa-ban {
+  color: #DC2626;
+}
+
+.table tbody tr .fa-check-circle {
+  color: #10B981;
+}
+
 .category-container {
   padding: 18px 0;
 }

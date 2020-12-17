@@ -80,27 +80,30 @@ class User extends SuperModel
         return "Registreren gelukt";
     }
 
-    public static function getActiveAuctionsByUser(){
-        $activeAuctions = DB::select("
-        SELECT COUNT(auctions.id) as auctions, users.id as user_id
-        FROM dbo.users JOIN dbo.auctions
-        ON users.id = auctions.user_id
-        WHERE auctions.end_datetime >= GETDATE()
-        GROUP BY users.id
-        ORDER BY users.id ASC
-        ");
-
-        return $activeAuctions;
-    }
-
-    public static function getallAuctionsByUser(){
+    public static function getAuctionsByUser(){
         $auctions = DB::select("
-        SELECT COUNT(auctions.id) as auctions, users.id
-        FROM dbo.users
-        JOIN dbo.auctions
-        ON users.id = auctions.user_id
+        WITH acactive AS(
+        SELECT users.id, COUNT(ac1.id) as Active
+        FROM users
+        LEFT JOIN auctions ac1
+        ON ac1.user_id = users.id
+        WHERE ac1.end_datetime >= GETDATE()
         GROUP BY users.id
-        ORDER BY users.id ASC
+        )
+        , acall AS(
+        SELECT users.id, COUNT(ac2.id) as AllCnt
+        FROM users
+        LEFT JOIN auctions ac2
+        ON ac2.user_id = users.id
+        GROUP BY users.id
+        )
+
+        SELECT users.*, acactive.Active, acall.AllCnt
+        FROM users
+        LEFT JOIN acactive
+        ON acactive.id=users.id
+        LEFT JOIN acall
+        ON acall.id=users.id
         ");
 
         return $auctions;
