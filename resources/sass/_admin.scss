@@ -143,4 +143,20 @@
         opacity: 1;
     }
 
+    tbody{
+        tr{
+            &:hover{
+               background-color: #4c4c4c;
+                cursor: pointer;
+            }
+
+            .fa-ban{
+                color: #DC2626;
+            }
+
+            .fa-check-circle{
+                color: #10B981;
+            }
+        }
+    }
 }
