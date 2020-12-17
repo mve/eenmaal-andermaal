@@ -7,7 +7,7 @@
         <h1 class="text-center pt-3"> Eenmaal andermaal</h1>
 
         <div class="content">
-            <h1>Beheer omgeving</h1>
+            <h1>Dashboard</h1>
 
             <div class="row">
 
