@@ -2,8 +2,8 @@
 
 @section('content')
 
-
-    <div class="container-fluid admin">
+<div class="admin">
+    <div class="container-fluid ">
         <h1 class="text-center pt-3"> Eenmaal andermaal</h1>
 
         <div class="content">
@@ -33,5 +33,5 @@
         </div>
 
     </div>
-
+</div>
 @endsection

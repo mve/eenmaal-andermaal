@@ -1,5 +1,5 @@
 .admin {
-    h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, label {
+    h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, label, .table {
         color: #a6a6a6;
     }
 
@@ -9,7 +9,8 @@
     }
 
     background-color: #353535;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
 
     .content{
         padding-top: 35px;
@@ -123,6 +124,39 @@
 
         &:hover {
             background-color: #444;
+        }
+    }
+}
+
+.table {
+    margin: 0 auto;
+    width: 80%;
+    .thead{
+        background-color: #404040;
+    }
+
+    .endTd{
+        border-right: 1px solid;
+    }
+
+    .form-check-input:disabled{
+        opacity: 1;
+    }
+
+    tbody{
+        tr{
+            &:hover{
+               background-color: #4c4c4c;
+                cursor: pointer;
+            }
+
+            .fa-ban{
+                color: #DC2626;
+            }
+
+            .fa-check-circle{
+                color: #10B981;
+            }
         }
     }
 }
