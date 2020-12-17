@@ -26,11 +26,19 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function list(Request $request)
+    public function list()
     {
-        return view('admin.users.list');
-    }      
-    
+        $users = User::all();
+        $activeAuctions = User::getActiveAuctionsByUser();
+        $allAuctions = User::getallAuctionsByUser();
+        $data = [
+            'users' => $users,
+            'activeAuctions' => $activeAuctions,
+            'allAuctions' => $allAuctions
+        ];
+        return view('admin.users.list')->with($data);
+    }
+
     /**
      * Show the admin Dashboard.
      *
@@ -49,5 +57,5 @@ class UserController extends Controller
             'auctions' => $auctions
         ];
         return view('admin.users.view')->with($data);
-    }    
+    }
 }

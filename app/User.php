@@ -79,4 +79,31 @@ class User extends SuperModel
         ]);
         return "Registreren gelukt";
     }
+
+    public static function getActiveAuctionsByUser(){
+        $activeAuctions = DB::select("
+        SELECT COUNT(auctions.id) as auctions, users.id as user_id
+        FROM dbo.users JOIN dbo.auctions
+        ON users.id = auctions.user_id
+        WHERE auctions.end_datetime >= GETDATE()
+        GROUP BY users.id
+        ORDER BY users.id ASC
+        ");
+
+        return $activeAuctions;
+    }
+
+    public static function getallAuctionsByUser(){
+        $auctions = DB::select("
+        SELECT COUNT(auctions.id) as auctions, users.id
+        FROM dbo.users
+        JOIN dbo.auctions
+        ON users.id = auctions.user_id
+        GROUP BY users.id
+        ORDER BY users.id ASC
+        ");
+
+        return $auctions;
+    }
+
 }

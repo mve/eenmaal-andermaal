@@ -9,7 +9,8 @@
     }
 
     background-color: #353535;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
 
     .content{
         padding-top: 35px;
@@ -125,4 +126,21 @@
             background-color: #444;
         }
     }
+}
+
+.table {
+    margin: 0 auto;
+    width: 80%;
+    .thead{
+        background-color: #404040;
+    }
+
+    .endTd{
+        border-right: 1px solid;
+    }
+
+    .form-check-input:disabled{
+        opacity: 1;
+    }
+
 }

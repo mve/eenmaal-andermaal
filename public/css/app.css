@@ -11777,7 +11777,8 @@ p {
 
 .admin {
   background-color: #353535;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .admin h1,
@@ -11913,6 +11914,23 @@ p {
 
 .sidebar .openbtn:hover {
   background-color: #444;
+}
+
+.table {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.table .thead {
+  background-color: #404040;
+}
+
+.table .endTd {
+  border-right: 1px solid;
+}
+
+.table .form-check-input:disabled {
+  opacity: 1;
 }
 
 .category-container {
