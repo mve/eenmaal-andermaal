@@ -116,8 +116,8 @@ GO
 ---------------------------------------------------------
 
 -- https://stackoverflow.com/questions/46225232/remove-all-spaces-and-combine-multiple-lines-to-single-line-in-sql
-CREATE FUNCTION [dbo].[remove_newlines](@S varchar(max))
-Returns varchar(max)
+CREATE FUNCTION [dbo].[remove_newlines](@S NVARCHAR(max))
+Returns NVARCHAR(max)
 Begin
     Select @S=Replace(@S,char(n),' ')
      From  (values (1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(14),(15),(16),(17),(18),(19),(20),(21),(22),(23),(24),(25),(26),(27),(28),(29),(30),(31) ) N(n)
@@ -304,7 +304,7 @@ BEGIN
 	SET @html = dbo.strip_html(@html)
 	SET @html = dbo.remove_spaces(@html)
 	-- SET @html = dbo.remove_newlines(@html)
-	SET @html = LEFT(@html, 495)
+	-- SET @html = LEFT(@html, 495)
 	RETURN @html
 END
 GO
