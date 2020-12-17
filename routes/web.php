@@ -75,10 +75,10 @@ Route::get('cookie', 'HomeController@cookie')->name('cookie');
 Route::post('cookie', 'HomeController@cookie')->name('cookie');
 
 //Admin Routes
-Route::get('admin', 'AdminController@index')->name('Admin.Index');
-Route::get('admin/login', 'Auth\AdminLoginController@index')->name('Admin.login');
-Route::post('admin/logout', 'Auth\AdminLoginController@logout')->name('Admin.logout');
-Route::post('admin/login', 'Auth\AdminLoginController@login')->name('Admin.login');
+Route::get('admin', 'Admin\AdminController@index')->name('Admin.Index');
+Route::get('admin/login', 'Admin\Auth\AdminLoginController@index')->name('Admin.login');
+Route::post('admin/logout', 'Admin\Auth\AdminLoginController@logout')->name('Admin.logout');
+Route::post('admin/login', 'Admin\Auth\AdminLoginController@login')->name('Admin.login');
 
 
 Route::get('admin/users/{id}', 'Admin\UserController@view')->name('users.view');
