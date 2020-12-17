@@ -25,6 +25,8 @@ class BidController extends Controller
         $auction = Auction::oneWhere("id", $id);
         if (!$auction)
             return response()->json(['error' => 'Veiling niet gevonden']);
+        if(Session::get('user')->id == $auction->user_id)
+            return response()->json(['error' => 'Je kan niet op je eigen veiling bieden']);
         if (Carbon::now() >= Carbon::parse($auction->end_datetime))
             return response()->json(['error' => 'De veiling is al afgelopen']);
         $latestBid = $auction->getLatestBid();

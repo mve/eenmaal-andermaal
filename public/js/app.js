@@ -28078,8 +28078,8 @@ window.FontAwesomeKitConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\guusn\OneDrive\Desktop\EENMAAL ANDERMAAL\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\xampp\htdocs\eenmaalAndermaal\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\xampp\htdocs\eenmaalAndermaal\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
