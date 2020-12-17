@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\DB;
 use App\User;
+use App\Auction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
@@ -179,6 +180,49 @@ class UserDetailsController extends Controller
         $lon = $response[0]->lon;
 
         return ['lat' => $lat, 'lon' => $lon];
+    }
+
+     /**
+     * Show the user's information.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function remove(Request $request)
+    {
+        $highest = false;
+        $auctions = $request->session()->get("user")->getUserBids();
+       
+        foreach ($auctions as $auction){
+          
+
+            $auction = Auction::resultArrayToClassArray(DB::select("SELECT * FROM auctions WHERE id=:auction_id AND end_datetime > GETDATE()", [
+                "auction_id" => $auction['auction_id']
+            ]));
+            
+           
+            if (!empty($auction) && $auction[0]->getHighestBid()->user_id == $request->session()->get("user")->id) {
+                $highest = true;
+            }
+        }
+
+        $myAuctions = Auction::resultArrayToClassArray(DB::select("SELECT count(*) as auctions FROM auctions WHERE user_id=:user_id AND end_datetime > GETDATE()", [
+            "user_id" => $request->session()->get("user")->id
+        ]));
+
+        if ($myAuctions[0]->auctions > 0) {
+            $request->session()->flash('error', 'Je account heeft nog active veilingen openstaan en kan daarom niet verwijderd worden');
+            return redirect()->route('mijnaccount');
+        }
+        
+        if ($highest) {
+            $request->session()->flash('error', 'Je bent momenteel de hoogste bieder op een openstaande veiling je account kan nu niet verwijderd worden');
+            return redirect()->route('mijnaccount');
+        }
+
+        if ($myAuctions[0]->auctions == 0 && !$highest ) {
+
+        }
     }
 
 }

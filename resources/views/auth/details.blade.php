@@ -11,7 +11,13 @@
 
                         <div class="card-body">
 
-                            <h2 class="text-center mt-2 mb-4">Mijn account <a href="{{route("mijnaccount.bewerken")}}" class="btn btn-primary">Bewerken</a></h2>
+                            <form method="POST" action="{{ route('mijnaccount.verwijderen') }}"><h2 class="text-center mt-2 mb-4">Mijn account <a href="{{route("mijnaccount.bewerken")}}" class="btn btn-primary">Bewerken</a> @csrf <button type="submit" class="btn btn-danger"> Account verwijderen </button></h2>
+                            
+                            @if(Session::has("error"))
+                                <div class="alert alert-danger" role="alert" id="alert-danger">
+                                    <span class="error" id="error" style="margin-top:10px; margin-bottom: 10px;">{!! Session::get("error") !!}</span>
+                                </div>
+                            @endif
 
                             <div class="row">
                                 <div class="col-lg-4 fw-bold">Gebruikersnaam</div>

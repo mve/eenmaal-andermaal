@@ -39,6 +39,22 @@ class User extends SuperModel
     }
 
     /**
+     * Get the user's bids
+     * @return mixed
+     */
+    public function getUserBids()
+    {
+        return DB::select("
+            SELECT *
+            FROM bids
+            WHERE user_id=:id
+            ",
+            [
+                "id" => $this->id
+            ]);
+    }
+
+    /**
      * Get the user's contry
      * @return mixed
      */
