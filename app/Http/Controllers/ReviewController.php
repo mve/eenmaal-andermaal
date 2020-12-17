@@ -6,6 +6,8 @@ use App\Auction;
 use App\DB;
 use App\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class ReviewController extends Controller
 {
@@ -21,13 +23,15 @@ class ReviewController extends Controller
 
     public function index()
     {
-        $user_id = 2065;
+        // Redirect to homepage if not logged in.
+        if (Session::has("user") === false) {return redirect('/');}
+        $userId = Session::get("user")->id;
 
-        $data = DB::select("SELECT r.id AS review_id, r.auction_id, r.user_id, r.review_datetime, r.rating, r.comment, u.username, u.email, u.first_name, u.last_name, a.title AS auction_title, a.description AS auction_description
-            FROM reviews r
-            LEFT JOIN users u ON r.user_id = u.id
-            LEFT JOIN auctions a ON r.auction_id = a.id
-            WHERE r.user_id = " . $user_id);
+        $data = DB::select("SELECT r.id AS review_id, r.auction_id, r.user_id AS buyer_id, a.user_id AS seller_id, r.review_datetime, r.rating, r.comment, u.username, u.email, u.first_name, u.last_name, a.title AS auction_title, a.description AS auction_description
+                                FROM reviews r
+                                LEFT JOIN users u ON r.user_id = u.id
+                                LEFT JOIN auctions a ON r.auction_id = a.id
+                                WHERE a.user_id = " . $userId);
 
         return view("reviews.index")->with('data', $data);
     }
