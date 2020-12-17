@@ -70,6 +70,9 @@ Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCat
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
+Route::get('cookie', 'HomeController@cookie')->name('cookie');
+Route::post('cookie', 'HomeController@cookie')->name('cookie');
+
 //Admin Routes
 Route::get('admin', 'AdminController@index')->name('Admin.Index');
 Route::get('admin/login', 'Auth\AdminLoginController@index')->name('Admin.login');

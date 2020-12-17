@@ -84,3 +84,8 @@
         </div>
     </div>
 </nav>
+
+@if (!Cookie::has('cookie_allow'))
+    @include('includes.cookie');    
+@endif
+

@@ -12106,3 +12106,11 @@ a.category:hover {
   padding: 208.5px 0;
 }
 
+.modal {
+  z-index: 1072;
+}
+
+.modal-backdrop {
+  z-index: 1071;
+}
+
