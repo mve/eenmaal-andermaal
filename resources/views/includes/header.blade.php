@@ -43,7 +43,6 @@
 
                 @else
 
-
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -54,14 +53,18 @@
                             <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">
                                 Gewonnen veilingen
                             </a>
-                            <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
-                                Mijn veilingen
-                            </a>
                             @if (Session::get('user')->is_seller)
+                                <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
+                                    Mijn veilingen
+                                </a>
+                                <a class="dropdown-item" href="{{route("beoordeling.overzicht")}}">
+                                    Beoordelingen
+                                </a>
                                 <a class="dropdown-item" href="{{ route('veilingmaken') }}">
                                     Veiling aanmaken
                                 </a>
                             @endif
+
                             <a class="dropdown-item" href="{{route("mijnaccount")}}">
                                 Mijn account
                             </a>
