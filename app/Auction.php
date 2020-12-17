@@ -128,7 +128,7 @@ class Auction extends SuperModel
                 FROM auctions
                 WHERE EXISTS (
                     SELECT TOP $maxn auction_id, COUNT(auction_id) as Cnt
-                    FROM auction_hits WHERE auction_id=auctions.id AND hit_datetime >= DATEADD(HOUR, -1, GETDATE())
+                    FROM auction_hits WHERE auction_id=auctions.id AND created_at >= DATEADD(HOUR, -1, GETDATE())
                     GROUP BY auction_id
                     ORDER BY Cnt DESC
                 ) AND end_datetime >= GETDATE()
