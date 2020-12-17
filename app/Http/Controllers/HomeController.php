@@ -39,6 +39,7 @@ class HomeController extends Controller
         $data = [
             "categoryMenuHTML" => Category::getCategories(),
             "popularAuctions" => Auction::getPopularAuctions(4),
+            "recentlyAddedAuctions" => Auction::getRecentlyAddedAuctions(4),
             "personalAuctions" => Auction::getPersonalAuctions(3, 4),
             "topCategoryAuctions" => Auction::getAllTopCategoryAuctions(3)
         ];

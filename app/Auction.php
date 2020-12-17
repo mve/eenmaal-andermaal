@@ -123,39 +123,35 @@ class Auction extends SuperModel
      */
     public static function getPopularAuctions($maxn = 10)
     {
-        $popularAuctions = Auction::resultArrayToClassArray(DB::select("
-                SELECT TOP $maxn *
-                FROM auctions
-                WHERE EXISTS (
-                    SELECT TOP $maxn auction_id, COUNT(auction_id) as Cnt
-                    FROM auction_hits WHERE auction_id=auctions.id AND hit_datetime >= DATEADD(HOUR, -1, GETDATE())
+        return Auction::resultArrayToClassArray(DB::select("
+                WITH hits AS(
+                    SELECT TOP $maxn auction_id, COUNT(distinct ip) as Cnt
+                    FROM auction_hits WHERE hit_datetime >= DATEADD(HOUR, -1, GETDATE())
                     GROUP BY auction_id
                     ORDER BY Cnt DESC
-                ) AND end_datetime >= GETDATE()
+                )
+
+                SELECT TOP $maxn *
+                FROM auctions a
+                LEFT JOIN hits h
+                ON h.auction_id=a.id
+                WHERE a.end_datetime >= GETDATE()
+                ORDER BY h.Cnt DESC
             "));
-        $popularAuctionsCount = count($popularAuctions);
-        if ($popularAuctionsCount < $maxn) {
-            if ($popularAuctionsCount === 0) {
-                $addAuctions = Auction::resultArrayToClassArray(DB::select("
-                    SELECT TOP $maxn *
-                    FROM auctions ORDER BY end_datetime ASC"));
-            } else {
-                $nAddAuctions = $maxn - $popularAuctionsCount;
-                $idString = "";
-                for ($i = 0; $i < $popularAuctionsCount; $i++)
-                    $idString .= $popularAuctions[$i]->id . ($i == $popularAuctionsCount - 1 ? "" : ",");
-                $addAuctions = Auction::resultArrayToClassArray(DB::select("
-                    SELECT TOP $nAddAuctions *
-                    FROM auctions
-                    WHERE id NOT IN (
-                        SELECT id
-                        FROM auctions
-                        WHERE id IN ($idString)
-                ) ORDER BY end_datetime ASC"));
-            }
-            $popularAuctions = array_merge($popularAuctions, $addAuctions);
-        }
-        return $popularAuctions;
+    }
+
+    /**
+     * Get the most popular auctions and add auctions that will close soon if there are not enough popular auctions
+     * @param int $maxn
+     * @return array
+     */
+    public static function getRecentlyAddedAuctions($maxn = 10)
+    {
+        return Auction::resultArrayToClassArray(DB::select("
+                SELECT TOP $maxn *
+                FROM auctions
+                ORDER BY id DESC
+            "));
     }
 
     /**

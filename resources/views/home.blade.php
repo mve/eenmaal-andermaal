@@ -22,9 +22,15 @@
 
     <div class="container pt-4">
         @include("includes.auctionsrow", [
-                "title" => "Uitgelichte veilingen",
-
+                "title" => "Populaire veilingen",
                 "auctions" =>$popularAuctions,
+                "large" => false
+
+            ])
+
+        @include("includes.auctionsrow", [
+                "title" => "Recent toegevoegd",
+                "auctions" =>$recentlyAddedAuctions,
                 "large" => false
 
             ])
