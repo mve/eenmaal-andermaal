@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class AuctionHit extends SuperModel
 {
 
-    public static function hit($auction, $user)
+    public static function hit($auction, $user, $request)
     {
         $userId = null;
 
@@ -17,12 +17,24 @@ class AuctionHit extends SuperModel
             $userId = $user->id;
         }
 
-        AuctionHit::insert([
-            "auction_id" => $auction->id,
-            'user_id' => $userId,
-            "ip" => request()->ip(),
-            "hit_datetime" => Carbon::now()
-        ]);
+        if ($request->cookie('cookie_allowed') == 1 OR $user){
+            if ($request->cookie('cookie_allowed') == 1 ) {
+                AuctionHit::insert([
+                    "auction_id" => $auction->id,
+                    'user_id' => $userId,
+                    "ip" => request()->ip(),
+                    "hit_datetime" => Carbon::now()
+                ]);
+            } else if ($request->cookie('cookie_allowed') == 0){
+                AuctionHit::insert([
+                    "auction_id" => $auction->id,
+                    'user_id' => $userId,
+                    "ip" => "0.0.0.0",
+                    "hit_datetime" => Carbon::now()
+                ]);
+            }
+        }
+       
     }
 
     public static function getHits($auction)

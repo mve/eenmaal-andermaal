@@ -48,6 +48,7 @@ Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->
 Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
 Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
 
+Route::get('/beoordeling','ReviewController@index')->name('beoordeling.overzicht');
 Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
 Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
 
@@ -69,6 +70,9 @@ Route::post('search', 'HomeController@search')->name('zoeken');
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');
+
+Route::get('cookie', 'HomeController@cookie')->name('cookie');
+Route::post('cookie', 'HomeController@cookie')->name('cookie');
 
 //Admin Routes
 Route::get('admin', 'AdminController@index')->name('Admin.Index');

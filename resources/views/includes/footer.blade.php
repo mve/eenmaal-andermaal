@@ -37,7 +37,6 @@
                 © {{ now()->year }} Eenmaal Andermaal
             </div>
         </div>
-
     </div>
-
+  
 </footer>
