@@ -29,7 +29,7 @@ class CategoryController extends Controller
         $offset = $offsetPage*$limit;
 
         $querySelectAll = "SELECT * ";
-        $querySelectCount = "SELECT COUNT(*) ";
+        $querySelectCount = "SELECT COUNT(*) as computed ";
         $query = "FROM categories";
         $values = [];
 
@@ -37,7 +37,7 @@ class CategoryController extends Controller
             $query = "FROM categories WHERE name LIKE :searchq";
             $values['searchq'] = '%'.$request->get("search").'%';
         }
-
+        //dd(DB::selectOne($querySelectCount.$query,$values));
         $eaPaginationTotalItems = DB::selectOne($querySelectCount.$query,$values)['computed'];
         $eaPaginationCurrentPage = $page;
         $eaPaginationTotalPages = ceil($eaPaginationTotalItems / $limit);
