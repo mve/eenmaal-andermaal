@@ -120,7 +120,7 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @return ...
+     * @return redirect to last page
      */
     public function toggleBlock(Request $request, $id)
     {
@@ -128,5 +128,4 @@ class UserController extends Controller
         DB::insertOne('UPDATE users SET is_blocked =:block WHERE id =:id', ['block' => $block, 'id' => $id]);
         return redirect(url()->previous());
     }
-
 }
