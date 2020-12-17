@@ -6,10 +6,10 @@
 
     <h1 class="text-center pt-3">{{ $user->username }}</h1>
     <div class="content">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-lg-3 text-center">
                 <h2>Veilingen</h2>
-                <div class="row rounded-top border-top pt-2 mx-1">
+                <div class="row rounded-top border-top py-2 mx-1">
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
@@ -21,6 +21,17 @@
                                     <div class="col">
                                         <p>Totaal</p>
                                         <h1 class="display-2">{{count($auctions + $pastAuctions)}}</h1>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p>Bekeken</p>
+                                    <div class="col">
+                                        <p>Vandaag</p>
+                                        <h1 class="display-2">{{$views->today}}</h1>
+                                    </div>
+                                    <div class="col">
+                                        <p>Totaal</p>
+                                        <h1 class="display-2">{{$views->total}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -37,10 +48,19 @@
                                 <div class="row">
                                     <p>Ontvangen</p>
                                     <div class="col">
-                                        <h1 class="display-2">€{{number_format($bids->amount_received, 2)}}</h1>
+                                        <h1 class="display-1">€{{number_format($bids->amount_received)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-2">{{$bids->received}}</h1>
+                                        <h1 class="display-1">{{$bids->received}}</h1>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p>Totaal</p>
+                                    <div class="col">
+                                        <h1 class="display-1">€{{number_format($bids->amount_received_total)}}</h1>
+                                    </div>
+                                    <div class="col">
+                                        <h1 class="display-1">{{$bids->received_total}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -52,10 +72,19 @@
                                 <div class="row">
                                     <p>Geplaatst</p>
                                     <div class="col">
-                                        <h1 class="display-2">€{{number_format($bids->amount_placed, 2)}}</h1>
+                                        <h1 class="display-1">€{{number_format($bids->amount_placed)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-2">{{$bids->placed}}</h1>
+                                        <h1 class="display-1">{{$bids->placed}}</h1>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p>Totaal</p>
+                                    <div class="col">
+                                        <h1 class="display-1">€{{number_format($bids->amount_placed_total)}}</h1>
+                                    </div>
+                                    <div class="col">
+                                        <h1 class="display-1">{{$bids->placed_total}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -72,37 +101,71 @@
                                 <table class="table">
                                     <tbody>
                                         <tr>
-                                            <td class="text-left">Naam</td>
-                                            @if($user->first_name === $user->last_name)
-                                                <td class="text-right">{{$user->last_name}}</td>
-                                            @else
-                                                <td class="text-right">{{$user->first_name}} {{$user->last_name}}</td>
-                                            @endif
-                                            
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col text-left">Naam</div>
+                                                    <div class="col text-right">
+                                                        @if ($user->first_name === $user->last_name)
+                                                        {{$user->first_name}}
+                                                        @else
+                                                        {{$user->first_name}} {{$user->last_name}}
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td class="text-left">E-mail</td>
-                                            <td class="text-right">{{ $user->email }}</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col text-left">E-mail</div>
+                                                    <div class="col text-right">{{ $user->email }}</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td class="text-left">Geboortedatum</td>
-                                            <td class="text-right">{{ $user->birth_date }}</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col text-left">Geboortedatum</div>
+                                                    <div class="col text-right">{{$user->birth_date}}</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td class="text-left">Woonplaats</td>
-                                            <td class="text-right">{{ $user->city }}</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col text-left">Woonplaats</div>
+                                                    <div class="col text-right">{{$user->city}}</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td class="text-left">Land</td>
-                                            <td class="text-right">{{ $user->country_code }}</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col text-left">Land</div>
+                                                    <div class="col text-right">{{$user->country_code}}</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td class="text-left">Registratiedatum</td>
-                                            <td class="text-right">{{date('d-m-Y', strtotime($user->created_at))}}</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col text-left">Registratiedatum</div>
+                                                    <div class="col text-right">{{date('d-m-Y', strtotime($user->created_at))}}</div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-danger text-light btn-lg">Blokkeren</button>
+                                <form method="post" action="{{route('admin.users.view', $user->id)}}">
+                                    @csrf
+                                    @if ($user->is_blocked)
+                                    <button class="btn btn-success btn-lg" type="submit" name="unblock"
+                                        onclick="return confirm('Weet u zeker dat u deze gebruiker wilt deblokkeren?')">Deblokkeren</button>
+                                    @else
+                                    <button class="btn btn-danger text-light btn-lg" type="submit" name="block"
+                                        onclick="return confirm('Weet u zeker dat u deze gebruiker wilt blokkeren?')">Blokkeren</button>
+                                    @endif
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -111,47 +174,48 @@
         </div>
 
         @if(count($auctions) > 0)
-            <h3>Actieve veilingen</h3>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Titel</th>
-                        <th scope="col">Huidig bod</th>
-                        <th scope="col">Einddatum</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        @foreach($auctions as $auction)                
-                            <tr>
-                                <td>{{$auction->title}}</td>
-                                <td>{{$auction->amount}}</td>
-                                <td>{{$auction->end_datetime}}</td>
-                            </tr>
-                        @endforeach
-                </tbody>
-            </table>
+        <h3>Actieve veilingen</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Titel</th>
+                    <th scope="col">Huidig bod</th>
+                    <th scope="col">Einddatum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($auctions as $auction)
+                <tr onclick="window.location.assign('{{route('admin.auctions.view', $auction->id)}}')">
+                    <td>{{$auction->title}}
+                    </td>
+                    <td>{{$auction->amount}}</td>
+                    <td>{{date('d-m-Y H:m:s', strtotime($auction->end_datetime))}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
         @endif
 
         @if(count($pastAuctions) > 0)
         <h3>Historie</h3>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Titel</th>
-                        <th scope="col">Huidig bod</th>
-                        <th scope="col">Einddatum</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                        @foreach($auctions as $auction)                
-                            <tr>
-                                <td>{{$auction->title}}</td>
-                                <td>{{$auction->amount}}</td>
-                                <td>{{$auction->end_datetime}}</td>
-                            </tr>
-                        @endforeach
-                </tbody>
-            </table>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Titel</th>
+                    <th scope="col">Huidig bod</th>
+                    <th scope="col">Einddatum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($auctions as $auction)
+                <tr>
+                    <td>{{$auction->title}}</td>
+                    <td>{{$auction->amount}}</td>
+                    <td>{{$auction->end_datetime}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
         @endif
     </div>
 </div>

@@ -80,8 +80,11 @@ Route::get('adminview', function () {
     return view('admin.index');
 });
 
-Route::get('admin/users/{id}', 'Admin\UserController@view')->name('users.view');
-Route::get('admin/users', 'Admin\UserController@list')->name('users.list');
+Route::get('admin/users', 'Admin\UserController@list')->name('admin.users.list');
+Route::get('admin/users/{id}', 'Admin\UserController@view')->name('admin.users.view');
+Route::post('admin/users/{id}', 'Admin\UserController@toggleBlock');
+Route::get('admin/auctions', 'Admin\AuctionController@list')->name('admin.auctions.list');
+Route::get('admin/auctions/{id}', 'Admin\AuctionController@view')->name('admin.auctions.view');
 
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld
