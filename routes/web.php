@@ -83,6 +83,8 @@ Route::post('admin/login', 'Admin\Auth\LoginController@login')->name('Admin.logi
 Route::get('admin/users/{id}', 'Admin\UserController@view')->name('users.view');
 Route::get('admin/users', 'Admin\UserController@list')->name('users.list');
 
+Route::resource('admin/categories', Admin\CategoryController::class);
+
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld
 //    $data = [
