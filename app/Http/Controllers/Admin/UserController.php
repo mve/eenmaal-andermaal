@@ -26,9 +26,16 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function list(Request $request)
+    public function list()
     {
-        return view('admin.users.list');
+        $Auctions = User::getAuctionsByUser();
+
+        $user = User::resultArrayToClassArray($Auctions);
+        $data = [
+            'users' => $user
+
+        ];
+        return view('admin.users.list')->with($data);
     }
 
     /**
@@ -121,4 +128,5 @@ class UserController extends Controller
         DB::insertOne('UPDATE users SET is_blocked =:block WHERE id =:id', ['block' => $block, 'id' => $id]);
         return redirect(url()->previous());
     }
+
 }

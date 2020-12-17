@@ -48,6 +48,7 @@ Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->
 Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
 Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
 
+Route::get('/beoordeling','ReviewController@index')->name('beoordeling.overzicht');
 Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
 Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
 
@@ -70,21 +71,22 @@ Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCat
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
-// Admin Routes
-Route::get('admin', 'Admin\AdminController@index')->name('Admin.Index');
-Route::get('admin/login', 'Admin\Auth\LoginController@index')->name('Admin.login');
-Route::get('admin/logout', 'Admin\Auth\LoginController@logout')->name('Admin.logout');
-Route::post('admin/login', 'Admin\Auth\LoginController@login')->name('Admin.login');
+Route::get('cookie', 'HomeController@cookie')->name('cookie');
+Route::post('cookie', 'HomeController@cookie')->name('cookie');
 
-Route::get('adminview', function () {
-    return view('admin.index');
-});
+//Admin Routes
+Route::get('admin', 'Admin\AdminController@index')->name('Admin.Index');
+Route::get('admin/login', 'Admin\Auth\AdminLoginController@index')->name('Admin.login');
+Route::post('admin/logout', 'Admin\Auth\AdminLoginController@logout')->name('Admin.logout');
+Route::post('admin/login', 'Admin\Auth\AdminLoginController@login')->name('Admin.login');
 
 Route::get('admin/users', 'Admin\UserController@list')->name('admin.users.list');
 Route::get('admin/users/{id}', 'Admin\UserController@view')->name('admin.users.view');
 Route::post('admin/users/{id}', 'Admin\UserController@toggleBlock');
 Route::get('admin/auctions', 'Admin\AuctionController@list')->name('admin.auctions.list');
 Route::get('admin/auctions/{id}', 'Admin\AuctionController@view')->name('admin.auctions.view');
+
+Route::resource('admin/categories', Admin\CategoryController::class);
 
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld
