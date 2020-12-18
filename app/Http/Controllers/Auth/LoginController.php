@@ -69,7 +69,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $user = User::oneWhere('email', $request->get('email'));
+        $user = User::oneWhere('email', $request->get('email'), 'is_deleted', 0);
 
         if(!$user){
             return redirect()->back()->withInput($request->all())->withErrors(["email" => "Er is geen account gevonden met het ingevulde e-mailadres"]);
