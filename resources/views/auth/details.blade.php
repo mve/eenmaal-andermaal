@@ -11,7 +11,7 @@
 
                         <div class="card-body">
 
-                            <form method="POST" action="{{ route('mijnaccount.verwijderen') }}"><h2 class="text-center mt-2 mb-4">Mijn account <a href="{{route("mijnaccount.bewerken")}}" class="btn btn-primary">Bewerken</a> @csrf <button type="submit" class="btn btn-danger"> Account verwijderen </button></h2>
+                            <h2 class="text-center mt-2 mb-4">Mijn account <a href="{{route("mijnaccount.bewerken")}}" class="btn btn-primary">Bewerken</a> <button type="submit" id="verwijderen" class="btn btn-danger"> Account verwijderen </button></h2>
                             
                             @if(Session::has("error"))
                                 <div class="alert alert-danger" role="alert" id="alert-danger">
@@ -122,4 +122,49 @@
                 </div>
             </div>
         </div>
+
+    <div id="backdrop" class="d-none">
+    <div class="modal" id="exampleModalCenter" role="dialog" aria-labelledby="exampleModalCenterTitle">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content rounded-5">
+            <div class="modal-header text-center">
+            <h5 class="modal-title float-center" id="exampleModalLongTitle">Account verwijderen</h5>
+            </div>
+            <div class="modal-body">
+            <form method="POST" action="{{ route('mijnaccount.verwijderen') }}">
+                @csrf
+               
+                <div class="form-group row mb-2">
+                    <label for="password"
+                           class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
+
+                    <div class="col-md-6">
+                        <input id="password" type="password"
+                               class="form-control @error('password') is-invalid @enderror"
+                               name="password" required autocomplete="current-password">
+
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Account verwijderen" name="Verwijderen" class="btn btn-primary">
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+        <div class="modal-backdrop fade show"> </div>
+</div>
+    <script>
+      document.getElementById("verwijderen").addEventListener("click", (event) => {
+          document.getElementById("backdrop").classList.remove('d-none');
+          document.getElementById("exampleModalCenter").style.display = "block";
+       })
+      </script>
 @endsection
+
