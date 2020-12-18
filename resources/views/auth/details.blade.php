@@ -131,6 +131,8 @@
             <h5 class="modal-title float-center" id="exampleModalLongTitle">Account verwijderen</h5>
             </div>
             <div class="modal-body">
+                <h6>Vul ter bevestiging je wachtwoord in </h6>
+                <h6>Let op na deze stap wordt je account verwijderd en kan niet meer teruggedraaid worden! </h6>
             <form method="POST" action="{{ route('mijnaccount.verwijderen') }}">
                 @csrf
                
