@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,9 +49,9 @@ Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->
 Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
 Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
 
-Route::get('/beoordeling','ReviewController@index')->name('beoordeling.overzicht');
-Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
-Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
+Route::get('/beoordeling', 'ReviewController@index')->name('beoordeling.overzicht');
+Route::get('/beoordeling/plaatsen/{id}', 'ReviewController@create')->name('beoordeling.toevoegen');
+Route::post('/beoordeling/plaatsen/{id}', 'ReviewController@store')->name('beoordeling.toevoegen');
 
 Route::get('faq', function () {
     return view('faq.faq');
@@ -85,13 +86,16 @@ Route::get('admin/users', 'Admin\UserController@list')->name('users.list');
 
 Route::resource('admin/categories', Admin\CategoryController::class);
 
-//Route::get('foo', function () {
-//    //Handmatige breadcrumbs voorbeeld
-//    $data = [
-//        "Appels",
-//        "<a href='https://google.com'>Google</a>",
-//        "Nederland",
-//    ];
-//    \App\Breadcrumbs::createAndPrint($data);
-//    return "";
-//});
+Route::get('foo', function () {
+    $log = \App\Auction::oneWhere("payment_instruction", "EUR");
+    dd($log->toArray());
+//    $acLog = new \Monolog\Logger("auction");
+//    $acLog->pushHandler()
+
+    \Illuminate\Support\Facades\Log::channel("eenmaalandermaal")->info("test", [
+        "id" => $log->id,
+        "title" => $log->title
+    ]);
+
+    dd($log);
+});
