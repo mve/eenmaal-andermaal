@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="container-fluid admin">
     <h1 class="text-center pt-3">{{ $user->username }}</h1>
     <div class="content">

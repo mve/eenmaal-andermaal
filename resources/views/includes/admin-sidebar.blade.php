@@ -11,10 +11,9 @@
                     <a class="nav-link" href="{{ route('admin.users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('auctions.list') }}"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
+                    <a class="nav-link" href="{{ route('admin.auctions.list') }}"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
                 </li>
             </ul>
-
 
             <div class="bottom-info">
                 <ul class="nav flex-column ">

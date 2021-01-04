@@ -81,9 +81,7 @@ Route::get('admin/users/{id}', 'Admin\UserController@view')->name('admin.users.v
 Route::post('admin/users/{id}', 'Admin\UserController@toggleBlock');
 Route::get('admin/auctions', 'Admin\AuctionController@list')->name('admin.auctions.list');
 Route::get('admin/auctions/{id}', 'Admin\AuctionController@view')->name('admin.auctions.view');
-
-Route::get('admin/auctions/{id}', 'Admin\AuctionController@view')->name('auctions.view');
-Route::get('admin/auctions', 'Admin\AuctionController@list')->name('auctions.list');
+Route::post('admin/auctions/{id}', 'Admin\AuctionController@toggleBlock');
 
 Route::resource('admin/categories', Admin\CategoryController::class);
 
