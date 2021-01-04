@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Auction;
+use App\Category;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,8 +28,10 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-//        dd(User::getCreatedUsersLastMonth());
+        $data = [
+            "users" => User::getCreatedUsersLastMonth(),
+        ];
 
-        return view('admin.index');
+        return view('admin.index')->with($data);
     }
 }
