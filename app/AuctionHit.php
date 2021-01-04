@@ -16,14 +16,14 @@ class AuctionHit extends SuperModel
             $userId = $user->id;
         }
 
-        if ($request->cookie('cookie_allowed') == 1 OR $user){
-            if ($request->cookie('cookie_allowed') == 1 ) {
+        if ($request->cookie('cookie_allow') == 1 OR $user){
+            if ($request->cookie('cookie_allow') == 1 ) {
                 AuctionHit::insert([
                     "auction_id" => $auction->id,
                     'user_id' => $userId,
                     "ip" => request()->ip()
                 ]);
-            } else if ($request->cookie('cookie_allowed') == 0){
+            } else if ($request->cookie('cookie_allow') == 0){
                 AuctionHit::insert([
                     "auction_id" => $auction->id,
                     'user_id' => $userId,
@@ -31,7 +31,7 @@ class AuctionHit extends SuperModel
                 ]);
             }
         }
-       
+
     }
 
     public static function getHits($auction)
