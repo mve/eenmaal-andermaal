@@ -84,13 +84,10 @@ Route::post('admin/login', 'Admin\Auth\AdminLoginController@login')->name('Admin
 Route::get('admin/users/{id}', 'Admin\UserController@view')->name('users.view');
 Route::get('admin/users', 'Admin\UserController@list')->name('users.list');
 
+Route::get('admin/statistics', 'Admin\AdminController@statistics')->name('admin.statistics');
+
 Route::resource('admin/categories', Admin\CategoryController::class);
 
 Route::get('foo', function () {
-    $log = \App\Auction::oneWhere("payment_instruction", "EUR");
-    $lo2g = \App\User::oneWhere("is_blocked", "0");
 
-    \Illuminate\Support\Facades\Log::channel("eenmaalandermaal")->info("test", ["auction" => $log->toArray(), "user" => $lo2g->toArray()]);
-
-    dd($log);
 });
