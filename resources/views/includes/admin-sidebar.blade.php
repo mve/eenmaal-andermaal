@@ -8,7 +8,7 @@
                     <a class="nav-link" href="#"><i class="fas fa-fw fa-chart-line"></i>Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
+                    <a class="nav-link" href="{{ route('admin.users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
