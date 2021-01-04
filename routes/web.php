@@ -80,9 +80,10 @@ Route::get('admin/login', 'Admin\Auth\AdminLoginController@index')->name('Admin.
 Route::post('admin/logout', 'Admin\Auth\AdminLoginController@logout')->name('Admin.logout');
 Route::post('admin/login', 'Admin\Auth\AdminLoginController@login')->name('Admin.login');
 
-
 Route::get('admin/users/{id}', 'Admin\UserController@view')->name('users.view');
 Route::get('admin/users', 'Admin\UserController@list')->name('users.list');
+
+Route::resource('admin/categories', Admin\CategoryController::class);
 
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld
