@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class User extends SuperModel
@@ -19,6 +20,33 @@ class User extends SuperModel
             ",
             [
                 "id" => $this->id
+            ]);
+    }
+
+    public static function getCreatedUsersLastMonth()
+    {
+//        return DB::select("
+//            SELECT phone_number
+//            FROM phone_numbers
+//            WHERE user_id=:id
+//            ",
+//            [
+//                "id" => $this->id
+//            ]);
+
+        $time = Carbon::now();
+        $time->subtract('1 month');
+        $time = $time->format('Y-m-d');
+
+        return DB::select("
+            select COUNT(id) as total, dateadd(DAY,0, datediff(day,0, created_at)) as created_at
+            from users
+            WHERE created_at > :time
+            group by dateadd(DAY,0, datediff(day,0, created_at))
+            ORDER BY created_at ASC
+            ",
+            [
+                "time" => $time
             ]);
     }
 
