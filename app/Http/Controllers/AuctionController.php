@@ -34,6 +34,7 @@ class AuctionController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('check.user.is.blocked');
         $this->middleware('check.user')->except(['show', 'mailFinishedAuctionOwners']);
     }
 

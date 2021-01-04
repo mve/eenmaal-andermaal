@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Auth\LoginController;
 
 class User extends SuperModel
 {
@@ -109,4 +110,17 @@ class User extends SuperModel
         return $auctions;
     }
 
+    public static function handleIsBlocked($request) {
+        if (!$request->session()->has('user')) {
+            return;
+        }
+
+        $user = DB::selectOne("SELECT is_blocked FROM users WHERE id=:id", [
+            "id" => $request->session()->get('user')->id
+        ]);
+
+        if ($user['is_blocked'] == 1) {
+            return LoginController::logout($request, true);
+        }
+    }
 }
