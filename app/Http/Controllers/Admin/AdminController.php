@@ -58,6 +58,7 @@ class AdminController extends Controller
         $labelArr = [];
         $dataArr = [];
         $datasetLabelArr = [];
+        $logFileContents = "";
         while (!feof($file)) {
             $str = fgets($file);
             $matches = [];
@@ -72,7 +73,9 @@ class AdminController extends Controller
                     ]);
                 }
             }
+            $logFileContents .= $str;
         }
+        fclose($file);
 
         $mainLabels = array_unique($labelArr);
         $datasetLabelArr = array_unique($datasetLabelArr);
@@ -127,13 +130,13 @@ class AdminController extends Controller
                 "data" => $datasetDataArray
             ]);
         }
-
-        fclose($file);
-
+//        printf(str_replace("\n","<br/>", $logFileContents));
+//        die();
         $data = [
             "datasets" => $finalDataArray,
             "total" => $totalErrorsArray,
-            "labels" => $mainLabels
+            "labels" => $mainLabels,
+            "logFileContents" => $logFileContents
         ];
 
         return view('admin.statistics')->with($data);

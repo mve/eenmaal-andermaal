@@ -1,6 +1,6 @@
 require('./fontawesome');
 require('./bootstrap');
-require('chart.js');
+// require('chart.js');
 
 /*  Navigatie rubrieken */
 var categoriesMenuElement = document.querySelector("#category-container-parent");

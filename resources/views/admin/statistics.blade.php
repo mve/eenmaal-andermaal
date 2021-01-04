@@ -4,14 +4,17 @@
 
     <div class="admin">
         <div class="container-fluid ">
-            <h1 class="text-center pt-3"> Eenmaal andermaal</h1>
+            <h1 class="text-center pt-3"> Statistieken</h1>
 
-            <div class="content">
-                <h1>Statistieken</h1>
+            <div class="content pb-4">
+{{--                <h1>Errors</h1>--}}
 
                 <div class="row">
 
                     <div class="col-md-6">
+
+                        <h2>Gecategoriseerde errors</h2>
+
                         <div class="card">
                             <div class="card-body">
 
@@ -22,6 +25,9 @@
                     </div>
 
                     <div class="col-md-6">
+
+                        <h2>Totale aantal errors</h2>
+
                         <div class="card">
                             <div class="card-body">
 
@@ -32,6 +38,21 @@
                     </div>
 
                 </div>
+
+                <div class="row mt-4">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body logfile-contents overflow-scroll">
+
+                                {!! nl2br($logFileContents) !!}
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
@@ -68,10 +89,10 @@
                         }
                     }]
                 },
-                title: {
-                    display: true,
-                    text: 'Gecategoriseerde errors'
-                },
+                // title: {
+                //     display: true,
+                //     text: 'Gecategoriseerde errors'
+                // },
             }
         });
 
@@ -102,10 +123,10 @@
                         }
                     }]
                 },
-                title: {
-                    display: true,
-                    text: 'Totale aantal errors'
-                },
+                // title: {
+                //     display: true,
+                //     text: 'Totale aantal errors'
+                // },
             }
         });
     </script>
