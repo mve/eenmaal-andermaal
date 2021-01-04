@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $user = User::oneWhere('id', $request->id);
 
-        $sql = 'SELECT a.id, a.title, a.end_datetime, b.amount 
+        $sql = 'SELECT a.id, a.title, a.end_datetime, ISNULL(b.amount, a.start_price) AS amount
         FROM auctions a
         OUTER APPLY (
             SELECT TOP 1 b.amount 

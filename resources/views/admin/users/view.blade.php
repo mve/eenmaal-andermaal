@@ -2,8 +2,8 @@
 
 @section('content')
 
-<div class="container-fluid admin">
 
+<div class="container-fluid admin">
     <h1 class="text-center pt-3">{{ $user->username }}</h1>
     <div class="content">
         <div class="row mb-3">
@@ -20,7 +20,7 @@
                                     </div>
                                     <div class="col">
                                         <p>Totaal</p>
-                                        <h1 class="display-2">{{count($auctions + $pastAuctions)}}</h1>
+                                        <h1 class="display-2">{{count($auctions) + count($pastAuctions)}}</h1>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -159,11 +159,9 @@
                                 <form method="post" action="{{route('admin.users.view', $user->id)}}">
                                     @csrf
                                     @if ($user->is_blocked)
-                                    <button class="btn btn-success btn-lg" type="submit" name="unblock"
-                                        onclick="return confirm('Weet u zeker dat u deze gebruiker wilt deblokkeren?')">Deblokkeren</button>
+                                    <button class="btn btn-success btn-lg" type="submit" name="unblock" onclick="return confirm('Weet u zeker dat u deze gebruiker wilt deblokkeren?')">Deblokkeren</button>
                                     @else
-                                    <button class="btn btn-danger text-light btn-lg" type="submit" name="block"
-                                        onclick="return confirm('Weet u zeker dat u deze gebruiker wilt blokkeren?')">Blokkeren</button>
+                                    <button class="btn btn-danger text-light btn-lg" type="submit" name="block" onclick="return confirm('Weet u zeker dat u deze gebruiker wilt blokkeren?')">Blokkeren</button>
                                     @endif
                                 </form>
                             </div>
@@ -174,48 +172,17 @@
         </div>
 
         @if(count($auctions) > 0)
-        <h3>Actieve veilingen</h3>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Titel</th>
-                    <th scope="col">Huidig bod</th>
-                    <th scope="col">Einddatum</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($auctions as $auction)
-                <tr onclick="window.location.assign('{{route('admin.auctions.view', $auction->id)}}')">
-                    <td>{{$auction->title}}
-                    </td>
-                    <td>{{$auction->amount}}</td>
-                    <td>{{date('d-m-Y H:m:s', strtotime($auction->end_datetime))}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @include("admin.includes.auctions-table", [
+            "title" => "Actieve veilingen",
+            "auctions" => $auctions
+            ])
         @endif
 
         @if(count($pastAuctions) > 0)
-        <h3>Historie</h3>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Titel</th>
-                    <th scope="col">Huidig bod</th>
-                    <th scope="col">Einddatum</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($auctions as $auction)
-                <tr>
-                    <td>{{$auction->title}}</td>
-                    <td>{{$auction->amount}}</td>
-                    <td>{{$auction->end_datetime}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @include("admin.includes.auctions-table", [
+            "title" => "Historie",
+            "auctions" => $pastAuctions
+            ])
         @endif
     </div>
 </div>
