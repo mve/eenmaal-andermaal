@@ -88,14 +88,9 @@ Route::resource('admin/categories', Admin\CategoryController::class);
 
 Route::get('foo', function () {
     $log = \App\Auction::oneWhere("payment_instruction", "EUR");
-    dd($log->toArray());
-//    $acLog = new \Monolog\Logger("auction");
-//    $acLog->pushHandler()
+    $lo2g = \App\User::oneWhere("is_blocked", "0");
 
-    \Illuminate\Support\Facades\Log::channel("eenmaalandermaal")->info("test", [
-        "id" => $log->id,
-        "title" => $log->title
-    ]);
+    \Illuminate\Support\Facades\Log::channel("eenmaalandermaal")->info("test", ["auction" => $log->toArray(), "user" => $lo2g->toArray()]);
 
     dd($log);
 });
