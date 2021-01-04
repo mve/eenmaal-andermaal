@@ -28,8 +28,19 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
+        $data = User::getCreatedUsersLastMonth();
+        $total = [];
+        $created_at = [];
+
+        foreach ($data as $dateWithUserCount)
+        {
+            array_push($total, $dateWithUserCount['total']);
+            array_push($created_at, $dateWithUserCount['created_at']);
+        }
+
         $data = [
-            "users" => User::getCreatedUsersLastMonth(),
+            "total" => $total,
+            "created_at" => $created_at
         ];
 
         return view('admin.index')->with($data);

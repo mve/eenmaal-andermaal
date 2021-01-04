@@ -15,7 +15,7 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <canvas id="myChart"></canvas>
+                                <canvas id="accountsCreatedChart"></canvas>
 
                             </div>
                         </div>
@@ -48,24 +48,33 @@
     </div>
 
     <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
+        var ctx = document.getElementById('accountsCreatedChart').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',
 
             // The data for our dataset
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: {!! json_encode($created_at) !!},
                 datasets: [{
-                    label: 'My First dataset',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45]
+                    label: 'Nieuwe accounts',
+                    backgroundColor: '#c5AE91',
+                    borderColor: '#616161',
+                    borderWidth:'2',
+                    data: {!! json_encode($total) !!}
                 }]
             },
 
             // Configuration options go here
-            options: {}
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
         });
     </script>
 
