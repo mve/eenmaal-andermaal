@@ -83,6 +83,9 @@ Route::post('admin/login', 'Admin\Auth\AdminLoginController@login')->name('Admin
 Route::get('admin/users/{id}', 'Admin\UserController@view')->name('users.view');
 Route::get('admin/users', 'Admin\UserController@list')->name('users.list');
 
+Route::get('admin/auctions/{id}', 'Admin\AuctionController@view')->name('auctions.view');
+Route::get('admin/auctions', 'Admin\AuctionController@list')->name('auctions.list');
+
 Route::resource('admin/categories', Admin\CategoryController::class);
 
 //Route::get('foo', function () {
