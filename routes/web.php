@@ -48,6 +48,7 @@ Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->
 Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
 Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
 
+Route::get('/beoordeling','ReviewController@index')->name('beoordeling.overzicht');
 Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
 Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
 
@@ -70,12 +71,19 @@ Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCat
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
-//Admin Routes
-Route::get('admin', 'AdminController@index')->name('Admin.Index');
-Route::get('admin/login', 'Auth\AdminLoginController@index')->name('Admin.login');
-Route::post('admin/logout', 'Auth\AdminLoginController@logout')->name('Admin.logout');
-Route::post('admin/login', 'Auth\AdminLoginController@login')->name('Admin.login');
+Route::get('cookie', 'HomeController@cookie')->name('cookie');
+Route::post('cookie', 'HomeController@cookie')->name('cookie');
 
+//Admin Routes
+Route::get('admin', 'Admin\AdminController@index')->name('Admin.Index');
+Route::get('admin/login', 'Admin\Auth\AdminLoginController@index')->name('Admin.login');
+Route::post('admin/logout', 'Admin\Auth\AdminLoginController@logout')->name('Admin.logout');
+Route::post('admin/login', 'Admin\Auth\AdminLoginController@login')->name('Admin.login');
+
+Route::get('admin/users/{id}', 'Admin\UserController@view')->name('users.view');
+Route::get('admin/users', 'Admin\UserController@list')->name('users.list');
+
+Route::resource('admin/categories', Admin\CategoryController::class);
 
 //Route::get('foo', function () {
 //    //Handmatige breadcrumbs voorbeeld

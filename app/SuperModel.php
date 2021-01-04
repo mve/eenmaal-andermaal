@@ -33,8 +33,10 @@ abstract class SuperModel
     {
         $values = [];
         $arr = get_object_vars($this);
-        foreach ($arr as $key=>$value){
-            if($key=="created_at"||$key=="birth_date")
+        $arr['updated_at'] = Carbon::now()->toDateTimeString();
+
+        foreach ($arr as $key=>$value) {
+            if($key=="created_at")
                 continue;
             $values[$key] = $value;
         }
@@ -126,8 +128,8 @@ abstract class SuperModel
     }
 
     /**
-     * Select all rows from the child table WHERE $column=$value and orders 
-     * 
+     * Select all rows from the child table WHERE $column=$value and orders
+     *
      */
     public static function allWhereOrderBy($column, $value, $orderBy, $order = "ASC") {
         $result = DB::select("SELECT * FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:value ORDER BY " . $orderBy . " " . $order, array(

@@ -90,7 +90,7 @@ class RegisterController extends Controller
         if ($data["verificatie_code"] == $request->session()->get('verify_code')) {
 
             $this->validate($request, array(
-                'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-]+$/u'],
+                'username' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-0-9]+$/u'],
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
                 'first_name' => ['required', 'string'],
@@ -106,6 +106,9 @@ class RegisterController extends Controller
 
             if (User::oneWhere("email", $request->email) !== false) {
                 return redirect()->back()->withInput($request->all())->withErrors(["email" => "Er bestaat al een gebruiker met het ingevulde e-mailadres"]);
+            }
+            if (User::oneWhere("username", $request->username) !== false) {
+                return redirect()->back()->withInput($request->all())->withErrors(["username" => "Er bestaat al een gebruiker met het ingevulde gebruikersnaam"]);
             }
             if (
                 DB::selectOne("SELECT * FROM countries WHERE country_code=:country_code", [
@@ -178,6 +181,10 @@ class RegisterController extends Controller
         if ($data["type"] == "1") {
             if (User::oneWhere("email", $request->email) !== false)
                 return response()->json(['error' => 'Er bestaat al een gebruiker met het ingevulde e-mailadres']);
+            if (User::oneWhere("username", $request->username) !== false)
+                return response()->json(['error' => 'Er bestaat al een gebruiker met het ingevulde gebruikersnaam']);
+            if(!preg_match("/^[\pL\s\-0-9]+$/u", $request->username))
+                return response()->json(['error' => 'Het gebruikersnaam mag alleen letters en cijfers bevatten']);
 
             $code = Str::random(32);
 

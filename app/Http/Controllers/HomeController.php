@@ -74,5 +74,16 @@ class HomeController extends Controller
 
     }
 
+    public function cookie(Request $request){
+        if ($request->cookie_allow){
+            return redirect()->back()->withCookie(cookie()->forever('cookie_allow', '1'));
+        } else if  ($request->cookie_disallow){
+            return redirect()->back()->withCookie(cookie()->forever('cookie_allow', '0'));
+        } else {
+            abort(404);
+        }
+      
+    }
+
 
 }

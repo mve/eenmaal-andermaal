@@ -11777,7 +11777,8 @@ p {
 
 .admin {
   background-color: #353535;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .admin h1,
@@ -11793,7 +11794,8 @@ p {
 .admin h6,
 .admin .h6,
 .admin p,
-.admin label {
+.admin label,
+.admin .table {
   color: #a6a6a6;
 }
 
@@ -11912,6 +11914,36 @@ p {
 
 .sidebar .openbtn:hover {
   background-color: #444;
+}
+
+.table {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.table .thead {
+  background-color: #404040;
+}
+
+.table .endTd {
+  border-right: 1px solid;
+}
+
+.table .form-check-input:disabled {
+  opacity: 1;
+}
+
+.table tbody tr:hover {
+  background-color: #4c4c4c;
+  cursor: pointer;
+}
+
+.table tbody tr .fa-ban {
+  color: #DC2626;
+}
+
+.table tbody tr .fa-check-circle {
+  color: #10B981;
 }
 
 .category-container {
@@ -12104,5 +12136,13 @@ a.category:hover {
 
 .not-found {
   padding: 208.5px 0;
+}
+
+.modal {
+  z-index: 1072;
+}
+
+.modal-backdrop {
+  z-index: 1071;
 }
 

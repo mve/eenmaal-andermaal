@@ -126,7 +126,7 @@ class Auction extends SuperModel
         return Auction::resultArrayToClassArray(DB::select("
                 WITH hits AS(
                     SELECT TOP $maxn auction_id, COUNT(DISTINCT ip) as Cnt
-                    FROM auction_hits WHERE hit_datetime >= DATEADD(HOUR, -1, GETDATE())
+                    FROM auction_hits WHERE created_at >= DATEADD(HOUR, -1, GETDATE())
                     GROUP BY auction_id
                     ORDER BY Cnt DESC
                 )
