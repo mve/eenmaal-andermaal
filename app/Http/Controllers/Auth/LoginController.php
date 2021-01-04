@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-
     /**
      * The session used by the guard.
      *
@@ -71,8 +70,12 @@ class LoginController extends Controller
     {
         $user = User::oneWhere('email', $request->get('email'));
 
-        if(!$user){
+        if (!$user) {
             return redirect()->back()->withInput($request->all())->withErrors(["email" => "Er is geen account gevonden met het ingevulde e-mailadres"]);
+        }
+
+        if ($user->is_blocked) {
+            return redirect()->back()->withInput($request->all())->withErrors(["email" => "Dit account is geblokkeerd en inloggen is niet mogelijk. Neem contact op om het account te laten deblokkeren."]);
         }
 
         $userLoggedIn = Hash::check($request->get('password'), $user->password);
@@ -84,11 +87,15 @@ class LoginController extends Controller
         return redirect()->back()->withInput($request->all())->withErrors(["password" => "Incorrect wachtwoord ingevuld"]);
     }
 
-    public function logout(Request $request)
+    public static function logout(Request $request, $blocked = false)
     {
-        if($request->session()->has('user')) {
+        if ($request->session()->has('user')) {
             $request->session()->forget('user');
             $cookie = Cookie::forget("seller_verification");
+
+            if ($blocked) {
+                return redirect('login')->withErrors(["email" => "Uw account is geblokkeerd. Neem contact op om het account te laten deblokkeren."]);
+            }
             return redirect('login')->withCookie($cookie);
         }
     }

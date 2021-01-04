@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Session;
 class BidController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('check.user.is.blocked');
+    }
+
+    /**
      * Post a bid to the auction
      * @param $id
      * @param $amount
@@ -25,7 +35,7 @@ class BidController extends Controller
         $auction = Auction::oneWhere("id", $id);
         if (!$auction)
             return response()->json(['error' => 'Veiling niet gevonden']);
-        if(Session::get('user')->id == $auction->user_id)
+        if (Session::get('user')->id == $auction->user_id)
             return response()->json(['error' => 'Je kan niet op je eigen veiling bieden']);
         if (Carbon::now() >= Carbon::parse($auction->end_datetime))
             return response()->json(['error' => 'De veiling is al afgelopen']);
@@ -33,7 +43,7 @@ class BidController extends Controller
         $minimumBid = $latestBid + $auction->getIncrement();
         if ($amount < $minimumBid) {
             return response()->json([
-//                'error' => 'Bod moet minimaal &euro;'.$minimumBid." zijn",
+                //                'error' => 'Bod moet minimaal &euro;'.$minimumBid." zijn",
                 'error' => 'Bod is te laag',
                 'currentBid' => $latestBid,
                 'lastFiveBidsHTML' => $auction->getLastNBidsHTML()
@@ -48,10 +58,10 @@ class BidController extends Controller
         $bid->amount = $amount;
         $bid->save();
 
-        if($latestBid){
+        if ($latestBid) {
             $lastBidder = $latestBid->getBidder();
             $user = Session::get('user');
-            if($lastBidder->id != $user->id)
+            if ($lastBidder->id != $user->id)
                 Mail::to($lastBidder->email)->send(new Outbid($auction->title, $auction->id));
         }
 
