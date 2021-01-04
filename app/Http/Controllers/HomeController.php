@@ -19,6 +19,7 @@ class HomeController extends Controller
     public function __construct()
     {
 //        $this->middleware('check.user');
+        $this->middleware('check.user.is.blocked');
     }
 
     /**
