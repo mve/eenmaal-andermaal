@@ -135,7 +135,7 @@ class Auction extends SuperModel
                 FROM auctions a
                 LEFT JOIN hits h
                 ON h.auction_id=a.id
-                WHERE a.end_datetime >= GETDATE()
+                WHERE a.end_datetime >= GETDATE() AND a.is_blocked = 0
                 ORDER BY h.Cnt DESC
             "));
     }
@@ -150,6 +150,7 @@ class Auction extends SuperModel
         return Auction::resultArrayToClassArray(DB::select("
                 SELECT TOP $maxn *
                 FROM auctions
+                WHERE is_blocked = 0
                 ORDER BY id DESC
             "));
     }
@@ -470,7 +471,7 @@ class Auction extends SuperModel
             SELECT TOP $limit * FROM auctions
             WHERE EXISTS(
                 SELECT * FROM auction_categories ac WHERE ac.category_id=$parentId AND ac.auction_id=auctions.id AND auctions.end_datetime >= GETDATE()
-            )
+            ) AND is_blocked = 0
             "));
     }
 

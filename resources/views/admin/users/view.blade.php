@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="container-fluid admin">
     <h1 class="text-center pt-3">{{ $user->username }}</h1>
     <div class="content">
@@ -156,7 +155,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <form method="post" action="{{route('admin.users.view', $user->id)}}">
+                                <form method="post" action="{{route('admin.users.view', $user->id)}}" class="mt-3">
                                     @csrf
                                     @if ($user->is_blocked)
                                     <button class="btn btn-success btn-lg" type="submit" name="unblock" onclick="return confirm('Weet u zeker dat u deze gebruiker wilt deblokkeren?')">Deblokkeren</button>

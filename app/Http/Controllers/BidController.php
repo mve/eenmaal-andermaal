@@ -35,6 +35,9 @@ class BidController extends Controller
         $auction = Auction::oneWhere("id", $id);
         if (!$auction)
             return response()->json(['error' => 'Veiling niet gevonden']);
+        if ($auction->is_blocked == 1) {
+            return response()->json(['error' => 'Deze veiling is geblokkeerd en bieden is niet mogelijk']);
+        }
         if (Session::get('user')->id == $auction->user_id)
             return response()->json(['error' => 'Je kan niet op je eigen veiling bieden']);
         if (Carbon::now() >= Carbon::parse($auction->end_datetime))
