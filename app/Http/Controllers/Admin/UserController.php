@@ -54,7 +54,7 @@ class UserController extends Controller
             SELECT TOP 1 b.amount 
             FROM bids b 
             WHERE a.id = b.auction_id 
-            ORDER BY b.bid_datetime DESC
+            ORDER BY b.created_at DESC
         ) as b 
         WHERE a.user_id =:user_id AND a.end_datetime /xd/ GETDATE()
         ORDER BY a.end_datetime DESC';
@@ -99,12 +99,12 @@ class UserController extends Controller
 
         $views = Auction::resultArrayToClassArray(DB::select(
         'WITH auctionsviewed AS (
-            SELECT hit_datetime FROM auction_hits WHERE user_id =:user_id
+            SELECT created_at FROM auction_hits WHERE user_id =:user_id
         )
         
         SELECT 
-        (SELECT COUNT(hit_datetime) FROM auctionsviewed) AS total,
-        (SELECT COUNT(hit_datetime) FROM auctionsviewed WHERE hit_datetime > dateadd(DD, -1, cast(GETDATE() as date))) AS today',
+        (SELECT COUNT(created_at) FROM auctionsviewed) AS total,
+        (SELECT COUNT(created_at) FROM auctionsviewed WHERE created_at > dateadd(DD, -1, cast(GETDATE() as date))) AS today',
             ['user_id' => $user->id]
         ));
 
