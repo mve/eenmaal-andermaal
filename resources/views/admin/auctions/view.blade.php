@@ -15,8 +15,7 @@
                 </ol>
                 <div class="carousel-inner">
                     @for($i = 0; $i < count($auctionImages); $i++) <div class="carousel-item @if($i==0) active @endif">
-                        <img src='{{$auctionImages[$i]["file_name"]}}' class="d-block" alt="...">
-                </div>
+                        <img src='{{$auctionImages[$i]["file_name"]}}' class="d-block" alt="..."></div>
                 @endfor
             </div>
             @if(count($auctionImages) > 1)
@@ -106,12 +105,18 @@
                                 @endif
                             </tbody>
                         </table>
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col text-right">
                                 <button class="btn btn-primary text-light btn-lg" name="block" onclick="window.location.assign('{{route('admin.users.view', $auction->user_id)}}')">Zie verkoper</button>
                             </div>
+                            <div class="col text-center">
+                                <form method="post" action="{{route('admin.auctions.edit', $auction->id)}}">
+                                    @csrf
+                                    <button class="btn btn-warning btn-lg" type="submit" name="edit">Bewerken</button>
+                                </form>
+                            </div>
                             <div class="col text-left">
-                                <form method="post" action="">
+                                <form method="post">
                                     @csrf
                                     @if ($auction->is_blocked)
                                     <button class="btn btn-success btn-lg" type="submit" name="unblock" onclick="return confirm('Weet u zeker dat u deze veiling wilt deblokkeren?')">Deblokkeren</button>

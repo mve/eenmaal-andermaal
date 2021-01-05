@@ -9,7 +9,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Auctioncontroller extends Controller
+class AuctionController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -65,6 +65,32 @@ class Auctioncontroller extends Controller
         ];
         
         return view('admin.auctions.view')->with($data);
+    }
+
+    public function edit(Request $request) {
+        $auction = Auction::oneWhere('id', $request->id);
+
+        if ($auction === false) {
+            return abort(404);
+        }
+
+        return view('admin.auctions.edit')->with(['auction' => $auction]);
+    }
+
+    public function save(Request $request) {
+        $this->validate($request, array(
+            'title' => ['required', 'string', 'max:100'],
+            'description' => ['nullable', 'string', 'max:500'],
+            'payment_instruction' => ['nullable', 'string', 'max:255'],
+        ));
+
+        $auction = Auction::oneWhere('id', $request->id);
+        $auction->title = $request->title;
+        $auction->description = $request->description;
+        $auction->payment_instruction = $request->payment_instruction;
+        $auction->update();
+
+        return redirect()->route("admin.auctions.view", $auction->id);
     }
 
     /**
