@@ -27522,14 +27522,92 @@ if (auctionTimes.length) {
 /* Admin sidepanel open/close */
 
 
-document.getElementById("openbtn").addEventListener("click", function () {
-  /* Set the width of the sidebar to 250px (show it) */
-  document.getElementById("mySidepanel").style.left = "0";
-});
-document.getElementById("closebtn").addEventListener("click", function () {
-  /* Set the width of the sidebar to 250px (show it) */
-  document.getElementById("mySidepanel").style.left = "-250px";
-});
+var openbtn = document.getElementById("openbtn");
+
+if (openbtn) {
+  openbtn.addEventListener("click", function () {
+    /* Set the width of the sidebar to 250px (show it) */
+    document.getElementById("mySidepanel").style.left = "0";
+  });
+}
+
+var closebtn = document.getElementById("closebtn");
+
+if (closebtn) {
+  closebtn.addEventListener("click", function () {
+    /* Set the width of the sidebar to 250px (show it) */
+    document.getElementById("mySidepanel").style.left = "-250px";
+  });
+}
+/*  Rubrieken admin */
+
+
+var categoriesAdminElement = document.querySelector("#category-container-parent-admin");
+
+if (categoriesAdminElement) {
+  var _hideChildren = function _hideChildren(parent) {
+    var children = parent.parentElement.querySelectorAll(":scope>a,:scope>div");
+
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].classList.contains("d-block")) {
+        children[i].classList.remove("d-block");
+        children[i].classList.add("d-none");
+      }
+    }
+  };
+
+  var _toggleSubMenu = function _toggleSubMenu() {
+    var children = this.parentElement.querySelectorAll(":scope>a,:scope>div");
+
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].classList.contains("d-block")) {
+        children[i].classList.remove("d-block");
+        children[i].classList.add("d-none");
+      } else {
+        children[i].classList.remove("d-none");
+        children[i].classList.add("d-block");
+      }
+    }
+  };
+
+  var _closeAllHoverablesChildren = function _closeAllHoverablesChildren() {
+    for (var i = 0; i < hoverables.length; i++) {
+      _hideChildren(hoverables[i]);
+    }
+  }; // document.addEventListener('click', function (event) {
+  //     var isClickInside = categoriesMenuElement.contains(event.target);
+  //
+  //     if (!isClickInside) {
+  //         closeAllHoverablesChildren();
+  //     }
+  // });
+  // function debounce(func) {
+  //     var timer;
+  //     return function (event) {
+  //         if (timer) clearTimeout(timer);
+  //         timer = setTimeout(func, 100, event);
+  //     };
+  // }
+  // function setNavCopySize() {
+  //     categoriesCopyElement.style.height = categoriesMenuElement.offsetHeight + "px";
+  // }
+  // window.addEventListener("resize", debounce(function (e) {
+  //     closeAllHoverablesChildren();
+  //     setNavCopySize();
+  // }));
+  //
+  // window.addEventListener('load', function () {
+  //     setNavCopySize();
+  // });
+
+
+  var hoverables = document.querySelectorAll(".clickable-submenu");
+
+  for (var i = 0; i < hoverables.length; i++) {
+    hoverables[i].addEventListener('click', _toggleSubMenu);
+  }
+}
+/*  Rubrieken admin einde */
 
 /***/ }),
 
@@ -28078,8 +28156,8 @@ window.FontAwesomeKitConfig = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Projects\eenmaal-andermaal\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/teunissenstefan/Homestead/htdocs/eenmaal-andermaal/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
