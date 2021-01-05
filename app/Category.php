@@ -84,11 +84,11 @@ class Category extends SuperModel
             $marginLeft = 10 * $level;
 
             if (count($childCategories) > 0) {
-                $printStr .= '<div class="' . $classes . ' category-hoverable" style="margin-left:'.$marginLeft.'px"><span class="clickable-submenu user-select-none">' . $category->name . " <i class='fas fa-arrow-down category-arrow'></i>" . " </span>";
+                $printStr .= '<div class="' . $classes . ' category-hoverable" style="margin-left:'.$marginLeft.'px"><span id="' . $category->id . '" class="clickable-submenu user-select-none">' . $category->name . " <i class='fas fa-arrow-down category-arrow'></i>" . " </span>";
                 $printStr .= self::printTreeAdmin($childCategories, $allCategories, $level + 1);
                 $printStr .= '</div>';
             } else {
-                $printStr .= '<a href="javascript:void(0);" class="' . $classes . ' user-select-none" style="margin-left:'.$marginLeft.'px">' . $category->name . " <i class='fas fa-arrow-right category-arrow'></i>";
+                $printStr .= '<a id="' . $category->id . '" href="javascript:void(0);" class="' . $classes . ' user-select-none" style="margin-left:'.$marginLeft.'px">' . $category->name . " <i class='fas fa-arrow-right category-arrow'></i>";
                 $printStr .= '</a>';
             }
         }
