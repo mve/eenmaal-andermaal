@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/categories"><i class="fas fa-fw fa-list-alt"></i>Categorien</a>
+                </li>
             </ul>
 
 
