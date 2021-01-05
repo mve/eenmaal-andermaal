@@ -14,4 +14,10 @@
         </div>
     </div>
 
+    <script>
+        function categorySelected() {
+            console.log(window.event.target.id);
+        }
+    </script>
+
 @endsection
