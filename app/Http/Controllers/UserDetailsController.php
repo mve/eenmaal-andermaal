@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\DB;
 use App\User;
+use App\Auction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserDetailsController extends Controller
 {
@@ -60,7 +63,7 @@ class UserDetailsController extends Controller
     {
         $currentUser = Session::get('user');
         $this->validate($request, array(
-            'username' => ['required', 'string', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
+            'username' => ['required', 'string', 'max:100', 'regex:/^[\pL\s\-0-9]+$/u'],
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             'address' => ['required', 'string', 'max:100'],
@@ -179,6 +182,73 @@ class UserDetailsController extends Controller
         $lon = $response[0]->lon;
 
         return ['lat' => $lat, 'lon' => $lon];
+    }
+
+     /**
+     * Show the user's information.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function remove(Request $request)
+    {
+        $user = $request->session()->get("user");
+        $highest = false;
+        $auctions = $user->getUserBids();
+        $userLoggedIn = Hash::check($request->get('password'), $user->password);
+       
+        if(!$userLoggedIn) {
+            $request->session()->flash('error', 'Verkeerd wachtwoord ingevoerd');
+            return redirect()->route('mijnaccount');
+        }
+
+        foreach ($auctions as $auction){
+            $auction = Auction::resultArrayToClassArray(DB::select("SELECT * FROM auctions WHERE id=:auction_id AND end_datetime > GETDATE()", [
+                "auction_id" => $auction['auction_id']
+            ]));
+            
+           
+            if (!empty($auction) && $auction[0]->getHighestBid()->user_id == $user->id) {
+                $highest = true;
+            }
+        }
+
+        $myAuctions = Auction::resultArrayToClassArray(DB::select("SELECT count(*) as auctions FROM auctions WHERE user_id=:user_id AND end_datetime > GETDATE()", [
+            "user_id" => $user->id
+        ]));
+
+        if ($myAuctions[0]->auctions > 0) {
+            $request->session()->flash('error', 'Dit account heeft nog active veilingen openstaan en kan daarom niet verwijderd worden');
+            return redirect()->route('mijnaccount');
+        }
+        
+        if ($highest) {
+            $request->session()->flash('error', 'Je bent momenteel de hoogste bieder op een openstaande veiling! Het account kan op dit moment niet verwijderd worden.');
+            return redirect()->route('mijnaccount');
+        }
+
+        if ($myAuctions[0]->auctions == 0 && !$highest) {
+            $random = Str::random(6);
+            $currentUser = Session::get('user');
+            $currentUser->username = 'deleted user '.$random;
+            $currentUser->first_name = $random;
+            $currentUser->last_name = $random;
+            $currentUser->email = $random."@mail.com";
+            $currentUser->password = Hash::make(random_bytes(32));
+            $currentUser->postal_code = $currentUser->postal_code;
+            $currentUser->address = $random;
+            $currentUser->city = $currentUser->city;
+            $currentUser->country_code = $currentUser->country_code;
+            $currentUser->latitude = $currentUser->latitude;
+            $currentUser->longitude = $currentUser->longitude;
+            $currentUser->is_seller = 0;
+            $currentUser->is_deleted = 1;
+            $currentUser->update();
+
+            $request->session()->forget('user');
+            $request->session()->flash('success', 'Je account is verwijderd');
+            return redirect()->route('login');
+        }
     }
 
 }

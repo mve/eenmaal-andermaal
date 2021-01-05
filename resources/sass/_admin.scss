@@ -6,6 +6,7 @@
     .card {
         background-color: #353535;
         border-color: #616161;
+        margin-bottom: 24px;
     }
 
     background-color: #353535;
@@ -23,6 +24,67 @@
         color: $sand;
     }
 
+    #category-container-parent{
+        position:inherit;
+        left:0;
+        right:0;
+        background-color: transparent;
+    }
+
+    .clickable-submenu{
+        font-weight: normal;
+        color: $gray!important;
+        cursor: pointer;
+    }
+
+    a.category{
+        text-decoration: none;
+        font-weight: bold;
+        color: $gray!important;
+
+        &:hover{
+            color: $gray!important;
+        }
+    }
+    .category {
+        &-arrow{
+            font-size:10px;
+        }
+
+        &-0{
+            > div, >a {
+                display:block;
+            }
+            >.clickable-submenu{
+                font-weight:normal;
+            }
+            :last-child{
+                padding-bottom: 10px;
+            }
+        }
+
+        &-1 {
+            font-weight: bold;
+            color: $gray!important;
+            display:block;
+        }
+
+
+        &-hoverable > * {
+            > div, >a {
+                display:none;
+            }
+        }
+
+        a{
+            font-weight: normal;
+        }
+    }
+}
+
+.logfile-contents{
+    color: #a6a6a6;
+    max-height: 400px;
 }
 
 .sidebar {

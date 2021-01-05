@@ -5,13 +5,19 @@
             <div class="text-center mb-3 fw-bold title">Eenmaal Andermaal</div>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-fw fa-chart-line"></i>Dashboard</a>
+                    <a class="nav-link" href="{{ route('Admin.Index') }}"><i class="fas fa-fw fa-chart-line"></i>Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
+                    <a class="nav-link" href="{{ route('admin.users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('auctions.list') }}"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin.statistics')}}"><i class="fas fa-fw fa-gavel"></i>Statistieken</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/categories"><i class="fas fa-fw fa-list-alt"></i>Categorien</a>
                 </li>
             </ul>
 

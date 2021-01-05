@@ -99,6 +99,7 @@ CREATE TABLE dbo.users (
 	security_question_id int NOT NULL,
 	security_answer varchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
 	is_seller bit DEFAULT 0 NOT NULL,
+    is_deleted bit DEFAULT 0 NOT NULL,
 	created_at datetime DEFAULT getdate() NOT NULL,
     latitude varchar(30) NULL,
     longitude varchar(30) NULL,

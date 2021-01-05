@@ -23,7 +23,7 @@ class Bid extends SuperModel
      */
     public function getTime()
     {
-        return Carbon::parse($this->bid_datetime)->toTimeString();
+        return Carbon::parse($this->created_at)->toTimeString();
     }
 
     /**
@@ -32,8 +32,8 @@ class Bid extends SuperModel
      */
     public function getTimeForHumans()
     {
-        $bidDateTime = Carbon::parse($this->bid_datetime);
+        $bidDateTime = Carbon::parse($this->created_at);
         $now = Carbon::now();
-        return ($bidDateTime->diff($now)->days < 1) ? Carbon::parse($this->bid_datetime)->format("H:i") : $bidDateTime->diffForHumans($now, true)." geleden";
+        return ($bidDateTime->diff($now)->days < 1) ? Carbon::parse($this->created_at)->format("H:i") : $bidDateTime->diffForHumans($now, true)." geleden";
     }
 }

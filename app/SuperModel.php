@@ -20,7 +20,7 @@ abstract class SuperModel
     {
         $values = [];
         $arr = get_object_vars($this);
-        foreach ($arr as $key=>$value){
+        foreach ($arr as $key => $value) {
             $values[$key] = $value;
         }
         $this->id = self::insert($values);
@@ -33,8 +33,10 @@ abstract class SuperModel
     {
         $values = [];
         $arr = get_object_vars($this);
-        foreach ($arr as $key=>$value){
-            if($key=="created_at"||$key=="birth_date")
+        $arr['updated_at'] = Carbon::now()->toDateTimeString();
+
+        foreach ($arr as $key => $value) {
+            if ($key == "created_at")
                 continue;
             $values[$key] = $value;
         }
@@ -43,9 +45,9 @@ abstract class SuperModel
         end($values);
         $lastElement = key($values);
         foreach ($values as $key => $value) {
-            if($key=="id")
+            if ($key == "id")
                 continue;
-            $setString .= $key."=:" . $key;
+            $setString .= $key . "=:" . $key;
             if ($key != $lastElement) {
                 $setString .= ",";
             }
@@ -126,10 +128,11 @@ abstract class SuperModel
     }
 
     /**
-     * Select all rows from the child table WHERE $column=$value and orders 
-     * 
+     * Select all rows from the child table WHERE $column=$value and orders
+     *
      */
-    public static function allWhereOrderBy($column, $value, $orderBy, $order = "ASC") {
+    public static function allWhereOrderBy($column, $value, $orderBy, $order = "ASC")
+    {
         $result = DB::select("SELECT * FROM " . self::getTableName(static::class) . " WHERE " . $column . "=:value ORDER BY " . $orderBy . " " . $order, array(
             'value' => $value
         ));
@@ -181,7 +184,7 @@ abstract class SuperModel
      */
     private function fillAttributes($stdClassObject)
     {
-        foreach ($stdClassObject as $key=>$value) {
+        foreach ($stdClassObject as $key => $value) {
             $this->{$key} = $value;
         }
 //        unset($this->attributes);
@@ -194,7 +197,7 @@ abstract class SuperModel
      */
     public static function resultArrayToClassArray($resultArray)
     {
-        $class= static::class;
+        $class = static::class;
         $returnArray = [];
         foreach ($resultArray as $result) {
             $obj = new $class();
@@ -211,10 +214,26 @@ abstract class SuperModel
      */
     public static function resultToClass($result)
     {
-        $class= static::class;
+        $class = static::class;
         $obj = new $class();
         $obj->fillAttributes($result);
         return $obj;
+    }
+
+    /**
+     * Convert object into array
+     * @return array
+     */
+    public function toArray()
+    {
+        $returnArray = [];
+        $vars = get_object_vars($this);
+
+        foreach ($vars as $key => $value) {
+            $returnArray[$key] = $value;
+        }
+
+        return $returnArray;
     }
 
     /**
@@ -222,12 +241,13 @@ abstract class SuperModel
      * @param $string
      * @return string
      */
-    private static function pascalCaseToSnakeCase($string){
-        $parts = preg_split("/(?=[A-Z])/",lcfirst($string));
+    private static function pascalCaseToSnakeCase($string)
+    {
+        $parts = preg_split("/(?=[A-Z])/", lcfirst($string));
         $returnString = "";
         $last = end($parts);
-        foreach ($parts as $part){
-            $returnString .= $part.($part == $last ? "" : "_");
+        foreach ($parts as $part) {
+            $returnString .= $part . ($part == $last ? "" : "_");
         }
         return strtolower($returnString);
     }

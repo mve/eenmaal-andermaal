@@ -12,6 +12,11 @@
                         <div class="card-body">
 
                             <h2 class="text-center mt-2 mb-4">Inloggen</h2>
+                            @if(Session::has("success"))
+                                <div class="alert alert-success" role="alert" id="alert-success">
+                                    <span class="success" id="success" style="margin-top:10px; margin-bottom: 10px;">{!! Session::get("success") !!}</span>
+                                </div>
+                            @endif
 
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
