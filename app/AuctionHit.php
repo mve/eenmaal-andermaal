@@ -48,5 +48,38 @@ class AuctionHit extends SuperModel
         return $unique_visits_last_hour[0]['unique_visits_last_hour'];
     }
 
+    public static function getAuctionHitsToday()
+    {
+        $time = Carbon::now();
+        $time = $time->format('Y-m-d');
+
+        $unique_visits_today = DB::select("SELECT count(distinct ip) as unique_visits_today FROM auction_hits WHERE created_at>=:time", [
+            "time" => $time,
+        ]);
+
+        return $unique_visits_today[0]['unique_visits_today'];
+    }
+
+    public static function getAuctionHitsLastMonth()
+    {
+        $timeNow = Carbon::now();
+
+        $time = Carbon::now();
+        $time->subtract('1 month');
+        $time = $time->format('Y-m-d');
+
+        return DB::select("
+            select count(distinct ip) as unique_visits_last_month, dateadd(DAY,0, datediff(day,0, created_at)) as created_at
+            from auction_hits
+            WHERE created_at > :time AND created_at < :timeNow
+            group by dateadd(DAY,0, datediff(day,0, created_at))
+            ORDER BY created_at ASC
+            ",
+            [
+                "time" => $time,
+                "timeNow" => $timeNow
+            ]);
+    }
+
 
 }
