@@ -26,12 +26,11 @@ class AuctionController extends Controller
     public function list()
     {
         $auctions = DB::select("
-            SELECT TOP 10 auctions.* , users.first_name , users.last_name
+            SELECT auctions.* , users.first_name , users.last_name
             FROM auctions LEFT JOIN users
             ON users.id = auctions.user_id
             ORDER BY auctions.id
             ");
-
 
         $auctions = Auction::resultArrayToClassArray($auctions);
 
@@ -103,7 +102,7 @@ class AuctionController extends Controller
         $auction = Auction::oneWhere('id', $request->id);
         $auction->title = $request->title;
         $auction->description = $request->description;
-        $auction->payment_instruction = $request->payment_instruction;
+        $auction->payment_instruction = $request->paymentInstruction;
         $auction->update();
 
         return redirect()->route("admin.auctions.view", $auction->id);

@@ -11,7 +11,7 @@
         @foreach($auctions as $auction)
         <tr onclick="window.location.assign('{{route('admin.auctions.view', $auction->id)}}')">
             <td>{{$auction->title}}</td>
-            <td>{{$auction->amount}}</td>
+            <td>€ {{$auction->amount}}</td>
             <td>{{$auction->end_datetime}}</td>
         </tr>
         @endforeach

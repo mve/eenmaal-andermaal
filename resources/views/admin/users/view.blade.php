@@ -47,19 +47,19 @@
                                 <div class="row">
                                     <p>Ontvangen</p>
                                     <div class="col">
-                                        <h1 class="display-1">€{{number_format($bids->amount_received)}}</h1>
+                                        <h1 class="display-2">€ {{number_format($bids->amount_received)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-1">{{$bids->received}}</h1>
+                                        <h1 class="display-2">{{$bids->received}}</h1>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <p>Totaal</p>
                                     <div class="col">
-                                        <h1 class="display-1">€{{number_format($bids->amount_received_total)}}</h1>
+                                        <h1 class="display-2">€ {{number_format($bids->amount_received_total)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-1">{{$bids->received_total}}</h1>
+                                        <h1 class="display-2">{{$bids->received_total}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -71,19 +71,19 @@
                                 <div class="row">
                                     <p>Geplaatst</p>
                                     <div class="col">
-                                        <h1 class="display-1">€{{number_format($bids->amount_placed)}}</h1>
+                                        <h1 class="display-2">€ {{number_format($bids->amount_placed)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-1">{{$bids->placed}}</h1>
+                                        <h1 class="display-2">{{$bids->placed}}</h1>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <p>Totaal</p>
                                     <div class="col">
-                                        <h1 class="display-1">€{{number_format($bids->amount_placed_total)}}</h1>
+                                        <h1 class="display-2">€ {{number_format($bids->amount_placed_total)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-1">{{$bids->placed_total}}</h1>
+                                        <h1 class="display-2">{{$bids->placed_total}}</h1>
                                     </div>
                                 </div>
                             </div>

@@ -3,7 +3,10 @@
 @section('content')
 
 <div class="container-fluid admin">
-    <h2>{{$auction->title}}</h2>
+    <div class="d-flex justify-content-center align-items-center mb-3">
+        <h2 class="text-center">{{$auction->title}}</h2>
+        <button class="btn btn-primary text-light btn-lg ml-4" name="show_auction" onclick="window.location.assign('{{route('auctions.show', $auction->id)}}')">Open veiling</button>
+    </div>
     <div class="row">
         <div class="col-lg-8">
             <!-- CAROUSEL SLIDER -->
@@ -81,7 +84,7 @@
                                     <td>
                                         <div class="row mt-4">
                                             <div class="col text-left">Startprijs</div>
-                                            <div class="col text-right">€{{number_format($auction->start_price)}}</div>
+                                            <div class="col text-right">€ {{number_format($auction->start_price)}}</div>
                                         </div>
                                     </td>
                                 </tr>
@@ -98,7 +101,7 @@
                                     <td>
                                         <div class="row">
                                             <div class="col text-left">Huidig bedrag</div>
-                                            <div class="col text-right">€{{$bids->amount}}</div>
+                                            <div class="col text-right">€ {{$bids->amount}}</div>
                                         </div>
                                     </td>
                                 </tr>
@@ -107,7 +110,7 @@
                         </table>
                         <div class="row mt-3">
                             <div class="col text-right">
-                                <button class="btn btn-primary text-light btn-lg" name="block" onclick="window.location.assign('{{route('admin.users.view', $auction->user_id)}}')">Zie verkoper</button>
+                                <button class="btn btn-primary text-light btn-lg" name="show_profile" onclick="window.location.assign('{{route('admin.users.view', $auction->user_id)}}')">Zie verkoper</button>
                             </div>
                             <div class="col text-center">
                                 <form method="post" action="{{route('admin.auctions.edit', $auction->id)}}">

@@ -33,7 +33,7 @@
 
             <div class="col-md-12">
                 <label for="paymentInstruction" class="form-label">Extra betalingsinstructies</label>
-                <textarea name="paymentInstruction" class="form-control @error('paymentInstruction') is-invalid @enderror" maxlength="255">{{old("paymentInstruction")}}</textarea>
+                <textarea name="paymentInstruction" class="form-control @error('paymentInstruction') is-invalid @enderror" maxlength="255">{{old("paymentInstruction")?:$auction->payment_instruction}}</textarea>
                 <span id="limit-payment-instruction-length" class="text-right float-right text-white">Maximaal 255 tekens: 0/255</span>
             </div>
             @error('paymentInstruction')
