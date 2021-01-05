@@ -26,14 +26,7 @@ class User extends SuperModel
 
     public static function getCreatedUsersLastMonth()
     {
-//        return DB::select("
-//            SELECT phone_number
-//            FROM phone_numbers
-//            WHERE user_id=:id
-//            ",
-//            [
-//                "id" => $this->id
-//            ]);
+        $timeNow = Carbon::now();
 
         $time = Carbon::now();
         $time->subtract('1 month');
@@ -42,12 +35,13 @@ class User extends SuperModel
         return DB::select("
             select COUNT(id) as total, dateadd(DAY,0, datediff(day,0, created_at)) as created_at
             from users
-            WHERE created_at > :time
+            WHERE created_at > :time AND created_at < :timeNow
             group by dateadd(DAY,0, datediff(day,0, created_at))
             ORDER BY created_at ASC
             ",
             [
-                "time" => $time
+                "time" => $time,
+                "timeNow" => $timeNow
             ]);
     }
 
