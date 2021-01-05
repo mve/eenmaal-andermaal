@@ -5,7 +5,7 @@
             <div class="text-center mb-3 fw-bold title">Eenmaal Andermaal</div>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-fw fa-chart-line"></i>Dashboard</a>
+                    <a class="nav-link" href="{{ route('Admin.Index') }}"><i class="fas fa-fw fa-chart-line"></i>Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
@@ -33,7 +33,7 @@
                                               document.getElementById('logout-form').submit();">
                          Uitloggen
                      </a>
-                
+
                      <form id="logout-form" action="{{ route('Admin.logout') }}" method="POST" class="d-none">
                          @csrf
                      </form>
@@ -44,7 +44,7 @@
         </div>
 
 
-       
+
 
         <button id="openbtn" class="openbtn">&#9776;</button>
 

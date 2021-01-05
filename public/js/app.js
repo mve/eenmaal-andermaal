@@ -27522,21 +27522,26 @@ if (auctionTimes.length) {
 /* Admin sidepanel open/close */
 
 
-var openbtn = document.getElementById("openbtn");
+var mySidepanel = document.getElementById("mySidepanel");
 
-if (openbtn) {
+if (mySidepanel) {
+  var openbtn = document.getElementById("openbtn");
+  var closebtn = document.getElementById("closebtn");
+  document.addEventListener('click', function (event) {
+    var isClickInsidePanel = mySidepanel.contains(event.target);
+    var isClickInsideOpenBtn = openbtn.contains(event.target);
+
+    if (!isClickInsidePanel && !isClickInsideOpenBtn) {
+      mySidepanel.style.left = "-250px";
+    }
+  });
   openbtn.addEventListener("click", function () {
     /* Set the width of the sidebar to 250px (show it) */
-    document.getElementById("mySidepanel").style.left = "0";
+    mySidepanel.style.left = "0";
   });
-}
-
-var closebtn = document.getElementById("closebtn");
-
-if (closebtn) {
   closebtn.addEventListener("click", function () {
     /* Set the width of the sidebar to 250px (show it) */
-    document.getElementById("mySidepanel").style.left = "-250px";
+    mySidepanel.style.left = "-250px";
   });
 }
 /*  Rubrieken admin */
