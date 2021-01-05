@@ -23,7 +23,8 @@ class CategoryController extends Controller
     public function index()
     {
         $data = [
-            "categoryMenuHTML" => Category::getCategoriesAdmin()
+            "categoryMenuHTML" => Category::getCategoriesAdmin(),
+            "categories" => Category::all()
         ];
         return view("admin.categories.index")->with($data);
     }
