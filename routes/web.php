@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,9 +48,9 @@ Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->
 Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
 Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
 
-Route::get('/beoordeling','ReviewController@index')->name('beoordeling.overzicht');
-Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
-Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
+Route::get('/beoordeling', 'ReviewController@index')->name('beoordeling.overzicht');
+Route::get('/beoordeling/plaatsen/{id}', 'ReviewController@create')->name('beoordeling.toevoegen');
+Route::post('/beoordeling/plaatsen/{id}', 'ReviewController@store')->name('beoordeling.toevoegen');
 
 Route::get('faq', function () {
     return view('faq.faq');
@@ -81,6 +82,8 @@ Route::get('admin/users/{id}', 'Admin\UserController@view')->name('admin.users.v
 Route::post('admin/users/{id}', 'Admin\UserController@toggleBlock');
 Route::get('admin/auctions', 'Admin\AuctionController@list')->name('admin.auctions.list');
 Route::get('admin/auctions/{id}', 'Admin\AuctionController@view')->name('admin.auctions.view');
+
+Route::get('admin/statistics', 'Admin\AdminController@statistics')->name('admin.statistics');
 
 Route::resource('admin/categories', Admin\CategoryController::class);
 
