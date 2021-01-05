@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Auth\LoginController;
 
 class User extends SuperModel
 {
@@ -53,6 +54,22 @@ class User extends SuperModel
         return DB::selectOne("
             SELECT *
             FROM seller_verifications
+            WHERE user_id=:id
+            ",
+            [
+                "id" => $this->id
+            ]);
+    }
+
+    /**
+     * Get the user's bids
+     * @return mixed
+     */
+    public function getUserBids()
+    {
+        return DB::select("
+            SELECT *
+            FROM bids
             WHERE user_id=:id
             ",
             [
@@ -131,4 +148,17 @@ class User extends SuperModel
         return $auctions;
     }
 
+    public static function handleIsBlocked($request) {
+        if (!$request->session()->has('user')) {
+            return;
+        }
+
+        $user = DB::selectOne("SELECT is_blocked FROM users WHERE id=:id", [
+            "id" => $request->session()->get('user')->id
+        ]);
+
+        if ($user['is_blocked'] == 1) {
+            return LoginController::logout($request, true);
+        }
+    }
 }

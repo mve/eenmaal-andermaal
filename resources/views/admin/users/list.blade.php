@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                         @foreach($users as $user)
-                            <tr onclick="window.location.assign('{{route('users.view', $user->id)}}')">
+                            <tr onclick="window.location.assign('{{route('admin.users.view', $user->id)}}')">
                                 <td>{{$user->username}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>@if ($user->first_name === $user->last_name)

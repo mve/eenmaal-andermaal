@@ -8,10 +8,13 @@
                     <a class="nav-link" href="#"><i class="fas fa-fw fa-chart-line"></i>Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
+                    <a class="nav-link" href="{{ route('admin.users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin.statistics')}}"><i class="fas fa-fw fa-gavel"></i>Statistieken</a>
                 </li>
             </ul>
 
@@ -30,7 +33,7 @@
                                               document.getElementById('logout-form').submit();">
                          Uitloggen
                      </a>
-                
+
                      <form id="logout-form" action="{{ route('Admin.logout') }}" method="POST" class="d-none">
                          @csrf
                      </form>
@@ -41,7 +44,7 @@
         </div>
 
 
-       
+
 
         <button id="openbtn" class="openbtn">&#9776;</button>
 
