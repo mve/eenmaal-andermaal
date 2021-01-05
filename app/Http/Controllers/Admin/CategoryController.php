@@ -20,44 +20,13 @@ class CategoryController extends Controller
         $this->middleware('check.admin');
     }
 
-
-    public function index(Request $request)
+    public function index()
     {
-        $limit = 15;
-        $page = ($request->has("page")) ? (is_numeric($request->get("page")) ? $request->get("page") : 1) : 1;
-        $offsetPage = ($page<=0)? 0 : $page-1 ;
-        $offset = $offsetPage*$limit;
-
-        $querySelectAll = "SELECT * ";
-        $querySelectCount = "SELECT COUNT(*) as computed ";
-        $query = "FROM categories";
-        $values = [];
-
-        if($request->has("search") && !empty($request->get("search"))){
-            $query = "FROM categories WHERE name LIKE :searchq";
-            $values['searchq'] = '%'.$request->get("search").'%';
-        }
-        //dd(DB::selectOne($querySelectCount.$query,$values));
-        $eaPaginationTotalItems = DB::selectOne($querySelectCount.$query,$values)['computed'];
-        $eaPaginationCurrentPage = $page;
-        $eaPaginationTotalPages = ceil($eaPaginationTotalItems / $limit);
-
-        $query .= " ORDER BY name ASC OFFSET $offset ROWS FETCH NEXT $limit ROWS ONLY";
-
-        $categories = Category::resultArrayToClassArray(DB::select(
-            $querySelectAll.$query
-        ,$values));
-
         $data = [
-            'categories' => $categories,
-            'paginationData' => [
-                'totalItems' => $eaPaginationTotalItems,
-                'totalPages' => $eaPaginationTotalPages,
-                'currentPage' => $eaPaginationCurrentPage,
-            ]
-
+            "categoryMenuHTML" => Category::getCategoriesAdmin(),
+            "categories" => Category::all()
         ];
-        return view('admin.categories.index')->with($data);
+        return view("admin.categories.index")->with($data);
     }
 
 

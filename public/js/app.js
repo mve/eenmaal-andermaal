@@ -27236,7 +27236,8 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./fontawesome */ "./resources/js/fontawesome.js");
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // require('chart.js');
+
 /*  Navigatie rubrieken */
 
 
@@ -27522,14 +27523,78 @@ if (auctionTimes.length) {
 /* Admin sidepanel open/close */
 
 
-document.getElementById("openbtn").addEventListener("click", function () {
-  /* Set the width of the sidebar to 250px (show it) */
-  document.getElementById("mySidepanel").style.left = "0";
-});
-document.getElementById("closebtn").addEventListener("click", function () {
-  /* Set the width of the sidebar to 250px (show it) */
-  document.getElementById("mySidepanel").style.left = "-250px";
-});
+var mySidepanel = document.getElementById("mySidepanel");
+
+if (mySidepanel) {
+  var openbtn = document.getElementById("openbtn");
+  var closebtn = document.getElementById("closebtn");
+  document.addEventListener('click', function (event) {
+    var isClickInsidePanel = mySidepanel.contains(event.target);
+    var isClickInsideOpenBtn = openbtn.contains(event.target);
+
+    if (!isClickInsidePanel && !isClickInsideOpenBtn) {
+      mySidepanel.style.left = "-250px";
+    }
+  });
+  openbtn.addEventListener("click", function () {
+    /* Set the width of the sidebar to 250px (show it) */
+    mySidepanel.style.left = "0";
+  });
+  closebtn.addEventListener("click", function () {
+    /* Set the width of the sidebar to 250px (show it) */
+    mySidepanel.style.left = "-250px";
+  });
+}
+/*  Rubrieken admin */
+
+
+var categoriesAdminElement = document.querySelector("#category-container-parent-admin");
+
+if (categoriesAdminElement) {
+  var _hideChildren = function _hideChildren(parent) {
+    var children = parent.parentElement.querySelectorAll(":scope>a,:scope>div");
+
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].classList.contains("d-block")) {
+        children[i].classList.remove("d-block");
+        children[i].classList.add("d-none");
+      }
+    }
+  };
+
+  var _toggleSubMenu = function _toggleSubMenu() {
+    if (this.parentElement.classList.contains("category-0")) {
+      _closeAllHoverablesChildren(this);
+    }
+
+    var children = this.parentElement.querySelectorAll(":scope>a,:scope>div");
+
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].classList.contains("d-block")) {
+        children[i].classList.remove("d-block");
+        children[i].classList.add("d-none");
+      } else {
+        children[i].classList.remove("d-none");
+        children[i].classList.add("d-block");
+      }
+    }
+  };
+
+  var _closeAllHoverablesChildren = function _closeAllHoverablesChildren(except) {
+    for (var i = 0; i < hoverables.length; i++) {
+      if (hoverables[i] != except) {
+        _hideChildren(hoverables[i]);
+      }
+    }
+  };
+
+  var hoverables = document.querySelectorAll(".clickable-submenu");
+
+  for (var i = 0; i < hoverables.length; i++) {
+    hoverables[i].addEventListener('click', _toggleSubMenu);
+  }
+}
+/*  Rubrieken admin einde */
 
 /***/ }),
 

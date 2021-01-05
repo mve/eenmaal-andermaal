@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +40,7 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 Route::get('mijnaccount/bewerken', 'UserDetailsController@edit')->name('mijnaccount.bewerken');
 Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken');
+Route::post('mijnaccount/verwijderen', 'UserDetailsController@remove')->name('mijnaccount.verwijderen');
 Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
 Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 
@@ -47,9 +49,9 @@ Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->
 Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
 Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
 
-Route::get('/beoordeling','ReviewController@index')->name('beoordeling.overzicht');
-Route::get('/beoordeling/plaatsen/{id}','ReviewController@create')->name('beoordeling.toevoegen');
-Route::post('/beoordeling/plaatsen/{id}','ReviewController@store')->name('beoordeling.toevoegen');
+Route::get('/beoordeling', 'ReviewController@index')->name('beoordeling.overzicht');
+Route::get('/beoordeling/plaatsen/{id}', 'ReviewController@create')->name('beoordeling.toevoegen');
+Route::post('/beoordeling/plaatsen/{id}', 'ReviewController@store')->name('beoordeling.toevoegen');
 
 Route::get('faq', function () {
     return view('faq.faq');
@@ -82,6 +84,8 @@ Route::post('admin/users/{id}', 'Admin\UserController@toggleBlock');
 Route::get('admin/auctions', 'Admin\AuctionController@list')->name('admin.auctions.list');
 Route::get('admin/auctions/{id}', 'Admin\AuctionController@view')->name('admin.auctions.view');
 Route::post('admin/auctions/{id}', 'Admin\AuctionController@toggleBlock');
+
+Route::get('admin/statistics', 'Admin\AdminController@statistics')->name('admin.statistics');
 
 Route::resource('admin/categories', Admin\CategoryController::class);
 
