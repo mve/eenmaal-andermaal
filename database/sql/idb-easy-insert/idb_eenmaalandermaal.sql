@@ -106,6 +106,7 @@ CREATE TABLE dbo.users (
 	latitude varchar(30) NULL,
     longitude varchar(30) NULL,
 	is_blocked bit DEFAULT 0 NOT NULL,
+    is_deleted bit DEFAULT 0 NOT NULL,
 	created_at datetime DEFAULT getdate() NOT NULL,
 	updated_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_users PRIMARY KEY (id),

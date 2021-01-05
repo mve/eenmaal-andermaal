@@ -218,12 +218,12 @@ class UserDetailsController extends Controller
         ]));
 
         if ($myAuctions[0]->auctions > 0) {
-            $request->session()->flash('error', 'Je account heeft nog active veilingen openstaan en kan daarom niet verwijderd worden');
+            $request->session()->flash('error', 'Dit account heeft nog active veilingen openstaan en kan daarom niet verwijderd worden');
             return redirect()->route('mijnaccount');
         }
         
         if ($highest) {
-            $request->session()->flash('error', 'Je bent momenteel de hoogste bieder op een openstaande veiling je account kan nu niet verwijderd worden');
+            $request->session()->flash('error', 'Je bent momenteel de hoogste bieder op een openstaande veiling! Het account kan op dit moment niet verwijderd worden.');
             return redirect()->route('mijnaccount');
         }
 
