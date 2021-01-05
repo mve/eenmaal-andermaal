@@ -63,7 +63,7 @@ class UserDetailsController extends Controller
     {
         $currentUser = Session::get('user');
         $this->validate($request, array(
-            'username' => ['required', 'string', 'max:100', 'regex:/^[\pL\s\-]+$/u'],
+            'username' => ['required', 'string', 'max:100', 'regex:/^[\pL\s\-0-9]+$/u'],
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             'address' => ['required', 'string', 'max:100'],

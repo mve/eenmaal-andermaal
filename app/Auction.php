@@ -123,39 +123,35 @@ class Auction extends SuperModel
      */
     public static function getPopularAuctions($maxn = 10)
     {
-        $popularAuctions = Auction::resultArrayToClassArray(DB::select("
-                SELECT TOP $maxn *
-                FROM auctions
-                WHERE EXISTS (
-                    SELECT TOP $maxn auction_id, COUNT(auction_id) as Cnt
-                    FROM auction_hits WHERE auction_id=auctions.id AND hit_datetime >= DATEADD(HOUR, -1, GETDATE())
+        return Auction::resultArrayToClassArray(DB::select("
+                WITH hits AS(
+                    SELECT TOP $maxn auction_id, COUNT(DISTINCT ip) as Cnt
+                    FROM auction_hits WHERE created_at >= DATEADD(HOUR, -1, GETDATE())
                     GROUP BY auction_id
                     ORDER BY Cnt DESC
-                ) AND end_datetime >= GETDATE()
+                )
+
+                SELECT TOP $maxn *
+                FROM auctions a
+                LEFT JOIN hits h
+                ON h.auction_id=a.id
+                WHERE a.end_datetime >= GETDATE()
+                ORDER BY h.Cnt DESC
             "));
-        $popularAuctionsCount = count($popularAuctions);
-        if ($popularAuctionsCount < $maxn) {
-            if ($popularAuctionsCount === 0) {
-                $addAuctions = Auction::resultArrayToClassArray(DB::select("
-                    SELECT TOP $maxn *
-                    FROM auctions ORDER BY end_datetime ASC"));
-            } else {
-                $nAddAuctions = $maxn - $popularAuctionsCount;
-                $idString = "";
-                for ($i = 0; $i < $popularAuctionsCount; $i++)
-                    $idString .= $popularAuctions[$i]->id . ($i == $popularAuctionsCount - 1 ? "" : ",");
-                $addAuctions = Auction::resultArrayToClassArray(DB::select("
-                    SELECT TOP $nAddAuctions *
-                    FROM auctions
-                    WHERE id NOT IN (
-                        SELECT id
-                        FROM auctions
-                        WHERE id IN ($idString)
-                ) ORDER BY end_datetime ASC"));
-            }
-            $popularAuctions = array_merge($popularAuctions, $addAuctions);
-        }
-        return $popularAuctions;
+    }
+
+    /**
+     * Get the most popular auctions and add auctions that will close soon if there are not enough popular auctions
+     * @param int $maxn
+     * @return array
+     */
+    public static function getRecentlyAddedAuctions($maxn = 10)
+    {
+        return Auction::resultArrayToClassArray(DB::select("
+                SELECT TOP $maxn *
+                FROM auctions
+                ORDER BY id DESC
+            "));
     }
 
     /**
@@ -169,38 +165,58 @@ class Auction extends SuperModel
         $categories = [];
         if (Session::has("user")) {
             $userid = Session::get("user")->id;
-            $categories = DB::select("
-                SELECT TOP $maxc id,name
-                FROM categories
-                WHERE EXISTS (
-                    SELECT TOP $maxc category_id
-                    FROM auction_categories
-                    WHERE EXISTS (
-                        SELECT TOP 10 id
-                        FROM auctions
-                        WHERE EXISTS (
-                            SELECT TOP 10 auction_id, COUNT(auction_id) as Cnt
-                            FROM auction_hits WHERE auction_id=auctions.id AND user_id= $userid
-                            GROUP BY auction_id
-                            ORDER BY Cnt DESC
-                        ) AND auction_id =id
-                        GROUP BY id
-                    ) AND category_id = categories .id
+            $auctions = Auction::resultArrayToClassArray(DB::select("
+                WITH hits AS(
+                    SELECT auction_id, COUNT(DISTINCT ip) as Cnt
+                    FROM auction_hits WHERE user_id= $userid
+                    GROUP BY auction_id
                 )
-            ");
-            for ($i = 0; $i < count($categories); $i++) {
-                $auctions = Auction::resultArrayToClassArray(DB::select("
-                    SELECT TOP $maxn *
-                    FROM auctions
-                    WHERE EXISTS (
-                        SELECT TOP 3 auction_id
-                        FROM auction_categories
-                        WHERE category_id = :cat_id AND auctions.id=auction_categories.auction_id
-                    ) AND end_datetime >= DATEADD(MINUTE, 1, GETDATE())
-                ", [
-                    "cat_id" => $categories[$i]["id"]
-                ]));
-                $categories[$i]["auctions"] = $auctions;
+                , acs AS(
+                    SELECT TOP 50 ac.category_id, h.Cnt
+                    FROM auction_categories ac
+                    LEFT JOIN hits h
+                    ON h.auction_id=ac.auction_id
+                    WHERE h.Cnt IS NOT NULL
+                    ORDER BY Cnt DESC
+                )
+                , cats AS(
+                    SELECT TOP $maxc acs.category_id , COUNT(acs.Cnt) as Sm
+                    FROM acs
+                    GROUP BY acs.category_id
+                    ORDER BY Sm DESC
+                )
+                , acs2 AS(
+                    SELECT ac2.*, cats.Sm, c2.name
+                    FROM auction_categories ac2
+                    LEFT JOIN cats
+                    ON cats.category_id=ac2.category_id
+                    LEFT JOIN categories c2
+                    ON c2.id=ac2.category_id
+                    WHERE cats.Sm IS NOT NULL
+                )
+                , acs3 AS(
+                    SELECT *
+                    FROM (
+                        SELECT TOP 5000 acs2.*, ROW_NUMBER ()
+                          over (Partition BY category_id
+                                ORDER BY Sm DESC ) AS RowNo
+                        FROM acs2
+                        ORDER BY acs2.auction_id DESC
+                        ) rs WHERE RowNo <= $maxn
+                )
+
+                SELECT ac.*, acs3.name
+                FROM auctions ac
+                LEFT JOIN acs3
+                ON acs3.auction_id=ac.id
+                WHERE acs3.name IS NOT NULL
+            "));
+            foreach($auctions as $auction){
+                if(isset($categories[$auction->name])){
+                    array_push($categories[$auction->name],$auction);
+                }else{
+                    $categories[$auction->name] = [$auction];
+                }
             }
         }
         return $categories;

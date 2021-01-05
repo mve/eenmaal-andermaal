@@ -23,6 +23,8 @@ CREATE TABLE dbo.auctions (
 	latitude varchar(30) NULL,
     longitude varchar(30) NULL,
 	is_blocked bit DEFAULT 0 NOT NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
+	updated_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_auctions PRIMARY KEY (id),
 	CONSTRAINT FK_countries_auctions FOREIGN KEY (country_code) REFERENCES dbo.countries(country_code),
 	CONSTRAINT CHK_duration CHECK (
@@ -52,6 +54,7 @@ CREATE TABLE dbo.auction_images (
 	id bigint IDENTITY(0,1) NOT NULL,
 	auction_id bigint NOT NULL,
 	file_name varchar(255) NOT NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_auctionimages PRIMARY KEY (id),
 	CONSTRAINT FK_auctions_auctionimages FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id)
 )
@@ -100,11 +103,11 @@ CREATE TABLE dbo.users (
 	security_question_id int NOT NULL,
 	security_answer varchar(100) NOT NULL,
 	is_seller bit DEFAULT 0 NOT NULL,
-	is_deleted bit DEFAULT 0 NOT NULL,
-	created_at datetime DEFAULT getdate() NOT NULL,
 	latitude varchar(30) NULL,
     longitude varchar(30) NULL,
 	is_blocked bit DEFAULT 0 NOT NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
+	updated_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_users PRIMARY KEY (id),
 	CONSTRAINT FK_securityquestions_users FOREIGN KEY (security_question_id) REFERENCES dbo.security_questions(id),
 	CONSTRAINT FK_countries_users FOREIGN KEY (country_code) REFERENCES dbo.countries(country_code),
@@ -117,6 +120,8 @@ CREATE TABLE dbo.seller_verifications (
 	creditcard_number VARCHAR(50) NULL,
 	bank_name VARCHAR(50) NULL,
 	bank_account_number VARCHAR(50) NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
+	updated_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_userid PRIMARY KEY (user_id),
 	CONSTRAINT CHK_method CHECK (
 		method IN ('Bank', 'Creditcard', 'Post')
@@ -137,9 +142,10 @@ CREATE TABLE dbo.auction_hits (
 	auction_id bigint NOT NULL,
 	user_id bigint NULL,
 	ip varchar(45) NOT NULL,
-	hit_datetime datetime DEFAULT getdate() NOT NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_auctionhits PRIMARY KEY (id),
-	CONSTRAINT FK_users_auctionhits FOREIGN KEY (user_id) REFERENCES dbo.users(id)
+	CONSTRAINT FK_users_auctionhits FOREIGN KEY (user_id) REFERENCES dbo.users(id),
+	CONSTRAINT FK_auctions_auctionhits FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id)
 )
 
 CREATE TABLE dbo.bids (
@@ -147,7 +153,7 @@ CREATE TABLE dbo.bids (
 	auction_id bigint NOT NULL,
 	user_id bigint NOT NULL,
 	amount decimal(15,2) NOT NULL,
-	bid_datetime datetime DEFAULT getdate() NOT NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_bids PRIMARY KEY (id),
 	CONSTRAINT FK_auctions_bids FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
 	CONSTRAINT FK_users_bids FOREIGN KEY (user_id) REFERENCES dbo.users(id)
@@ -157,6 +163,7 @@ CREATE TABLE dbo.phone_numbers (
 	id bigint IDENTITY(0,1) NOT NULL,
 	user_id bigint NOT NULL,
 	phone_number varchar(15) NOT NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_phonenumbers PRIMARY KEY (id),
 	CONSTRAINT FK_users_phonenumbers FOREIGN KEY (user_id) REFERENCES dbo.users(id)
 )
@@ -165,9 +172,10 @@ CREATE TABLE dbo.reviews (
 	id bigint IDENTITY(0,1) NOT NULL,
 	auction_id bigint NOT NULL,
 	user_id bigint NOT NULL,
-	review_datetime datetime DEFAULT getdate() NOT NULL,
 	rating tinyint DEFAULT 5 NOT NULL,
 	comment varchar(255) NULL,
+	created_at datetime DEFAULT getdate() NOT NULL,
+	updated_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_reviews PRIMARY KEY (id),
 	CONSTRAINT FK_auctions_reviews FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
 	CONSTRAINT FK_users_reviews FOREIGN KEY (user_id) REFERENCES dbo.users(id),
@@ -182,6 +190,7 @@ CREATE TABLE dbo.administrators (
 	email varchar(100) NOT NULL,
 	password varchar(100) NOT NULL,
 	created_at datetime DEFAULT getdate() NOT NULL,
+	updated_at datetime DEFAULT getdate() NOT NULL,
 	CONSTRAINT PK_administrators PRIMARY KEY (id),
 )
 GO

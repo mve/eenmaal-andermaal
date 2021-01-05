@@ -48,8 +48,8 @@ class Category extends SuperModel
 
         $checkSum = md5(serialize($allCategories));
 
-        $fileName =  "cache/categories.html";
-        if(isset($_COOKIE["category_hash"]) && $_COOKIE["category_hash"] == $checkSum){
+        $fileName = "cache/categories.html";
+        if (isset($_COOKIE["category_hash"]) && $_COOKIE["category_hash"] == $checkSum) {
             return Storage::disk('local')->get($fileName);
         }
 
@@ -112,6 +112,47 @@ class Category extends SuperModel
         // Returns the HTML
         return sprintf($outputHtml, $childrenHtml);
 //        return sprintf($childrenHtml);
+    }
+
+    /**
+     * Get the parent category as array
+     * @return array
+     */
+    public function getParentCategory()
+    {
+        $category = DB::selectOne("
+            SELECT TOP 1 * FROM categories WHERE id=:parent_id
+        ", [
+            "parent_id" => $this->parent_id
+        ]);
+        return $category ?: ["name" => ""];
+    }
+
+    /**
+     * Get the children categories as array
+     * @return array
+     */
+    public function getChildrenCategories()
+    {
+        $categories = DB::select("
+            SELECT * FROM categories WHERE parent_id=:id
+        ", [
+            "id" => $this->id
+        ]);
+        return $categories;
+    }
+
+    /**
+     * Get the children categories as string
+     * @return string
+     */
+    public function getChildrenCategoriesString()
+    {
+        $returnStr = "";
+        foreach($this->getChildrenCategories() as $category){
+            $returnStr .= $category["name"].", ";
+        }
+        return $returnStr;
     }
 
 }

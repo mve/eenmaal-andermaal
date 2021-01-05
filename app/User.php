@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Auth\LoginController;
 
 class User extends SuperModel
 {
@@ -94,5 +95,48 @@ class User extends SuperModel
             "password" => Hash::make($password)
         ]);
         return "Registreren gelukt";
+    }
+
+    public static function getAuctionsByUser(){
+        $auctions = DB::select("
+        WITH acactive AS(
+        SELECT users.id, COUNT(ac1.id) as Active
+        FROM users
+        LEFT JOIN auctions ac1
+        ON ac1.user_id = users.id
+        WHERE ac1.end_datetime >= GETDATE()
+        GROUP BY users.id
+        )
+        , acall AS(
+        SELECT users.id, COUNT(ac2.id) as AllCnt
+        FROM users
+        LEFT JOIN auctions ac2
+        ON ac2.user_id = users.id
+        GROUP BY users.id
+        )
+
+        SELECT users.*, acactive.Active, acall.AllCnt
+        FROM users
+        LEFT JOIN acactive
+        ON acactive.id=users.id
+        LEFT JOIN acall
+        ON acall.id=users.id
+        ");
+
+        return $auctions;
+    }
+
+    public static function handleIsBlocked($request) {
+        if (!$request->session()->has('user')) {
+            return;
+        }
+
+        $user = DB::selectOne("SELECT is_blocked FROM users WHERE id=:id", [
+            "id" => $request->session()->get('user')->id
+        ]);
+
+        if ($user['is_blocked'] == 1) {
+            return LoginController::logout($request, true);
+        }
     }
 }
