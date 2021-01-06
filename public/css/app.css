@@ -11872,6 +11872,12 @@ p {
   font-weight: normal;
 }
 
+.admin .back-button {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+}
+
 .logfile-contents {
   color: #a6a6a6;
   max-height: 400px;
