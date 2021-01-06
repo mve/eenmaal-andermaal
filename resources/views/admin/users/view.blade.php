@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="container-fluid admin">
     <h1 class="text-center pt-3">{{ $user->username }}</h1>
     <div class="content">
@@ -48,19 +47,19 @@
                                 <div class="row">
                                     <p>Ontvangen</p>
                                     <div class="col">
-                                        <h1 class="display-1">€{{number_format($bids->amount_received)}}</h1>
+                                        <h1 class="display-2">€ {{number_format($bids->amount_received)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-1">{{$bids->received}}</h1>
+                                        <h1 class="display-2">{{$bids->received}}</h1>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <p>Totaal</p>
                                     <div class="col">
-                                        <h1 class="display-1">€{{number_format($bids->amount_received_total)}}</h1>
+                                        <h1 class="display-2">€ {{number_format($bids->amount_received_total)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-1">{{$bids->received_total}}</h1>
+                                        <h1 class="display-2">{{$bids->received_total}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -72,19 +71,19 @@
                                 <div class="row">
                                     <p>Geplaatst</p>
                                     <div class="col">
-                                        <h1 class="display-1">€{{number_format($bids->amount_placed)}}</h1>
+                                        <h1 class="display-2">€ {{number_format($bids->amount_placed)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-1">{{$bids->placed}}</h1>
+                                        <h1 class="display-2">{{$bids->placed}}</h1>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <p>Totaal</p>
                                     <div class="col">
-                                        <h1 class="display-1">€{{number_format($bids->amount_placed_total)}}</h1>
+                                        <h1 class="display-2">€ {{number_format($bids->amount_placed_total)}}</h1>
                                     </div>
                                     <div class="col">
-                                        <h1 class="display-1">{{$bids->placed_total}}</h1>
+                                        <h1 class="display-2">{{$bids->placed_total}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +155,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <form method="post" action="{{route('admin.users.view', $user->id)}}">
+                                <form method="post" action="{{route('admin.users.view', $user->id)}}" class="mt-3">
                                     @csrf
                                     @if ($user->is_blocked)
                                     <button class="btn btn-success btn-lg" type="submit" name="unblock" onclick="return confirm('Weet u zeker dat u deze gebruiker wilt deblokkeren?')">Deblokkeren</button>

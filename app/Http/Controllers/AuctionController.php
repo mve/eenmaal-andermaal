@@ -57,7 +57,6 @@ class AuctionController extends Controller
             "countries" => Country::allOrderBy('country')
         ];
         return view("auctions.create")->with($data);
-
     }
 
     public function store(Request $request)
@@ -68,7 +67,7 @@ class AuctionController extends Controller
             'start_price' => ['require', 'regex:/^\d+(\.\d{1,2})?$/'],
             'payment_instruction' => ['nullable', 'string', 'max:255'],
             'duration' => ['required', 'numeric'],
-            'image.*' => ['required', 'mimes:jpeg,jpg,png', 'max:10000'],//10000kb/10mb
+            'image.*' => ['required', 'mimes:jpeg,jpg,png', 'max:10000'], //10000kb/10mb
             'city' => ['required', 'string', 'max:100'],
         ));
 
@@ -114,12 +113,12 @@ class AuctionController extends Controller
         $auction->longitude = $latAndLon['lon'];
         $auction->save();
 
-        if($request->file('image')!=null){
+        if ($request->file('image') != null) {
             foreach ($request->file('image') as $img) {
                 $fileName = $auction->id . "/" . Str::random(10) . ".png";
-                if(env("APP_ENV")=="local"){
+                if (env("APP_ENV") == "local") {
                     Storage::disk('auction_images')->put($fileName, file_get_contents($img));
-                }else{
+                } else {
                     Storage::disk('auction_images_server')->put($fileName, file_get_contents($img));
                 }
 
@@ -128,7 +127,7 @@ class AuctionController extends Controller
                 $auctionImage->file_name = '/images/auctions/' . $fileName;
                 $auctionImage->save();
             }
-        }else{
+        } else {
             return redirect()->back()->withInput($request->all())->withErrors(["image.0" => ["Je moet minimaal 1 afbeelding selecteren"]]);
         }
 
@@ -179,6 +178,10 @@ class AuctionController extends Controller
         $auction = Auction::oneWhere("id", $id);
         if ($auction === false)
             return abort(404);
+
+        if ($auction->is_blocked == 1) {
+            return view('auctions.blocked');
+        }
 
         $user = session('user');
         //als ingelogd pak alleen userid geen ip
@@ -337,11 +340,11 @@ class AuctionController extends Controller
 
     function getLatAndLon($city, $countryCode)
     {
-//        $postalCode = str_replace(' ', '', $postalCode);
+        // $postalCode = str_replace(' ', '', $postalCode);
 
         $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&city=' . $city . '&format=json&limit=1';
 
-        ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 6.0)');
+        ini_set('user_agent', 'Mozilla/4.0 (compatible; MSIE 6.0)');
 
         $response = json_decode(file_get_contents($url));
 
@@ -354,4 +357,8 @@ class AuctionController extends Controller
         return ['lat' => $lat, 'lon' => $lon];
     }
 
+    public function handleIsBlocked(Request $request)
+    {
+        return view("auctions.blocked");
+    }
 }
