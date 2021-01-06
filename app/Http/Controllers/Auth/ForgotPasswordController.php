@@ -105,7 +105,7 @@ class ForgotPasswordController extends Controller
         if ($user->email == $data['email']) {
 
             $this->validate($request, array(
-                'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+                'password' => ['required', 'string', 'min:7', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\d\x]).*$/'],
             ));
 
             DB::insertOne("UPDATE users SET password=:password, reset_token=:reset_token WHERE id=:id",[

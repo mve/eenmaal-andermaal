@@ -98,7 +98,7 @@ class UserController extends Controller
         ));
 
         $views = Auction::resultArrayToClassArray(DB::select(
-        'WITH auctionsviewed AS (
+            'WITH auctionsviewed AS (
             SELECT created_at FROM auction_hits WHERE user_id =:user_id
         )
         

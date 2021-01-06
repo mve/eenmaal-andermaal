@@ -83,6 +83,9 @@ Route::get('admin/users/{id}', 'Admin\UserController@view')->name('admin.users.v
 Route::post('admin/users/{id}', 'Admin\UserController@toggleBlock');
 Route::get('admin/auctions', 'Admin\AuctionController@list')->name('admin.auctions.list');
 Route::get('admin/auctions/{id}', 'Admin\AuctionController@view')->name('admin.auctions.view');
+Route::post('admin/auctions/{id}', 'Admin\AuctionController@toggleBlock');
+Route::post('admin/auctions/{id}/edit/save', 'Admin\AuctionController@save')->name('admin.auctions.edit.save');
+Route::match(array('GET', 'POST'), 'admin/auctions/{id}/edit', 'Admin\AuctionController@edit')->name('admin.auctions.edit');
 
 Route::get('admin/statistics', 'Admin\AdminController@statistics')->name('admin.statistics');
 
