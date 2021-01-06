@@ -36,7 +36,7 @@ class HomeController extends Controller
 //        dump(inet_ntop($binary));
 //        dump($user->id);
 //        dump(Carbon::now());
-        
+
         $data = [
             "categoryMenuHTML" => Category::getCategories(),
             "popularAuctions" => Auction::getPopularAuctions(4),
@@ -83,7 +83,11 @@ class HomeController extends Controller
         } else {
             abort(404);
         }
-      
+
+    }
+
+    public function privacy(Request $request) {
+        return view('privacy.index');
     }
 
 

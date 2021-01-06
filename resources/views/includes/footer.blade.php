@@ -28,7 +28,7 @@
                 <a class="footer-link" href="#">Algemene voorwaarden</a>
             </div>
             <div class="col-sm-12 col-md-6 col-lg">
-                <a class="footer-link" href="#">Privacy</a>
+                <a class="footer-link" href="/privacy">Privacy</a>
             </div>
             <div class="col-sm-12 col-md-6 col-lg">
                 <a class="footer-link" href="#">Cookies</a>
@@ -38,5 +38,5 @@
             </div>
         </div>
     </div>
-  
+
 </footer>
