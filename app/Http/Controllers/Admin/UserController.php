@@ -57,7 +57,7 @@ class UserController extends Controller
         $page = ($request->has("page")) ? (is_numeric($request->get("page")) ? $request->get("page") : 1) : 1;
         $offsetPage = ($page<=0)? 0 : $page-1 ;
         $offset = $offsetPage*$limit;
-        $querySelectCount = str_replace("SELECT users.*, acactive.Active, acall.AllCnt","SELECT COUNT(users.id)",$query);
+        $querySelectCount = str_replace("SELECT users.*, acactive.Active, acall.AllCnt","SELECT COUNT(users.id) AS computed",$query);
 
         $eaPaginationTotalItems = DB::selectOne($querySelectCount)['computed'];
         $eaPaginationCurrentPage = $page;

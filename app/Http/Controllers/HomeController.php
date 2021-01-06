@@ -79,7 +79,7 @@ class HomeController extends Controller
             $page = ($request->has("page")) ? (is_numeric($request->get("page")) ? $request->get("page") : 1) : 1;
             $offsetPage = ($page<=0)? 0 : $page-1 ;
             $offset = $offsetPage*$limit;
-            $querySelectCount = str_replace("SELECT *","SELECT COUNT(*)",$query);
+            $querySelectCount = str_replace("SELECT *","SELECT COUNT(*) AS computed",$query);
 
             $eaPaginationTotalItems = DB::selectOne($querySelectCount,$bindValues)['computed'];
             $eaPaginationCurrentPage = $page;
