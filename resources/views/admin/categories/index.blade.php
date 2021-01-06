@@ -66,6 +66,7 @@
                                     <select id="change_parent" name="change_parent"
                                         class="form-select @error('change_parent') is-invalid @enderror"
                                         aria-label="Default select example" >
+                                        <option data-parent-id="-1" value="-1">Root</option>
                                         @foreach ($categories as $categorie)
                                         <option data-parent-id="{{$categorie->parent_id}}" value="{{ $categorie->id }}">[{{$categorie->name_parent}}] {{ $categorie->name }}</option>
                                         @endforeach
@@ -100,8 +101,12 @@
     </div>
 
     <script>
-        var xhttp = new XMLHttpRequest();
-          function categorySelected() {
+
+        pageLoaded();
+
+
+         var xhttp = new XMLHttpRequest();
+        function categorySelected() {
            
 
             let _token = document.getElementsByName("_token")[0].value;
@@ -133,19 +138,20 @@
             if(new_category.value.length > 0) {
                 // Nieuwe categorie aanmaken
 
+                // Loading screen
+
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         var data = JSON.parse(this.response);
 
-                        document.getElementById('alert').style.opacity = 1;
-                        document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie Aangemaakt';
-                        document.getElementById('category_tree').innerHTML = data.categoryMenuHTML;
+                        if(data.success) {
+                            window.location.replace("/admin/categories?status=success&type=new");
+                        }
 
-                        setTimeout(function () {
-                            document.getElementById('alert').style.opacity = 0;
-                        }, 5000);
+                        if(data.error) {
+                            window.location.replace("/admin/categories?status=error&type=new");
+                        }
 
-                        location.reload();
                     }
                 };
 
@@ -155,22 +161,20 @@
             } else {
                 // Categorie bijwerken
 
+                // Loading screen
+
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        var data = JSON.parse(this.response).data;
-                        
-                        document.getElementById('alert').style.opacity = 1;
-                        document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie verplaatst';
-                        document.getElementById('category_tree').innerHTML = data.categoryMenuHTML;
-                        
-                        setTimeout(function () {
-                            document.getElementById('alert').style.opacity = 0;
-                        }, 5000);
-                        
-                        location.reload();
-                        // var data = JSON.parse(this.response).data;
-                        // console.log(data);
+                        var data = JSON.parse(this.response);
 
+                        if(data.success) {
+                            window.location.replace("/admin/categories?status=success&type=update");
+                        }
+
+                        if(data.error) {
+                            window.location.replace("/admin/categories?status=error&type=update");
+                        }
+                        
                     }
                 };
 
@@ -181,7 +185,6 @@
         }
 
         function deleteBtnPressed() {
-            console.log('delete button is pressed.');
             let _token = document.getElementsByName("_token")[0].value;
             let change_name = document.getElementById("change_name");
             let change_parent = document.getElementById("change_parent");
@@ -190,11 +193,13 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(this.response);
                     
-                    console.log(data);
+                    if(data.success) {
+                        window.location.replace("/admin/categories?status=success&type=delete");
+                    }
 
-                    document.getElementById('alert').style.opacity = 1;
-                    if(data.)
-                    document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie verplaatst';
+                    if(data.error) {
+                        window.location.replace("/admin/categories?status=error&type=delete");
+                    }
 
                 }
             };
@@ -202,6 +207,79 @@
             xhttp.open("DELETE", "/admin/categories/" + change_name.dataset.selectedId, true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value);
+        }
+
+        function pageLoaded()
+        {
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var responseStatus = url.searchParams.get("status");
+            var responseType = url.searchParams.get("type");
+
+            if(responseType == "delete") {
+
+                if(responseStatus == "success") {
+                    document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie verwijderd';
+                    document.getElementById('alert').style.opacity = 1;
+
+                    setTimeout(function () {
+                        document.getElementById('alert').style.opacity = 0;
+                    }, 5000);
+                }
+
+                if(responseStatus == "error") {
+                    document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie kan niet verwijderd worden zorg dat deze categorie leeg is voordat je hem verwijderd';
+                    document.getElementById('alert').style.opacity = 1;
+
+                    setTimeout(function () {
+                        document.getElementById('alert').style.opacity = 0;
+                    }, 5000);
+                }
+            }
+
+            if(responseType == "new") {
+
+                if(responseStatus == "success") {
+                    document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Nieuwe categorie aangemaakt';
+                    document.getElementById('alert').style.opacity = 1;
+
+                    setTimeout(function () {
+                        document.getElementById('alert').style.opacity = 0;
+                    }, 5000);
+                }
+
+                if(responseStatus == "error") {
+                    document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Fout bij het aanmaken van een nieuwe categorie';
+                    document.getElementById('alert').style.opacity = 1;
+
+                    setTimeout(function () {
+                        document.getElementById('alert').style.opacity = 0;
+                    }, 5000);
+                }
+            }
+
+
+            if(responseType == "update") {
+
+                if(responseStatus == "success") {
+                    document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie is bijgewerkt';
+                    document.getElementById('alert').style.opacity = 1;
+
+                    setTimeout(function () {
+                        document.getElementById('alert').style.opacity = 0;
+                    }, 5000);
+                }
+
+                if(responseStatus == "error") {
+                    document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Fout bij het bijwerken van een nieuwe categorie';
+                    document.getElementById('alert').style.opacity = 1;
+
+                    setTimeout(function () {
+                        document.getElementById('alert').style.opacity = 0;
+                    }, 5000);
+                }
+            }
+
         }
 
      

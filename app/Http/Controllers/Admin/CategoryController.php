@@ -22,7 +22,7 @@ class CategoryController extends Controller
         $this->middleware('check.admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $data = [
             "categoryMenuHTML" => Category::getCategoriesAdmin(),
@@ -45,7 +45,7 @@ class CategoryController extends Controller
         $category->parent_id = $data["change_parent"];
         $category->save();
 
-        $this->checkCategory($data["change_parent"]);
+        $this->checkEmptyCategory($data["change_parent"]);
 
         $data = [
             "categoryMenuHTML" => Category::getCategoriesAdmin()
@@ -66,7 +66,7 @@ class CategoryController extends Controller
 
         // new_parent veilingen heeft 
         
-        $this->checkCategory($data["new_parent"]);
+        $this->checkEmptyCategory($data["new_parent"]);
 
         $data = [
             "categoryMenuHTML" => Category::getCategoriesAdmin()
