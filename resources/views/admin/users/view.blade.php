@@ -4,6 +4,7 @@
 
 <div class="container-fluid admin">
     <h1 class="text-center pt-3">{{ $user->username }}</h1>
+    <a href="{{ route('admin.users.list') }}" class="back-button btn btn-outline-secondary">Terug</a>
     <div class="content">
         <div class="row mb-3">
             <div class="col-lg-3 text-center">
