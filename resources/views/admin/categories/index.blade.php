@@ -135,10 +135,17 @@
 
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.response);
+                        var data = JSON.parse(this.response);
 
-                        // var data = JSON.parse(this.response).data;
-                        // console.log(data);
+                        document.getElementById('alert').style.opacity = 1;
+                        document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie Aangemaakt';
+                        document.getElementById('category_tree').innerHTML = data.categoryMenuHTML;
+
+                        setTimeout(function () {
+                            document.getElementById('alert').style.opacity = 0;
+                        }, 5000);
+
+                        location.reload();
                     }
                 };
 
@@ -153,7 +160,7 @@
                         var data = JSON.parse(this.response).data;
                         
                         document.getElementById('alert').style.opacity = 1;
-                        document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> test';
+                        document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie verplaatst';
                         document.getElementById('category_tree').innerHTML = data.categoryMenuHTML;
                         
                         setTimeout(function () {
@@ -176,15 +183,18 @@
         function deleteBtnPressed() {
             console.log('delete button is pressed.');
             let _token = document.getElementsByName("_token")[0].value;
-            let new_category = document.getElementById("new_category");
             let change_name = document.getElementById("change_name");
             let change_parent = document.getElementById("change_parent");
 
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    var data = JSON.parse(this.response).data;
+                    var data = JSON.parse(this.response);
                     
                     console.log(data);
+
+                    document.getElementById('alert').style.opacity = 1;
+                    if(data.)
+                    document.getElementById('toast-body').innerHTML = '<i class="far fa-check-circle"></i> Categorie verplaatst';
 
                 }
             };

@@ -77,11 +77,34 @@ class CategoryController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        //veilingen uit category verplaatsen
+        $data = $request->all();
+        
+        $auctionsCheck = AuctionCategory::resultArrayToClassArray(DB::select("SELECT * FROM auction_categories WHERE category_id=:new_parent", [
+            "new_parent" => $id
+        ]));
 
-        //sub categorien verplaatsen
+        $parentCheck = Category::resultArrayToClassArray(DB::select("SELECT * FROM categories WHERE parent_id=:new_parent", [
+            "new_parent" => $id
+        ]));
 
-        //catergory verwijderen
+        if (empty($auctionsCheck))
+        {
+            if(empty($parentCheck)){
+                $category = Category::deleteWhere('id', $id);
+                
+                $data = [
+                    "categoryMenuHTML" => Category::getCategoriesAdmin()
+                ];
+
+                return response()->json(['success' => "deleted", 'data' => $data]);
+            }
+        }
+
+        $data = [
+            "categoryMenuHTML" => Category::getCategoriesAdmin()
+        ];
+        
+        return response()->json(['error' => 'delete', 'data' => $data]);
     }
 
     public function categoryTree()
