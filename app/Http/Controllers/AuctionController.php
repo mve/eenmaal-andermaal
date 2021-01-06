@@ -57,7 +57,6 @@ class AuctionController extends Controller
             "countries" => Country::allOrderBy('country')
         ];
         return view("auctions.create")->with($data);
-
     }
 
     public function store(Request $request)
@@ -68,7 +67,7 @@ class AuctionController extends Controller
             'start_price' => ['require', 'regex:/^\d+(\.\d{1,2})?$/'],
             'payment_instruction' => ['nullable', 'string', 'max:255'],
             'duration' => ['required', 'numeric'],
-            'image.*' => ['required', 'mimes:jpeg,jpg,png', 'max:10000'],//10000kb/10mb
+            'image.*' => ['required', 'mimes:jpeg,jpg,png', 'max:10000'], //10000kb/10mb
             'city' => ['required', 'string', 'max:100'],
         ));
 
@@ -179,6 +178,10 @@ class AuctionController extends Controller
         $auction = Auction::oneWhere("id", $id);
         if ($auction === false)
             return abort(404);
+
+        if ($auction->is_blocked == 1) {
+            return view('auctions.blocked');
+        }
 
         $user = session('user');
         //als ingelogd pak alleen userid geen ip
@@ -368,7 +371,7 @@ class AuctionController extends Controller
 
     function getLatAndLon($city, $countryCode)
     {
-//        $postalCode = str_replace(' ', '', $postalCode);
+        // $postalCode = str_replace(' ', '', $postalCode);
 
         $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&city=' . $city . '&format=json&limit=1';
 
@@ -385,4 +388,8 @@ class AuctionController extends Controller
         return ['lat' => $lat, 'lon' => $lon];
     }
 
+    public function handleIsBlocked(Request $request)
+    {
+        return view("auctions.blocked");
+    }
 }

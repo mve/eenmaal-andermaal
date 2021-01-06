@@ -33,17 +33,17 @@
 
     .clickable-submenu{
         font-weight: normal;
-        color: $gray!important;
+        color: #a6a6a6!important;
         cursor: pointer;
     }
 
     a.category{
         text-decoration: none;
         font-weight: bold;
-        color: $gray!important;
+        color: #a6a6a6!important;
 
         &:hover{
-            color: $gray!important;
+            color: #a6a6a6!important;
         }
     }
     .category {
