@@ -23,19 +23,33 @@ class AuctionController extends Controller
         $this->middleware('check.admin');
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $auctions = DB::select("
+        $query = "
             SELECT auctions.* , users.first_name , users.last_name
             FROM auctions LEFT JOIN users
             ON users.id = auctions.user_id
-            ORDER BY auctions.id
-            ");
+            ";
 
-        $auctions = Auction::resultArrayToClassArray($auctions);
+        $limit = 15;
+        $page = ($request->has("page")) ? (is_numeric($request->get("page")) ? $request->get("page") : 1) : 1;
+        $offsetPage = ($page<=0)? 0 : $page-1 ;
+        $offset = $offsetPage*$limit;
+        $querySelectCount = str_replace("SELECT auctions.* , users.first_name , users.last_name","SELECT COUNT(auctions.id) AS computed",$query);
 
+        $eaPaginationTotalItems = DB::selectOne($querySelectCount)['computed'];
+        $eaPaginationCurrentPage = $page;
+        $eaPaginationTotalPages = ceil($eaPaginationTotalItems / $limit);
+
+        $query .= " ORDER BY auctions.id DESC OFFSET $offset ROWS FETCH NEXT $limit ROWS ONLY";
+        $auctions = Auction::resultArrayToClassArray(DB::select($query));
         $data = [
             "auctions" => $auctions,
+            'paginationData' => [
+                'totalItems' => $eaPaginationTotalItems,
+                'totalPages' => $eaPaginationTotalPages,
+                'currentPage' => $eaPaginationCurrentPage,
+            ]
         ];
        // dd($data);
         return view('admin.auctions.list')->with($data);
@@ -47,7 +61,7 @@ class AuctionController extends Controller
         // $auction = Auction::resultArrayToClassArray(DB::selectOne('
         //     select a.id, a.title, a.description, a.start_price, a.duration, a.end_datetime, a.user_id, a.created_at, u.first_name, u.last_name
         //     FROM auctions AS a
-        //     INNER JOIN users AS u 
+        //     INNER JOIN users AS u
         //     ON a.user_id = u.id
         //     AND a.id =:auction_id
         // ', ['auction_id' => $request->id]));
@@ -57,15 +71,15 @@ class AuctionController extends Controller
         }
 
         $user = User::resultArrayToClassArray(DB::select(
-            'SELECT first_name, last_name 
+            'SELECT first_name, last_name
             FROM users WHERE id =:user_id',
             ['user_id' => $auction->user_id]
         ));
 
         $bids = Bid::resultArrayToClassArray(DB::select(
-            'SELECT max(amount) as amount, count(amount) as count 
-            FROM bids 
-            WHERE auction_id =:auction_id 
+            'SELECT max(amount) as amount, count(amount) as count
+            FROM bids
+            WHERE auction_id =:auction_id
             GROUP BY auction_id',
             ['auction_id' => $auction->id]
         ));
@@ -78,7 +92,7 @@ class AuctionController extends Controller
             'user' => $user[0],
             'bids' => $bids ? $bids[0] : null
         ];
-        
+
         return view('admin.auctions.view')->with($data);
     }
 

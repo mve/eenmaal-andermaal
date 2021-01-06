@@ -11980,7 +11980,7 @@ p {
 }
 
 .sidebar .openbtn:hover {
-  background-color: #444;
+  background-color: #4c4c4c;
 }
 
 .table {
@@ -12011,6 +12011,33 @@ p {
 
 .table tbody tr .fa-check-circle {
   color: #10B981;
+}
+
+.page-item.active .page-link {
+  background-color: #284B63 !important;
+}
+
+.page-item.active .page-link .page-link:focus {
+  box-shadow: 0 0 0 0.25rem rgba(40, 75, 99, 0.25) !important;
+}
+
+.admin .page-item.active .page-link {
+  background-color: #c5AE91 !important;
+  border-color: #c5AE91 !important;
+}
+
+.admin .page-item.disabled .page-link {
+  border: 1px solid #616161;
+}
+
+.admin .page-link:focus {
+  box-shadow: 0 0 0 0.25rem rgba(197, 174, 145, 0.25) !important;
+}
+
+.admin .page-link {
+  background-color: #404040 !important;
+  color: #c5AE91;
+  border: 1px solid #616161;
 }
 
 .category-container {

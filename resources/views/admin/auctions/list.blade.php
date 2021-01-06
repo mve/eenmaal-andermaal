@@ -44,6 +44,9 @@
                 </table>
             </div>
         </div>
+
+        @include("includes.pagination", $paginationData)
+
     </div>
 </div>
 
