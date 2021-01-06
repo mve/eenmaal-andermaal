@@ -53,6 +53,9 @@
                             <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">
                                 Gewonnen veilingen
                             </a>
+                            <a class="dropdown-item" href="{{route("veilingen.geboden")}}">
+                                Geboden veilingen
+                            </a>
                             @if (Session::get('user')->is_seller)
                                 <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
                                     Mijn veilingen
@@ -89,6 +92,6 @@
 </nav>
 
 @if (!Cookie::has('cookie_allow'))
-    @include('includes.cookie');    
+    @include('includes.cookie');
 @endif
 

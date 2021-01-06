@@ -280,6 +280,37 @@ class AuctionController extends Controller
     }
 
     /**
+     * Get the auctions that the user has bid on
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function bidAuctions(Request $request)
+    {
+        $userId = Session::get("user")->id;
+        $auctions = Auction::resultArrayToClassArray(DB::select("
+                WITH bidsLatest AS(
+                    SELECT * FROM
+                    (SELECT auction_id,user_id,created_at,
+                                ROW_NUMBER() OVER (PARTITION BY auction_id ORDER BY created_at DESC) AS RowNumber
+                         FROM   bids
+                         WHERE  user_id = $userId) AS a
+                    WHERE a.RowNumber = 1
+                )
+
+                SELECT a.*, b.created_at AS bid_created_at
+                FROM bidsLatest b
+                LEFT JOIN auctions a
+                ON b.auction_id=a.id
+                ORDER BY bid_created_at DESC
+            "));
+
+        $data = [
+            'auctions' => $auctions
+        ];
+        return view("auctions.bidauctions")->with($data);
+    }
+
+    /**
      * Send emails to owners of auctions finished within the last minute
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
