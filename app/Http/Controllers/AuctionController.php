@@ -114,12 +114,12 @@ class AuctionController extends Controller
         $auction->longitude = $latAndLon['lon'];
         $auction->save();
 
-        if($request->file('image')!=null){
+        if ($request->file('image') != null) {
             foreach ($request->file('image') as $img) {
                 $fileName = $auction->id . "/" . Str::random(10) . ".png";
-                if(env("APP_ENV")=="local"){
+                if (env("APP_ENV") == "local") {
                     Storage::disk('auction_images')->put($fileName, file_get_contents($img));
-                }else{
+                } else {
                     Storage::disk('auction_images_server')->put($fileName, file_get_contents($img));
                 }
 
@@ -128,7 +128,7 @@ class AuctionController extends Controller
                 $auctionImage->file_name = '/images/auctions/' . $fileName;
                 $auctionImage->save();
             }
-        }else{
+        } else {
             return redirect()->back()->withInput($request->all())->withErrors(["image.0" => ["Je moet minimaal 1 afbeelding selecteren"]]);
         }
 
@@ -277,6 +277,37 @@ class AuctionController extends Controller
     }
 
     /**
+     * Get the auctions that the user has bid on
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function bidAuctions(Request $request)
+    {
+        $userId = Session::get("user")->id;
+        $auctions = Auction::resultArrayToClassArray(DB::select("
+                WITH bidsLatest AS(
+                    SELECT * FROM
+                    (SELECT auction_id,user_id,created_at,
+                                ROW_NUMBER() OVER (PARTITION BY auction_id ORDER BY created_at DESC) AS RowNumber
+                         FROM   bids
+                         WHERE  user_id = $userId) AS a
+                    WHERE a.RowNumber = 1
+                )
+
+                SELECT a.*, b.created_at AS bid_created_at
+                FROM bidsLatest b
+                LEFT JOIN auctions a
+                ON b.auction_id=a.id
+                ORDER BY bid_created_at DESC
+            "));
+
+        $data = [
+            'auctions' => $auctions
+        ];
+        return view("auctions.bidauctions")->with($data);
+    }
+
+    /**
      * Send emails to owners of auctions finished within the last minute
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -341,7 +372,7 @@ class AuctionController extends Controller
 
         $url = 'http://nominatim.openstreetmap.org/search?country=' . $countryCode . '&city=' . $city . '&format=json&limit=1';
 
-        ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 6.0)');
+        ini_set('user_agent', 'Mozilla/4.0 (compatible; MSIE 6.0)');
 
         $response = json_decode(file_get_contents($url));
 
