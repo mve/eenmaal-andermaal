@@ -45,6 +45,8 @@ class CategoryController extends Controller
         $category->parent_id = $data["change_parent"];
         $category->save();
 
+        $this->checkCategory($data["change_parent"]);
+
         $data = [
             "categoryMenuHTML" => Category::getCategoriesAdmin()
         ];
@@ -63,28 +65,14 @@ class CategoryController extends Controller
         $category->update(true);
 
         // new_parent veilingen heeft 
-        $auctionsCheck = AuctionCategory::resultArrayToClassArray(DB::select("SELECT * FROM auction_categories WHERE category_id=:new_parent", [
-            "new_parent" => $data["new_parent"]
-        ]));
-
-        if (!empty($auctionsCheck)) {
-            $category = new \App\Category();
-            $category->name = "overige";
-            $category->parent_id = $data["new_parent"];
-            $category->save();
-
-            foreach($auctionsCheck as $auction) {
-                $auction->category_id = $category->id;
-                $auction->update(true);
-            }
-        }
-       
+        
+        $this->checkCategory($data["new_parent"]);
 
         $data = [
             "categoryMenuHTML" => Category::getCategoriesAdmin()
         ];
         
-        return response()->json(['success' => "updated", 'data' => $auctionsCheck]);
+        return response()->json(['success' => "updated", 'data' => $data]);
     }
 
     public function destroy(Request $request, $id)
@@ -99,5 +87,24 @@ class CategoryController extends Controller
     public function categoryTree()
     {
 
+    }
+
+    private function checkEmptyCategory($new_parent)
+    {
+        $auctionsCheck = AuctionCategory::resultArrayToClassArray(DB::select("SELECT * FROM auction_categories WHERE category_id=:new_parent", [
+            "new_parent" => $new_parent
+        ]));
+
+        if (!empty($auctionsCheck)) {
+            $category = new \App\Category();
+            $category->name = "overige";
+            $category->parent_id = $new_parent;
+            $category->save();
+
+            foreach($auctionsCheck as $auction) {
+                $auction->category_id = $category->id;
+                $auction->update(true);
+            }
+        }
     }
 }
