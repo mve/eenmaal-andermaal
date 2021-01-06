@@ -9,7 +9,11 @@
                             "large" => false
                             ])
         @if(!count($auctions))
-            U heeft nog niet geboden op een veiling
+
+            <div class="alert alert-primary mb-5" role="alert">
+                U heeft nog niet geboden op een veiling.
+            </div>
+
         @endif
     </div>
 
