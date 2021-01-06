@@ -219,19 +219,19 @@
         var title = document.getElementsByName('title')[0];
         var titleLimit = document.getElementById('limit-title-length');
         title.addEventListener('keyup', e => {
-            changeLimit(title, titleLimit, 100);
+            changeLimit(title, titleLimit, title.maxLength);
         });
 
         var description = document.getElementsByName('description')[0];
         var descLimit = document.getElementById('limit-description-length');
         description.addEventListener('keyup', e => {
-            changeLimit(description, descLimit, 500);
+            changeLimit(description, descLimit, description.maxLength);
         });
 
         var paymentInstruction = document.getElementsByName('paymentInstruction')[0];
         var payInsLimit = document.getElementById('limit-payment-instruction-length');
         paymentInstruction.addEventListener('keyup', e => {
-            changeLimit(paymentInstruction, payInsLimit, 255);
+            changeLimit(paymentInstruction, payInsLimit, paymentInstruction.maxLength);
         });
     </script>
 

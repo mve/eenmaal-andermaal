@@ -3,8 +3,7 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             <i class="fas fa-gavel"></i> {{ config('app.name', 'Laravel') }}
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -33,53 +32,56 @@
                 <!-- Authentication Links -->
                 @if (!Session::has('user'))
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Inloggen</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">Inloggen</a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Registreren</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">Registreren</a>
+                </li>
 
                 @else
 
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Welkom <span class="fw-bold">{{ Session::get('user')->username }}</span>
+                <li class="nav-item">
+                    <a class="nav-link bi bi-envelope-fill" href="{{route('messages')}}"><i class="fa fa-fw fa-envelope"></i> Berichten</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <i class="fa fa-fw fa-user"></i>
+                        Welkom <span class="fw-bold">{{ Session::get('user')->username }}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                        <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">
+                            Gewonnen veilingen
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        @if (Session::get('user')->is_seller)
+                        <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
+                            Mijn veilingen
+                        </a>
+                        <a class="dropdown-item" href="{{route("beoordeling.overzicht")}}">
+                            Beoordelingen
+                        </a>
+                        <a class="dropdown-item" href="{{ route('veilingmaken') }}">
+                            Veiling aanmaken
+                        </a>
+                        @endif
 
-                            <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">
-                                Gewonnen veilingen
-                            </a>
-                            @if (Session::get('user')->is_seller)
-                                <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
-                                    Mijn veilingen
-                                </a>
-                                <a class="dropdown-item" href="{{route("beoordeling.overzicht")}}">
-                                    Beoordelingen
-                                </a>
-                                <a class="dropdown-item" href="{{ route('veilingmaken') }}">
-                                    Veiling aanmaken
-                                </a>
-                            @endif
+                        <a class="dropdown-item" href="{{route("mijnaccount")}}">
+                            Mijn account
+                        </a>
 
-                            <a class="dropdown-item" href="{{route("mijnaccount")}}">
-                                Mijn account
-                            </a>
-
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                Uitloggen
-                            </a>
+                            Uitloggen
+                        </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
 
                 @endif
             </ul>
@@ -89,6 +91,5 @@
 </nav>
 
 @if (!Cookie::has('cookie_allow'))
-    @include('includes.cookie');    
+@include('includes.cookie');
 @endif
-

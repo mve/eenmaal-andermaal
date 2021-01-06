@@ -119,10 +119,10 @@
                 <p>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</p>
 
                 <div class="my-3">
-                    <a class="btn btn-outline-primary" @if(Session::has('user')) href="mailto:{{$auction->getSeller()->email}}">
-                        @endif
-                        <i class="fas fa-envelope"></i> Bericht
-                    </a>
+
+                    @if(Session::has('user'))
+                    <button class="btn btn-outline-primary" id="bericht"><i class="fas fa-envelope"></i> Bericht</button>
+                    @endif
                     @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
                     <a class="btn btn-primary" @if(Session::has('user')) href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
                         @endif
@@ -220,5 +220,70 @@
     </div>
 </div>
 </div>
+
+<div id="backdrop" class="d-none">
+    <div class="modal" id="exampleModalCenter" role="dialog" aria-labelledby="exampleModalCenterTitle">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content rounded-5">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title float-center" id="exampleModalLongTitle">Bericht versturen aan {{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</h5>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('messages.send') }}">
+                        @csrf
+                        <div class="form-group row mb-2">
+                            <div class="mb-3 col-md-12">
+                                <textarea name="message" class="form-control @error('message') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" maxlength="250" placeholder="Schrijf hier uw bericht..." required></textarea>
+                                <span id="limit-message-length" class="text-right float-right">Maximaal 250 tekens: 0/250</span>
+                            </div>
+                            @error('message')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            <input type="hidden" name="auctionId" value="{{$auction->id}}">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="btn btn-danger text-light" onclick="toggleModal()">Annuleren</span>
+                    <input type="submit" value="Versturen" name="send" class="btn btn-primary">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+</div>
+
+<script>
+    function toggleModal() {
+        var backdrop = document.getElementById("backdrop");
+        var modal = document.getElementById("exampleModalCenter");
+
+        if (backdrop.classList.contains('d-none')) {
+            // Modal is not visible
+            document.getElementById("backdrop").classList.remove('d-none');
+            document.getElementById("exampleModalCenter").style.display = "block";
+        } else {
+            // Modal is visible
+            document.getElementById("backdrop").classList.add('d-none');
+            document.getElementById("exampleModalCenter").style.display = "none";
+        }
+    }
+
+    document.getElementById("bericht").addEventListener("click", (event) => {
+        toggleModal();
+    })
+
+    function changeLimit(textElement, textLimitElement, limit) {
+        textLimitElement.innerHTML = 'Maximaal ' + limit + ' tekens: ' + textElement.value.length + '/' + limit;
+    }
+
+    var description = document.getElementsByName('message')[0];
+    var descLimit = document.getElementById('limit-message-length');
+    description.addEventListener('keyup', e => {
+        changeLimit(description, descLimit, description.maxLength);
+    });
+</script>
 
 @endsection
