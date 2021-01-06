@@ -72,6 +72,8 @@ Route::get('categorieën', 'CategoryController@categories')->name('categories');
 Route::get('cookie', 'HomeController@cookie')->name('cookie');
 Route::post('cookie', 'HomeController@cookie')->name('cookie');
 
+Route::get('privacy', 'HomeController@privacy')->name('privacy');
+
 // Admin Routes
 Route::get('admin', 'Admin\AdminController@index')->name('Admin.Index');
 Route::get('admin/login', 'Admin\Auth\AdminLoginController@index')->name('Admin.login');
@@ -90,6 +92,8 @@ Route::match(array('GET', 'POST'), 'admin/auctions/{id}/edit', 'Admin\AuctionCon
 Route::get('admin/statistics', 'Admin\AdminController@statistics')->name('admin.statistics');
 
 Route::resource('admin/categories', Admin\CategoryController::class);
+
+
 
 //Route::get('foo', function () {
 //    // Handmatige breadcrumbs voorbeeld
