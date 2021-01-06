@@ -95,13 +95,12 @@ Route::resource('admin/categories', Admin\CategoryController::class);
 
 
 
-//Route::get('foo', function () {
-//    // Handmatige breadcrumbs voorbeeld
-//    $data = [
-//        "Appels",
-//        "<a href='https://google.com'>Google</a>",
-//        "Nederland",
-//    ];
-//    \App\Breadcrumbs::createAndPrint($data);
-//    return "";
-//});
+Route::get('foo', function () {
+    abort(401);
+    abort(403);
+    abort(404);
+    abort(419);
+    abort(429);
+    abort(500);
+    abort(503);
+});
