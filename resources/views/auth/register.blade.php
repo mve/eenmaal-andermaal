@@ -124,7 +124,7 @@
                                                class="form-control @error('password') is-invalid @enderror"
                                                name="password" required autocomplete="new-password">
                                         <small id="passwordHelpInline" class="text-muted">
-                                          Wachtwoord moet minimaal 8 tekens bevatten, 1 hoofdletter en 1 speciaal teken bevatten
+                                          Wachtwoord moet minimaal 7 tekens, 1 cijfer, 1 kleine letter en 1 hoofdletter bevatten
                                         </small>
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">

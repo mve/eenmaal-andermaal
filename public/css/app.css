@@ -11826,18 +11826,18 @@ p {
 
 .admin .clickable-submenu {
   font-weight: normal;
-  color: #6B7280 !important;
+  color: #a6a6a6 !important;
   cursor: pointer;
 }
 
 .admin a.category {
   text-decoration: none;
   font-weight: bold;
-  color: #6B7280 !important;
+  color: #a6a6a6 !important;
 }
 
 .admin a.category:hover {
-  color: #6B7280 !important;
+  color: #a6a6a6 !important;
 }
 
 .admin .category-arrow {
