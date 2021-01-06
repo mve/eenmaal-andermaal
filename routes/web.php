@@ -19,6 +19,7 @@ Route::resource('auctions', AuctionController::class);
 Route::get('mijnveilingen', 'AuctionController@myAuctions')->name('veilingen.mijn');
 Route::get('gewonnenveilingen', 'AuctionController@wonAuctions')->name('veilingen.gewonnen');
 Route::get('veilingen/af/mail', 'AuctionController@mailFinishedAuctionOwners')->name('veilingen.mailsturen');
+Route::get('gebodenveilingen', 'AuctionController@bidAuctions')->name('veilingen.geboden');
 
 Route::get('bid/{id}/{amount}', 'BidController@bid')->name('veilingen.bieden');
 Route::get('bid/{id}', 'BidController@loadData')->name('veilingen.ophalen');
@@ -95,13 +96,12 @@ Route::resource('admin/categories', Admin\CategoryController::class);
 
 
 
-//Route::get('foo', function () {
-//    // Handmatige breadcrumbs voorbeeld
-//    $data = [
-//        "Appels",
-//        "<a href='https://google.com'>Google</a>",
-//        "Nederland",
-//    ];
-//    \App\Breadcrumbs::createAndPrint($data);
-//    return "";
-//});
+Route::get('foo', function () {
+    abort(401);
+    abort(403);
+    abort(404);
+    abort(419);
+    abort(429);
+    abort(500);
+    abort(503);
+});
