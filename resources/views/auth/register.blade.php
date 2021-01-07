@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="san sand-blue-gradient">
+    <div class="san sand-blue-gradient content-height">
         <div class="container">
             <div class="row justify-content-center align-items-center py-5">
                 <div class="col-md-6">

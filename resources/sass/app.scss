@@ -150,6 +150,7 @@ a.category{
 .sand-blue-gradient {
     background: $sand;
     background: linear-gradient(27deg, $sand 0%, $dark-blue-opactiy 100%);
+
 }
 
 .profile-picture {
@@ -265,3 +266,9 @@ a.category{
         color: #ffffff;
     }
 }
+
+.content-height{
+    min-height: calc(100vh - 415px);
+}
+
+
