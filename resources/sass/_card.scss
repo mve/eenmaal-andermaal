@@ -5,14 +5,14 @@
     position: relative;
 }
 
-.auction-card{
-    &-mine{
+.auction-card {
+    &-mine {
         box-shadow: 0 10px 20px rgba(40, 75, 99, 0.26), 0 0 6px rgba(40, 75, 99, 0.26) !important;
     }
 
-    > div.mine{
-        position:absolute;
-        background-color:$dark-blue;
+    > div.mine {
+        position: absolute;
+        background-color: $dark-blue;
         border-bottom-right-radius: 0.75rem;
         padding: 10px;
         color: $white;
@@ -53,5 +53,19 @@
         height: 240px;
         background-size: cover;
         background-position: center;
+    }
+}
+
+.auction-card--side {
+    height: 200px;
+}
+
+@media only screen and (max-width: 768px) {
+    .auction-card--side {
+        height: 400px;
+
+        &-image {
+            height: 200px;
+        }
     }
 }

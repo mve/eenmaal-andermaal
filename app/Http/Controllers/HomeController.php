@@ -85,7 +85,7 @@ class HomeController extends Controller
             $eaPaginationCurrentPage = $page;
             $eaPaginationTotalPages = ceil($eaPaginationTotalItems / $limit);
 
-            $query .= " ORDER BY end_datetime DESC OFFSET $offset ROWS FETCH NEXT $limit ROWS ONLY";
+            $query .= " ORDER BY title ASC OFFSET $offset ROWS FETCH NEXT $limit ROWS ONLY";
             $auctions = Auction::resultArrayToClassArray(DB::select($query, $bindValues));
 
             $data = [

@@ -97,5 +97,12 @@ Route::resource('admin/categories', Admin\CategoryController::class);
 
 
 Route::get('foo', function () {
+    $auctions = \App\DB::select("
+        SELECT *
+        FROM auctions
 
+        ORDER BY id DESC
+        OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY
+    ");
+    dd($auctions);
 });
