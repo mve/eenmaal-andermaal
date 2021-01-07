@@ -262,12 +262,12 @@
 
         if (backdrop.classList.contains('d-none')) {
             // Modal is not visible
-            document.getElementById("backdrop").classList.remove('d-none');
-            document.getElementById("exampleModalCenter").style.display = "block";
+            backdrop.classList.remove('d-none');
+            modal.style.display = "block";
         } else {
             // Modal is visible
-            document.getElementById("backdrop").classList.add('d-none');
-            document.getElementById("exampleModalCenter").style.display = "none";
+            backdrop.classList.add('d-none');
+            modal.style.display = "none";
         }
     }
 

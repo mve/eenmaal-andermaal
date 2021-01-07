@@ -12207,3 +12207,11 @@ a.category:hover {
   z-index: 1071;
 }
 
+.text-one-line {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

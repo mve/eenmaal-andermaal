@@ -2,28 +2,100 @@
 
 @section('content')
 
-<div class="sand-blue-gradient">
-    <div class="container">
-        <div class="row justify-content-center align-items-center py-5" style="height: calc(100vh - 392px); min-height: 450px;">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="text-center mt-2 mb-4">Berichten</h2>
-                        @if(Session()->has('message'))
-                            <div class="alert alert-success">
-                                {{ Session()->get('message') }}
-                            </div>
-                        @endif
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                {{$errors->first()}}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container pt-4">
+	<h2>Berichten</h2>
+	@if($convos)
+	@if(Session()->has('message'))
+	<div class="alert alert-success">
+		{{ Session()->get('message') }}
+	</div>
+	@endif
+	@if($errors->any())
+	<div class="alert alert-danger">
+		{{$errors->first()}}
+	</div>
+	@endif
+
+	<div class="row">
+		<div class="col-4">
+			<table class="table table-hover mb-4">
+				<tbody>
+					@foreach($convos as $convo)
+					<tr class="table-light" onclick="openConversation('conversation-{{$convo->conversation_id}}')">
+						<td>
+							<strong class="text-one-line">{{$convo->auction_title}}</strong>
+							<div class="text-one-line">{{$convo->messages[0]->message}}</div>
+							@if(date('Y', strtotime($convo->messages[0]->created_at)) >= now()->year)
+							<div class="text-right"><i>{{date('d-m H:m', strtotime($convo->messages[0]->created_at))}}</i></div>
+							@else
+							<div class="text-right"><i>{{date('d-m-Y H:m', strtotime($convo->messages[0]->created_at))}}</i></div>
+							@endif
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+		<div class="col-8">
+			@foreach($convos as $convo)
+			<div class="conversation d-none" id="conversation-{{$convo->conversation_id}}">
+				<a href="{{ route('login') }}" class="text-decoration-none">
+					<div class="border p-3 pb-1">
+						<h5>{{$convo->auction_title}}</h5>
+					</div>
+				</a>
+				<div class="overflow-auto">
+					<div class="chat-container">
+						@foreach($convo->messages as $msg)
+						<div class="m-2">
+							@if($msg->user_id == Session::get('user')->id)
+							<div class="messagebox border p-2 offset-6" style="max-width: 50%">
+								@else
+								<div class="messagebox border p-2" style="max-width: 50%">
+									@endif
+									<span>{{$msg->message}}</span>
+									@if(date('Y', strtotime($convo->messages[0]->created_at)) >= now()->year)
+									<div class="text-right"><i>{{date('d-m H:m', strtotime($convo->messages[0]->created_at))}}</i></div>
+									@else
+									<div class="text-right"><i>{{date('d-m-Y H:m', strtotime($convo->messages[0]->created_at))}}</i></div>
+									@endif
+								</div>
+							</div>
+							@endforeach
+						</div>
+					</div>
+				</div>
+				@endforeach
+			</div>
+		</div>
+
+		@else
+		<p class="py-4">U heeft nog geen berichten ontvangen of verstuurd</p>
+		@endif
+	</div>
 </div>
+
+<script>
+	function openConversation(elementId) {
+		closeAllConversations();
+
+		var el = document.getElementById(elementId);
+
+		if (el.classList.contains('d-none')) {
+			el.classList.remove('d-none');
+		} else {
+			el.classList.add('d-none');
+		}
+	}
+
+	function closeAllConversations() {
+		var convos = document.querySelectorAll('.conversation');
+		convos.forEach(convo => {
+			if (!convo.classList.contains('d-none')) {
+				convo.classList.add('d-none');
+			}
+		})
+	}
+</script>
 
 @endsection
