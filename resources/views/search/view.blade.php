@@ -13,9 +13,7 @@
 
                     <div class="row hover-effect auction-card mb-4 auction-card--side">
 
-{{--                        <div class="col-md-3 img-fluid"--}}
-{{--                             style="background-image: url('{{$auction->getFirstImage()}}'); background-size: cover;"></div>--}}
-                        <div class="col-md-3 img-fluid auction-card--side-image" style="background-image: url('/images/auctions/400809556660/mjEEDpDIx3.png'); background-size: cover;"></div>
+                        <div class="col-md-3 img-fluid auction-card--side-image" style="background-image: url('{{$auction->getFirstImage()}}'); background-size: cover;"></div>
 
                         <div class="col-md-9 p-4 d-flex justify-content-between flex-column">
 
