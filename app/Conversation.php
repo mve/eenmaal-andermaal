@@ -35,15 +35,17 @@ class Conversation extends SuperModel
 	public static function getAllMessagesForUser($userId)
 	{
 		return Conversation::resultArrayToClassArray(DB::select(
-			'SELECT a.title, c.user_id, m.auction_conversation_id, c.auction_id, c.is_closed, m.id AS message_id, m.message, m.created_at
-            FROM auction_conversations AS c
-            INNER JOIN auction_messages AS m 
-                ON c.user_id = m.user_id 
-                AND m.auction_conversation_id = c.id
-            INNER JOIN auctions AS a 
-                ON a.id = c.auction_id
-                AND (a.user_id = 252 OR c.user_id = 252)
-            ORDER BY m.created_at ASC'
+			'DECLARE @userId int =:user_id
+
+			SELECT a.title, m.user_id, m.auction_conversation_id, c.auction_id, c.is_closed, m.id AS message_id, m.message, m.created_at 
+			FROM auction_conversations AS c
+			INNER JOIN auction_messages AS m 
+				ON c.id = m.auction_conversation_id 
+				AND m.auction_conversation_id = c.id
+			INNER JOIN auctions AS a 
+				ON a.id = c.auction_id
+				AND (a.user_id = @userId OR c.user_id = @userId)
+			ORDER BY m.created_at ASC', ['user_id' => $userId]
 		));
 	}
 }

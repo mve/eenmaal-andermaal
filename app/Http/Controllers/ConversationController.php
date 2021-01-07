@@ -53,6 +53,8 @@ class ConversationController extends Controller
 			array_push($convos, $obj);
 		}
 
+		// dd($convos);
+
 		return view('messages')->with(['convos' => $convos]);
 	}
 
@@ -65,11 +67,16 @@ class ConversationController extends Controller
 		$auctionId = $request->auctionId;
 		$userId = $request->session()->get('user')->id;
 		
-		$conv = Conversation::getOrCreate($auctionId, $userId);
+		$convId = 0;
+		if ($request->has('conversationId')) {
+			$convId = $request->get('conversationId');
+		} else {
+			$convId = Conversation::getOrCreate($auctionId, $userId)->id;
+		}
 
 		$message = DB::insertOne(
 			"INSERT INTO auction_messages (auction_conversation_id, user_id, message)
-            VALUES (" . $conv->id . ", " . $userId . ", '" . $request->message . "')"
+            VALUES (" . $convId . ", " . $userId . ", '" . $request->message . "')"
 		);
 
 		if (!$message) {

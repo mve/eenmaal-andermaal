@@ -16,6 +16,7 @@
 	</div>
 	@endif
 
+
 	<div class="row">
 		<div class="col-4">
 			<table class="table table-hover mb-4">
@@ -24,11 +25,11 @@
 					<tr class="table-light" onclick="openConversation('conversation-{{$convo->conversation_id}}')">
 						<td>
 							<strong class="text-one-line">{{$convo->auction_title}}</strong>
-							<div class="text-one-line">{{$convo->messages[0]->message}}</div>
-							@if(date('Y', strtotime($convo->messages[0]->created_at)) >= now()->year)
-							<div class="text-right"><i>{{date('d-m H:m', strtotime($convo->messages[0]->created_at))}}</i></div>
+							<div class="text-one-line">{{end($convo->messages)->message}}</div>
+							@if(date('Y', strtotime(end($convo->messages)->created_at)) >= now()->year)
+							<div class="text-right"><i>{{date('d-m H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
 							@else
-							<div class="text-right"><i>{{date('d-m-Y H:m', strtotime($convo->messages[0]->created_at))}}</i></div>
+							<div class="text-right"><i>{{date('d-m-Y H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
 							@endif
 						</td>
 					</tr>
@@ -38,14 +39,14 @@
 		</div>
 		<div class="col-8">
 			@foreach($convos as $convo)
-			<div class="conversation d-none" id="conversation-{{$convo->conversation_id}}">
-				<a href="{{ route('login') }}" class="text-decoration-none">
+			<div class="conversation d-none mb-2" id="conversation-{{$convo->conversation_id}}">
+				<a href="{{ route('auctions.show', $convo->auction_id) }}" class="text-decoration-none">
 					<div class="border p-3 pb-1">
 						<h5>{{$convo->auction_title}}</h5>
 					</div>
 				</a>
 				<div class="overflow-auto">
-					<div class="chat-container">
+					<div class="chat-container overflow-auto" style="min-height: 33vh; max-height: 33vh;">
 						@foreach($convo->messages as $msg)
 						<div class="m-2">
 							@if($msg->user_id == Session::get('user')->id)
@@ -54,16 +55,29 @@
 								<div class="messagebox border p-2" style="max-width: 50%">
 									@endif
 									<span>{{$msg->message}}</span>
-									@if(date('Y', strtotime($convo->messages[0]->created_at)) >= now()->year)
-									<div class="text-right"><i>{{date('d-m H:m', strtotime($convo->messages[0]->created_at))}}</i></div>
+									@if(date('Y', strtotime($msg->created_at)) >= now()->year)
+									<div class="text-right"><i>{{date('d-m H:i', strtotime($msg->created_at))}}</i></div>
 									@else
-									<div class="text-right"><i>{{date('d-m-Y H:m', strtotime($convo->messages[0]->created_at))}}</i></div>
+									<div class="text-right"><i>{{date('d-m-Y H:i', strtotime($msg->created_at))}}</i></div>
 									@endif
 								</div>
 							</div>
 							@endforeach
 						</div>
 					</div>
+					<form method="POST" action="{{ route('messages.send') }}">
+						@csrf
+						<div class="row">
+							<div class="col-10">
+								<input name="message" type="text" class="form-control">
+							</div>
+							<input type="hidden" name="auctionId" value="{{$convo->auction_id}}">
+							<input type="hidden" name="conversationId" value="{{$convo->conversation_id}}">
+							<div class="col-2 text-center">
+								<button class="btn btn-large btn-primary" type="submit">Verstuur</button>
+							</div>
+						</div>
+					</form>
 				</div>
 				@endforeach
 			</div>
