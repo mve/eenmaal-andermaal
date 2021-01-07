@@ -165,7 +165,7 @@
             </div>
         </div>
         <!-- RATINGS -->
-        <div class="auction-card">
+        <div class="auction-card mb-5">
             <div class="flex-centered auction-card-head">
                 <h4>Beoordelingen</h4>
             </div>
