@@ -41,6 +41,10 @@ class AuctionController extends Controller
         $this->middleware('check.user')->except(['show', 'mailFinishedAuctionOwners']);
     }
 
+    public function index()
+    {
+        return abort(404);
+    }
     /**
      * Show the requested auction
      * @param $id
@@ -182,6 +186,10 @@ class AuctionController extends Controller
 
     public function show($id, Request $request)
     {
+        if(!is_numeric($id)){
+            return abort(404);
+        }
+
         $auction = Auction::oneWhere("id", $id);
         if ($auction === false)
             return abort(404);
