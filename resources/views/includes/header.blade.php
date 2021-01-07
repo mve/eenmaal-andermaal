@@ -21,10 +21,10 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item mr-3">
-                    <form method="POST" action="{{ route('zoeken') }}">
-                        @csrf
+                    <form method="GET" action="{{ route('zoeken') }}">
+{{--                        @csrf--}}
                         <div class="input-group">
-                            <input value="" name="keywords" type="text" class="form-control" placeholder="Zoeken...">
+                            <input value="@if(isset($_GET['search'])){{$_GET['search']}}@endif" name="search" type="text" class="form-control" placeholder="Zoeken...">
                             <button id="btn-search" type="submit" class="btn btn-light"> <i class="fas fa-search"></i></button>
                         </div>
                     </form>
@@ -47,14 +47,19 @@
                 </li>
 
                 <li class="nav-item dropdown">
+
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         <i class="fa fa-fw fa-user"></i>
                         Welkom <span class="fw-bold">{{ Session::get('user')->username }}</span>
                     </a>
+
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                         <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">
                             Gewonnen veilingen
+                        </a>
+                        <a class="dropdown-item" href="{{route("veilingen.geboden")}}">
+                            Geboden veilingen
                         </a>
                         @if (Session::get('user')->is_seller)
                         <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
@@ -90,5 +95,5 @@
 </nav>
 
 @if (!Cookie::has('cookie_allow'))
-@include('includes.cookie');
+    @include('includes.cookie');
 @endif

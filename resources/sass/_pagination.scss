@@ -1,0 +1,29 @@
+.page-item.active .page-link {
+    background-color: $dark-blue !important;
+
+    .page-link:focus {
+        box-shadow: 0 0 0 0.25rem rgba(40, 75, 99, 0.25) !important;
+    }
+
+}
+
+.admin {
+    .page-item.active .page-link {
+        background-color: $sand !important;
+        border-color: $sand !important;
+    }
+
+    .page-item.disabled .page-link {
+        border: 1px solid $admin-border;
+    }
+
+    .page-link:focus {
+        box-shadow: 0 0 0 0.25rem rgba(197, 174, 145, 0.25) !important;
+    }
+
+    .page-link {
+        background-color: $admin-bg-light !important;
+        color: $sand;
+        border: 1px solid $admin-border;
+    }
+}

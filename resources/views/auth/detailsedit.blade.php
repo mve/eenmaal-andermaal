@@ -11,7 +11,7 @@
 
                         <div class="card-body">
 
-                            <h2 class="text-center mt-2 mb-4">Account bewerken <a href="{{route('mijnaccount')}}" class="btn btn-primary">Terug</a></h2>
+                            <h2 class="text-center mt-2 mb-4">Account bewerken </h2>
 
                             @if(\Illuminate\Support\Facades\Session::has("success"))
                                 <div class="alert alert-success" role="alert" id="alert-success">
@@ -178,9 +178,10 @@
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-8 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary mr-1">
                                             Opslaan
                                         </button>
+                                        <a href="{{route('mijnaccount')}}" class="btn btn-outline-primary">Terug</a>
                                     </div>
                                 </div>
                             </form>

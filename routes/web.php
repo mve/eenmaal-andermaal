@@ -19,6 +19,7 @@ Route::resource('auctions', AuctionController::class);
 Route::get('mijnveilingen', 'AuctionController@myAuctions')->name('veilingen.mijn');
 Route::get('gewonnenveilingen', 'AuctionController@wonAuctions')->name('veilingen.gewonnen');
 Route::get('veilingen/af/mail', 'AuctionController@mailFinishedAuctionOwners')->name('veilingen.mailsturen');
+Route::get('gebodenveilingen', 'AuctionController@bidAuctions')->name('veilingen.geboden');
 
 Route::get('bid/{id}/{amount}', 'BidController@bid')->name('veilingen.bieden');
 Route::get('bid/{id}', 'BidController@loadData')->name('veilingen.ophalen');
@@ -63,7 +64,7 @@ Route::get('/veilingmaken', 'AuctionController@create')->name('veilingmaken')->m
 Route::get('veilingmaken/categoryselect/{id}/{level}/', 'AuctionController@categorySelect')->name('veilingmaken.categoryselect');
 
 Route::get('search', 'HomeController@search')->name('zoeken');
-Route::post('search', 'HomeController@search')->name('zoeken');
+//Route::post('search', 'HomeController@search')->name('zoeken');
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
 Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
@@ -98,13 +99,13 @@ Route::resource('admin/categories', Admin\CategoryController::class);
 
 
 
-//Route::get('foo', function () {
-//    // Handmatige breadcrumbs voorbeeld
-//    $data = [
-//        "Appels",
-//        "<a href='https://google.com'>Google</a>",
-//        "Nederland",
-//    ];
-//    \App\Breadcrumbs::createAndPrint($data);
-//    return "";
-//});
+Route::get('foo', function () {
+    $auctions = \App\DB::select("
+        SELECT *
+        FROM auctions
+
+        ORDER BY id DESC
+        OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY
+    ");
+    dd($auctions);
+});

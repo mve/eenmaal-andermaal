@@ -5,6 +5,7 @@
 <div class="container-fluid admin">
     <div class="d-flex justify-content-center align-items-center mb-3">
         <h2 class="text-center">{{$auction->title}}</h2>
+        <a href="{{ route('admin.auctions.list') }}" class="back-button btn btn-outline-secondary">Terug</a>
         <button class="btn btn-primary text-light btn-lg ml-4" name="show_auction" onclick="window.location.assign('{{route('auctions.show', $auction->id)}}')">Open veiling</button>
     </div>
     <div class="row">

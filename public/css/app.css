@@ -11604,6 +11604,20 @@ fieldset:disabled .btn {
   background-position: center;
 }
 
+.auction-card--side {
+  height: 200px;
+}
+
+@media only screen and (max-width: 768px) {
+  .auction-card--side {
+    height: 400px;
+  }
+
+  .auction-card--side-image {
+    height: 200px;
+  }
+}
+
 .footer-link {
   text-decoration: none;
   color: #cbd5e0;
@@ -11872,6 +11886,32 @@ p {
   font-weight: normal;
 }
 
+.admin .back-button {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+}
+
+.admin .order-circle {
+  margin-right: 10px;
+  background-color: black;
+  border-radius: 1000px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  float: left;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.admin .order-spacing {
+  width: 30px;
+  height: 20px;
+  float: left;
+}
+
 .logfile-contents {
   color: #a6a6a6;
   max-height: 400px;
@@ -11974,7 +12014,7 @@ p {
 }
 
 .sidebar .openbtn:hover {
-  background-color: #444;
+  background-color: #4c4c4c;
 }
 
 .table {
@@ -12007,8 +12047,48 @@ p {
   color: #10B981;
 }
 
+.page-item.active .page-link {
+  background-color: #284B63 !important;
+}
+
+.page-item.active .page-link .page-link:focus {
+  box-shadow: 0 0 0 0.25rem rgba(40, 75, 99, 0.25) !important;
+}
+
+.admin .page-item.active .page-link {
+  background-color: #c5AE91 !important;
+  border-color: #c5AE91 !important;
+}
+
+.admin .page-item.disabled .page-link {
+  border: 1px solid #616161;
+}
+
+.admin .page-link:focus {
+  box-shadow: 0 0 0 0.25rem rgba(197, 174, 145, 0.25) !important;
+}
+
+.admin .page-link {
+  background-color: #404040 !important;
+  color: #c5AE91;
+  border: 1px solid #616161;
+}
+
 .category-container {
   padding: 18px 0;
+}
+
+.line-clamp-1 {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 #category-container-parent {
@@ -12187,6 +12267,15 @@ a.category:hover {
   font-size: 22px;
 }
 
+.auction-details p {
+  word-break: break-word;
+}
+
+.auction-star-text {
+  width: 60px;
+  text-align: right;
+}
+
 .make-auction .form-check-label {
   font-weight: normal !important;
 }
@@ -12213,5 +12302,21 @@ a.category:hover {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.fend tr:hover {
+  background-color: #ced2d6 !important;
+}
+
+.btn-danger {
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  color: #ffffff;
+}
+
+.content-height {
+  min-height: calc(100vh - 415px);
 }
 

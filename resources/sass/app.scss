@@ -15,9 +15,23 @@
 @import 'accordion';
 @import 'breadcrumbs';
 @import 'admin';
+@import 'pagination';
 
 .category-container {
     padding: 18px 0;
+}
+
+.line-clamp-1 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 #category-container-parent{
@@ -149,6 +163,7 @@ a.category{
 .sand-blue-gradient {
     background: $sand;
     background: linear-gradient(27deg, $sand 0%, $dark-blue-opactiy 100%);
+
 }
 
 .profile-picture {
@@ -221,6 +236,16 @@ a.category{
     }
 }
 
+.auction-details{
+    p{
+        word-break: break-word;
+    }
+}
+
+.auction-star-text{
+    width:60px;
+    text-align: right;
+}
 
 .make-auction{
     .form-check-label{
@@ -251,3 +276,20 @@ a.category{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.fend tr:hover{
+    background-color: #ced2d6!important;
+}
+
+.btn-danger{
+    color: #ffffff;
+    &:hover{
+        color: #ffffff;
+    }
+}
+
+.content-height{
+    min-height: calc(100vh - 415px);
+}
+
+

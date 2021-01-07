@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use function App\Helpers\countLengthNewlinesOneCharacter;
+use function App\Helpers\pizzaaaa;
+use function App\Helpers\textAreaNewlinesToSimpleNewline;
 
 class AuctionController extends Controller
 {
@@ -38,6 +41,10 @@ class AuctionController extends Controller
         $this->middleware('check.user')->except(['show', 'mailFinishedAuctionOwners']);
     }
 
+    public function index()
+    {
+        return abort(404);
+    }
     /**
      * Show the requested auction
      * @param $id
@@ -63,13 +70,17 @@ class AuctionController extends Controller
     {
         $this->validate($request, array(
             'title' => ['required', 'string', 'max:100'],
-            'description' => ['nullable', 'string', 'max:500'],
+            'description' => ['nullable', 'string'],
             'start_price' => ['require', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'payment_instruction' => ['nullable', 'string', 'max:255'],
+            'payment_instruction' => ['nullable', 'string'],
             'duration' => ['required', 'numeric'],
             'image.*' => ['required', 'mimes:jpeg,jpg,png', 'max:10000'], //10000kb/10mb
             'city' => ['required', 'string', 'max:100'],
         ));
+        if (countLengthNewlinesOneCharacter($request->get("description")) > 500)
+            return redirect()->back()->withInput($request->all())->withErrors(["description" => "Omschrijving mag niet uit meer dan 500 tekens bestaan."]);
+        if (countLengthNewlinesOneCharacter($request->get("payment_instruction")) > 255)
+            return redirect()->back()->withInput($request->all())->withErrors(["payment_instruction" => "Extra betalingsinstructies mag niet uit meer dan 255 tekens bestaan."]);
 
         $catId = -1;
         foreach ($request->get("category") as $key => $value) {
@@ -78,7 +89,7 @@ class AuctionController extends Controller
             }
         }
         if (count(Category::allWhereOrderBy("parent_id", $catId, 'name')))
-            return redirect()->back()->withInput($request->all())->withErrors(["category" => "Je mag geen rubriek kiezen die zelf rubrieken heeft"]);
+            return redirect()->back()->withInput($request->all())->withErrors(["category" => "Je mag geen rubriek kiezen die subrubrieken heeft"]);
         if (
             $request->get("duration") != "1" &&
             $request->get("duration") != "3" &&
@@ -102,8 +113,8 @@ class AuctionController extends Controller
         $auction = new Auction();
         $auction->user_id = $request->session()->get("user")->id;
         $auction->title = $request->title;
-        $auction->description = $request->description;
-        $auction->payment_instruction = $request->paymentInstruction;
+        $auction->description = textAreaNewlinesToSimpleNewline($request->description);
+        $auction->payment_instruction = textAreaNewlinesToSimpleNewline($request->paymentInstruction);
         $auction->start_price = $request->startPrice;
         $auction->duration = $request->duration;
         $auction->end_datetime = Carbon::now()->addDays($auction->duration);
@@ -175,6 +186,10 @@ class AuctionController extends Controller
 
     public function show($id, Request $request)
     {
+        if(!is_numeric($id)){
+            return abort(404);
+        }
+
         $auction = Auction::oneWhere("id", $id);
         if ($auction === false)
             return abort(404);
@@ -277,6 +292,37 @@ class AuctionController extends Controller
             'auctions' => $auctions
         ];
         return view("auctions.wonauctions")->with($data);
+    }
+
+    /**
+     * Get the auctions that the user has bid on
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function bidAuctions(Request $request)
+    {
+        $userId = Session::get("user")->id;
+        $auctions = Auction::resultArrayToClassArray(DB::select("
+                WITH bidsLatest AS(
+                    SELECT * FROM
+                    (SELECT auction_id,user_id,created_at,
+                                ROW_NUMBER() OVER (PARTITION BY auction_id ORDER BY created_at DESC) AS RowNumber
+                         FROM   bids
+                         WHERE  user_id = $userId) AS a
+                    WHERE a.RowNumber = 1
+                )
+
+                SELECT a.*, b.created_at AS bid_created_at
+                FROM bidsLatest b
+                LEFT JOIN auctions a
+                ON b.auction_id=a.id
+                ORDER BY bid_created_at DESC
+            "));
+
+        $data = [
+            'auctions' => $auctions
+        ];
+        return view("auctions.bidauctions")->with($data);
     }
 
     /**
