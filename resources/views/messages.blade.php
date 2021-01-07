@@ -100,6 +100,8 @@
 		} else {
 			el.classList.add('d-none');
 		}
+		var chatElement = el.querySelector(".chat-container");
+        chatElement.scrollTop = chatElement.offsetHeight;
 	}
 
 	function closeAllConversations() {
@@ -110,6 +112,10 @@
 			}
 		})
 	}
+
+	@if(isset($_GET["conversation"]))
+        openConversation("conversation-{{$_GET["conversation"]}}");
+    @endif
 </script>
 
 @endsection

@@ -8,8 +8,8 @@ class Conversation extends SuperModel
 	{
 		return Conversation::resultArrayToClassArray(DB::select(
 			'SELECT *
-            FROM auction_conversations 
-            WHERE auction_id =:auction_id 
+            FROM auction_conversations
+            WHERE auction_id =:auction_id
                 AND user_id =:user_id',
 			['auction_id' => $auctionId, 'user_id' => $userId]
 		));
@@ -24,7 +24,7 @@ class Conversation extends SuperModel
 		}
 
 		$insert = DB::insertOne(
-			'INSERT INTO auction_conversations (auction_id, user_id) 
+			'INSERT INTO auction_conversations (auction_id, user_id)
             VALUES ( ' . $auctionId . ', ' . $userId . ')',
 			[]
 		);
@@ -35,18 +35,20 @@ class Conversation extends SuperModel
 	public static function getAllMessagesForUser($userId)
 	{
 		return Conversation::resultArrayToClassArray(DB::select(
-			'DECLARE @userId int =:user_id
-
-			SELECT a.title, m.user_id, m.auction_conversation_id, c.auction_id, c.is_closed, m.id AS message_id, m.message, m.created_at 
+			'
+			SELECT a.title, m.user_id, m.auction_conversation_id, c.auction_id, c.is_closed, m.id AS message_id, m.message, m.created_at
 			FROM auction_conversations AS c
-			INNER JOIN auction_messages AS m 
-				ON c.id = m.auction_conversation_id 
+			INNER JOIN auction_messages AS m
+				ON c.id = m.auction_conversation_id
 				AND m.auction_conversation_id = c.id
-			INNER JOIN auctions AS a 
+			INNER JOIN auctions AS a
 				ON a.id = c.auction_id
-				AND (a.user_id = @userId OR c.user_id = @userId)
+				AND (a.user_id = :user_id OR c.user_id = :user_id1)
 			ORDER BY m.created_at ASC',
-			['user_id' => $userId]
+			[
+			    'user_id' => $userId,
+			    'user_id1' => $userId
+            ]
 		));
 	}
 }

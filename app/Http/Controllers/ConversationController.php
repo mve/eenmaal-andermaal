@@ -51,8 +51,6 @@ class ConversationController extends Controller
 			array_push($convos, $obj);
 		}
 
-		// dd($convos);
-
 		usort($convos, function ($a, $b) {
 			$aLast = end($a->messages)->created_at;
 			$bLast = end($b->messages)->created_at;
@@ -89,6 +87,6 @@ class ConversationController extends Controller
 		if (!$message) {
 			return redirect()->back()->withInput($request->all())->withErrors(["message" => "Bericht is niet verzonden!"]);
 		}
-		return redirect()->route("messages")->with('message', 'Uw bericht is verzonden!');
+		return redirect()->route("messages",["conversation" => $convId])->with('message', 'Uw bericht is verzonden!');
 	}
 }
