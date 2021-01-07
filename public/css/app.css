@@ -12240,6 +12240,10 @@ a.category:hover {
   z-index: 1071;
 }
 
+.fend tr:hover {
+  background-color: #ced2d6 !important;
+}
+
 .btn-danger {
   color: #ffffff;
 }
