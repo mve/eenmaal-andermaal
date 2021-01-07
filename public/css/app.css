@@ -12240,3 +12240,11 @@ a.category:hover {
   z-index: 1071;
 }
 
+.btn-danger {
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  color: #ffffff;
+}
+
