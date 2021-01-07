@@ -59,6 +59,21 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="change_order" class="col-md-11 col-form-label text-md-left">Uitgelichte volgorde</label>
+
+                                <div class="col-md-12">
+                                    <input data-selected-id="" id="change_order" type="number"
+                                        class="form-control @error('change_order') is-invalid @enderror"
+                                        name="change_order" value="{{ old('change_order') }}" autofocus>
+                                    @error('change_order')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="change_parent" class="col-md-11 col-form-label text-md-left">Bovenliggende
                                     categorie</label>
 
@@ -116,6 +131,8 @@
                     var data = JSON.parse(this.response).data;
 
                     let change_name = document.getElementById("change_name");
+                    let change_order = document.getElementById("change_order");
+                    change_order.value = data.manual_order;
                     change_name.value = data.name;
                     change_name.setAttribute('data-selected-id', data.id);
 
@@ -134,6 +151,7 @@
             let new_category = document.getElementById("new_category");
             let change_name = document.getElementById("change_name");
             let change_parent = document.getElementById("change_parent");
+            let change_order = document.getElementById("change_order");
 
             if(new_category.value.length > 0) {
                 // Nieuwe categorie aanmaken
@@ -157,7 +175,7 @@
 
                 xhttp.open("POST", "/admin/categories", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("_token=" + _token + "&new_category=" + new_category.value + "&change_parent=" + change_parent.value);
+                xhttp.send("_token=" + _token + "&new_category=" + new_category.value + "&change_parent=" + change_parent.value + "&new_order=" + change_order.value);
             } else {
                 // Categorie bijwerken
 
@@ -180,7 +198,7 @@
 
                 xhttp.open("PATCH", "/admin/categories/" + change_name.dataset.selectedId, true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value);
+                xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value + "&new_order=" + change_order.value);
             }
         }
 

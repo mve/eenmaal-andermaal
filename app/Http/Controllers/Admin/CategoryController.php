@@ -26,7 +26,7 @@ class CategoryController extends Controller
     {
         $data = [
             "categoryMenuHTML" => Category::getCategoriesAdmin(),
-            "categories" => Category::resultArrayToClassArray(DB::select("SELECT c.id, c.name, c2.name as name_parent, c2.id as parent_id FROM categories c INNER JOIN categories c2 ON c.parent_id = c2.id ORDER by c2.name"))
+            "categories" => Category::resultArrayToClassArray(DB::select("SELECT c.id, c.name, c.manual_order, c2.name as name_parent, c2.id as parent_id FROM categories c INNER JOIN categories c2 ON c.parent_id = c2.id ORDER by c2.name"))
         ];
         return view("admin.categories.index")->with($data);
     }
@@ -42,6 +42,9 @@ class CategoryController extends Controller
 
         $category = new \App\Category();
         $category->name = $data["new_category"];
+        if($data["new_order"] >= 1) {
+            $category->manual_order = $data['new_order'];
+        }
         $category->parent_id = $data["change_parent"];
         $category->save();
 
@@ -61,6 +64,7 @@ class CategoryController extends Controller
         //verplaats categorie naar nieuwe parent
         $category = Category::oneWhere('id', $id);
         $category->parent_id = $data["new_parent"];
+        $category->manual_order = $data['new_order'];
         $category->name = $data["new_name"];
         $category->update(true);
 
