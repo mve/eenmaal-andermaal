@@ -84,32 +84,15 @@ class Category extends SuperModel
             }
             $marginLeft = 10 * $level;
 
-            // $category->manual_order
-
-            // TODO code kan beter, is nu een beetje dubbel.
-
             if (count($childCategories) > 0) {
-
                 $printStr .= '<div class="' . $classes . ' category-hoverable" style="margin-left:'.$marginLeft.'px">';
-                $printStr .= '<span onclick="categorySelected();" id="' . $category->id . '" class="clickable-submenu user-select-none">' . ($category->manual_order ? $category->manual_order . ' ' : '') . $category->name . " <i class='fas fa-arrow-down category-arrow'></i>" . " </span>";
+                $printStr .= '<span onclick="categorySelected();" id="' . $category->id . '" class="clickable-submenu user-select-none">' . ($category->manual_order ? '<span class="order-circle">' . $category->manual_order . '</span>' : '<span class="order-spacing"></span>') . $category->name . " <i class='fas fa-arrow-down category-arrow'></i>" . " </span>";
                 $printStr .= self::printTreeAdmin($childCategories, $allCategories, $level + 1);
                 $printStr .= '</div>';
-
             } else {
-
-                $printStr .= '<a onclick="categorySelected();" id="' . $category->id . '" href="javascript:void(0);" class="' . $classes . ' user-select-none" style="margin-left:'.$marginLeft.'px">' . ($category->manual_order ? $category->manual_order . ' ': '') . $category->name . " <i class='fas fa-arrow-right category-arrow'></i>";
+                $printStr .= '<a onclick="categorySelected();" id="' . $category->id . '" href="javascript:void(0);" class="' . $classes . ' user-select-none" style="margin-left:'.$marginLeft.'px">' . ($category->manual_order ? '<span class="order-circle">' . $category->manual_order . '</span>' : '<span class="order-spacing"></span>') . $category->name . " <i class='fas fa-arrow-right category-arrow'></i>";
                 $printStr .= '</a>';
-                
             }
-
-            // if (count($childCategories) > 0) {
-            //     $printStr .= '<div class="' . $classes . ' category-hoverable" style="margin-left:'.$marginLeft.'px"><span onclick="categorySelected();" id="' . $category->id . '" class="clickable-submenu user-select-none">' . $category->name . " <i class='fas fa-arrow-down category-arrow'></i>" . " </span>";
-            //     $printStr .= self::printTreeAdmin($childCategories, $allCategories, $level + 1);
-            //     $printStr .= '</div>';
-            // } else {
-            //     $printStr .= '<a onclick="categorySelected();" id="' . $category->id . '" href="javascript:void(0);" class="' . $classes . ' user-select-none" style="margin-left:'.$marginLeft.'px">' . $category->name . " <i class='fas fa-arrow-right category-arrow'></i>";
-            //     $printStr .= '</a>';
-            // }
         }
         return $printStr;
     }
