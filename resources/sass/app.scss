@@ -244,3 +244,9 @@ a.category{
 .modal-backdrop{
     z-index: 1071;
 }
+.btn-danger{
+    color: #ffffff;
+    &:hover{
+        color: #ffffff;
+    }
+}
