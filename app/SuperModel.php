@@ -29,14 +29,24 @@ abstract class SuperModel
     /**
      * Update the model with attributes into the child's presumed table at the row with the ID of the object
      */
-    public function update()
+    public function update($updatedAt = true)
     {
+        // $values = [];
+        // $arr = get_object_vars($this);
+        // $arr['updated_at'] = Carbon::now()->toDateTimeString();
+
+        // foreach ($arr as $key => $value) {
+        //     if ($key == "created_at")
+        //         continue;
+        //     $values[$key] = $value;
+        // }
+
         $values = [];
         $arr = get_object_vars($this);
         $arr['updated_at'] = Carbon::now()->toDateTimeString();
 
         foreach ($arr as $key => $value) {
-            if ($key == "created_at")
+            if ($key == "created_at" || ($updatedAt && $key == "updated_at"))
                 continue;
             $values[$key] = $value;
         }

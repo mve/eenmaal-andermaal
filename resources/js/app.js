@@ -368,4 +368,6 @@ if (categoriesAdminElement && rubriekenSearchForm) {
         }
     });
 }
+
+
 /*  Rubrieken admin einde */
