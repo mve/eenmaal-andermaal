@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="san sand-blue-gradient">
+    <div class="san sand-blue-gradient content-height">
         <div class="container">
             <div class="row justify-content-center align-items-center py-5">
                 <div class="col-md-8">
@@ -11,11 +11,13 @@
 
                         <div class="card-body">
 
-                            <h2 class="text-center mt-2 mb-4">Mijn account <a href="{{route("mijnaccount.bewerken")}}" class="btn btn-primary">Bewerken</a> <button type="submit" id="verwijderen" class="btn btn-danger"> Account verwijderen </button></h2>
+                            <h2 class="text-center mt-2 mb-4">Mijn account
+                            </h2>
 
                             @if(Session::has("error"))
                                 <div class="alert alert-danger" role="alert" id="alert-danger">
-                                    <span class="error" id="error" style="margin-top:10px; margin-bottom: 10px;">{!! Session::get("error") !!}</span>
+                                    <span class="error" id="error"
+                                          style="margin-top:10px; margin-bottom: 10px;">{!! Session::get("error") !!}</span>
                                 </div>
                             @endif
 
@@ -34,7 +36,8 @@
                                         Verkoper
                                     @else
                                         Koper
-                                        <a href="{{route("verkoperworden")}}" class="btn-primary btn-sm no-link text-white">Verkoper worden</a>
+                                        <a href="{{route("verkoperworden")}}"
+                                           class="btn-primary btn-sm no-link text-white">Verkoper worden</a>
                                     @endif
                                 </div>
                             </div>
@@ -116,62 +119,78 @@
                                 <div class="col-lg-4 fw-bold">Lid sinds</div>
                                 <div class="col-lg-8">{{date('d-m-Y', strtotime($user->created_at))}}</div>
                             </div>
+                            <div class="mt-3">
+                                <a href="{{route("mijnaccount.bewerken")}}"
+                                   class="btn btn-primary mr-3">Bewerken</a>
 
+                                <button type="submit" id="verwijderen" class="btn btn-danger"> Account verwijderen
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="backdrop" class="d-none">
+            <div class="modal" id="exampleModalCenter" role="dialog" aria-labelledby="exampleModalCenterTitle">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content rounded-5">
+                        <div class="modal-header text-center">
+                            <h5 class="modal-title float-center" id="exampleModalLongTitle">Account verwijderen</h5>
+                        </div>
+                        <div class="modal-body">
+                            <h6>Vul ter bevestiging het wachtwoord in </h6>
+                            <h6>Let op! Na deze stap wordt het account verwijderd en dit kan niet meer teruggedraaid
+                                worden! </h6>
+                            <form method="POST" action="{{ route('mijnaccount.verwijderen') }}">
+                                @csrf
+
+                                <div class="form-group row mb-2">
+                                    <label for="password"
+                                           class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
+
+                                    <div class="col-md-6">
+                                        <input id="password" type="password"
+                                               class="form-control @error('password') is-invalid @enderror"
+                                               name="password" required autocomplete="current-password">
+
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" id="annuleren" name="Annuleren" class="btn btn-danger close"
+                                            aria-label="Close" data-dismiss="modal">Annuleren
+                                    </button>
+                                    <input type="submit" value="Account verwijderen" name="Verwijderen"
+                                           class="btn btn-primary">
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    <div id="backdrop" class="d-none">
-    <div class="modal" id="exampleModalCenter" role="dialog" aria-labelledby="exampleModalCenterTitle">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content rounded-5">
-            <div class="modal-header text-center">
-            <h5 class="modal-title float-center" id="exampleModalLongTitle">Account verwijderen</h5>
-            </div>
-            <div class="modal-body">
-                <h6>Vul ter bevestiging het wachtwoord in </h6>
-                <h6>Let op! Na deze stap wordt het account verwijderd en dit kan niet meer teruggedraaid worden! </h6>
-            <form method="POST" action="{{ route('mijnaccount.verwijderen') }}">
-                @csrf
-
-                <div class="form-group row mb-2">
-                    <label for="password"
-                           class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
-
-                    <div class="col-md-6">
-                        <input id="password" type="password"
-                               class="form-control @error('password') is-invalid @enderror"
-                               name="password" required autocomplete="current-password">
-
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                        @enderror
-                    </div>
-                </div>
-
-            <div class="modal-footer">
-                <button type="button" id="annuleren" name="Annuleren" class="btn btn-danger close" aria-label="Close" data-dismiss="modal">Annuleren</button>
-                <input type="submit" value="Account verwijderen" name="Verwijderen" class="btn btn-primary">
-            </form></div>
-            </div>
-        </div>
-        </div>
+        <div id="backdrop2" class="modal-backdrop fade show d-none"></div>
     </div>
-        <div class="modal-backdrop fade show"> </div>
-</div>
     <script>
         document.getElementById("annuleren").addEventListener("click", (event) => {
             document.getElementById("backdrop").classList.add('d-none');
+            document.getElementById("backdrop2").classList.add('d-none');
             document.getElementById("exampleModalCenter").style.remove = "block";
-        } )
-      document.getElementById("verwijderen").addEventListener("click", (event) => {
-          document.getElementById("backdrop").classList.remove('d-none');
-          document.getElementById("exampleModalCenter").style.display = "block";
-       })
-      </script>
+        })
+        document.getElementById("verwijderen").addEventListener("click", (event) => {
+            document.getElementById("backdrop").classList.remove('d-none');
+            document.getElementById("backdrop2").classList.remove('d-none');
+            document.getElementById("exampleModalCenter").style.display = "block";
+
+        })
+    </script>
 @endsection
 

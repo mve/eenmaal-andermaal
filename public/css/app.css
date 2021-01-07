@@ -12281,3 +12281,7 @@ a.category:hover {
   color: #ffffff;
 }
 
+.content-height {
+  min-height: calc(100vh - 415px);
+}
+
