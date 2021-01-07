@@ -34,7 +34,7 @@
             </a>
             @endif
         </div>
-        <div class="my-4">
+        <div class="my-4 auction-details">
             <h4>Omschrijving</h4>
             <hr>
             <p>{!! nl2br($auction->description) !!}</p>
@@ -184,31 +184,31 @@
                     <i>{{$reviewsData["count"]}} {{$reviewsData["count"]==1 ? "beoordeling" : "beoordelingen"}}</i>
                 </div>
 
-                <div class="flex-centered">5 sterren
+                <div class="flex-centered"><span class="auction-star-text">5 sterren</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["fiveStars"]}};"></div>
                     </div>
                     {{$reviewsData["fiveStars"]}}
                 </div>
-                <div class="flex-centered">4 sterren
+                <div class="flex-centered"><span class="auction-star-text">4 sterren</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["fourStars"]}};"></div>
                     </div>
                     {{$reviewsData["fourStars"]}}
                 </div>
-                <div class="flex-centered">3 sterren
+                <div class="flex-centered"><span class="auction-star-text">3 sterren</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["threeStars"]}};"></div>
                     </div>
                     {{$reviewsData["threeStars"]}}
                 </div>
-                <div class="flex-centered">2 sterren
+                <div class="flex-centered"><span class="auction-star-text">2 sterren</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["twoStars"]}};"></div>
                     </div>
                     {{$reviewsData["twoStars"]}}
                 </div>
-                <div class="flex-centered">1 ster
+                <div class="flex-centered"><span class="auction-star-text">1 ster</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["oneStars"]}};"></div>
                     </div>

@@ -97,11 +97,5 @@ Route::resource('admin/categories', Admin\CategoryController::class);
 
 
 Route::get('foo', function () {
-    abort(401);
-    abort(403);
-    abort(404);
-    abort(419);
-    abort(429);
-    abort(500);
-    abort(503);
+
 });

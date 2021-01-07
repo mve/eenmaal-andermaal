@@ -12220,6 +12220,15 @@ a.category:hover {
   font-size: 22px;
 }
 
+.auction-details p {
+  word-break: break-word;
+}
+
+.auction-star-text {
+  width: 60px;
+  text-align: right;
+}
+
 .make-auction .form-check-label {
   font-weight: normal !important;
 }
