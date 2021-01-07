@@ -31,7 +31,9 @@
 
 @include('includes.header')
 
+<div class="content-height">
     @yield('content')
+</div>
 
 @include('includes.footer')
 
