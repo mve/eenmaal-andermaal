@@ -16,7 +16,6 @@
 	</div>
 	@endif
 
-
 	<div class="row">
 		<div class="col-md-4">
 			<div style="width:80%;overflow-y:auto;height:500px;" class="ml-auto mr-auto mb-2">

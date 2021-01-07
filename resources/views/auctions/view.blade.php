@@ -118,8 +118,8 @@
                 <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
                 <p>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</p>
 
+				@if ($auction->user_id != Session::get('user')->id)
                 <div class="my-3">
-
                     @if(Session::has('user'))
                     <button class="btn btn-outline-primary" id="bericht"><i class="fas fa-envelope"></i> Bericht</button>
                     @endif
@@ -129,9 +129,8 @@
                         <i class="fas fa-phone-alt"></i> Neem contact op!
                     </a>
                     @endif
-
                 </div>
-
+				@endif
             </div>
             <ul class="list-group">
                 <li class="list-group-item text-center">
@@ -143,7 +142,9 @@
                     </div>
                 </li>
             </ul>
+
             <div class="auction-card-body">
+				@if ($auction->user_id != Session::get('user')->id)
                 <label for="Bieden" class="form-label fw-bold">Plaats bod</label>
                 <div class="input-group mb-3">
                     <input type="hidden" id="auction-id" value="{{$auction->id}}" />
@@ -157,6 +158,7 @@
                     <span class="error" id="error" style="margin-top:10px; margin-bottom: 10px;"></span>
                 </div>
                 <hr>
+				@endif
                 <p class="fw-bold">Vorige bieders</p>
                 <ul class="list-group" style="max-height: 200px; overflow-y: scroll" id="last-five-bids-list">
                     {!! $auction->getLastNBidsHTML(5) !!}
