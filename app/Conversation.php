@@ -45,7 +45,8 @@ class Conversation extends SuperModel
 			INNER JOIN auctions AS a 
 				ON a.id = c.auction_id
 				AND (a.user_id = @userId OR c.user_id = @userId)
-			ORDER BY m.created_at ASC', ['user_id' => $userId]
+			ORDER BY m.created_at ASC',
+			['user_id' => $userId]
 		));
 	}
 }

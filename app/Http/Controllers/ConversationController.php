@@ -41,8 +41,6 @@ class ConversationController extends Controller
 			]);
 		}
 
-		$convosArray = array_reverse($convosArray);
-
 		$convos = [];
 		foreach ($convosArray as $convo) {
 			$obj = (object) [];
@@ -55,6 +53,12 @@ class ConversationController extends Controller
 
 		// dd($convos);
 
+		usort($convos, function ($a, $b) {
+			$aLast = end($a->messages)->created_at;
+			$bLast = end($b->messages)->created_at;
+			return strtotime($bLast) - strtotime($aLast);
+		});
+
 		return view('messages')->with(['convos' => $convos]);
 	}
 
@@ -66,7 +70,7 @@ class ConversationController extends Controller
 
 		$auctionId = $request->auctionId;
 		$userId = $request->session()->get('user')->id;
-		
+
 		$convId = 0;
 		if ($request->has('conversationId')) {
 			$convId = $request->get('conversationId');
@@ -76,7 +80,10 @@ class ConversationController extends Controller
 
 		$message = DB::insertOne(
 			"INSERT INTO auction_messages (auction_conversation_id, user_id, message)
-            VALUES (" . $convId . ", " . $userId . ", '" . $request->message . "')"
+			VALUES (" . $convId . ", " . $userId . ", :message)",
+			[
+				'message' => $request->message
+			]
 		);
 
 		if (!$message) {
