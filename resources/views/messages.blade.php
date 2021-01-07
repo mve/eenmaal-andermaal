@@ -19,23 +19,25 @@
 
 	<div class="row">
 		<div class="col-md-4">
-			<table class="table table-hover mb-4">
-				<tbody>
-					@foreach($convos as $convo)
-					<tr class="table-light" onclick="openConversation('conversation-{{$convo->conversation_id}}')">
-						<td>
-							<strong class="text-one-line">{{$convo->auction_title}}</strong>
-							<div class="text-one-line">{{end($convo->messages)->message}}</div>
-							@if(date('Y', strtotime(end($convo->messages)->created_at)) >= now()->year)
-							<div class="text-right"><i>{{date('d-m H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
-							@else
-							<div class="text-right"><i>{{date('d-m-Y H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
-							@endif
-						</td>
-					</tr>
-					@endforeach
-				</tbody>
-			</table>
+			<div style="width:80%;overflow-y:auto;height:500px;" class="ml-auto mr-auto mb-2">
+                <table class="table table-hover mb-4 conversations-table">
+                    <tbody>
+                    @foreach($convos as $convo)
+                        <tr class="table-light" onclick="openConversation('conversation-{{$convo->conversation_id}}')">
+                            <td>
+                                <strong class="text-one-line">{{$convo->auction_title}}</strong>
+                                <div class="text-one-line">{{end($convo->messages)->message}}</div>
+                                @if(date('Y', strtotime(end($convo->messages)->created_at)) >= now()->year)
+                                    <div class="text-right"><i>{{date('d-m H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
+                                @else
+                                    <div class="text-right"><i>{{date('d-m-Y H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
 		</div>
 		<div class="col-md-8">
 			@foreach($convos as $convo)
@@ -46,7 +48,8 @@
 					</div>
 				</a>
 				<div class="overflow-auto">
-					<div class="chat-container overflow-auto" style="min-height: 33vh; max-height: 33vh;">
+                    <!--  min-height: 33vh;;max-height: 33vh; -->
+					<div class="chat-container overflow-auto" style="min-height: 41vh;max-height: 41vh;">
 						@foreach($convo->messages as $msg)
 						<div class="m-2">
 							@if($msg->user_id == Session::get('user')->id)

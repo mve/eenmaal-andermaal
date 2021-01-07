@@ -12316,6 +12316,10 @@ a.category:hover {
   color: #ffffff;
 }
 
+.conversations-table {
+  width: 100%;
+}
+
 .content-height {
   min-height: calc(100vh - 415px);
 }
