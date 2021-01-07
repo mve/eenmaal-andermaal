@@ -115,7 +115,7 @@
             </div>
             <div class="auction-card-body">
                 <i class="fas fa-user profile-picture"></i>
-                <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
+                {{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}
                 <p>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</p>
 
                 <div class="my-3">
