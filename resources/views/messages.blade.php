@@ -17,8 +17,8 @@
 	@endif
 
 	<div class="row">
-		<div class="col-md-4">
-			<div style="width:80%;overflow-y:auto;height:500px;" class="ml-auto mr-auto mb-2">
+		<div class="col-md-4 border">
+			<div style="width:100%;overflow-y:auto;height:60vh;" class="ml-auto mr-auto mb-2">
                 <table class="table table-hover mb-4 conversations-table">
                     <tbody>
                     @foreach($convos as $convo)
@@ -48,7 +48,7 @@
 				</a>
 				<div class="overflow-auto">
                     <!--  min-height: 33vh;;max-height: 33vh; -->
-					<div class="chat-container overflow-auto" style="min-height: 41vh;max-height: 41vh;">
+					<div class="chat-container overflow-auto" style="height:55vh;">
 						@foreach($convo->messages as $msg)
 						<div class="m-2">
 							@if($msg->user_id == Session::get('user')->id)
