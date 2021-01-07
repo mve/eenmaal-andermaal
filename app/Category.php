@@ -44,7 +44,7 @@ class Category extends SuperModel
 
     public static function getCategories()
     {
-        $allCategories = self::allOrderBy('name');
+        $allCategories = self::allOrderBy('-manual_order DESC, name');
 
         $checkSum = md5(serialize($allCategories));
 

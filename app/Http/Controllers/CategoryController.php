@@ -23,7 +23,7 @@ class CategoryController extends Controller
         if ($category === false)
             return redirect()->route("home");
 
-        $children = Category::allWhereOrderBy("parent_id", $category->id, 'name');
+        $children = Category::allWhereOrderBy("parent_id", $category->id,'-manual_order DESC, name');
         if (count($children))
             return self::categoryChildren($category, $children);
 
