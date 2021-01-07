@@ -16,10 +16,9 @@
 	</div>
 	@endif
 
-
 	<div class="row">
-		<div class="col-md-4">
-			<table class="table table-hover mb-4">
+		<div class="col-md-4 border">
+			<table class="table table-hover mb-4" style="width:100%;">
 				<tbody>
 					@foreach($convos as $convo)
 					<tr class="table-light" onclick="openConversation('conversation-{{$convo->conversation_id}}')">
@@ -46,7 +45,7 @@
 					</div>
 				</a>
 				<div class="overflow-auto">
-					<div class="chat-container overflow-auto" style="min-height: 33vh; max-height: 33vh;">
+					<div class="chat-container overflow-auto" style="min-height: 45vh; max-height: 45vh;">
 						@foreach($convo->messages as $msg)
 						<div class="m-2">
 							@if($msg->user_id == Session::get('user')->id)
