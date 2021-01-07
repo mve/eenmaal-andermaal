@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Conversation;
 use App\Message;
 use App\DB;
+use function App\Helpers\countLengthNewlinesOneCharacter;
+use function App\Helpers\textAreaNewlinesToSimpleNewline;
 
 class ConversationController extends Controller
 {
@@ -63,8 +65,10 @@ class ConversationController extends Controller
 	public function send(Request $request)
 	{
 		$this->validate($request, array(
-			'message' => ['required', 'string', 'max:250'],
+			'message' => ['required', 'string'],
 		));
+        if (countLengthNewlinesOneCharacter($request->get("message")) > 250)
+            return redirect()->back()->withInput($request->all())->withErrors(["message" => "Bericht mag niet uit meer dan 500 tekens bestaan."]);
 
 		$auctionId = $request->auctionId;
 		$userId = $request->session()->get('user')->id;
@@ -80,7 +84,7 @@ class ConversationController extends Controller
 			"INSERT INTO auction_messages (auction_conversation_id, user_id, message)
 			VALUES (" . $convId . ", " . $userId . ", :message)",
 			[
-				'message' => $request->message
+				'message' => textAreaNewlinesToSimpleNewline($request->message)
 			]
 		);
 
