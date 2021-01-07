@@ -12244,3 +12244,11 @@ a.category:hover {
   background-color: #ced2d6 !important;
 }
 
+.btn-danger {
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  color: #ffffff;
+}
+

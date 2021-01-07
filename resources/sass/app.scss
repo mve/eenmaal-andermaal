@@ -248,3 +248,10 @@ a.category{
 .fend tr:hover{
     background-color: #ced2d6!important;
 }
+
+.btn-danger{
+    color: #ffffff;
+    &:hover{
+        color: #ffffff;
+    }
+}
