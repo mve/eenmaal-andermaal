@@ -22,10 +22,10 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item mr-3">
-                    <form method="POST" action="{{ route('zoeken') }}">
-                        @csrf
+                    <form method="GET" action="{{ route('zoeken') }}">
+{{--                        @csrf--}}
                         <div class="input-group">
-                            <input value="" name="keywords" type="text" class="form-control" placeholder="Zoeken...">
+                            <input value="@if(isset($_GET['search'])){{$_GET['search']}}@endif" name="search" type="text" class="form-control" placeholder="Zoeken...">
                             <button id="btn-search" type="submit" class="btn btn-light"> <i class="fas fa-search"></i></button>
                         </div>
                     </form>
@@ -52,6 +52,9 @@
 
                             <a class="dropdown-item" href="{{route("veilingen.gewonnen")}}">
                                 Gewonnen veilingen
+                            </a>
+                            <a class="dropdown-item" href="{{route("veilingen.geboden")}}">
+                                Geboden veilingen
                             </a>
                             @if (Session::get('user')->is_seller)
                                 <a class="dropdown-item" href="{{route("veilingen.mijn")}}">
@@ -89,6 +92,6 @@
 </nav>
 
 @if (!Cookie::has('cookie_allow'))
-    @include('includes.cookie');    
+    @include('includes.cookie');
 @endif
 

@@ -5,6 +5,11 @@
     <div class="container-fluid admin">
         <h1 class="text-center pt-3">Rubrieken</h1>
 
+        <form id="rubriekenSearchForm" class="form-group text-center">
+            <input type="text" class="form-control" style="width: inherit;display:inline" placeholder="Yu-Gi-Oh!">
+            <input type="submit" class="btn btn-secondary" name="submit" value="Zoek"/>
+        </form>
+
         <div class="row mb-3">
             <div class="col-lg-8">
                 <div class="content">

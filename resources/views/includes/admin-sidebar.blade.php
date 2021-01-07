@@ -11,16 +11,15 @@
                     <a class="nav-link" href="{{ route('admin.users.list') }}"><i class="fas fa-fw fa-users"></i>Gebruikers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
+                    <a class="nav-link" href="{{ route('admin.auctions.list') }}"><i class="fas fa-fw fa-gavel"></i>Veilingen</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('admin.statistics')}}"><i class="fas fa-fw fa-gavel"></i>Statistieken</a>
+                    <a class="nav-link" href="{{route('admin.statistics')}}"><i class="fas fa-fw fa-chart-bar"></i>Statistieken</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/categories"><i class="fas fa-fw fa-list-alt"></i>Categorien</a>
                 </li>
             </ul>
-
 
             <div class="bottom-info">
                 <ul class="nav flex-column ">

@@ -27549,8 +27549,9 @@ if (mySidepanel) {
 
 
 var categoriesAdminElement = document.querySelector("#category-container-parent-admin");
+var rubriekenSearchForm = document.getElementById("rubriekenSearchForm");
 
-if (categoriesAdminElement) {
+if (categoriesAdminElement && rubriekenSearchForm) {
   var _hideChildren = function _hideChildren(parent) {
     var children = parent.parentElement.querySelectorAll(":scope>a,:scope>div");
 
@@ -27558,6 +27559,17 @@ if (categoriesAdminElement) {
       if (children[i].classList.contains("d-block")) {
         children[i].classList.remove("d-block");
         children[i].classList.add("d-none");
+      }
+    }
+  };
+
+  var showChildren = function showChildren(parent) {
+    var children = parent.parentElement.querySelectorAll(":scope>a,:scope>div");
+
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].classList.contains("d-none")) {
+        children[i].classList.remove("d-none");
+        children[i].classList.add("d-block");
       }
     }
   };
@@ -27593,6 +27605,37 @@ if (categoriesAdminElement) {
   for (var i = 0; i < hoverables.length; i++) {
     hoverables[i].addEventListener('click', _toggleSubMenu);
   }
+
+  rubriekenSearchForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var value = e.target[0].value;
+
+    _closeAllHoverablesChildren();
+
+    if (value.length >= 2) {
+      var rChildren = categoriesAdminElement.querySelectorAll("a,span");
+
+      for (var i = 0; i < rChildren.length; i++) {
+        var curChild = rChildren[i];
+        var curVal = curChild.textContent.toLowerCase();
+
+        if (curVal.indexOf(value.toLowerCase()) !== -1) {
+          var foundMax = false;
+          var element = curChild;
+
+          while (element.parentNode && !foundMax) {
+            showChildren(element);
+            element = element.parentNode;
+
+            if (element == categoriesAdminElement) {
+              foundMax = true;
+              break;
+            }
+          }
+        }
+      }
+    }
+  });
 }
 /*  Rubrieken admin einde */
 

@@ -101,6 +101,13 @@ class AdminController extends Controller
             }
             $logFileContents .= $str;
         }
+        $maxL = 5000;
+        $newlines = substr_count($logFileContents, "\n");
+        if($newlines > $maxL){
+            $arr = explode("\n", $logFileContents);
+            $newArray = array_splice($arr, $newlines-$maxL,$newlines);
+            $logFileContents = implode("\n", $newArray);
+        }
         fclose($file);
 
         $mainLabels = array_unique($labelArr);
@@ -156,8 +163,7 @@ class AdminController extends Controller
                 "data" => $datasetDataArray
             ]);
         }
-//        printf(str_replace("\n","<br/>", $logFileContents));
-//        die();
+
         $data = [
             "datasets" => $finalDataArray,
             "total" => $totalErrorsArray,
