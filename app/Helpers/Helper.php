@@ -24,7 +24,7 @@ if (!function_exists('textAreaNewlinesToSimpleNewline')) {
      */
     function textAreaNewlinesToSimpleNewline($string)
     {
-        $string = str_replace(["\n", "\r\n", "\r"],"",$string);
+        $string = str_replace(["\n", "\r\n", "\r"],"\n",$string);
         return $string;
     }
 }
