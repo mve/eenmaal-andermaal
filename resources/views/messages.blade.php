@@ -18,7 +18,7 @@
 
 
 	<div class="row">
-		<div class="col-4">
+		<div class="col-md-4">
 			<table class="table table-hover mb-4">
 				<tbody>
 					@foreach($convos as $convo)
@@ -37,7 +37,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-8">
+		<div class="col-md-8">
 			@foreach($convos as $convo)
 			<div class="conversation d-none mb-2" id="conversation-{{$convo->conversation_id}}">
 				<a href="{{ route('auctions.show', $convo->auction_id) }}" class="text-decoration-none">
@@ -67,15 +67,11 @@
 					</div>
 					<form method="POST" action="{{ route('messages.send') }}">
 						@csrf
-						<div class="row">
-							<div class="col-10">
-								<input name="message" type="text" class="form-control">
-							</div>
-							<input type="hidden" name="auctionId" value="{{$convo->auction_id}}">
-							<input type="hidden" name="conversationId" value="{{$convo->conversation_id}}">
-							<div class="col-2 text-center">
-								<button class="btn btn-large btn-primary" type="submit">Verstuur</button>
-							</div>
+						<div>
+                            <input type="hidden" name="auctionId" value="{{$convo->auction_id}}">
+                            <input type="hidden" name="conversationId" value="{{$convo->conversation_id}}">
+                            <button class="btn btn-large btn-primary float-right" type="submit">Verstuur</button>
+                            <span class="d-block overflow-hidden pr-1"><input name="message" type="text" class="form-control float-left"></span>
 						</div>
 					</form>
 				</div>
@@ -102,6 +98,13 @@
 		}
 		var chatElement = el.querySelector(".chat-container");
         chatElement.scrollTop = chatElement.offsetHeight;
+        if(window.innerWidth <= 767){
+            const y = chatElement.closest(".conversation").getBoundingClientRect().top + window.scrollY;
+            window.scroll({
+                top: y,
+                behavior: 'smooth'
+            });
+        }
 	}
 
 	function closeAllConversations() {
