@@ -18,7 +18,7 @@
 
 	<div class="row">
 		<div class="col-md-4 border">
-			<div style="width:100%;overflow-y:auto;height:60vh;" class="ml-auto mr-auto mb-2">
+			<div style="width:100%;overflow-y:auto;height:62vh;" class="ml-auto mr-auto mb-2">
                 <table class="table table-hover mb-4 conversations-table">
                     <tbody>
                     @foreach($convos as $convo)
@@ -38,7 +38,7 @@
                 </table>
             </div>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-8 border">
 			@foreach($convos as $convo)
 			<div class="conversation d-none mb-2" id="conversation-{{$convo->conversation_id}}">
 				<a href="{{ route('auctions.show', $convo->auction_id) }}" class="text-decoration-none">
