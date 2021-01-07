@@ -10,6 +10,7 @@ use App\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use function App\Helpers\countLengthNewlinesOneCharacter;
 
 class AuctionController extends Controller
 {
@@ -109,9 +110,13 @@ class AuctionController extends Controller
     public function save(Request $request) {
         $this->validate($request, array(
             'title' => ['required', 'string', 'max:100'],
-            'description' => ['nullable', 'string', 'max:500'],
-            'payment_instruction' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'payment_instruction' => ['nullable', 'string'],
         ));
+        if (countLengthNewlinesOneCharacter($request->get("description")) > 500)
+            return redirect()->back()->withInput($request->all())->withErrors(["description" => "Omschrijving mag niet uit meer dan 500 tekens bestaan."]);
+        if (countLengthNewlinesOneCharacter($request->get("payment_instruction")) > 255)
+            return redirect()->back()->withInput($request->all())->withErrors(["payment_instruction" => "Extra betalingsinstructies mag niet uit meer dan 255 tekens bestaan."]);
 
         $auction = Auction::oneWhere('id', $request->id);
         $auction->title = $request->title;
