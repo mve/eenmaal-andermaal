@@ -26,10 +26,9 @@
                 <div class="card px-2 py-4">
                     <div class="card-body">
 
-
                         <div class="form-group mb-4">
                             <label for="new_category" class="col-md-11 col-form-label text-md-left">Nieuwe
-                                catergorie</label>
+                                categorie</label>
 
                             <div class="col-md-12">
                                 <input id="new_category" type="text"
