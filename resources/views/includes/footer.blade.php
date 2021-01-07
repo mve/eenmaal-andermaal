@@ -23,11 +23,11 @@
             </div>
         </div>
 
-        <div class="row" style="padding: 20px 0 20px 0; text-align: center; border-top: 1px solid white;">
+        <div class="row" style="padding: 20px 0 20px 0; border-top: 1px solid white;">
             <div class="col-sm-12 col-md-6 col-lg">
                 <a class="footer-link" href="/privacy">Privacy</a>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg">
+            <div class="col-sm-12 col-md-6 col-lg" style="text-align: center;">
                 © {{ now()->year }} Eenmaal Andermaal
             </div>
         </div>
