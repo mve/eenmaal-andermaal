@@ -30,7 +30,7 @@
                                 <form method="post" action="">
                                     <div>
                                         <div class="form-group">
-                                            <label for="new_categorie" class="col-md-11 col-form-label text-md-left">Nieuwe catergorie</label>
+                                            <label for="new_categorie" class="col-md-11 col-form-label text-md-left">Nieuwe categorie</label>
 
                                             <div class="col-md-12">
                                                 <input id="new_categorie" type="text"
@@ -63,7 +63,7 @@
 
                                         <div class="form-group">
                                             <label for="country_code"
-                                                class="col-md-11 col-form-label text-md-left">Hoofdcatergorie wijzigen</label>
+                                                class="col-md-11 col-form-label text-md-left">Hoofdcategorie wijzigen</label>
 
                                             <div class="col-md-12">
                                                 <select name="change_parent" class="form-select @error('change_parent') is-invalid @enderror" aria-label="Default select example">
