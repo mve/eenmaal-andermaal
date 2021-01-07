@@ -12,7 +12,7 @@
                         <div class="card-body">
 
                             <h2 class="text-center mt-2 mb-4">Mijn account <a href="{{route("mijnaccount.bewerken")}}" class="btn btn-primary">Bewerken</a> <button type="submit" id="verwijderen" class="btn btn-danger"> Account verwijderen </button></h2>
-                            
+
                             @if(Session::has("error"))
                                 <div class="alert alert-danger" role="alert" id="alert-danger">
                                     <span class="error" id="error" style="margin-top:10px; margin-bottom: 10px;">{!! Session::get("error") !!}</span>
@@ -135,7 +135,7 @@
                 <h6>Let op! Na deze stap wordt het account verwijderd en dit kan niet meer teruggedraaid worden! </h6>
             <form method="POST" action="{{ route('mijnaccount.verwijderen') }}">
                 @csrf
-               
+
                 <div class="form-group row mb-2">
                     <label for="password"
                            class="col-md-4 col-form-label text-md-right">Wachtwoord</label>
@@ -152,10 +152,11 @@
                         @enderror
                     </div>
                 </div>
-            </div>
+
             <div class="modal-footer">
+                <button type="button" id="annuleren" name="Annuleren" class="btn btn-danger close" aria-label="Close" data-dismiss="modal">Annuleren</button>
                 <input type="submit" value="Account verwijderen" name="Verwijderen" class="btn btn-primary">
-            </form>
+            </form></div>
             </div>
         </div>
         </div>
@@ -163,6 +164,10 @@
         <div class="modal-backdrop fade show"> </div>
 </div>
     <script>
+        document.getElementById("annuleren").addEventListener("click", (event) => {
+            document.getElementById("backdrop").classList.add('d-none');
+            document.getElementById("exampleModalCenter").style.remove = "block";
+        } )
       document.getElementById("verwijderen").addEventListener("click", (event) => {
           document.getElementById("backdrop").classList.remove('d-none');
           document.getElementById("exampleModalCenter").style.display = "block";
