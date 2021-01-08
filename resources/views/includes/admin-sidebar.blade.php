@@ -17,7 +17,7 @@
                     <a class="nav-link" href="{{route('admin.statistics')}}"><i class="fas fa-fw fa-chart-bar"></i>Statistieken</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/categories"><i class="fas fa-fw fa-list-alt"></i>Categorien</a>
+                    <a class="nav-link" href="/admin/categories"><i class="fas fa-fw fa-list-alt"></i>Categorieën</a>
                 </li>
             </ul>
 
@@ -42,14 +42,9 @@
                     </li>
                 </ul>
             </div>
-
         </div>
 
-
-
-
         <button id="openbtn" class="openbtn">&#9776;</button>
-
     </div>
 </div>
 
