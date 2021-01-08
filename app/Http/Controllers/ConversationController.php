@@ -39,6 +39,7 @@ class ConversationController extends Controller
 			array_push($convosArray[$convo->auction_conversation_id]['messages'], (object) [
 				'message' => $convo->message,
 				'user_id' => $convo->user_id,
+				'is_read' => $convo->is_read,
 				'created_at' => $convo->created_at
 			]);
 		}

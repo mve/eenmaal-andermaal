@@ -213,6 +213,7 @@ CREATE TABLE dbo.auction_messages (
     auction_conversation_id bigint NOT NULL,
     user_id bigint NOT NULL,
     message varchar(255) NOT NULL,
+	is_read bit DEFAULT 0 NOT NULL,
     created_at datetime DEFAULT getdate() NOT NULL,
     CONSTRAINT PK_auctionmessages PRIMARY KEY (id),
     CONSTRAINT FK_auctionconversations_auctionmessages FOREIGN KEY (auction_conversation_id) REFERENCES dbo.auction_messages(id),

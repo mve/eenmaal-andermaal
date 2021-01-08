@@ -75,6 +75,7 @@ Route::post('cookie', 'HomeController@cookie')->name('cookie');
 
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
 
+Route::get('messages/read', 'ConversationController@markAsRead')->name('messages.read');
 Route::get('messages', 'ConversationController@list')->name('messages');
 Route::post('messages/send', 'ConversationController@send')->name('messages.send');
 

@@ -19,24 +19,31 @@
 	<div class="row">
 		<div class="col-md-4 border">
 			<div style="width:100%;overflow-y:auto;height:62vh;" class="ml-auto mr-auto mb-2">
-                <table class="table table-hover mb-4 conversations-table">
-                    <tbody>
-                    @foreach($convos as $convo)
-                        <tr class="table-light" onclick="openConversation('conversation-{{$convo->conversation_id}}')">
-                            <td>
-                                <strong class="text-one-line">{{$convo->auction_title}}</strong>
-                                <div class="text-one-line">{{end($convo->messages)->message}}</div>
-                                @if(date('Y', strtotime(end($convo->messages)->created_at)) >= now()->year)
-                                    <div class="text-right"><i>{{date('d-m H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
-                                @else
-                                    <div class="text-right"><i>{{date('d-m-Y H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+				<table class="table table-hover mb-4 conversations-table">
+					<tbody>
+						@foreach($convos as $convo)
+						<tr class="table-light" onclick="openConversation('conversation-{{$convo->conversation_id}}')">
+							<td>
+								<strong class="text-one-line">{{$convo->auction_title}}</strong>
+								@if(end($convo->messages)->is_read == 1)
+								<div class="text-one-line">{{end($convo->messages)->message}}</div>
+								@else
+								<strong>
+									<div class="text-one-line">{{end($convo->messages)->message}}</div>
+								</strong>
+								@endif
+
+								@if(date('Y', strtotime(end($convo->messages)->created_at)) >= now()->year)
+								<div class="text-right"><i>{{date('H:i d-m', strtotime(end($convo->messages)->created_at))}}</i></div>
+								@else
+								<div class="text-right"><i>{{date('H:i d-m-Y', strtotime(end($convo->messages)->created_at))}}</i></div>
+								@endif
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<div class="col-md-8 border">
 			@foreach($convos as $convo)
@@ -47,7 +54,7 @@
 					</div>
 				</a>
 				<div class="overflow-auto">
-                    <!--  min-height: 33vh;;max-height: 33vh; -->
+					<!--  min-height: 33vh;;max-height: 33vh; -->
 					<div class="chat-container overflow-auto" style="height:55vh;">
 						@foreach($convo->messages as $msg)
 						<div class="m-2">
@@ -58,9 +65,9 @@
 									@endif
 									<span>{{$msg->message}}</span>
 									@if(date('Y', strtotime($msg->created_at)) >= now()->year)
-									<div class="text-right"><i>{{date('d-m H:i', strtotime($msg->created_at))}}</i></div>
+									<div class="text-right"><i>{{date('H:i d-m', strtotime($msg->created_at))}}</i></div>
 									@else
-									<div class="text-right"><i>{{date('d-m-Y H:i', strtotime($msg->created_at))}}</i></div>
+									<div class="text-right"><i>{{date('H:i d-m-Y', strtotime($msg->created_at))}}</i></div>
 									@endif
 								</div>
 							</div>
@@ -70,10 +77,10 @@
 					<form method="POST" action="{{ route('messages.send') }}">
 						@csrf
 						<div>
-                            <input type="hidden" name="auctionId" value="{{$convo->auction_id}}">
-                            <input type="hidden" name="conversationId" value="{{$convo->conversation_id}}">
-                            <button class="btn btn-large btn-primary float-right" type="submit">Verstuur</button>
-                            <span class="d-block overflow-hidden pr-1"><input name="message" type="text" class="form-control float-left"></span>
+							<input type="hidden" name="auctionId" value="{{$convo->auction_id}}">
+							<input type="hidden" name="conversationId" value="{{$convo->conversation_id}}">
+							<button class="btn btn-large btn-primary float-right" type="submit">Verstuur</button>
+							<span class="d-block overflow-hidden pr-1"><input name="message" type="text" class="form-control float-left"></span>
 						</div>
 					</form>
 				</div>
@@ -93,22 +100,22 @@
 
 		var el = document.getElementById(elementId);
 
-		if(el){
-            if (el.classList.contains('d-none')) {
-                el.classList.remove('d-none');
-            } else {
-                el.classList.add('d-none');
-            }
-            var chatElement = el.querySelector(".chat-container");
-            chatElement.scrollTop = chatElement.offsetHeight;
-            if(window.innerWidth <= 767){
-                const y = chatElement.closest(".conversation").getBoundingClientRect().top + window.scrollY;
-                window.scroll({
-                    top: y,
-                    behavior: 'smooth'
-                });
-            }
-        }
+		if (el) {
+			if (el.classList.contains('d-none')) {
+				el.classList.remove('d-none');
+			} else {
+				el.classList.add('d-none');
+			}
+			var chatElement = el.querySelector(".chat-container");
+			chatElement.scrollTop = chatElement.offsetHeight;
+			if (window.innerWidth <= 767) {
+				const y = chatElement.closest(".conversation").getBoundingClientRect().top + window.scrollY;
+				window.scroll({
+					top: y,
+					behavior: 'smooth'
+				});
+			}
+		}
 	}
 
 	function closeAllConversations() {
@@ -120,9 +127,21 @@
 		})
 	}
 
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = () => {
+		if (this.readyState == 4 && this.status == 200) {
+			console.log('Versturen geslaagd!');
+		} else {
+			console.log('Versturen mislukt!');
+		}
+	};
+	xhttp.open("GET", "{{route('messages.read')}}" + (maxId + 1), true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send();
+
 	@if(isset($_GET["conversation"]))
-        openConversation("conversation-{{$_GET["conversation"]}}");
-    @endif
+		openConversation("conversation-{{$_GET["conversation "]}}");
+	@endif
 </script>
 
 @endsection

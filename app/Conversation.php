@@ -36,7 +36,7 @@ class Conversation extends SuperModel
 	{
 		return Conversation::resultArrayToClassArray(DB::select(
 			'
-			SELECT a.title, m.user_id, m.auction_conversation_id, c.auction_id, c.is_closed, m.id AS message_id, m.message, m.created_at
+			SELECT a.title, m.user_id, m.auction_conversation_id, c.auction_id, c.is_closed, m.id AS message_id, m.message, m.is_read, m.created_at
 			FROM auction_conversations AS c
 			INNER JOIN auction_messages AS m
 				ON c.id = m.auction_conversation_id
