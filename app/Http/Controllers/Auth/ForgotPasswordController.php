@@ -75,7 +75,7 @@ class ForgotPasswordController extends Controller
 
         }
 
-        session()->flash('msg', 'Email verstuurd als email adress en beveiligings antwoord klopt');
+        session()->flash('msg', 'E-mail verstuurd als e-mailadres en beveiligingsantwoord juist zijn');
         return redirect('/wachtwoordvergeten');
 
     }
@@ -105,7 +105,7 @@ class ForgotPasswordController extends Controller
         if ($user->email == $data['email']) {
 
             $this->validate($request, array(
-                'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+                'password' => ['required', 'string', 'min:7', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\d\x]).*$/'],
             ));
 
             DB::insertOne("UPDATE users SET password=:password, reset_token=:reset_token WHERE id=:id",[
@@ -122,7 +122,7 @@ class ForgotPasswordController extends Controller
 
         }else if ($user->email != $data['email']) {
 
-            session()->flash('msg', 'Verkeerd emailadress opgegeven');
+            session()->flash('msg', 'Verkeerd e-mailadres opgegeven');
             return redirect(url()->previous());
 
         }

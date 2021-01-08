@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="sand-blue-gradient">
+    <div class="sand-blue-gradient content-height">
         <div class="container">
-            <div class="row justify-content-center align-items-center py-5"
-                 style="height: calc(100vh - 392px); min-height: 450px;">
+            <div class="row justify-content-center align-items-center py-5">
                 <div class="col-md-6">
 
                     <div class="card">
@@ -12,6 +11,11 @@
                         <div class="card-body">
 
                             <h2 class="text-center mt-2 mb-4">Inloggen</h2>
+                            @if(Session::has("success"))
+                                <div class="alert alert-success" role="alert" id="alert-success">
+                                    <span class="success" id="success" style="margin-top:10px; margin-bottom: 10px;">{!! Session::get("success") !!}</span>
+                                </div>
+                            @endif
 
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf

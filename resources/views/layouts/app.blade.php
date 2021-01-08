@@ -24,9 +24,6 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- FontAwesome -->
-    <script src="https://kit.fontawesome.com/306091d7c8.js" crossorigin="anonymous"></script>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -34,7 +31,9 @@
 
 @include('includes.header')
 
+<div class="content-height">
     @yield('content')
+</div>
 
 @include('includes.footer')
 

@@ -1,0 +1,250 @@
+.admin {
+    h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p, label, .table {
+        color: $admin-grey;
+    }
+
+    .card {
+        background-color: $admin-bg;
+        border-color: $admin-border;
+        margin-bottom: 24px;
+    }
+
+    background-color: $admin-bg;
+    min-height: 100vh;
+    height: 100%;
+
+    .content{
+        padding-top: 35px;
+    }
+    .navbar {
+        background-color: $admin-bg-light;
+    }
+
+    .navbar-brand {
+        color: $sand;
+    }
+
+    #category-container-parent{
+        position:inherit;
+        left:0;
+        right:0;
+        background-color: transparent;
+    }
+
+    .clickable-submenu{
+        font-weight: normal;
+        color: $admin-grey !important;
+        cursor: pointer;
+    }
+
+    a.category{
+        text-decoration: none;
+        font-weight: bold;
+        color: $admin-grey !important;
+
+        &:hover{
+            color: $admin-grey !important;
+        }
+    }
+    .category {
+        &-arrow{
+            font-size:10px;
+        }
+
+        &-0{
+            > div, >a {
+                display:block;
+            }
+            >.clickable-submenu{
+                font-weight:normal;
+            }
+            :last-child{
+                padding-bottom: 10px;
+            }
+        }
+
+        &-1 {
+            font-weight: bold;
+            color: $gray!important;
+            display:block;
+        }
+
+
+        &-hoverable > * {
+            > div, >a {
+                display:none;
+            }
+        }
+
+        a{
+            font-weight: normal;
+        }
+    }
+
+    .back-button{
+        position: absolute;
+        top: 20px;
+        right: 25px;
+    }
+
+    .order-circle {
+        margin-right: 10px;
+        background-color: black;
+        border-radius: 1000px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        float: left;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+    }
+
+    .order-spacing {
+        width: 30px;
+        height: 20px;
+        float: left;
+    }
+}
+
+.logfile-contents{
+    color: $admin-grey;
+    max-height: 400px;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100%;
+
+    .hamburgermenu {
+        position: absolute;
+    }
+
+    .sidepanel {
+        height: 100%;
+        width: 250px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: -250px;
+        color: $sand;
+        background-color: $admin-bg-light;
+        overflow-x: hidden;
+        padding-top: 60px !important;
+        transition: 0.5s;
+
+
+        .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            cursor: pointer;
+        }
+
+        .title{
+            color: $admin-grey;
+            font-size: 23px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+
+
+        ul{
+            list-style-type: none;
+            padding-left: 0!important;
+
+            li{
+                margin-bottom: 10px;
+
+                a {
+                    text-decoration: none;
+                    color: $sand;
+
+                    &:hover {
+                        color: $sand;
+                        background-color: #565656;
+                    }
+
+                    i{
+                         font-size: 18px;
+                         margin-right: 5px;
+                     }
+                    .fa-fw{
+                        width: 2.25em!important;
+                    }
+                }
+            }
+        }
+
+        .bottom-info{
+            position: absolute;
+            bottom: 10px;
+            left: 55px;
+
+            li{
+                margin-bottom: 2px;
+            }
+
+            a{
+                &:hover{
+                    background-color: $admin-bg-light;
+                    text-decoration: underline;
+                }
+            }
+            b{
+                margin-bottom: 0;
+                color: $sand;
+            }
+        }
+    }
+
+    .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: transparent;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+
+        &:hover {
+            background-color: $admin-table-header;
+        }
+    }
+}
+
+.table {
+    margin: 0 auto;
+    width: 80%;
+    .thead{
+        background-color: $admin-bg-light;
+    }
+
+    .endTd{
+        border-right: 1px solid;
+    }
+
+    .form-check-input:disabled{
+        opacity: 1;
+    }
+
+    tbody{
+        tr{
+            &:hover{
+               background-color: $admin-table-header;
+                cursor: pointer;
+            }
+
+            .fa-ban{
+                color: #DC2626;
+            }
+
+            .fa-check-circle{
+                color: #10B981;
+            }
+        }
+    }
+}

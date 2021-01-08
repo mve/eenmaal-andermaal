@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\DB;
+use App\User;
 use Closure;
 
 class CheckUser
@@ -15,7 +17,6 @@ class CheckUser
      */
     public function handle($request, Closure $next)
     {
-
         if (!$request->session()->has('user')) {
             return redirect('login');
         }

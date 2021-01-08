@@ -4,9 +4,9 @@
 
         <div class="row" style="padding: 40px 0;">
             <div class="col-md-6 col-lg-4 mt-4">
-                <div class="fw-bold">Eenmaal Andermaal</div>
-                <div><a class="footer-link" href="#">Categorieën</a></div>
-                <div><a class="footer-link" href="#">Nieuwste veilingen</a></div>
+                <div class="fw-bold">EenmaalAndermaal</div>
+                <div><a class="footer-link" href="/">Hoofdpagina</a></div>
+                <div><a class="footer-link" href="/categorieën">Categorieën</a></div>
                 <div><a class="footer-link" href="/faq">Veelgestelde vragen</a></div>
             </div>
             <div class="col-md-6 col-lg-4 mt-4">
@@ -23,21 +23,14 @@
             </div>
         </div>
 
-        <div class="row" style="padding: 20px 0 20px 0; text-align: center; border-top: 1px solid white;">
+        <div class="row" style="padding: 20px 0 20px 0; border-top: 1px solid white;">
             <div class="col-sm-12 col-md-6 col-lg">
-                <a class="footer-link" href="#">Algemene voorwaarden</a>
+                <a class="footer-link" href="/privacy">Privacy</a>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg">
-                <a class="footer-link" href="#">Privacy</a>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg">
-                <a class="footer-link" href="#">Cookies</a>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg">
-                © {{ now()->year }} Eenmaal Andermaal
+            <div class="col-sm-12 col-md-6 col-lg" style="text-align: center;">
+                © {{ now()->year }} EenmaalAndermaal
             </div>
         </div>
-
     </div>
 
 </footer>

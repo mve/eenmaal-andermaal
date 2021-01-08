@@ -53,10 +53,18 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'check.admin' => \App\Http\Middleware\CheckAdmin::class,
+        'check.user' => \App\Http\Middleware\CheckUser::class,
+        'check.user.seller' => \App\Http\Middleware\CheckUserSeller::class,
+        'check.user.won.auction' => \App\Http\Middleware\CheckUserWonAuction::class,
+        'check.user.reviewed.auction' => \App\Http\Middleware\CheckUserReviewedAuction::class,
+        'check.user.isnot.seller' => \App\Http\Middleware\CheckUserIsNotSeller::class,
+        'check.user.is.blocked' => \App\Http\Middleware\CheckUserIsBlocked::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest.admin' => \App\Http\Middleware\RedirectIfAdmin::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,

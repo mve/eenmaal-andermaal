@@ -47,6 +47,12 @@ return [
             'level' => 'debug',
         ],
 
+        'eenmaalandermaal' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/eenmaalandermaal.log'),
+            'level' => 'info',
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

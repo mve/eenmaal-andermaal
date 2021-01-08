@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="sand-blue-gradient">
+    <div class="sand-blue-gradient content-height">
         <div class="container">
-            <div class="row justify-content-center align-items-center py-5"
-                 style="height: calc(100vh - 392px); min-height: 450px;">
+            <div class="row justify-content-center align-items-center py-5">
                 <div class="col-md-6">
 
                     <div class="card">
@@ -19,7 +18,7 @@
                                 <input type="hidden" name="token" value="{{ $token }}">
 
                                 <div class="form-group row mb-2">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">Email adres</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">E-mailadres</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email"
@@ -44,8 +43,7 @@
                                                class="form-control @error('password') is-invalid @enderror"
                                                name="password" required autocomplete="new-password">
                                         <small id="passwordHelpInline" class="text-muted">
-                                            Wachtwoord moet minimaal 8 tekens bevatten, 1 hoofdletter en 1 speciaal
-                                            teken
+                                            Wachtwoord moet minimaal 7 tekens, 1 cijfer, 1 kleine letter en 1 hoofdletter bevatten
                                         </small>
                                         @error('password')
                                         <span class="invalid-feedback" role="alert">
