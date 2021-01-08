@@ -19,7 +19,7 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('mijnaccount.bewerken') }}">
+                            <form method="POST" action="{{ route('mijnaccount.bewerken.post') }}">
                                 @csrf
 
                                 <div class="form-group row mb-2">

@@ -26,7 +26,7 @@
 
                                 <h2 class="text-center mt-2 mb-4">Admin inloggen</h2>
 
-                                <form method="POST" action="{{ route('Admin.login') }}">
+                                <form method="POST" action="{{ route('Admin.login.post') }}">
                                     @csrf
 
                                     <div class="form-group row mb-2">
