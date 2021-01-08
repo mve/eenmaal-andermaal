@@ -68,7 +68,7 @@ class ConversationController extends Controller
 			'message' => ['required', 'string'],
 		));
         if (countLengthNewlinesOneCharacter($request->get("message")) > 250)
-            return redirect()->back()->withInput($request->all())->withErrors(["message" => "Bericht mag niet uit meer dan 500 tekens bestaan."]);
+            return redirect()->back()->withInput($request->all())->withErrors(["message" => "Bericht mag niet uit meer dan 250 tekens bestaan."]);
 
 		$auctionId = $request->auctionId;
 		$userId = $request->session()->get('user')->id;

@@ -25,7 +25,7 @@
                         <tr class="table-light" onclick="openConversation('conversation-{{$convo->conversation_id}}')">
                             <td>
                                 <strong class="text-one-line">{{$convo->auction_title}}</strong>
-                                <div class="text-one-line">{{end($convo->messages)->message}}</div>
+                                <div class="text-one-line text-break">{{end($convo->messages)->message}}</div>
                                 @if(date('Y', strtotime(end($convo->messages)->created_at)) >= now()->year)
                                     <div class="text-right"><i>{{date('d-m H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
                                 @else
@@ -56,7 +56,7 @@
 								@else
 								<div class="messagebox border p-2" style="max-width: 50%">
 									@endif
-									<span>{{$msg->message}}</span>
+									<span class="text-break">{{$msg->message}}</span>
 									@if(date('Y', strtotime($msg->created_at)) >= now()->year)
 									<div class="text-right"><i>{{date('d-m H:i', strtotime($msg->created_at))}}</i></div>
 									@else
@@ -73,7 +73,7 @@
                             <input type="hidden" name="auctionId" value="{{$convo->auction_id}}">
                             <input type="hidden" name="conversationId" value="{{$convo->conversation_id}}">
                             <button class="btn btn-large btn-primary float-right" type="submit">Verstuur</button>
-                            <span class="d-block overflow-hidden pr-1"><input name="message" type="text" class="form-control float-left"></span>
+                            <span class="d-block overflow-hidden pr-1"><input name="message" type="text" class="form-control float-left" maxLength="250"></span>
 						</div>
 					</form>
 				</div>
