@@ -93,19 +93,21 @@
 
 		var el = document.getElementById(elementId);
 
-		if (el.classList.contains('d-none')) {
-			el.classList.remove('d-none');
-		} else {
-			el.classList.add('d-none');
-		}
-		var chatElement = el.querySelector(".chat-container");
-        chatElement.scrollTop = chatElement.offsetHeight;
-        if(window.innerWidth <= 767){
-            const y = chatElement.closest(".conversation").getBoundingClientRect().top + window.scrollY;
-            window.scroll({
-                top: y,
-                behavior: 'smooth'
-            });
+		if(el){
+            if (el.classList.contains('d-none')) {
+                el.classList.remove('d-none');
+            } else {
+                el.classList.add('d-none');
+            }
+            var chatElement = el.querySelector(".chat-container");
+            chatElement.scrollTop = chatElement.offsetHeight;
+            if(window.innerWidth <= 767){
+                const y = chatElement.closest(".conversation").getBoundingClientRect().top + window.scrollY;
+                window.scroll({
+                    top: y,
+                    behavior: 'smooth'
+                });
+            }
         }
 	}
 
