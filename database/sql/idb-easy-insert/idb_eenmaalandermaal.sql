@@ -196,6 +196,30 @@ CREATE TABLE dbo.administrators (
 )
 GO
 
+CREATE TABLE dbo.auction_conversations (
+    id bigint IDENTITY(0,1) NOT NULL,
+    auction_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    is_closed bit DEFAULT 0 NOT NULL,
+    created_at datetime DEFAULT getdate() NOT NULL,
+    CONSTRAINT PK_auctionconversations PRIMARY KEY (id),
+    CONSTRAINT FK_auctions_auctionconversations FOREIGN KEY (auction_id) REFERENCES dbo.auctions(id),
+    CONSTRAINT FK_users_auctionconversations FOREIGN KEY (user_id) REFERENCES dbo.users(id),
+)
+GO
+
+CREATE TABLE dbo.auction_messages (
+    id bigint IDENTITY(0,1) NOT NULL,
+    auction_conversation_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    message varchar(255) NOT NULL,
+    created_at datetime DEFAULT getdate() NOT NULL,
+    CONSTRAINT PK_auctionmessages PRIMARY KEY (id),
+    CONSTRAINT FK_auctionconversations_auctionmessages FOREIGN KEY (auction_conversation_id) REFERENCES dbo.auction_messages(id),
+    CONSTRAINT FK_users_auctionmessages FOREIGN KEY (user_id) REFERENCES dbo.users(id)
+)
+GO
+
 ---------------------------------------------------------
 ---------------------------------------------------------
 --------------------- INSERT VALUES ---------------------

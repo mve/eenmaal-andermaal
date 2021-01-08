@@ -97,7 +97,7 @@ class DB
         $stmt = $dbh->prepare($query);
         foreach ($values as $key => &$value) {
             $stmt->bindParam($key, $value);
-        }
+		}
         return $stmt->execute();
     }
 

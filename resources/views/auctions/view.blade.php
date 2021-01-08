@@ -125,20 +125,17 @@
                 {{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}
                 <p><i>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</i></p>
 
+				@if (Session::has('user') && $auction->user_id != Session::get('user')->id)
                 <div class="my-3">
-                    <a class="btn btn-outline-primary" @if(Session::has('user')) href="mailto:{{$auction->getSeller()->email}}">
-                        @endif
-                        <i class="fas fa-envelope"></i> Bericht
-                    </a>
+                    <button class="btn btn-outline-primary" id="bericht"><i class="fas fa-envelope"></i> Bericht</button>
                     @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
                     <a class="btn btn-primary" @if(Session::has('user')) href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
                         @endif
                         <i class="fas fa-phone-alt"></i> Neem contact op!
                     </a>
                     @endif
-
                 </div>
-
+				@endif
             </div>
             <ul class="list-group">
                 <li class="list-group-item text-center">
@@ -150,7 +147,9 @@
                     </div>
                 </li>
             </ul>
+
             <div class="auction-card-body">
+				@if (Session::has('user') && $auction->user_id != Session::get('user')->id)
                 <label for="Bieden" class="form-label fw-bold">Plaats bod</label>
                 <div class="input-group mb-3">
                     <input type="hidden" id="auction-id" value="{{$auction->id}}" />
@@ -164,6 +163,7 @@
                     <span class="error" id="error" style="margin-top:10px; margin-bottom: 10px;"></span>
                 </div>
                 <hr>
+				@endif
                 <p class="fw-bold">Vorige bieders</p>
                 <ul class="list-group" style="max-height: 200px; overflow-y: scroll" id="last-five-bids-list">
                     {!! $auction->getLastNBidsHTML(5) !!}
@@ -227,5 +227,70 @@
     </div>
 </div>
 </div>
+
+<div id="backdrop" class="d-none">
+    <div class="modal" id="exampleModalCenter" role="dialog" aria-labelledby="exampleModalCenterTitle">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content rounded-5">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title float-center" id="exampleModalLongTitle">Bericht versturen aan {{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</h5>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('messages.send') }}">
+                        @csrf
+                        <div class="form-group row mb-2">
+                            <div class="mb-3 col-md-12">
+                                <textarea name="message" class="form-control @error('message') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" maxlength="250" placeholder="Schrijf hier uw bericht..." required></textarea>
+                                <span id="limit-message-length" class="text-right float-right">Maximaal 250 tekens: 0/250</span>
+                            </div>
+                            @error('message')
+                            <span class="invalid-feedback" style="display: block" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            <input type="hidden" name="auctionId" value="{{$auction->id}}">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="btn btn-danger text-light" onclick="toggleModal()">Annuleren</span>
+                    <input type="submit" value="Versturen" name="send" class="btn btn-primary">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+</div>
+
+<script>
+    function toggleModal() {
+        var backdrop = document.getElementById("backdrop");
+        var modal = document.getElementById("exampleModalCenter");
+
+        if (backdrop.classList.contains('d-none')) {
+            // Modal is not visible
+            backdrop.classList.remove('d-none');
+            modal.style.display = "block";
+        } else {
+            // Modal is visible
+            backdrop.classList.add('d-none');
+            modal.style.display = "none";
+        }
+    }
+
+    document.getElementById("bericht").addEventListener("click", (event) => {
+        toggleModal();
+    })
+
+    function changeLimit(textElement, textLimitElement, limit) {
+        textLimitElement.innerHTML = 'Maximaal ' + limit + ' tekens: ' + textElement.value.length + '/' + limit;
+    }
+
+    var description = document.getElementsByName('message')[0];
+    var descLimit = document.getElementById('limit-message-length');
+    description.addEventListener('keyup', e => {
+        changeLimit(description, descLimit, description.maxLength);
+    });
+</script>
 
 @endsection

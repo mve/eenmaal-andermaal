@@ -73,6 +73,9 @@ Route::post('cookie', 'HomeController@cookie')->name('cookie.post');
 
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
 
+Route::get('messages', 'ConversationController@list')->name('messages');
+Route::post('messages/send', 'ConversationController@send')->name('messages.send');
+
 // Admin Routes
 Route::get('admin', 'Admin\AdminController@index')->name('Admin.Index');
 Route::get('admin/login', 'Admin\Auth\AdminLoginController@index')->name('Admin.login');
