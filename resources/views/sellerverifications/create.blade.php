@@ -21,7 +21,7 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('verkoperworden') }}">
+                            <form method="POST" action="{{ route('verkoperworden.post') }}">
                                 @csrf
 
                                 <small>Om verkoper te worden moet u uw betaalgegevens aan ons doorgeven. U kunt kiezen tussen creditcard of IBAN.</small>

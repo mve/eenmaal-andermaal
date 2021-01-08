@@ -40,23 +40,21 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 Route::get('mijnaccount/bewerken', 'UserDetailsController@edit')->name('mijnaccount.bewerken');
-Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken');
+Route::post('mijnaccount/bewerken', 'UserDetailsController@update')->name('mijnaccount.bewerken.post');
 Route::post('mijnaccount/verwijderen', 'UserDetailsController@remove')->name('mijnaccount.verwijderen');
 Route::get('mijnaccount/phonefield/{id}', 'UserDetailsController@phoneField')->name('mijnaccount.phonefield');
 Route::get('mijnaccount', 'UserDetailsController@index')->name('mijnaccount');
 
 Route::get('verkoperworden', 'SellerVerificationController@verificationStart')->name('verkoperworden');
-Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->name('verkoperworden');
+Route::post('verkoperworden', 'SellerVerificationController@verificationPost')->name('verkoperworden.post');
 Route::get('verkoperworden/verifieren', 'SellerVerificationController@verificationVerify')->name('verkoperworden.verifieren');
-Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren');
+Route::post('verkoperworden/verifieren', 'SellerVerificationController@verificationVerifyCheck')->name('verkoperworden.verifieren.post');
 
 Route::get('/beoordeling', 'ReviewController@index')->name('beoordeling.overzicht');
 Route::get('/beoordeling/plaatsen/{id}', 'ReviewController@create')->name('beoordeling.toevoegen');
-Route::post('/beoordeling/plaatsen/{id}', 'ReviewController@store')->name('beoordeling.toevoegen');
+Route::post('/beoordeling/plaatsen/{id}', 'ReviewController@store')->name('beoordeling.toevoegen.post');
 
-Route::get('faq', function () {
-    return view('faq.faq');
-});
+Route::get('/faq', 'HomeController@faq');
 
 Route::get('categorie/{id}', 'CategoryController@index')->name('auctionsInCategory');
 
@@ -67,11 +65,11 @@ Route::get('search', 'HomeController@search')->name('zoeken');
 //Route::post('search', 'HomeController@search')->name('zoeken');
 
 Route::get('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
-Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory');
+Route::post('categorie/{id}', 'CategoryController@filtered')->name('auctionsInCategory.post');
 Route::get('categorieën', 'CategoryController@categories')->name('categories');
 
 Route::get('cookie', 'HomeController@cookie')->name('cookie');
-Route::post('cookie', 'HomeController@cookie')->name('cookie');
+Route::post('cookie', 'HomeController@cookie')->name('cookie.post');
 
 Route::get('privacy', 'HomeController@privacy')->name('privacy');
 
@@ -79,7 +77,7 @@ Route::get('privacy', 'HomeController@privacy')->name('privacy');
 Route::get('admin', 'Admin\AdminController@index')->name('Admin.Index');
 Route::get('admin/login', 'Admin\Auth\AdminLoginController@index')->name('Admin.login');
 Route::post('admin/logout', 'Admin\Auth\AdminLoginController@logout')->name('Admin.logout');
-Route::post('admin/login', 'Admin\Auth\AdminLoginController@login')->name('Admin.login');
+Route::post('admin/login', 'Admin\Auth\AdminLoginController@login')->name('Admin.login.post');
 
 Route::get('admin/users', 'Admin\UserController@list')->name('admin.users.list');
 Route::get('admin/users/{id}', 'Admin\UserController@view')->name('admin.users.view');
@@ -96,13 +94,13 @@ Route::resource('admin/categories', Admin\CategoryController::class);
 
 
 
-Route::get('foo', function () {
-    $auctions = \App\DB::select("
-        SELECT *
-        FROM auctions
-
-        ORDER BY id DESC
-        OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY
-    ");
-    dd($auctions);
-});
+//Route::get('foo', function () {
+//    $auctions = \App\DB::select("
+//        SELECT *
+//        FROM auctions
+//
+//        ORDER BY id DESC
+//        OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY
+//    ");
+//    dd($auctions);
+//});
