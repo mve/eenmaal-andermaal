@@ -39,28 +39,14 @@
                             <div class="col-lg-4 fw-bold">Type account</div>
                             <div class="col-lg-8">
                                 @if($user->is_seller == true)
-                                Verkoper
+                                    Verkoper
                                 @else
-                                Koper
-                                <a href="{{route("verkoperworden")}}" class="btn-primary btn-sm no-link text-white">Verkoper worden</a>
+                                    Koper
+                                    <a href="{{route("verkoperworden")}}"
+                                       class="btn-primary btn-sm no-link text-white">Verkoper worden</a>
                                 @endif
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4 fw-bold">E-mailadres</div>
-                                <div class="col-lg-8">{{$user->email}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4 fw-bold">Type account</div>
-                                <div class="col-lg-8">
-                                    @if($user->is_seller == true)
-                                        Verkoper
-                                    @else
-                                        Koper
-                                        <a href="{{route("verkoperworden")}}"
-                                           class="btn-primary btn-sm no-link text-white">Verkoper worden</a>
-                                    @endif
-                                </div>
-                            </div>
+                        </div>
 
                         @if($user->is_seller===1 && ($sellerVerification = $user->getSellerVerification()))
 
