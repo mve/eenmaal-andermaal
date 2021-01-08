@@ -6,12 +6,12 @@
         <h1 class="text-center pt-3">Rubrieken</h1>
 
         <form id="rubriekenSearchForm" class="form-group text-center">
-            <input type="text" class="form-control" style="width: inherit;display:inline" placeholder="Yu-Gi-Oh!">
+            <input type="text" class="form-control" style="width: inherit;display:inline" placeholder="Auto's">
             <input type="submit" class="btn btn-secondary" name="submit" value="Zoek"/>
         </form>
 
-        <div class="row mb-3">
-            <div class="col-lg-8">
+        <div class="row mb-3 offset-lg-2 offset-xl-3">
+            <div class="col-xl-6 col-lg-6 col-md-6">
                 <div class="content">
                     <div id="category-container-parent-admin">
                         <div class="row category-container" id="category_tree">
@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 text-center">
+            <div class="col-xl-4 col-lg-6 col-md-6 text-center">
                 <h2>Acties</h2>
                 <div class="card px-2 py-4">
                     <div class="card-body">

@@ -51,7 +51,9 @@
             </div>
 
         @else
-            <p class="py-4">Geen veilingen gevonden</p>
+			<div class="alert alert-primary my-4" role="alert">
+				Geen veilingen gevonden
+            </div>
         @endif
     </div>
 

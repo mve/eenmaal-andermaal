@@ -2,7 +2,7 @@
     <div class="hamburgermenu">
         <div id="mySidepanel" class="sidepanel">
             <div id="closebtn" class="closebtn">&times;</div>
-            <div class="text-center mb-3 fw-bold title">Eenmaal Andermaal</div>
+            <div class="text-center mb-3 fw-bold title">EenmaalAndermaal</div>
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('Admin.Index') }}"><i class="fas fa-fw fa-chart-line"></i>Dashboard</a>
