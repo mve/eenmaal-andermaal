@@ -215,7 +215,7 @@ CREATE TABLE dbo.auction_messages (
     message varchar(255) NOT NULL,
     created_at datetime DEFAULT getdate() NOT NULL,
     CONSTRAINT PK_auctionmessages PRIMARY KEY (id),
-    CONSTRAINT FK_auctionconversations_auctionmessages FOREIGN KEY (auction_conversation_id) REFERENCES dbo.auction_messages(id),
+    CONSTRAINT FK_auctionconversations_auctionmessages FOREIGN KEY (auction_conversation_id) REFERENCES dbo.auction_conversations(id),
     CONSTRAINT FK_users_auctionmessages FOREIGN KEY (user_id) REFERENCES dbo.users(id)
 )
 GO
