@@ -4,7 +4,7 @@
 
         <div class="row" style="padding: 40px 0;">
             <div class="col-md-6 col-lg-4 mt-4">
-                <div class="fw-bold">Eenmaal Andermaal</div>
+                <div class="fw-bold">EenmaalAndermaal</div>
                 <div><a class="footer-link" href="/">Hoofdpagina</a></div>
                 <div><a class="footer-link" href="/categorieën">Categorieën</a></div>
                 <div><a class="footer-link" href="/faq">Veelgestelde vragen</a></div>
@@ -28,7 +28,7 @@
                 <a class="footer-link" href="/privacy">Privacy</a>
             </div>
             <div class="col-sm-12 col-md-6 col-lg" style="text-align: center;">
-                © {{ now()->year }} Eenmaal Andermaal
+                © {{ now()->year }} EenmaalAndermaal
             </div>
         </div>
     </div>

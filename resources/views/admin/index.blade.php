@@ -4,7 +4,7 @@
 
     <div class="admin">
         <div class="container-fluid ">
-            <h1 class="text-center pt-3"> Eenmaal andermaal</h1>
+            <h1 class="text-center pt-3"> EenmaalAndermaal</h1>
 
             <div class="content">
                 <h1>Dashboard</h1>

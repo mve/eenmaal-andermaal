@@ -16,7 +16,7 @@
 
     <div class="hero-section">
         <h1 class="title text-white text-center">
-            <i class="fas fa-gavel"></i> Eenmaal Andermaal
+            <i class="fas fa-gavel"></i> EenmaalAndermaal
         </h1>
     </div>
 

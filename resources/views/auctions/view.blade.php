@@ -42,7 +42,9 @@
             <hr>
             <p>
                 Land: {{$auction->getCountry()}}<br />
+				@if(isset($auction->city))
                 Plaats: {{$auction->city}}
+				@endif
                 @foreach($auction->getSeller()->getPhoneNumbers() as $phoneNumber)
                 <br />Telefoonnummer: {{$phoneNumber["phone_number"]}}<br />
                 @endforeach
@@ -54,23 +56,28 @@
                 Betalingsinstructies:<br />
                 {{$auction->payment_instruction}}<br /><br />
                 @endif
-                De verkoper accepteert de volgende betalingsmethoden:<br />
-            <ul>
+
+				@if(count($auction->getPaymentMethods()) > 0)
+				De verkoper accepteert de volgende betalingsmethoden:<br />
+            	<ul>
                 @foreach($auction->getPaymentMethods() as $paymentMethod)
                 <li>{{$paymentMethod["method"]}}</li>
                 @endforeach
-            </ul>
+            	</ul>
+				@endif
             </p>
+			@if(count($auction->getShippingMethods()) > 0)
             <h4>Verzending</h4>
             <hr>
             <p>
                 De verkoper accepteert de volgende verzendmethoden:<br />
             <ul>
                 @foreach($auction->getShippingMethods() as $shippingMethod)
-                <li>{{$shippingMethod["method"]}}: &euro;{{$shippingMethod["price"]}}</li>
+                <li>{{$shippingMethod["method"]}}</li>
                 @endforeach
             </ul>
             </p>
+			@endif
         </div>
     </div>
     <div class="col-lg-5 col-xl-4 offset-xl-1">
@@ -147,7 +154,7 @@
                 <label for="Bieden" class="form-label fw-bold">Plaats bod</label>
                 <div class="input-group mb-3">
                     <input type="hidden" id="auction-id" value="{{$auction->id}}" />
-                    <input type="number" class="form-control" id="text-bid" aria-describedby="Plaats bod" value="{{$auction->getLatestBid()+$auction->getIncrement()}}">
+                    <input type="number" class="form-control" id="text-bid" aria-describedby="Plaats bod" value="{{number_format($auction->getLatestBid()+$auction->getIncrement(), 2)}}">
                     <button id="btn-bid" type="submit" class="btn btn-primary">Bied</button>
                 </div>
                 <div class="alert alert-success d-none" role="alert" id="alert-success">
