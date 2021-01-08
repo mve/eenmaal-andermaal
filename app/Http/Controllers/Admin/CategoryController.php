@@ -68,21 +68,18 @@ class CategoryController extends Controller
         $category->name = $data["new_name"];
         $category->update(true);
 
-        // new_parent veilingen heeft 
-        
+        // new_parent veilingen heeft
         $this->checkEmptyCategory($data["new_parent"]);
 
         $data = [
             "categoryMenuHTML" => Category::getCategoriesAdmin()
         ];
-        
+
         return response()->json(['success' => "updated", 'data' => $data]);
     }
 
     public function destroy(Request $request, $id)
     {
-        $data = $request->all();
-        
         $auctionsCheck = AuctionCategory::resultArrayToClassArray(DB::select("SELECT * FROM auction_categories WHERE category_id=:new_parent", [
             "new_parent" => $id
         ]));
@@ -95,7 +92,7 @@ class CategoryController extends Controller
         {
             if(empty($parentCheck)){
                 $category = Category::deleteWhere('id', $id);
-                
+
                 $data = [
                     "categoryMenuHTML" => Category::getCategoriesAdmin()
                 ];
@@ -107,13 +104,8 @@ class CategoryController extends Controller
         $data = [
             "categoryMenuHTML" => Category::getCategoriesAdmin()
         ];
-        
+
         return response()->json(['error' => 'delete', 'data' => $data]);
-    }
-
-    public function categoryTree()
-    {
-
     }
 
     private function checkEmptyCategory($new_parent)

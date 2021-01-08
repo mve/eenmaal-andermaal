@@ -6,12 +6,12 @@
         <h1 class="text-center pt-3">Rubrieken</h1>
 
         <form id="rubriekenSearchForm" class="form-group text-center">
-            <input type="text" class="form-control" style="width: inherit;display:inline" placeholder="Yu-Gi-Oh!">
+            <input type="text" class="form-control" style="width: inherit;display:inline" placeholder="Auto's">
             <input type="submit" class="btn btn-secondary" name="submit" value="Zoek"/>
         </form>
 
-        <div class="row mb-3">
-            <div class="col-lg-8">
+        <div class="row mb-3 offset-lg-2 offset-xl-2">
+            <div class="col-xl-6 col-lg-6 col-md-6">
                 <div class="content">
                     <div id="category-container-parent-admin">
                         <div class="row category-container" id="category_tree">
@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 text-center">
+            <div class="col-xl-4 col-lg-6 col-md-6 text-center">
                 <h2>Acties</h2>
                 <div class="card px-2 py-4">
                     <div class="card-body">
@@ -126,12 +126,8 @@
 
             pageLoaded();
 
-
-            var xhttp = new XMLHttpRequest();
-
             function categorySelected() {
-
-
+                var xhttp = new XMLHttpRequest();
                 let _token = document.getElementsByName("_token")[0].value;
 
                 xhttp.onreadystatechange = function () {
@@ -155,6 +151,7 @@
             }
 
             function applyBtnPressed() {
+                var xhttp = new XMLHttpRequest();
                 let _token = document.getElementsByName("_token")[0].value;
                 let new_category = document.getElementById("new_category");
                 let change_name = document.getElementById("change_name");
@@ -181,7 +178,7 @@
                         }
                     };
 
-                    xhttp.open("POST", "/admin/categories", true);
+                    xhttp.open("POST", "/admin/categories/store", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("_token=" + _token + "&new_category=" + new_category.value + "&change_parent=" + change_parent.value + "&new_order=" + change_order.value);
                 } else {
@@ -204,7 +201,7 @@
                         }
                     };
 
-                    xhttp.open("PATCH", "/admin/categories/" + change_name.dataset.selectedId, true);
+                    xhttp.open("POST", "/admin/categories/" + change_name.dataset.selectedId + "/update", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value + "&new_order=" + change_order.value);
                 }
@@ -214,7 +211,7 @@
                 let _token = document.getElementsByName("_token")[0].value;
                 let change_name = document.getElementById("change_name");
                 let change_parent = document.getElementById("change_parent");
-
+                var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         var data = JSON.parse(this.response);
@@ -230,7 +227,7 @@
                     }
                 };
 
-                xhttp.open("DELETE", "/admin/categories/" + change_name.dataset.selectedId, true);
+                xhttp.open("POST", "/admin/categories/" + change_name.dataset.selectedId + "/delete", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value);
             }

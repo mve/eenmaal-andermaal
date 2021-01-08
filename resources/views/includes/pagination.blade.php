@@ -31,6 +31,13 @@
                     </li>
                 @endfor
 
+                @if($currentPage == $showEachSide)
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{url($uri.'?page='.($currentPage+1).(isset($_GET['search'])? '&search='.$_GET['search'] : ''))}}">{{$currentPage+1}}</a>
+                    </li>
+                @endif
+
                 @if($currentPage > $showEachSide && $currentPage < ($totalPages-($showEachSide-1)))
 
                     @if(($currentPage - 1) > 3)
@@ -72,6 +79,13 @@
                 @else
                     <li class="page-item disabled">
                         <a class="page-link" href="#">...</a>
+                    </li>
+                @endif
+
+                @if($currentPage == $totalPages-1)
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{url($uri.'?page='.($totalPages-($showEachSide)).(isset($_GET['search'])? '&search='.$_GET['search'] : ''))}}">{{($totalPages-($showEachSide))}}</a>
                     </li>
                 @endif
 

@@ -2,7 +2,7 @@
     <div class="hamburgermenu">
         <div id="mySidepanel" class="sidepanel">
             <div id="closebtn" class="closebtn">&times;</div>
-            <div class="text-center mb-3 fw-bold title">Eenmaal Andermaal</div>
+            <div class="text-center mb-3 fw-bold title">EenmaalAndermaal</div>
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('Admin.Index') }}"><i class="fas fa-fw fa-chart-line"></i>Dashboard</a>
@@ -17,7 +17,7 @@
                     <a class="nav-link" href="{{route('admin.statistics')}}"><i class="fas fa-fw fa-chart-bar"></i>Statistieken</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/categories"><i class="fas fa-fw fa-list-alt"></i>Categorien</a>
+                    <a class="nav-link" href="/admin/categories"><i class="fas fa-fw fa-list-alt"></i>Categorieën</a>
                 </li>
             </ul>
 
@@ -42,14 +42,9 @@
                     </li>
                 </ul>
             </div>
-
         </div>
 
-
-
-
         <button id="openbtn" class="openbtn">&#9776;</button>
-
     </div>
 </div>
 

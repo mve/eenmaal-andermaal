@@ -35,7 +35,7 @@ class Category extends SuperModel
                 $printStr .= self::printTree($childCategories, $allCategories, $level + 1);
                 $printStr .= '</div>';
             } else {
-                $printStr .= '<a href="/categorie/' . $category->id . '" class="' . $classes . ' user-select-none">' . $category->name . " <i class='fas fa-arrow-right category-arrow'></i>";
+                $printStr .= '<a href="/categorie/' . $category->id . '" class="' . $classes . ' user-select-none">' . $category->name;
                 $printStr .= '</a>';
             }
         }
@@ -90,7 +90,7 @@ class Category extends SuperModel
                 $printStr .= self::printTreeAdmin($childCategories, $allCategories, $level + 1);
                 $printStr .= '</div>';
             } else {
-                $printStr .= '<a onclick="categorySelected();" id="' . $category->id . '" href="javascript:void(0);" class="' . $classes . ' user-select-none" style="margin-left:'.$marginLeft.'px">' . ($category->manual_order ? '<span class="order-circle">' . $category->manual_order . '</span>' : '<span class="order-spacing"></span>') . $category->name . " <i class='fas fa-arrow-right category-arrow'></i>";
+                $printStr .= '<a onclick="categorySelected();" id="' . $category->id . '" href="javascript:void(0);" class="' . $classes . ' user-select-none" style="margin-left:'.$marginLeft.'px">' . ($category->manual_order ? '<span class="order-circle">' . $category->manual_order . '</span>' : '<span class="order-spacing"></span>') . $category->name;
                 $printStr .= '</a>';
             }
         }

@@ -1,4 +1,4 @@
-# Eenmaal Andermaal Groep 2
+# EenmaalAndermaal Groep 2
 ## Setup
 
 1. ```composer update && composer install```
