@@ -195,31 +195,31 @@
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["fiveStars"]}};"></div>
                     </div>
-                    {{$reviewsData["fiveStars"]}}
+                    <span class="auction-star-percentage">{{$reviewsData["fiveStars"]}}</span>
                 </div>
                 <div class="flex-centered"><span class="auction-star-text">4 sterren</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["fourStars"]}};"></div>
                     </div>
-                    {{$reviewsData["fourStars"]}}
+                    <span class="auction-star-percentage">{{$reviewsData["fourStars"]}}</span>
                 </div>
                 <div class="flex-centered"><span class="auction-star-text">3 sterren</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["threeStars"]}};"></div>
                     </div>
-                    {{$reviewsData["threeStars"]}}
+                    <span class="auction-star-percentage">{{$reviewsData["threeStars"]}}</span>
                 </div>
                 <div class="flex-centered"><span class="auction-star-text">2 sterren</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["twoStars"]}};"></div>
                     </div>
-                    {{$reviewsData["twoStars"]}}
+                    <span class="auction-star-percentage">{{$reviewsData["twoStars"]}}</span>
                 </div>
                 <div class="flex-centered"><span class="auction-star-text">1 ster</span>
                     <div class="rating-bar-empty">
                         <div class="rating-bar-filled" style="width:{{$reviewsData["oneStars"]}};"></div>
                     </div>
-                    {{$reviewsData["oneStars"]}}
+                    <span class="auction-star-percentage">{{$reviewsData["oneStars"]}}</span>
                 </div>
 
             </div>

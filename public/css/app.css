@@ -12276,6 +12276,11 @@ a.category:hover {
   text-align: right;
 }
 
+.auction-star-percentage {
+  width: 40px;
+  text-align: left;
+}
+
 .make-auction .form-check-label {
   font-weight: normal !important;
 }
