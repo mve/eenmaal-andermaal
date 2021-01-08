@@ -164,7 +164,7 @@
                         @enderror
 
                         <div class="mb-3 col-md-12">
-                            <label for="payment" class="form-label">Betaalmethodes</label>
+                            <label for="payment" class="form-label">Betaalmethoden</label>
                             @foreach ($paymentMethods as $paymentMethod)
                             <div class="form-check">
 
@@ -185,7 +185,7 @@
                         <h3 class="my-3">Levering</h3>
 
                         <div class="mb-3 col-md-12">
-                            <label for="shipping" class="form-label">Betaalmethodes</label>
+                            <label for="shipping" class="form-label">Leveringsmethoden</label>
                             @foreach ($shippingMethods as $shippingMethod)
                                 <div class="form-check">
 

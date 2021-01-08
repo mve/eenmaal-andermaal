@@ -147,20 +147,23 @@ class AuctionController extends Controller
         $auctionCategory->category_id = $catId;
         $auctionCategory->save();
 
-        foreach ($request->shipping as $method) {
-            $auctionShippingMethod = new AuctionShippingMethod();
-            $auctionShippingMethod->auction_id = $auction->id;
-            $auctionShippingMethod->shipping_id = $method;
-            $auctionShippingMethod->save();
+        if($request->shipping !== null) {
+            foreach ($request->shipping as $method) {
+                $auctionShippingMethod = new AuctionShippingMethod();
+                $auctionShippingMethod->auction_id = $auction->id;
+                $auctionShippingMethod->shipping_id = $method;
+                $auctionShippingMethod->save();
+            }
         }
 
-        foreach ($request->payment as $method) {
-            $auctionPaymentMethod = new AuctionPaymentMethod();
-            $auctionPaymentMethod->auction_id = $auction->id;
-            $auctionPaymentMethod->payment_id = $method;
-            $auctionPaymentMethod->save();
+        if($request->payment !== null) {
+            foreach ($request->payment as $method) {
+                $auctionPaymentMethod = new AuctionPaymentMethod();
+                $auctionPaymentMethod->auction_id = $auction->id;
+                $auctionPaymentMethod->payment_id = $method;
+                $auctionPaymentMethod->save();
+            }
         }
-
         return redirect()->route("auctions.show", $auction->id);
     }
 
