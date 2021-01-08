@@ -61,10 +61,10 @@ class HomeController extends Controller
             $i = 0;
             $bindValues = [];
             foreach ($keywords as $key => $keyword) {
-                $kw1 = ":kw".$i."_1";
-                $kw2 = ":kw".$i."_2";
-                $bindValues[$kw1] = "%".$keyword."%";
-                $bindValues[$kw2] = "%".$keyword."%";
+                $kw1 = ":kw" . $i . "_1";
+                $kw2 = ":kw" . $i . "_2";
+                $bindValues[$kw1] = "%" . $keyword . "%";
+                $bindValues[$kw2] = "%" . $keyword . "%";
                 if ($key === array_key_first($keywords)) {
                     $query .= " WHERE (title LIKE $kw1 OR description LIKE $kw2) ";
                 } else {
@@ -77,11 +77,11 @@ class HomeController extends Controller
             //Pagination begin \/
             $limit = 15;
             $page = ($request->has("page")) ? (is_numeric($request->get("page")) ? $request->get("page") : 1) : 1;
-            $offsetPage = ($page<=0)? 0 : $page-1 ;
-            $offset = $offsetPage*$limit;
-            $querySelectCount = str_replace("SELECT *","SELECT COUNT(*) AS computed",$query);
+            $offsetPage = ($page <= 0) ? 0 : $page - 1;
+            $offset = $offsetPage * $limit;
+            $querySelectCount = str_replace("SELECT *", "SELECT COUNT(*) AS computed", $query);
 
-            $eaPaginationTotalItems = DB::selectOne($querySelectCount,$bindValues)['computed'];
+            $eaPaginationTotalItems = DB::selectOne($querySelectCount, $bindValues)['computed'];
             $eaPaginationCurrentPage = $page;
             $eaPaginationTotalPages = ceil($eaPaginationTotalItems / $limit);
 
@@ -119,6 +119,15 @@ class HomeController extends Controller
             abort(404);
         }
 
+    }
+
+    /**
+     * Display FAQ page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function faq()
+    {
+        return view('faq.faq');
     }
 
     public function privacy(Request $request)

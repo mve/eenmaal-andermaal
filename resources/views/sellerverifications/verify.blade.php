@@ -27,7 +27,7 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('verkoperworden.verifieren') }}">
+                            <form method="POST" action="{{ route('verkoperworden.verifieren.post') }}">
                                 @csrf
 
                                 <small>Vul de code in die in de ontvangen e-mail staat.</small>

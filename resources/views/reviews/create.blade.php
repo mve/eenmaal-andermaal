@@ -19,7 +19,7 @@
                                 <span class="fw-bold">{{$auction->title}}</span>
                             </p>
 
-                            <form method="POST" action="{{ route('beoordeling.toevoegen',["id"=>$auction->id]) }}">
+                            <form method="POST" action="{{ route('beoordeling.toevoegen.post',["id"=>$auction->id]) }}">
                                 @csrf
 
                                 <div class="form-group row mb-2">
