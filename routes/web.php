@@ -96,7 +96,7 @@ Route::get('admin/statistics', 'Admin\AdminController@statistics')->name('admin.
 
 Route::get('admin/categories', 'Admin\CategoryController@index')->name('admin.category.list');
 Route::get('admin/categories/{id}', 'Admin\CategoryController@show')->name('admin.category.show');
-Route::get('admin/categories/store', 'Admin\CategoryController@store')->name('admin.category.store');
-Route::get('admin/categories/{id}/update', 'Admin\CategoryController@update')->name('admin.category.update');
-Route::get('admin/categories/{id}/delete', 'Admin\CategoryController@destroy')->name('admin.category.destroy');
+Route::post('admin/categories/store', 'Admin\CategoryController@store')->name('admin.category.store');
+Route::post('admin/categories/{id}/update', 'Admin\CategoryController@update')->name('admin.category.update');
+Route::post('admin/categories/{id}/delete', 'Admin\CategoryController@destroy')->name('admin.category.destroy');
 

@@ -126,10 +126,8 @@
 
             pageLoaded();
 
-            var xhttp = new XMLHttpRequest();
-
             function categorySelected() {
-
+                var xhttp = new XMLHttpRequest();
                 let _token = document.getElementsByName("_token")[0].value;
 
                 xhttp.onreadystatechange = function () {
@@ -153,6 +151,7 @@
             }
 
             function applyBtnPressed() {
+                var xhttp = new XMLHttpRequest();
                 let _token = document.getElementsByName("_token")[0].value;
                 let new_category = document.getElementById("new_category");
                 let change_name = document.getElementById("change_name");
@@ -179,7 +178,7 @@
                         }
                     };
 
-                    xhttp.open("get", "/admin/categories/store", true);
+                    xhttp.open("POST", "/admin/categories/store", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("_token=" + _token + "&new_category=" + new_category.value + "&change_parent=" + change_parent.value + "&new_order=" + change_order.value);
                 } else {
@@ -202,7 +201,7 @@
                         }
                     };
 
-                    xhttp.open("get", "/admin/categories/" + change_name.dataset.selectedId + "/update", true);
+                    xhttp.open("POST", "/admin/categories/" + change_name.dataset.selectedId + "/update", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value + "&new_order=" + change_order.value);
                 }
@@ -212,7 +211,7 @@
                 let _token = document.getElementsByName("_token")[0].value;
                 let change_name = document.getElementById("change_name");
                 let change_parent = document.getElementById("change_parent");
-
+                var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         var data = JSON.parse(this.response);
@@ -228,7 +227,7 @@
                     }
                 };
 
-                xhttp.open("get", "/admin/categories/" + change_name.dataset.selectedId + "/delete", true);
+                xhttp.open("POST", "/admin/categories/" + change_name.dataset.selectedId + "/delete", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value);
             }
