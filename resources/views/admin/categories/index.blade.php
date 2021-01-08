@@ -126,11 +126,9 @@
 
             pageLoaded();
 
-
             var xhttp = new XMLHttpRequest();
 
             function categorySelected() {
-
 
                 let _token = document.getElementsByName("_token")[0].value;
 
@@ -181,7 +179,7 @@
                         }
                     };
 
-                    xhttp.open("POST", "/admin/categories", true);
+                    xhttp.open("get", "/admin/categories/store", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("_token=" + _token + "&new_category=" + new_category.value + "&change_parent=" + change_parent.value + "&new_order=" + change_order.value);
                 } else {
@@ -204,7 +202,7 @@
                         }
                     };
 
-                    xhttp.open("PATCH", "/admin/categories/" + change_name.dataset.selectedId, true);
+                    xhttp.open("get", "/admin/categories/" + change_name.dataset.selectedId + "/update", true);
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value + "&new_order=" + change_order.value);
                 }
@@ -230,7 +228,7 @@
                     }
                 };
 
-                xhttp.open("DELETE", "/admin/categories/" + change_name.dataset.selectedId, true);
+                xhttp.open("get", "/admin/categories/" + change_name.dataset.selectedId + "/delete", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.send("_token=" + _token + "&new_name=" + change_name.value + "&new_parent=" + change_parent.value);
             }
