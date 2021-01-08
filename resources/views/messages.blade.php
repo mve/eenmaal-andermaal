@@ -27,9 +27,9 @@
                                 <strong class="text-one-line">{{$convo->auction_title}}</strong>
                                 <div class="text-one-line text-break">{{end($convo->messages)->message}}</div>
                                 @if(date('Y', strtotime(end($convo->messages)->created_at)) >= now()->year)
-                                    <div class="text-right"><i>{{date('d-m H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
+                                    <div class="text-right"><i>{{date('H:i d-m', strtotime(end($convo->messages)->created_at))}}</i></div>
                                 @else
-                                    <div class="text-right"><i>{{date('d-m-Y H:i', strtotime(end($convo->messages)->created_at))}}</i></div>
+                                    <div class="text-right"><i>{{date('H:i d-m-Y', strtotime(end($convo->messages)->created_at))}}</i></div>
                                 @endif
                             </td>
                         </tr>
@@ -58,9 +58,9 @@
 									@endif
 									<span class="text-break">{{$msg->message}}</span>
 									@if(date('Y', strtotime($msg->created_at)) >= now()->year)
-									<div class="text-right"><i>{{date('d-m H:i', strtotime($msg->created_at))}}</i></div>
+									<div class="text-right"><i>{{date('H:i d-m', strtotime($msg->created_at))}}</i></div>
 									@else
-									<div class="text-right"><i>{{date('d-m-Y H:i', strtotime($msg->created_at))}}</i></div>
+									<div class="text-right"><i>{{date('H:i d-m-Y', strtotime($msg->created_at))}}</i></div>
 									@endif
 								</div>
 							</div>
