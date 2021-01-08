@@ -118,11 +118,9 @@
                 <a href="#">{{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}</a>
                 <p>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</p>
 
-				@if ($auction->user_id != Session::get('user')->id)
+				@if (Session::has('user') && $auction->user_id != Session::get('user')->id)
                 <div class="my-3">
-                    @if(Session::has('user'))
                     <button class="btn btn-outline-primary" id="bericht"><i class="fas fa-envelope"></i> Bericht</button>
-                    @endif
                     @if(count($auction->getSeller()->getPhoneNumbers()) > 0)
                     <a class="btn btn-primary" @if(Session::has('user')) href="tel:{{$auction->getSeller()->getPhoneNumbers()[0]["phone_number"]}}">
                         @endif
@@ -144,7 +142,7 @@
             </ul>
 
             <div class="auction-card-body">
-				@if ($auction->user_id != Session::get('user')->id)
+				@if (Session::has('user') && $auction->user_id != Session::get('user')->id)
                 <label for="Bieden" class="form-label fw-bold">Plaats bod</label>
                 <div class="input-group mb-3">
                     <input type="hidden" id="auction-id" value="{{$auction->id}}" />
