@@ -21,7 +21,7 @@
 
                     </div>
 
-                    <h5><i class="fas fa-map-marker-alt"></i> {{$auction->city . ", " . $auction->country_code}}</h5>
+                    <h5><i class="fas fa-map-marker-alt"></i> {{(empty($auction->city) ? "" : $auction->city . ", ") . $auction->country_code}}</h5>
 
                     <div class="flex-centered">
                         <div class="auction-card-data">€ {{$auction->getLatestBid()}}</div>
