@@ -116,7 +116,7 @@
             <div class="auction-card-body">
                 <i class="fas fa-user profile-picture"></i>
                 {{$auction->getSeller()->first_name}} {{$auction->getSeller()->last_name}}
-                <p>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</p>
+                <p><i>Lid sinds {{date('d-m-Y', strtotime($auction->getSeller()->created_at))}}</i></p>
 
                 <div class="my-3">
                     <a class="btn btn-outline-primary" @if(Session::has('user')) href="mailto:{{$auction->getSeller()->email}}">
