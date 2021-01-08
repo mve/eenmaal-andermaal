@@ -137,7 +137,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-8 offset-lg-2">
+    <div class="col-lg-8 offset-lg-1">
         <div class="my-4">
             <h4>Omschrijving</h4>
             <p>{!! nl2br($auction->description) !!}</p>

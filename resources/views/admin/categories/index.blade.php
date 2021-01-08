@@ -10,7 +10,7 @@
             <input type="submit" class="btn btn-secondary" name="submit" value="Zoek"/>
         </form>
 
-        <div class="row mb-3 offset-lg-2 offset-xl-3">
+        <div class="row mb-3 offset-lg-2 offset-xl-2">
             <div class="col-xl-6 col-lg-6 col-md-6">
                 <div class="content">
                     <div id="category-container-parent-admin">
