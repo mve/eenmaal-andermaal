@@ -169,7 +169,7 @@
 				De verkoper accepteert de volgende verzendmethoden:<br />
 			<ul>
 				@foreach($auction->getShippingMethods() as $shippingMethod)
-				<li>{{$shippingMethod["method"]}}: &euro;{{$shippingMethod["price"]}}</li>
+				<li>{{$shippingMethod["method"]}}{{$shippingMethod["price"]}}</li>
 				@endforeach
 			</ul>
 			</p>
