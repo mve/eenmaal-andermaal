@@ -32,7 +32,7 @@
                                 <div class="d-flex flex-md-row flex-column" style="flex: 1;">
 
                                     <h5 class="mr-3 text-nowrap">
-                                        <i class="fas fa-map-marker-alt"></i> {{$auction->city . ", " . $auction->country_code}}
+                                        <i class="fas fa-map-marker-alt"></i> {{(empty($auction->city) ? "" : $auction->city . ", ") . $auction->country_code}}
                                     </h5>
 
                                     <div>

@@ -278,9 +278,12 @@
         }
     }
 
-    document.getElementById("bericht").addEventListener("click", (event) => {
-        toggleModal();
-    })
+    var berichtBtn = document.getElementById("bericht");
+    if(berichtBtn){
+        berichtBtn.addEventListener("click", (event) => {
+            toggleModal();
+        })
+    }
 
     function changeLimit(textElement, textLimitElement, limit) {
         textLimitElement.innerHTML = 'Maximaal ' + limit + ' tekens: ' + textElement.value.length + '/' + limit;
