@@ -44,7 +44,7 @@
                         <td>
                             @php
                             $date = \Carbon\Carbon::create($review['created_at']);
-                            echo $date->format('d-m-Y H:m');
+                            echo $date->format('d-m-Y H:i');
                             @endphp
                         </td>
                         @endforeach
